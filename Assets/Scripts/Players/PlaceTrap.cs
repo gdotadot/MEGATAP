@@ -28,14 +28,6 @@ public class PlaceTrap : MonoBehaviour {
     //private bool placeEnabled;
 
 	void Start () {
-        //Add click listeners for all trap buttons
-		for(int trapNum = 0; trapNum < trapButtons.Length; trapNum++)
-        {
-            int closureCopy = trapNum;
-            GameObject trapComponent = Instantiate(trapButtons[trapNum]);
-            trapComponent.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => OnClickTrap(closureCopy));
-        }
-
         //Handle cursor or set buttons if controller connected
         p2Controller = gm.GetControllerTwoState();
         if(p2Controller)
@@ -328,9 +320,13 @@ public class PlaceTrap : MonoBehaviour {
     {
         for(int i = 0; i < queueSize; i++)
         {
-            GameObject newTrap = Instantiate(trapButtons[Random.Range(0, trapButtons.Length - 1)], new Vector3 (10f + 50f*i, -25f, 0), Quaternion.identity) as GameObject;
+            int random = Random.Range(0, trapButtons.Length - 1);
+            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (10f + 50f*i, -25f, 0), Quaternion.identity) as GameObject;
             newTrap.transform.SetParent(trapQueue.transform, false);
             queue.Add(newTrap);
+
+            //Add click listeners for all trap buttons
+            newTrap.GetComponent<Button>().onClick.AddListener(() => OnClickTrap(random));
         }
 
     }
