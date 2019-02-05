@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 222305475141012516}
   - component: {fileID: 114706188704019596}
   - component: {fileID: 114220841955447136}
+  - component: {fileID: 114070424228837000}
   - component: {fileID: 114033601464940588}
   m_Layer: 5
   m_Name: SpikeButton
@@ -144,6 +145,18 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &114070424228837000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1148860999998904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e9bc3ff25b7e25479601dad7097e850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonIndex: 0
 --- !u!114 &114220841955447136
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -19,6 +19,7 @@ public class PlaceTrap : MonoBehaviour {
     [SerializeField] private int queueSize = 7;
     private List<GameObject> queue = new List<GameObject>();
     [SerializeField] private GameObject trapQueue;
+    private int queueIndex;
 
     private TrapBase trap;
     private GameObject ghostTrap;
@@ -72,7 +73,6 @@ public class PlaceTrap : MonoBehaviour {
             ClearTrapQueue();
             CreateTrapQueue();
         }
-        Debug.Log("nope");
     }
 
     private Vector3? GetGridPosition()
@@ -147,6 +147,7 @@ public class PlaceTrap : MonoBehaviour {
             if (ghostTrap != null && CheckFloor(position.y))
             {
                 trap.InstantiateTrap(position, ghostTrap.transform.rotation);
+                ClearButton();
                 trap = null;
                 DestroyGhost();
 
@@ -209,7 +210,6 @@ public class PlaceTrap : MonoBehaviour {
             color.a = 0.5f;
             ghostTrap.GetComponentInChildren<MeshRenderer>().material.color = color;
         }
-        Debug.Log(trap);
 
     }
 
@@ -306,9 +306,12 @@ public class PlaceTrap : MonoBehaviour {
         previouslySelected = trapNum;
         eventSystem.SetSelectedGameObject(null);
 
-        Debug.Log("Pressed");
-
         SetGhost();
+    }
+
+    private void GetIndex(GameObject trap)
+    {
+        queueIndex = trap.GetComponent<ButtonIndex>().GetIndex();
     }
 
     private void SetSelectedButton(int trapNum)
@@ -323,10 +326,13 @@ public class PlaceTrap : MonoBehaviour {
             int random = Random.Range(0, trapButtons.Length - 1);
             GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (10f + 50f*i, -25f, 0), Quaternion.identity) as GameObject;
             newTrap.transform.SetParent(trapQueue.transform, false);
-            queue.Add(newTrap);
 
             //Add click listeners for all trap buttons
             newTrap.GetComponent<Button>().onClick.AddListener(() => OnClickTrap(random));
+            newTrap.GetComponent<ButtonIndex>().ButtonIndexing(i);
+            newTrap.GetComponent<Button>().onClick.AddListener(() => GetIndex(newTrap));
+
+            queue.Add(newTrap);
         }
 
     }
@@ -338,5 +344,10 @@ public class PlaceTrap : MonoBehaviour {
             Destroy(queue[i]);
         }
         queue.Clear();
+    }
+
+    private void ClearButton()
+    { 
+        queue[queueIndex].SetActive(false);
     }
 }

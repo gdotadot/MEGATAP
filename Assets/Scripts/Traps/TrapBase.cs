@@ -125,6 +125,4 @@ public class TrapBase : MonoBehaviour {
     {
         Debug.Log("RestartFace");
     }
-
-
 }

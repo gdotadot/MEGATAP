@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 222147479883885768}
   - component: {fileID: 114166959459078336}
   - component: {fileID: 114080980023477622}
+  - component: {fileID: 114078194783958400}
   - component: {fileID: 114177458779090350}
   m_Layer: 5
   m_Name: SapButton
@@ -64,6 +65,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &114078194783958400
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1110785462397992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e9bc3ff25b7e25479601dad7097e850, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonIndex: 0
 --- !u!114 &114080980023477622
 MonoBehaviour:
   m_ObjectHideFlags: 1
