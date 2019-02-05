@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class PlaceTrap : MonoBehaviour {
-    [SerializeField] private Button[] trapButtons;
+    [SerializeField] private GameObject[] trapButtons;
     [SerializeField] private TrapBase[] trapPrefabs;
     [SerializeField] private Image controllerCursor;
     [SerializeField] private EventSystem eventSystem;
@@ -16,6 +16,11 @@ public class PlaceTrap : MonoBehaviour {
     [SerializeField] private int cursorSpeed;
     [SerializeField] private int gridSize;
 
+    [SerializeField] private int queueSize = 7;
+    private List<GameObject> queue = new List<GameObject>();
+    [SerializeField] private GameObject trapQueue;
+    private int queueIndex;
+
     private TrapBase trap;
     private GameObject ghostTrap;
     private int previouslySelected;
@@ -24,13 +29,6 @@ public class PlaceTrap : MonoBehaviour {
     //private bool placeEnabled;
 
 	void Start () {
-        //Add click listeners for all trap buttons
-		for(int trapNum = 0; trapNum < trapButtons.Length; trapNum++)
-        {
-            int closureCopy = trapNum;
-            trapButtons[trapNum].onClick.AddListener(() => OnClickTrap(closureCopy));
-        }
-
         //Handle cursor or set buttons if controller connected
         p2Controller = gm.GetControllerTwoState();
         if(p2Controller)
@@ -43,6 +41,8 @@ public class PlaceTrap : MonoBehaviour {
         {
             controllerCursor.enabled = false;
         }
+
+        CreateTrapQueue();
 
         //placeEnabled = false;
     }
@@ -66,6 +66,13 @@ public class PlaceTrap : MonoBehaviour {
 
         MoveGhost();
         if (trap != null && ghostTrap != null) CheckValidLocation();
+
+        if (Input.GetButton("Submit_Joy_2"))
+        {
+            DestroyGhost();
+            ClearTrapQueue();
+            CreateTrapQueue();
+        }
     }
 
     private Vector3? GetGridPosition()
@@ -140,6 +147,7 @@ public class PlaceTrap : MonoBehaviour {
             if (ghostTrap != null && CheckFloor(position.y))
             {
                 trap.InstantiateTrap(position, ghostTrap.transform.rotation);
+                ClearButton();
                 trap = null;
                 DestroyGhost();
 
@@ -301,8 +309,45 @@ public class PlaceTrap : MonoBehaviour {
         SetGhost();
     }
 
+    private void GetIndex(GameObject trap)
+    {
+        queueIndex = trap.GetComponent<ButtonIndex>().GetIndex();
+    }
+
     private void SetSelectedButton(int trapNum)
     {
         eventSystem.SetSelectedGameObject(trapButtons[trapNum].gameObject);
+    }
+
+    private void CreateTrapQueue()
+    {
+        for(int i = 0; i < queueSize; i++)
+        {
+            int random = Random.Range(0, trapButtons.Length - 1);
+            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (10f + 50f*i, -25f, 0), Quaternion.identity) as GameObject;
+            newTrap.transform.SetParent(trapQueue.transform, false);
+
+            //Add click listeners for all trap buttons
+            newTrap.GetComponent<Button>().onClick.AddListener(() => OnClickTrap(random));
+            newTrap.GetComponent<ButtonIndex>().ButtonIndexing(i);
+            newTrap.GetComponent<Button>().onClick.AddListener(() => GetIndex(newTrap));
+
+            queue.Add(newTrap);
+        }
+
+    }
+
+    private void ClearTrapQueue()
+    {
+        for(int i = 0; i < queue.Count; i++)
+        {
+            Destroy(queue[i]);
+        }
+        queue.Clear();
+    }
+
+    private void ClearButton()
+    { 
+        queue[queueIndex].SetActive(false);
     }
 }
