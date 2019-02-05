@@ -80,6 +80,7 @@ public class CameraTwoRotator : MonoBehaviour {
         }
         camTween = TweenToPosition(goalPos, goalRot, moveSpeed);
         StartCoroutine(camTween);
+
     }
 
     //Camera movement coroutine
