@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class SpellBase : MonoBehaviour {
 
-	public void slow(GameObject obj, float slowPercent, float jumpReductionPercent)
+	public void Slow(GameObject obj, float slowPercent, float jumpReductionPercent)
     {
         //
     }
 
-    public void stun(GameObject obj, int stunDuration, GameObject trap)
+    public void Stun(GameObject obj, int stunDuration, GameObject trap)
     {
         //
     }
