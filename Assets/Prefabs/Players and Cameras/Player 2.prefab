@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23349369097790388}
   - component: {fileID: 136189357046121884}
   - component: {fileID: 114220156261559540}
+  - component: {fileID: 114766552131196816}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -187,6 +188,19 @@ MonoBehaviour:
   gridSize: 2
   queueSize: 7
   trapQueue: {fileID: 0}
+--- !u!114 &114766552131196816
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1134238031081466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d032921ba3418214a94eaa4e868fe41a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gm: {fileID: 0}
+  controllerCursor: {fileID: 0}
 --- !u!136 &136189357046121884
 CapsuleCollider:
   m_ObjectHideFlags: 1
