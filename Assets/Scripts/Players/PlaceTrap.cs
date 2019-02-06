@@ -23,18 +23,16 @@ public class PlaceTrap : MonoBehaviour {
 
     private TrapBase trap;
     private GameObject ghostTrap;
-    private int previouslySelected;
+    private GameObject previouslySelected;
 
     private bool p2Controller;
-    //private bool placeEnabled;
+    private bool placeEnabled;
 
 	void Start () {
         //Handle cursor or set buttons if controller connected
         p2Controller = gm.GetControllerTwoState();
         if(p2Controller)
         {
-            eventSystem.firstSelectedGameObject = trapButtons[0].gameObject;
-            SetSelectedButton(0);
             controllerCursor.enabled = true;
         }
         else
@@ -44,7 +42,7 @@ public class PlaceTrap : MonoBehaviour {
 
         CreateTrapQueue();
 
-        //placeEnabled = false;
+        placeEnabled = false;
     }
 	
 
@@ -58,9 +56,9 @@ public class PlaceTrap : MonoBehaviour {
                 controllerCursor.transform.Translate(Input.GetAxisRaw("Horizontal_Joy_2") * cursorSpeed, Input.GetAxisRaw("Vertical_Joy_2") * cursorSpeed, 0);
             }
             
-            if (Input.GetButton("Place_Joy_2") /*&& placeEnabled*/)
+            if (Input.GetButton("Place_Joy_2") && placeEnabled)
             {
-                //RaycastFromCam(true);
+                SetTrap();
             }
         }
 
@@ -73,6 +71,8 @@ public class PlaceTrap : MonoBehaviour {
             ClearTrapQueue();
             CreateTrapQueue();
         }
+
+        Debug.Log(Input.GetAxis("Horizontal_Menu"));
     }
 
     private Vector3? GetGridPosition()
@@ -153,8 +153,15 @@ public class PlaceTrap : MonoBehaviour {
 
                 if (p2Controller)
                 {
-                    SetSelectedButton(previouslySelected);
-                    //placeEnabled = false;
+                    //eventSystem.SetSelectedGameObject(previouslySelected);
+                    for(int i = queue.Count - 1; i >= 0; i--)
+                    {
+                        if(queue[i].activeInHierarchy)
+                        {
+                            eventSystem.SetSelectedGameObject(queue[i]);
+                        }
+                    }
+                    placeEnabled = false;
                 }
             }
         }
@@ -231,8 +238,8 @@ public class PlaceTrap : MonoBehaviour {
 
                     if (p2Controller)
                     {
-                        SetSelectedButton(previouslySelected);
-                        //placeEnabled = false;
+                        //eventSystem.SetSelectedGameObject(previouslySelected);
+                        placeEnabled = false;
                     }
                 }
             }
@@ -303,9 +310,9 @@ public class PlaceTrap : MonoBehaviour {
     {
         trap = trapPrefabs[trapNum];
         
-        previouslySelected = trapNum;
+        //previouslySelected = trapNum;
         eventSystem.SetSelectedGameObject(null);
-
+        StartCoroutine(EnableInput());
         SetGhost();
     }
 
@@ -326,6 +333,12 @@ public class PlaceTrap : MonoBehaviour {
             int random = Random.Range(0, trapButtons.Length);
             GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-150 + 50f*i, 0f, 0), Quaternion.identity) as GameObject;
             newTrap.transform.SetParent(trapQueue.transform, false);
+
+            if(i == 0)
+            {
+                eventSystem.firstSelectedGameObject = trapButtons[0].gameObject;
+                eventSystem.SetSelectedGameObject(newTrap.gameObject);
+            }
 
             //Add click listeners for all trap buttons
             newTrap.GetComponent<Button>().onClick.AddListener(() => OnClickTrap(random));
@@ -349,5 +362,13 @@ public class PlaceTrap : MonoBehaviour {
     private void ClearButton()
     { 
         queue[queueIndex].SetActive(false);
+    }
+
+    //Make player wait .5 seconds after pressing button to be able to place trap.
+    //Gets rid of controller bug where pressing A to select a trap also immediately places it
+    IEnumerator EnableInput()
+    {
+        yield return new WaitForSeconds(0.5f);
+        placeEnabled = true;
     }
 }
