@@ -217,6 +217,9 @@ public class PlaceTrap : MonoBehaviour {
             color.a = 0.5f;
             ghostTrap.GetComponentInChildren<MeshRenderer>().material.color = color;
         }
+        
+       	
+       	ghostTrap.GetComponent<TrapBase>().enabled = false;
 
     }
 
