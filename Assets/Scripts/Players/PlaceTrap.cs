@@ -323,7 +323,7 @@ public class PlaceTrap : MonoBehaviour {
     {
         for(int i = 0; i < queueSize; i++)
         {
-            int random = Random.Range(0, trapButtons.Length - 1);
+            int random = Random.Range(0, trapButtons.Length);
             GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (10f + 50f*i, -25f, 0), Quaternion.identity) as GameObject;
             newTrap.transform.SetParent(trapQueue.transform, false);
 
