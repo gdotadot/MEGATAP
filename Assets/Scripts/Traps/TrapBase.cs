@@ -74,7 +74,7 @@ public class TrapBase : MonoBehaviour {
     // apply knockback to inputted
     // must be used in a FixedUpdate method, will apply velocity per frame. Use a timing
     // method to decide how many frames force is applied.
-    public void KnockBack(GameObject obj, int knockBackDistance, int knockUpDistance) 
+    public void KnockBack(GameObject obj, int knockBackDistance, int knockUpDistance)
     {
         // find out which way the player is facing (on faces of the tower) so the knock can do accordingly
         int playerDirection = obj.gameObject.GetComponent<PlayerOneMovement>().GetState();
@@ -110,6 +110,21 @@ public class TrapBase : MonoBehaviour {
             time = 0;
             Destroy(trap);
         }
+    }
+
+    public void Stun2(GameObject obj, int stunTime, GameObject trap)
+    {
+        obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
+        obj.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, obj.gameObject.GetComponent<Rigidbody>().velocity.y, 0);
+        time += Time.deltaTime;
+        trap.GetComponent<Renderer>().enabled = false;
+        if(time >= stunTime)
+        {
+            obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
+            time = 0;
+            Destroy(trap);
+        }
+
     }
 
     // apply knockback to inputted
