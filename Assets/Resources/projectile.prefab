@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 33468517007846552}
   - component: {fileID: 23262491819376812}
   - component: {fileID: 135035695274582534}
+  - component: {fileID: 114209150249379914}
+  - component: {fileID: 114183101960201952}
   - component: {fileID: 54422676141630506}
   m_Layer: 0
   m_Name: projectile
@@ -100,6 +102,29 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114183101960201952
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1095368574633302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47c919212d88d784b9324f9aadcbf615, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ValidLocations: 0
+--- !u!114 &114209150249379914
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1095368574633302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e621b41b6859451ea5930cf7d542917, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135035695274582534
 SphereCollider:
   m_ObjectHideFlags: 1
