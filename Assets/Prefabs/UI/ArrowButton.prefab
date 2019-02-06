@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 114141432409571628}
   - component: {fileID: 114118963812608380}
   m_Layer: 5
-  m_Name: Button (3)
+  m_Name: ArrowButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1061845492245096}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -207,7 +207,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Purple
+  m_Text: ArrowTrap
 --- !u!222 &222437985959648224
 CanvasRenderer:
   m_ObjectHideFlags: 1

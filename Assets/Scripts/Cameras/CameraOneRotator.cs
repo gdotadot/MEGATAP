@@ -50,16 +50,16 @@ public class CameraOneRotator : MonoBehaviour
         switch (cameraState)
         {
             case 1:
-                playerOneCam.transform.position = new Vector3(playerModel.transform.position.x, playerOneCam.transform.position.y, playerModel.transform.position.z - camPosHorizontal);
+                playerOneCam.transform.position = new Vector3(Mathf.Clamp(playerModel.transform.position.x, -10, 10), playerOneCam.transform.position.y, playerModel.transform.position.z - camPosHorizontal);
                 break;
             case 2:
-                playerOneCam.transform.position = new Vector3(playerModel.transform.position.x + camPosHorizontal, playerOneCam.transform.position.y, playerModel.transform.position.z);
+                playerOneCam.transform.position = new Vector3(playerModel.transform.position.x + camPosHorizontal, playerOneCam.transform.position.y, Mathf.Clamp(playerModel.transform.position.z, -10, 10));
                 break;
             case 3:
-                playerOneCam.transform.position = new Vector3(playerModel.transform.position.x, playerOneCam.transform.position.y, playerModel.transform.position.z + camPosHorizontal);
+                playerOneCam.transform.position = new Vector3(Mathf.Clamp(playerModel.transform.position.x, -10, 10), playerOneCam.transform.position.y, playerModel.transform.position.z + camPosHorizontal);
                 break;
             case 4:
-                playerOneCam.transform.position = new Vector3(playerModel.transform.position.x - camPosHorizontal, playerOneCam.transform.position.y, playerModel.transform.position.z);
+                playerOneCam.transform.position = new Vector3(playerModel.transform.position.x - camPosHorizontal, playerOneCam.transform.position.y, Mathf.Clamp(playerModel.transform.position.z, -10, 10));
                 break;
 
         }
