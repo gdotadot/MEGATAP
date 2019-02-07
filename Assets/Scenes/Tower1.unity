@@ -689,6 +689,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1252450871 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114919750931675496, guid: 4d7db2f69eaabf34fbea4235913d474a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1601420783}
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &1376962753 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1674693470272370, guid: ff9fcda491d07404283d525387473970,
@@ -922,11 +928,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4d7db2f69eaabf34fbea4235913d474a, type: 2}
   m_IsPrefabAsset: 0
---- !u!212 &1601420784 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 212362016486268124, guid: 4d7db2f69eaabf34fbea4235913d474a,
-    type: 2}
-  m_PrefabInternal: {fileID: 1601420783}
 --- !u!1 &1629728421 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1917442397181180, guid: ff9fcda491d07404283d525387473970,
@@ -1101,7 +1102,7 @@ Prefab:
         type: 2}
       propertyPath: gridUI
       value: 
-      objectReference: {fileID: 1601420784}
+      objectReference: {fileID: 1252450871}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 295df6c694235764eac79c393ed826dc, type: 2}
   m_IsPrefabAsset: 0

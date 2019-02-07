@@ -7,7 +7,7 @@ public class CameraTwoRotator : MonoBehaviour {
 
     [SerializeField] private Camera playerTwoCam;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private SpriteRenderer gridUI;
+    [SerializeField] private Image gridUI;
 
     //Change these static variables iff tower is scaled
     private static int camPosHorizontal = 150;
