@@ -43,52 +43,47 @@ public class PlayerOneMovement : MonoBehaviour {
     {
         state = cam.GetState();
 
+        
+        inputAxis = gameManager.GetInputAxis();
+
         if (move == true)
         {
-            inputAxis = gameManager.GetInputAxis();
-            speed = moveSpeed;
-        }
-
-        if(move == false)
-        {
-            speed = 0;
-        }
-
-        switch (state)
-        {
-            case 1:
-                movementVector = new Vector3(inputAxis * speed, rb.velocity.y, 0);
-                rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
-                break;
-            case 2:
-                movementVector = new Vector3(0, rb.velocity.y, inputAxis * speed);
-                rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
-                break;
-            case 3:
-                movementVector = new Vector3(-inputAxis * speed, rb.velocity.y, 0);
-                rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
-                break;
-            case 4:
-                movementVector = new Vector3(0, rb.velocity.y, -inputAxis * speed);
-                rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
-                break;
-        }
+            switch (state)
+            {
+                case 1:
+                    movementVector = new Vector3(inputAxis * speed, rb.velocity.y, 0);
+                    rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+                    break;
+                case 2:
+                    movementVector = new Vector3(0, rb.velocity.y, inputAxis * speed);
+                    rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
+                    break;
+                case 3:
+                    movementVector = new Vector3(-inputAxis * speed, rb.velocity.y, 0);
+                    rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+                    break;
+                case 4:
+                    movementVector = new Vector3(0, rb.velocity.y, -inputAxis * speed);
+                    rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
+                    break;
+            }
 
 
-        //jumping
-        if (Input.GetButtonDown("Jump_Joy_1") && grounded)
-        {
-            jumping = true;
-        }
+            //jumping
+            if (Input.GetButtonDown("Jump_Joy_1") && grounded)
+            {
+                jumping = true;
+            }
 
-        //crouch
-        if (Input.GetButton("Crouch_Joy_1") && grounded)
-        {
-            crouching = true;
-        }
-        if (Input.GetButtonUp("Crouch_Joy_1") && grounded)
-        {
-            crouching = false;
+            //crouch
+            if (Input.GetButton("Crouch_Joy_1") && grounded)
+            {
+                crouching = true;
+            }
+            if (Input.GetButtonUp("Crouch_Joy_1") && grounded)
+            {
+                crouching = false;
+            }
         }
     }
 
