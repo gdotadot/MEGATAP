@@ -288,15 +288,13 @@ public class PlaceTrap : MonoBehaviour {
 
             //Add Offsets so they still stick to grid
             if(trapRot % 4 == 0)
-            {
-                Debug.Log("Facing Up");
+            {//Facing Up
                 gridYOffset = 0.35f;
                 gridXOffset = 0;
                 gridZOffset = 0;
             }
             else if((trapRot - 1) % 4 == 0)
-            {
-                Debug.Log("Facing Left");
+            {//Facing Left
                 gridYOffset = 1;
                 switch(cam.GetComponent<CameraTwoRotator>().GetState())
                 {
@@ -313,15 +311,13 @@ public class PlaceTrap : MonoBehaviour {
                 }
             }
             else if((trapRot - 2) % 4 == 0)
-            {
-                Debug.Log("Facing Down");
+            {//Facing Down
                 gridYOffset = 1.7f;
                 gridXOffset = 0;
                 gridZOffset = 0;
             }
             else if((trapRot - 3) % 4 == 0)
-            {
-                Debug.Log("Facing Right");
+            {//Facing Right
                 gridYOffset = 1;
                 switch (cam.GetComponent<CameraTwoRotator>().GetState())
                 {
