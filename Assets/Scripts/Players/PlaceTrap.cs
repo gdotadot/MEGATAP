@@ -99,7 +99,7 @@ public class PlaceTrap : MonoBehaviour {
                     hitZ = Mathf.RoundToInt((hit.point.z - 1) / gridSize) * gridSize + 1;
                     break;
             }
-            int hitY = Mathf.RoundToInt((hit.point.y - 1)/ gridSize) * gridSize + 1;
+            float hitY = Mathf.RoundToInt((hit.point.y - 1)/ gridSize) * gridSize + 0.45f;
             return new Vector3(hitX, hitY, hitZ);
         }
         else return null;
@@ -109,7 +109,7 @@ public class PlaceTrap : MonoBehaviour {
     {
         RaycastHit hit;
         Ray ray;
-        if (p2Controller && controllerCursor.transform.position.y > 50)
+        if (p2Controller && controllerCursor.transform.position.y > Screen.height / 2)
         {
             ray = cam.ScreenPointToRay(controllerCursor.transform.position);
             if (Physics.Raycast(ray, out hit, float.MaxValue, LayerMask.GetMask("Tower")))
@@ -120,7 +120,6 @@ public class PlaceTrap : MonoBehaviour {
         }
         else if(Input.mousePosition.y > Screen.height / 2)
         {
-            Debug.Log(Input.mousePosition.y);
             ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, float.MaxValue, LayerMask.GetMask("Tower")))
             {
