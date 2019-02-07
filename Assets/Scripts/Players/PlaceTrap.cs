@@ -71,8 +71,6 @@ public class PlaceTrap : MonoBehaviour {
             ClearTrapQueue();
             CreateTrapQueue();
         }
-
-        Debug.Log(Input.GetAxis("Horizontal_Menu"));
     }
 
     private Vector3? GetGridPosition()
@@ -111,17 +109,24 @@ public class PlaceTrap : MonoBehaviour {
     {
         RaycastHit hit;
         Ray ray;
-        if (p2Controller)
+        if (p2Controller && controllerCursor.transform.position.y > 50)
         {
             ray = cam.ScreenPointToRay(controllerCursor.transform.position);
+            if (Physics.Raycast(ray, out hit, float.MaxValue, LayerMask.GetMask("Tower")))
+            {
+                return hit;
+            }
+            else return null;
         }
-        else
+        else if(Input.mousePosition.y > Screen.height / 2)
         {
+            Debug.Log(Input.mousePosition.y);
             ray = cam.ScreenPointToRay(Input.mousePosition);
-        }
-        if (Physics.Raycast(ray, out hit, float.MaxValue, LayerMask.GetMask("Tower")))
-        {
-            return hit;
+            if (Physics.Raycast(ray, out hit, float.MaxValue, LayerMask.GetMask("Tower")))
+            {
+                return hit;
+            }
+            else return null;
         }
         else
         {
