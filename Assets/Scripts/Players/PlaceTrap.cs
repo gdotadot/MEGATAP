@@ -396,7 +396,7 @@ public class PlaceTrap : MonoBehaviour {
             GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-150 + 50f*i, 0f, 0), Quaternion.identity) as GameObject;
             newTrap.transform.SetParent(trapQueue.transform, false);
 
-            if(i == 0)
+            if(i == 0 && p2Controller)
             {
                 eventSystem.firstSelectedGameObject = trapButtons[0].gameObject;
                 eventSystem.SetSelectedGameObject(newTrap.gameObject);
