@@ -309,10 +309,10 @@ public class PlaceTrap : MonoBehaviour {
     private void OnClickTrap(int trapNum)
     {
         trap = trapPrefabs[trapNum];
-        
-        //previouslySelected = trapNum;
+
         eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
+        DestroyGhost();
         SetGhost();
     }
 

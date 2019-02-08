@@ -103,6 +103,20 @@ public class TrapBase : MonoBehaviour {
         }
     }
 
+    // apply stun to inputted
+    // goes to enumerator for its waitforseconds
+    // pass in the trap GameObject itself if you want it to be destroyed after stun runs
+    // do not pass in the trap GameObject if you want the stun to not destroy your trap.
+    // once boolean is so couroutine only runs once, otherwise player might get stuck in trap and it loops infinitely
+    public void Stun(GameObject obj, float stunDuration, GameObject trap = null)
+    {
+        if (once == false)
+        {
+            once = true;
+            StartCoroutine(Wait(obj, stunDuration, trap));
+        }
+    }
+
     private IEnumerator Wait(GameObject obj, float stunDuration, GameObject trap = null)
     {
         waitActive = true;
@@ -115,24 +129,10 @@ public class TrapBase : MonoBehaviour {
             obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
             once = false;
             waitActive = true;
-            if(trap != null)
+            if (trap != null)
             {
                 Destroy(trap);
             }
-        }
-    }
-
-    // apply stun to inputted
-    // goes to enumerator for its waitforseconds
-    // pass in the trap GameObject itself if you want it to be destroyed after stun runs
-    // do not pass in the trap GameObject if you want the stun to not destroy your trap.
-    // once boolean is so couroutine only runs once, otherwise player might get stuck in trap and it loops infinitely
-    public void Stun(GameObject obj, float stunDuration, GameObject trap = null)
-    {
-        if (once == false)
-        {
-            once = true;
-            StartCoroutine(Wait(obj, stunDuration, trap));
         }
     }
 
