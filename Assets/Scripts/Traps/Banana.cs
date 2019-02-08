@@ -25,13 +25,7 @@ public class Banana : MonoBehaviour {
             {
                 trapBase.Stun(player, 2, this.gameObject);
             }
-            else
-            {
-                hit = false;
-                Destroy(this.gameObject);
-            }
         }
-        Debug.Log(hit);
     }
 
     void OnTriggerEnter(Collider other)

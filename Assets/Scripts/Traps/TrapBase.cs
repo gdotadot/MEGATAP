@@ -102,29 +102,33 @@ public class TrapBase : MonoBehaviour {
         }
     }
 
-    private IEnumerator Wait(GameObject obj, float time)
+    private IEnumerator Wait(GameObject obj, float stunDuration, GameObject trap = null)
     {
         waitActive = true;
         obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
-        yield return new WaitForSeconds(time);
+        obj.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, obj.gameObject.GetComponent<Rigidbody>().velocity.y, 0);
+        yield return new WaitForSeconds(stunDuration);
         waitActive = false;
         if (waitActive == false)
         {
             obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
             once = false;
             waitActive = true;
+            if(trap != null)
+            {
+                Destroy(trap);
+            }
         }
     }
 
     // apply stun to inputted
-    public void Stun(GameObject obj, float stunDuration, GameObject trap)
+    public void Stun(GameObject obj, float stunDuration, GameObject trap = null)
     {
         if (once == false)
         {
             once = true;
-            StartCoroutine(Wait(obj, stunDuration));
+            StartCoroutine(Wait(obj, stunDuration, trap));
         }
-        
     }
 
     public void Stun2(GameObject obj, int stunTime, GameObject trap)
