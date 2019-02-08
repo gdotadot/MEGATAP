@@ -109,7 +109,6 @@ public class CameraTwoRotator : MonoBehaviour {
     //Rotate and move worldspace grid UI with camera
     private void MoveGrid()
     {
-        Debug.Log(currentPos);
         gridUI.transform.Rotate(0, 90, 0);
         switch (currentPos)
         {
