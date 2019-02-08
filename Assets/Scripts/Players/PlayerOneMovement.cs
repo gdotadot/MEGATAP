@@ -20,6 +20,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool grounded;
     private bool jumping;
 
+    //Control if player can have input
     public bool move;
 
     private float speed; //Change this when crouching, etc.; set it back to moveSpeed when done

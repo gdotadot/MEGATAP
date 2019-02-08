@@ -71,8 +71,9 @@ public class TrapBase : MonoBehaviour {
 
     private float time;
 
-    private bool waitActive = true;
 
+    //for stun function and its enum
+    private bool waitActive = true;
     private bool once = false;
 
     // apply knockback to inputted
@@ -122,6 +123,10 @@ public class TrapBase : MonoBehaviour {
     }
 
     // apply stun to inputted
+    // goes to enumerator for its waitforseconds
+    // pass in the trap GameObject itself if you want it to be destroyed after stun runs
+    // do not pass in the trap GameObject if you want the stun to not destroy your trap.
+    // once boolean is so couroutine only runs once, otherwise player might get stuck in trap and it loops infinitely
     public void Stun(GameObject obj, float stunDuration, GameObject trap = null)
     {
         if (once == false)
