@@ -61,15 +61,19 @@ public class PlaceTrap : MonoBehaviour {
                 SetTrap();
             }
         }
-
         MoveGhost();
         if (trap != null && ghostTrap != null) CheckValidLocation();
 
-        if (Input.GetButton("Submit_Joy_2"))
+        if (Input.GetButtonDown("Submit_Joy_2"))
         {
             DestroyGhost();
             ClearTrapQueue();
             CreateTrapQueue();
+        }
+
+        if (Input.GetButtonDown("Swap_Queue"))
+        {
+            trapQueue.SetActive(!trapQueue.activeSelf);
         }
 
         Debug.Log(Input.GetAxis("Horizontal_Menu"));
@@ -297,7 +301,7 @@ public class PlaceTrap : MonoBehaviour {
         }
     }
 
-    private void DestroyGhost()
+    public void DestroyGhost()
     {
         if(ghostTrap != null)
         {
@@ -313,6 +317,7 @@ public class PlaceTrap : MonoBehaviour {
         eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         DestroyGhost();
+        GetComponent<CastSpell>().DestroyTarget();
         SetGhost();
     }
 

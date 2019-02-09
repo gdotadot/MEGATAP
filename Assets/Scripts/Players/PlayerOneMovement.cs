@@ -29,11 +29,10 @@ public class PlayerOneMovement : MonoBehaviour {
 	private Rigidbody rb;
     
 
-
-
     private Vector3 movementVector;
+
 	void Start() {
-		rb = GetComponent<Rigidbody> ();
+		rb = GetComponent<Rigidbody>();
         speed = moveSpeed;
         jumpH = jumpHeight;
 
@@ -47,7 +46,6 @@ public class PlayerOneMovement : MonoBehaviour {
         if (move == true)
         {
             inputAxis = gameManager.GetInputAxis();
-            speed = moveSpeed;
 
             //jumping
             if (Input.GetButtonDown("Jump_Joy_1") && grounded)
@@ -65,10 +63,7 @@ public class PlayerOneMovement : MonoBehaviour {
                 crouching = false;
             }
         }
-        else
-        {
-            speed = 0;
-        }
+
         switch (state)
         {
             case 1:
