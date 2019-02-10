@@ -30,6 +30,7 @@ public class Spikes : MonoBehaviour {
             if (hit && knockTimer < 7 && knockTimer >= 5)
             {
                 trapBase.KnockBack(player, knockBackValue, 0);
+                trapBase.Stun(player.gameObject, 1);
                 knockTimer++;
             }
             else if (hit && knockTimer < 7)
