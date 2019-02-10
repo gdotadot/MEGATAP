@@ -76,6 +76,7 @@ public class PlaceTrap : MonoBehaviour {
 
         if (Input.GetButtonDown("Swap_Queue"))
         {
+            DestroyGhost();
             SwitchQueue();
         }
 
@@ -304,7 +305,7 @@ public class PlaceTrap : MonoBehaviour {
         }
     }
 
-    public void DestroyGhost()
+    private void DestroyGhost()
     {
         if(ghostTrap != null)
         {
@@ -320,7 +321,6 @@ public class PlaceTrap : MonoBehaviour {
         eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         DestroyGhost();
-        GetComponent<CastSpell>().DestroyTarget();
         SetGhost();
     }
 
