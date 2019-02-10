@@ -264,7 +264,6 @@ public class CastSpell : MonoBehaviour {
         float upperLimit = floor * 20;
         float lowerLimit = upperLimit - 20;
 
-        Debug.Log(lowerLimit);
         return (hitY >= lowerLimit && hitY <= upperLimit);
     }
 
