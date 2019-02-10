@@ -41,6 +41,7 @@ public class CastSpell : MonoBehaviour {
     private Rigidbody rb;
 
     private List<Camera> allCameras = new List<Camera>();
+    private bool active = true;
 
     void Start()
     {
@@ -63,7 +64,8 @@ public class CastSpell : MonoBehaviour {
         allCameras.Add(cam);
         allCameras.Add(cam2);
 
-        //spellQueue.SetActive(!spellQueue.activeSelf);
+        spellQueue.transform.SetAsFirstSibling();
+        SwitchQueue();
     }
 
 
@@ -100,7 +102,7 @@ public class CastSpell : MonoBehaviour {
 
         if (Input.GetButtonDown("Swap_Queue"))
         {
-            spellQueue.SetActive(!spellQueue.activeSelf);
+            SwitchQueue();
         }
     }
 
@@ -348,7 +350,7 @@ public class CastSpell : MonoBehaviour {
         for (int i = 0; i < queueSize; i++)
         {
             int random = 0; //Random.Range(0, spellButtons.Length);
-            GameObject newSpell = Instantiate(spellButtons[random], new Vector3(-100 + 50f * i, 25f, 0), Quaternion.identity) as GameObject;
+            GameObject newSpell = Instantiate(spellButtons[random], new Vector3(-125f + 50f * i, 25f, 0), Quaternion.identity) as GameObject;
             newSpell.transform.SetParent(spellQueue.transform, false);
 
             if (i == 0)
@@ -410,5 +412,29 @@ public class CastSpell : MonoBehaviour {
             }
         }
         return null;
+    }
+
+    private void SwitchQueue()
+    {
+        if (active == true)
+        {
+            spellQueue.transform.SetAsFirstSibling();
+            spellQueue.transform.position += new Vector3(15f, 15f, 0);
+            for (int i = 0; i < queue.Count; i++)
+            {
+                queue[i].GetComponent<Button>().interactable = false;
+            }
+        }
+
+        if (active == false)
+        {
+            spellQueue.transform.SetAsLastSibling();
+            spellQueue.transform.position -= new Vector3(15f, 15f, 0);
+            for (int i = 0; i < queue.Count; i++)
+            {
+                queue[i].GetComponent<Button>().interactable = true;
+            }
+        }
+        active = !active;
     }
 }

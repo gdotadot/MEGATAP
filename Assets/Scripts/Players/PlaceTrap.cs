@@ -28,6 +28,8 @@ public class PlaceTrap : MonoBehaviour {
     private bool p2Controller;
     private bool placeEnabled;
 
+    private bool active = true;
+
 	void Start () {
         //Handle cursor or set buttons if controller connected
         p2Controller = gm.GetControllerTwoState();
@@ -43,6 +45,7 @@ public class PlaceTrap : MonoBehaviour {
         CreateTrapQueue();
 
         placeEnabled = false;
+        trapQueue.transform.SetAsLastSibling();
     }
 	
 
@@ -73,10 +76,10 @@ public class PlaceTrap : MonoBehaviour {
 
         if (Input.GetButtonDown("Swap_Queue"))
         {
-            trapQueue.SetActive(!trapQueue.activeSelf);
+            SwitchQueue();
         }
 
-        Debug.Log(Input.GetAxis("Horizontal_Menu"));
+       // Debug.Log(Input.GetAxis("Horizontal_Menu"));
     }
 
     private Vector3? GetGridPosition()
@@ -336,7 +339,7 @@ public class PlaceTrap : MonoBehaviour {
         for(int i = 0; i < queueSize; i++)
         {
             int random = Random.Range(0, trapButtons.Length);
-            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-150 + 50f*i, 0f, 0), Quaternion.identity) as GameObject;
+            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-150f + 50f*i, 0f, 0), Quaternion.identity) as GameObject;
             newTrap.transform.SetParent(trapQueue.transform, false);
 
             if(i == 0)
@@ -375,5 +378,29 @@ public class PlaceTrap : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.5f);
         placeEnabled = true;
+    }
+
+    private void SwitchQueue()
+    {
+        if (active == true)
+        {
+            trapQueue.transform.SetAsFirstSibling();
+            trapQueue.transform.position += new Vector3(15f, 15f, 0);
+            for (int i = 0; i < queue.Count; i++)
+            {
+                queue[i].GetComponent<Button>().interactable = false;
+            }
+        }
+
+        if (active == false)
+        {
+            trapQueue.transform.SetAsLastSibling();
+            trapQueue.transform.position -= new Vector3(15f, 15f, 0);
+            for (int i = 0; i < queue.Count; i++)
+            {
+                queue[i].GetComponent<Button>().interactable = true;
+            }
+        }
+        active = !active;
     }
 }
