@@ -25,16 +25,12 @@ public class Banana : MonoBehaviour {
             {
                 trapBase.Stun(player, 2, this.gameObject);
             }
-            else
-            {
-                hit = false;
-            }
         }
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if(other.gameObject.CompareTag("Player"))
         {
             hit = true;
             player = other.gameObject;

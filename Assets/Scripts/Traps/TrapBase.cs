@@ -71,6 +71,11 @@ public class TrapBase : MonoBehaviour {
 
     private float time;
 
+
+    //for stun function and its enum
+    private bool waitActive = true;
+    private bool once = false;
+
     // apply knockback to inputted
     // must be used in a FixedUpdate method, will apply velocity per frame. Use a timing
     // method to decide how many frames force is applied.
@@ -99,16 +104,37 @@ public class TrapBase : MonoBehaviour {
     }
 
     // apply stun to inputted
-    public void Stun(GameObject obj, int stunTime, GameObject trap)
+    // goes to enumerator for its waitforseconds
+    // pass in the trap GameObject itself if you want it to be destroyed after stun runs
+    // do not pass in the trap GameObject if you want the stun to not destroy your trap.
+    // once boolean is so couroutine only runs once, otherwise player might get stuck in trap and it loops infinitely
+    public void Stun(GameObject obj, float stunDuration, GameObject trap = null)
     {
+        if (once == false)
+        {
+            once = true;
+            StartCoroutine(Wait(obj, stunDuration, trap));
+        }
+    }
+
+    private IEnumerator Wait(GameObject obj, float stunDuration, GameObject trap = null)
+    {
+        waitActive = true;
+        obj.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(0);
         obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
         obj.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, obj.gameObject.GetComponent<Rigidbody>().velocity.y, 0);
-        time += Time.deltaTime;
-        if(time >= stunTime)
+        yield return new WaitForSeconds(stunDuration);
+        waitActive = false;
+        if (waitActive == false)
         {
             obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
-            time = 0;
-            Destroy(trap);
+            obj.GetComponent<PlayerOneMovement>().SetSpeed(obj.GetComponent<PlayerOneMovement>().GetConstantSpeed());
+            once = false;
+            waitActive = true;
+            if (trap != null)
+            {
+                Destroy(trap);
+            }
         }
     }
 
