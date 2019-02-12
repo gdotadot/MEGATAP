@@ -120,29 +120,7 @@ public class CastSpell : MonoBehaviour {
         if (RaycastFromCam() != null)
         {
             RaycastHit hit = RaycastFromCam().Value;
-            int hitX = -1;
-            int hitZ = -1;
-            switch (playerOne.GetComponent<CameraOneRotator>().GetState())
-            {
-                case 1:
-                    hitX = Mathf.RoundToInt(hit.point.x);
-                    hitZ = Mathf.RoundToInt(hit.point.z);
-                    break;
-                case 2:
-                    hitX = Mathf.RoundToInt(hit.point.x);
-                    hitZ = Mathf.RoundToInt(hit.point.z);
-                    break;
-                case 3:
-                    hitX = Mathf.RoundToInt(hit.point.x);
-                    hitZ = Mathf.RoundToInt(hit.point.z);
-                    break;
-                case 4:
-                    hitX = Mathf.RoundToInt(hit.point.x);
-                    hitZ = Mathf.RoundToInt(hit.point.z);
-                    break;
-            }
-            int hitY = Mathf.RoundToInt(hit.point.y - 1);
-            return new Vector3(hitX, hitY, hitZ);
+            return new Vector3(hit.point.x, hit.point.y, hit.point.z);
         }
         else return null;
     }
