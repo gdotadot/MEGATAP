@@ -1,0 +1,50 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CheckValidLocations : MonoBehaviour {
+    private TrapBase tb;
+    private Location toCheck;
+    public bool Valid { get; private set; }
+
+    private void Start()
+    {
+        tb = GetComponentInParent<TrapBase>();
+        toCheck = tb.ValidLocations;
+
+        Valid = false;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        SetValidBool(true, other.tag);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        SetValidBool(false, other.tag);
+    }
+
+    //Set whether the trap is in a valid location based on whether it's colliding with a platform
+    //and what direction it is facing.
+    private void SetValidBool(bool valid, string tag)
+    {
+        if (tag == "Platform")
+        {
+            Direction dir = GameObject.Find("Player 2").GetComponent<PlaceTrap>().CurrentDirection;
+            switch (toCheck)
+            {
+                case Location.AnySurface:
+                    Valid = valid;
+                    break;
+                case Location.Floor:
+                    if(dir == Direction.Up)
+                    {
+                        Valid = valid;
+                    }
+                    break;
+                //<ac> TODO: All other directions; need traps to test with first.
+            }
+        }
+    }
+}
