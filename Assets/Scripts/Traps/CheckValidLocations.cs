@@ -44,6 +44,15 @@ public class CheckValidLocations : MonoBehaviour {
                     }
                     break;
                 //<ac> TODO: All other directions; need traps to test with first.
+                case Location.AnyWall:
+                case Location.Ceiling:
+                case Location.FloorAndCeiling:
+                case Location.FreeFloat:
+                case Location.LeftWall:
+                case Location.RightWall:
+                    Debug.Log("Snapping not implemented for this trap");
+                    Valid = true;
+                    break;
             }
         }
     }
