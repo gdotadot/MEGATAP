@@ -21,7 +21,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool jumping;
 
     //Control if player can have input
-    public bool move;
+    private bool move;
 
     private float speed; //Change this when crouching, etc.; set it back to moveSpeed when done
     private float jumpH; // change this when in sap etc.; set it back to jumpHeight when done
@@ -31,17 +31,22 @@ public class PlayerOneMovement : MonoBehaviour {
 
     private Vector3 movementVector;
 
-	void Start() {
+    [SerializeField] private Animator animator;
+
+   // private bool right = true;
+    //private float negVelocity;
+
+    void Start() {
 		rb = GetComponent<Rigidbody>();
         speed = moveSpeed;
         jumpH = jumpHeight;
 
         move = true;
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        state = cam.GetState();
 
         if (move == true)
         {
@@ -62,24 +67,57 @@ public class PlayerOneMovement : MonoBehaviour {
             {
                 crouching = false;
             }
+            // Animation parameters update
+            animator.SetBool("Jumping", jumping);
+            animator.SetBool("Running", move);
         }
 
         switch (state)
         {
             case 1:
                 movementVector = new Vector3(inputAxis * speed, rb.velocity.y, 0);
+                //Face left or right depending on input
+                /*if (rb.velocity.x > 0)
+                {
+                    right = true;
+                    transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0, 0));
+                    animator.SetFloat("Velocity", rb.velocity.x);
+                    negVelocity = rb.velocity.x;
+                }
+                else if (rb.velocity.x < 0)
+                {
+                    right = false;
+                    transform.rotation = Quaternion.LookRotation(new Vector3(-rb.velocity.x, 0, 0));
+                    animator.SetFloat("Velocity", -rb.velocity.x);
+                    negVelocity = -rb.velocity.x;
+                }
+                else if (rb.velocity.x == 0)
+                {
+                    if (right == true)
+                    {
+                        transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0, 0));
+                    }
+                    else
+                    {
+                        transform.rotation = Quaternion.LookRotation(new Vector3(-rb.velocity.x, 0, 0));
+                    }     
+                }*/
+                animator.SetFloat("Velocity", rb.velocity.x);
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
                 break;
             case 2:
                 movementVector = new Vector3(0, rb.velocity.y, inputAxis * speed);
+                animator.SetFloat("Velocity", rb.velocity.z);
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
                 break;
             case 3:
                 movementVector = new Vector3(-inputAxis * speed, rb.velocity.y, 0);
+                animator.SetFloat("Velocity", -rb.velocity.x);
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
                 break;
             case 4:
                 movementVector = new Vector3(0, rb.velocity.y, -inputAxis * speed);
+                animator.SetFloat("Velocity", -rb.velocity.z);
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
                 break;
         }
@@ -160,10 +198,5 @@ public class PlayerOneMovement : MonoBehaviour {
     public void SetMove(bool m)
     {
         move = m;
-    }
-
-    public Vector3 GetMomentum()
-    {
-        return movementVector;
     }
 }
