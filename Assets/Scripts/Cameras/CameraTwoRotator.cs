@@ -13,7 +13,7 @@ public class CameraTwoRotator : MonoBehaviour {
     private static int camPosHorizontal = 150;
     private static int camPosVertical = 20;
     private static int camRotationX = 5;
-    private static int numFloors = 10;
+    private static int numFloors = 7;
     
 
     private Vector3[] basePositions = new [] { new Vector3(0,                   camPosVertical, -camPosHorizontal),
