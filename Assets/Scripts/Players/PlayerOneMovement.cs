@@ -47,6 +47,7 @@ public class PlayerOneMovement : MonoBehaviour {
 
     private void Update()
     {
+        state = cam.GetState();
 
         if (move == true)
         {
@@ -76,32 +77,6 @@ public class PlayerOneMovement : MonoBehaviour {
         {
             case 1:
                 movementVector = new Vector3(inputAxis * speed, rb.velocity.y, 0);
-                //Face left or right depending on input
-                /*if (rb.velocity.x > 0)
-                {
-                    right = true;
-                    transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0, 0));
-                    animator.SetFloat("Velocity", rb.velocity.x);
-                    negVelocity = rb.velocity.x;
-                }
-                else if (rb.velocity.x < 0)
-                {
-                    right = false;
-                    transform.rotation = Quaternion.LookRotation(new Vector3(-rb.velocity.x, 0, 0));
-                    animator.SetFloat("Velocity", -rb.velocity.x);
-                    negVelocity = -rb.velocity.x;
-                }
-                else if (rb.velocity.x == 0)
-                {
-                    if (right == true)
-                    {
-                        transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0, 0));
-                    }
-                    else
-                    {
-                        transform.rotation = Quaternion.LookRotation(new Vector3(-rb.velocity.x, 0, 0));
-                    }     
-                }*/
                 animator.SetFloat("Velocity", rb.velocity.x);
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
                 break;
