@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+public enum Direction
+{
+    Left,
+    Right,
+    Up,
+    Down
+}
+
 
 public class PlaceTrap : MonoBehaviour {
     [SerializeField] private GameObject[] trapButtons;
@@ -22,6 +30,7 @@ public class PlaceTrap : MonoBehaviour {
     private int queueIndex;
 
     private TrapBase trap;
+    public Direction CurrentDirection { get; private set; }
     private GameObject ghostTrap;
     private GameObject previouslySelected;
     private float gridXOffset, gridZOffset, gridYOffset = 0.35f; //changed when trap is rotated so that it still properly aligns with grid.
@@ -67,7 +76,6 @@ public class PlaceTrap : MonoBehaviour {
             }
         }
         MoveGhost();
-        if (trap != null && ghostTrap != null) CheckValidLocation();
 
         if (Input.GetButtonDown("Submit_Joy_2"))
         {
@@ -81,8 +89,6 @@ public class PlaceTrap : MonoBehaviour {
             DestroyGhost();
             SwitchQueue();
         }
-
-       // Debug.Log(Input.GetAxis("Horizontal_Menu"));
     }
 
     private Vector3? GetGridPosition()
@@ -156,30 +162,47 @@ public class PlaceTrap : MonoBehaviour {
 
     private void SetTrap()
     {
-        if (GetGridPosition() != null && CheckNearby())
+        if(ghostTrap != null)
         {
-
-            Vector3 position = GetGridPosition().Value;
-            if (ghostTrap != null && CheckFloor(position.y))
+            //Check if trap is on correct surface
+            bool validLocation;
+            CheckValidLocations check = ghostTrap.GetComponentInChildren<CheckValidLocations>();
+            if(check != null)
             {
-                trap.InstantiateTrap(position, ghostTrap.transform.rotation);
-                ClearButton();
-                trap = null;
-                DestroyGhost();
+                validLocation = check.Valid;
+            }
+            else
+            {
+                validLocation = true;
+                Debug.Log("Warning: Trap not set up correctly; valid location is always true.");
+            }
 
-                if (p2Controller)
+            //CheckNearby() also checks the collider provided for the "safe zone" around the trap
+            if (GetGridPosition() != null && CheckNearby() && validLocation)
+            {
+                Vector3 position = GetGridPosition().Value;
+                if (ghostTrap != null && CheckFloor(position.y))
                 {
-                    //eventSystem.SetSelectedGameObject(previouslySelected);
-                    for(int i = queue.Count - 1; i >= 0; i--)
+                    trap.InstantiateTrap(position, ghostTrap.transform.rotation);
+                    ClearButton();
+                    trap = null;
+                    DestroyGhost();
+
+                    if (p2Controller)
                     {
-                        if(queue[i].activeInHierarchy)
+                        //eventSystem.SetSelectedGameObject(previouslySelected);
+                        for (int i = queue.Count - 1; i >= 0; i--)
                         {
-                            eventSystem.SetSelectedGameObject(queue[i]);
+                            if (queue[i].activeInHierarchy)
+                            {
+                                eventSystem.SetSelectedGameObject(queue[i]);
+                            }
                         }
+                        placeEnabled = false;
                     }
-                    placeEnabled = false;
                 }
             }
+
         }
     }
 
@@ -193,13 +216,6 @@ public class PlaceTrap : MonoBehaviour {
         return (hitY >= lowerLimit && hitY <= upperLimit);
     }
 
-    //Check  if it's being placed on correct object
-    private bool CheckValidLocation()
-    {
-        //Debug.Log(trap.ValidLocations);
-        return true;
-
-    }
 
     private bool CheckNearby()
     {
@@ -265,6 +281,7 @@ public class PlaceTrap : MonoBehaviour {
         }
     }
 
+
     //Change x/z rotation based on player input
     private int trapRot = 0;
     private void UpdateRotationInput()
@@ -299,12 +316,14 @@ public class PlaceTrap : MonoBehaviour {
             //Add Offsets so they still stick to grid
             if(trapRot % 4 == 0)
             {//Facing Up
+                CurrentDirection = Direction.Up;
                 gridYOffset = 0.35f;
                 gridXOffset = 0;
                 gridZOffset = 0;
             }
             else if((trapRot - 1) % 4 == 0)
             {//Facing Left
+                CurrentDirection = Direction.Left;
                 gridYOffset = 1;
                 switch(cam.GetComponent<CameraTwoRotator>().GetState())
                 {
@@ -322,12 +341,14 @@ public class PlaceTrap : MonoBehaviour {
             }
             else if((trapRot - 2) % 4 == 0)
             {//Facing Down
+                CurrentDirection = Direction.Down;
                 gridYOffset = 1.7f;
                 gridXOffset = 0;
                 gridZOffset = 0;
             }
             else if((trapRot - 3) % 4 == 0)
             {//Facing Right
+                CurrentDirection = Direction.Right;
                 gridYOffset = 1;
                 switch (cam.GetComponent<CameraTwoRotator>().GetState())
                 {
