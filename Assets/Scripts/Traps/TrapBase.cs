@@ -112,8 +112,8 @@ public class TrapBase : MonoBehaviour {
     {
         if (once == false)
         {
-            StartCoroutine(Wait(obj, stunDuration, trap));
             once = true;
+            StartCoroutine(Wait(obj, stunDuration, trap));
         }
     }
 
@@ -121,35 +121,21 @@ public class TrapBase : MonoBehaviour {
     {
         waitActive = true;
         obj.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(0);
-        obj.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, obj.gameObject.GetComponent<Rigidbody>().velocity.y, 0);
         obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
+        obj.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, obj.gameObject.GetComponent<Rigidbody>().velocity.y, 0);
         yield return new WaitForSeconds(stunDuration);
         waitActive = false;
         if (waitActive == false)
         {
-            obj.GetComponent<PlayerOneMovement>().SetSpeed(obj.GetComponent<PlayerOneMovement>().GetConstantSpeed());
             obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
+            obj.GetComponent<PlayerOneMovement>().SetSpeed(obj.GetComponent<PlayerOneMovement>().GetConstantSpeed());
             once = false;
+            waitActive = true;
             if (trap != null)
             {
                 Destroy(trap);
             }
         }
-    }
-
-    public void Stun2(GameObject obj, int stunTime, GameObject trap)
-    {
-        obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
-        obj.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, obj.gameObject.GetComponent<Rigidbody>().velocity.y, 0);
-        time += Time.deltaTime;
-        trap.GetComponent<Renderer>().enabled = false;
-        if(time >= stunTime)
-        {
-            obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
-            time = 0;
-            Destroy(trap);
-        }
-
     }
 
     // apply knockback to inputted
