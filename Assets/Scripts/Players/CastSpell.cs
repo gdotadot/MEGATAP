@@ -98,6 +98,10 @@ public class CastSpell : MonoBehaviour {
             //For testing purposes currently
             ClearSpellQueue();
             CreateSpellQueue();
+            if(active)
+            {
+                eventSystem.SetSelectedGameObject(queue[0]);
+            }
         }
 
         if (Input.GetButtonDown("Swap_Queue"))
@@ -317,10 +321,6 @@ public class CastSpell : MonoBehaviour {
         queueIndex = spell.GetComponent<ButtonIndex>().GetIndex();
     }
 
-    private void SetSelectedButton(int spellNum)
-    {
-        eventSystem.SetSelectedGameObject(spellButtons[spellNum].gameObject);
-    }
 
     private void CreateSpellQueue()
     {
@@ -330,11 +330,6 @@ public class CastSpell : MonoBehaviour {
             GameObject newSpell = Instantiate(spellButtons[random], new Vector3(-125f + 50f * i, 25f, 0), Quaternion.identity) as GameObject;
             newSpell.transform.SetParent(spellQueue.transform, false);
 
-            if (i == 0)
-            {
-                eventSystem.firstSelectedGameObject = spellButtons[i].gameObject;
-                eventSystem.SetSelectedGameObject(newSpell.gameObject);
-            }
 
             //Add click listeners for all trap buttons
             newSpell.GetComponent<Button>().onClick.AddListener(() => OnClickSpell(random));
@@ -410,11 +405,18 @@ public class CastSpell : MonoBehaviour {
 
         if (active == false)
         {
+            bool buttonSet = false;
             spellQueue.transform.SetAsLastSibling();
             spellQueue.transform.position -= new Vector3(15f, 15f, 0);
             for (int i = 0; i < queue.Count; i++)
             {
                 queue[i].GetComponent<Button>().interactable = true;
+
+                if (queue[i].activeInHierarchy && !buttonSet)
+                {
+                    eventSystem.SetSelectedGameObject(queue[i]);
+                    buttonSet = true;
+                }
             }
         }
         active = !active;
