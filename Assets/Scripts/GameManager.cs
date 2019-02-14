@@ -29,19 +29,6 @@ public class GameManager : MonoBehaviour {
 
     private void Update ()
     {
-
-		if(Input.GetButton("Cancel"))
-        {
-            PauseMenu pause = gameObject.GetComponent(typeof(PauseMenu)) as PauseMenu;
-            if(GameIsPaused){
-				pause.Resume();
-			}
-			else{
-				pause.Pause();
-			}
-            
-        }
-
         //Game Over from timer
         lose = lost.GameOver();
         if(lose == true)

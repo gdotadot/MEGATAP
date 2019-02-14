@@ -44,19 +44,22 @@ public class PlaceTrap : MonoBehaviour {
 	void Start () {
         //Handle cursor or set buttons if controller connected
         p2Controller = gm.GetControllerTwoState();
-        if(p2Controller)
-        {
-            controllerCursor.enabled = true;
-        }
-        else
-        {
-            controllerCursor.enabled = false;
-        }
 
         CreateTrapQueue();
 
         placeEnabled = false;
         trapQueue.transform.SetAsLastSibling();
+
+
+        if (p2Controller)
+        {
+            controllerCursor.enabled = true;
+            eventSystem.SetSelectedGameObject(queue[0].gameObject);
+        }
+        else
+        {
+            controllerCursor.enabled = false;
+        }
     }
 	
 
@@ -82,6 +85,10 @@ public class PlaceTrap : MonoBehaviour {
             DestroyGhost();
             ClearTrapQueue();
             CreateTrapQueue();
+            if (active)
+            {
+                eventSystem.SetSelectedGameObject(queue[0]);
+            }
         }
 
         if (Input.GetButtonDown("Swap_Queue"))
@@ -409,11 +416,6 @@ public class PlaceTrap : MonoBehaviour {
         queueIndex = trap.GetComponent<ButtonIndex>().GetIndex();
     }
 
-    private void SetSelectedButton(int trapNum)
-    {
-        eventSystem.SetSelectedGameObject(trapButtons[trapNum].gameObject);
-    }
-
     private void CreateTrapQueue()
     {
         trapRot = 0;
@@ -423,12 +425,6 @@ public class PlaceTrap : MonoBehaviour {
             GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-150f + 50f*i, 0f, 0), Quaternion.identity) as GameObject;
             newTrap.transform.SetParent(trapQueue.transform, false);
 
-            if(i == 0 && p2Controller)
-            {
-                eventSystem.firstSelectedGameObject = trapButtons[0].gameObject;
-                eventSystem.SetSelectedGameObject(newTrap.gameObject);
-            }
-
             //Add click listeners for all trap buttons
             newTrap.GetComponent<Button>().onClick.AddListener(() => OnClickTrap(random));
             newTrap.GetComponent<ButtonIndex>().ButtonIndexing(i);
@@ -436,7 +432,7 @@ public class PlaceTrap : MonoBehaviour {
 
             queue.Add(newTrap);
 
-            if(active == false)
+            if (active == false)
             {
                 queue[i].GetComponent<Button>().interactable = false;
             }
@@ -480,11 +476,17 @@ public class PlaceTrap : MonoBehaviour {
 
         if (active == false)
         {
+            bool buttonSet = false;
             trapQueue.transform.SetAsLastSibling();
             trapQueue.transform.position -= new Vector3(15f, 15f, 0);
             for (int i = 0; i < queue.Count; i++)
             {
                 queue[i].GetComponent<Button>().interactable = true;
+                if (queue[i].activeInHierarchy && !buttonSet)
+                {
+                    eventSystem.SetSelectedGameObject(queue[i]);
+                    buttonSet = true;
+                }
             }
         }
         active = !active;
