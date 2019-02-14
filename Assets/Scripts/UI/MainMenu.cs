@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour {
 	[SerializeField] private GameObject popup;
@@ -36,7 +37,7 @@ public class MainMenu : MonoBehaviour {
             es.SetSelectedGameObject(yesNoButtons[0]);
             for(int i = 0; i < menuButtons.Length; i++)
             {
-                menuButtons[i].SetActive(false);
+                menuButtons[i].GetComponent<Button>().interactable = false;
             }
         }
     }
@@ -52,7 +53,7 @@ public class MainMenu : MonoBehaviour {
     	popup.gameObject.SetActive(false);
         for (int i = 0; i < menuButtons.Length; i++)
         {
-            menuButtons[i].SetActive(true);
+            menuButtons[i].GetComponent<Button>().interactable = true;
         }
         es.SetSelectedGameObject(menuButtons[0]);
     }	
