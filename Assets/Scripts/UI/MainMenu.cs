@@ -36,7 +36,7 @@ public class MainMenu : MonoBehaviour {
             es.SetSelectedGameObject(yesNoButtons[0]);
             for(int i = 0; i < menuButtons.Length; i++)
             {
-                menuButtons[0].SetActive(false);
+                menuButtons[i].SetActive(false);
             }
         }
     }
@@ -52,7 +52,7 @@ public class MainMenu : MonoBehaviour {
     	popup.gameObject.SetActive(false);
         for (int i = 0; i < menuButtons.Length; i++)
         {
-            menuButtons[0].SetActive(true);
+            menuButtons[i].SetActive(true);
         }
         es.SetSelectedGameObject(menuButtons[0]);
     }	
