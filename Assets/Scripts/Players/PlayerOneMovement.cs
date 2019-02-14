@@ -109,6 +109,10 @@ public class PlayerOneMovement : MonoBehaviour {
         {
             //TODO
         }
+        if (move == false)
+        {
+            movementVector = new Vector3(0, movementVector.y, 0);
+        }
         rb.velocity = movementVector;
     }
     

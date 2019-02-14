@@ -112,8 +112,8 @@ public class TrapBase : MonoBehaviour {
     {
         if (once == false)
         {
-            once = true;
             StartCoroutine(Wait(obj, stunDuration, trap));
+            once = true;
         }
     }
 
@@ -121,16 +121,15 @@ public class TrapBase : MonoBehaviour {
     {
         waitActive = true;
         obj.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(0);
-        obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
         obj.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, obj.gameObject.GetComponent<Rigidbody>().velocity.y, 0);
+        obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
         yield return new WaitForSeconds(stunDuration);
         waitActive = false;
         if (waitActive == false)
         {
-            obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
             obj.GetComponent<PlayerOneMovement>().SetSpeed(obj.GetComponent<PlayerOneMovement>().GetConstantSpeed());
+            obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
             once = false;
-            waitActive = true;
             if (trap != null)
             {
                 Destroy(trap);
