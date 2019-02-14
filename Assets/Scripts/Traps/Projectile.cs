@@ -20,7 +20,7 @@ public class Projectile : MonoBehaviour {
 		{
 				if (hit)
 				{
-					trapBase.Stun2(player, 3, this.gameObject);
+					trapBase.Stun(player, 3, this.gameObject);
 				}
 				else
 				{
@@ -31,13 +31,14 @@ public class Projectile : MonoBehaviour {
 	}
 
 	// Update is called once per frame
-	void OnCollisionEnter(Collision col)
+	void OnTriggerEnter(Collider col)
 	{
 		if(col.gameObject.tag == "Player"){
 			player = col.gameObject;
 			hit = true;
+            GetComponent<MeshRenderer>().enabled = false;
 		}
-		else if(col.gameObject.name != "ArrowTrap(Clone)"){
+		else if(col.gameObject.name == "Boundary" || col.gameObject.name == "Platform"){
 			Destroy(gameObject);
 		}
 	}
