@@ -37,7 +37,7 @@ public class Sap : MonoBehaviour {
                 trapBase.Slow(player, 0.1f, 0.5f);
                 slowTriggered = true;
             }
-            else
+            else if(slowTriggered)
             {
                 player.GetComponent<PlayerOneMovement>().SetJumpHeight(player.GetComponent<PlayerOneMovement>().GetConstantJumpHeight());
                 player.GetComponent<PlayerOneMovement>().SetSpeed(player.GetComponent<PlayerOneMovement>().GetConstantSpeed());
