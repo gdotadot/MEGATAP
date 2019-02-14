@@ -15,12 +15,10 @@ public class PauseMenu : MonoBehaviour {
         {
             if (GameIsPaused)
             {
-                Debug.Log("Resume");
                 Resume();
             }
             else
             {
-                Debug.Log("Pause");
                 Pause();
             }
         }
@@ -33,7 +31,6 @@ public class PauseMenu : MonoBehaviour {
 	}
 	
 	public void Pause(){
-        Debug.Log("Pausing???");
 		pauseMenuUI.SetActive(true);
 		Time.timeScale = 0f;
 		GameIsPaused = true;
