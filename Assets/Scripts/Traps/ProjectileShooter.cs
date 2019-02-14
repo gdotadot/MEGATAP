@@ -42,7 +42,7 @@ public class ProjectileShooter : MonoBehaviour {
 		if(trapBase.enabled == true){
 			if(timer > waitTime){
 				projectile = Instantiate(prefab);
-				projectile.transform.position = transform.position;
+				projectile.transform.position = transform.position + new Vector3(0,0.5f,0);
                 rb = projectile.GetComponent<Rigidbody>();
                 rb.velocity = velocity;
 				timer = timer - waitTime;

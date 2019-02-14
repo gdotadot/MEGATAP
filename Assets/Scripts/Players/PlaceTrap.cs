@@ -191,6 +191,7 @@ public class PlaceTrap : MonoBehaviour {
                 if (ghostTrap != null && CheckFloor(position.y))
                 {
                     trap.InstantiateTrap(position, ghostTrap.transform.rotation);
+                    check.Placed = true;
                     ClearButton();
                     trap = null;
                     DestroyGhost();
