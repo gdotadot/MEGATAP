@@ -3,7 +3,7 @@
 using System;
 using UnityEditor;
 using UnityEngine;
-
+#if UNITY_EDITOR
 [CustomPropertyDrawer(typeof(EnumFlagAttribute))]
 public class EnumFlagDrawer : PropertyDrawer
 {
@@ -22,3 +22,5 @@ public class EnumFlagDrawer : PropertyDrawer
         EditorGUI.EndProperty();
     }
 }
+
+#endif
