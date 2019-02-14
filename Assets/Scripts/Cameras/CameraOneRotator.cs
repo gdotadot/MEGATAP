@@ -16,7 +16,7 @@ public class CameraOneRotator : MonoBehaviour
     [SerializeField] private Transform floorSpawn;
 
     //Change these if the tower is scaled
-    private static int camPosHorizontal = 25;
+    private static int camPosHorizontal = 20;
     private static int camPosVertical = 13;
     private static int camRotationX = 5;
     private static int camRotationY = 0;

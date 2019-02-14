@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4743651345122740}
   - component: {fileID: 20012750588843172}
   - component: {fileID: 81550902831561966}
+  - component: {fileID: 114962071263789826}
   m_Layer: 0
   m_Name: Player 1 Camera
   m_TagString: Untagged
@@ -49,7 +50,7 @@ Camera:
   m_GameObject: {fileID: 1964429399854856}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.3820755, g: 0.6223794, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
@@ -88,3 +89,18 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1964429399854856}
   m_Enabled: 1
+--- !u!114 &114962071263789826
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1964429399854856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -768656878, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 1024
+  m_MaxRayIntersections: 0
