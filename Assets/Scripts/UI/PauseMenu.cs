@@ -108,8 +108,6 @@ public class PauseMenu : MonoBehaviour {
         {
             pauseButtons[i].interactable = false;
         }
-
-		Time.timeScale = 1f;
 		Debug.Log("Control Scene");
 	}
     public void QuitGame()
