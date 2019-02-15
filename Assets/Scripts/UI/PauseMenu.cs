@@ -52,24 +52,26 @@ public class PauseMenu : MonoBehaviour {
 	
 	public void Resume(){
 		pauseMenuUI.SetActive(false);
-
+        bool buttonSet = false;
         for (int i = 0; i < cs.queue.Count; i++)
         {
-            cs.queue[i].GetComponent<Button>().interactable = true;
-            if(cs.active && cs.queue[i].activeInHierarchy)
+            if(cs.active) cs.queue[i].GetComponent<Button>().interactable = true;
+            if(cs.active && cs.queue[i].activeInHierarchy && !buttonSet)
             {
                 es.SetSelectedGameObject(cs.queue[i]);
+                buttonSet = true;
             }
         }
         for (int i = 0; i < pt.queue.Count; i++)
         {
-            pt.queue[i].GetComponent<Button>().interactable = true;
-            if (pt.active && pt.queue[i].activeInHierarchy)
+            if(pt.active) pt.queue[i].GetComponent<Button>().interactable = true;
+            if (pt.active && pt.queue[i].activeInHierarchy && !buttonSet)
             {
                 es.SetSelectedGameObject(pt.queue[i]);
+                buttonSet = true;
             }
         }
-
+        es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu";
         Time.timeScale = 1f;
 		GameIsPaused = false;
 	}
@@ -86,6 +88,8 @@ public class PauseMenu : MonoBehaviour {
         {
             pt.queue[i].GetComponent<Button>().interactable = false;
         }
+
+        es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Main_Menu";
         es.SetSelectedGameObject(resumeButton.gameObject);
         Time.timeScale = 0f;
 		GameIsPaused = true;
