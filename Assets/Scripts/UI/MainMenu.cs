@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,9 +12,23 @@ public class MainMenu : MonoBehaviour {
     [SerializeField] private GameObject[] yesNoButtons;
 
     private CheckControllers checkControllers;
-	
-    void Start () {
+
+    private void Awake()
+    {
+        //int musicPlayerCount = 0;
+        //while(GameObject.Find("MusicPlayer") != null)
+        //{
+        //    musicPlayerCount++;
+        //}
+        //Debug.Log(musicPlayerCount);
+    }
+
+    void Start ()
+    {
+        //Set "Quit" popup inactive
 		popup.gameObject.SetActive(false);
+
+        //Detect controller connection & if connected, set selected button
         checkControllers = GetComponent<CheckControllers>();
         if(checkControllers.GetControllerOneState())
         {
@@ -32,7 +44,9 @@ public class MainMenu : MonoBehaviour {
     public void QuitGame()
     {
 		popup.gameObject.SetActive(true);
-        if(checkControllers.GetControllerOneState())
+
+        //Handle controllers for Quit popup
+        if (checkControllers.GetControllerOneState())
         {
             es.SetSelectedGameObject(yesNoButtons[0]);
             for(int i = 0; i < menuButtons.Length; i++)
@@ -51,6 +65,8 @@ public class MainMenu : MonoBehaviour {
     public void NoButton()
     {
     	popup.gameObject.SetActive(false);
+
+        //Handle controllers again for regular menu
         for (int i = 0; i < menuButtons.Length; i++)
         {
             menuButtons[i].GetComponent<Button>().interactable = true;
