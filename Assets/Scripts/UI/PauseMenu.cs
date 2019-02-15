@@ -2,15 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour {
 	[HideInInspector] public bool GameIsPaused = false;
 	
 	[SerializeField] GameObject pauseMenuUI;
+    [SerializeField] Button resumeButton;
+    [SerializeField] GameObject playerTwo;
+    [SerializeField] EventSystem es;
 
+    private PlaceTrap pt;
+    private CastSpell cs;
 
-	// Update is called once per frame
-	void Update () {
+    private void Start()
+    {
+        pt = playerTwo.GetComponent<PlaceTrap>();
+        cs = playerTwo.GetComponent<CastSpell>();
+    }
+
+    // Update is called once per frame
+    void Update () {
         if (Input.GetButtonDown("Cancel"))
         {
             if (GameIsPaused)
@@ -26,14 +39,42 @@ public class PauseMenu : MonoBehaviour {
 	
 	public void Resume(){
 		pauseMenuUI.SetActive(false);
-		Time.timeScale = 1f;
+
+        for (int i = 0; i < cs.queue.Count; i++)
+        {
+            cs.queue[i].GetComponent<Button>().interactable = true;
+            if(cs.active && cs.queue[i].activeInHierarchy)
+            {
+                es.SetSelectedGameObject(cs.queue[i]);
+            }
+        }
+        for (int i = 0; i < pt.queue.Count; i++)
+        {
+            pt.queue[i].GetComponent<Button>().interactable = true;
+            if (pt.active && pt.queue[i].activeInHierarchy)
+            {
+                es.SetSelectedGameObject(pt.queue[i]);
+            }
+        }
+
+        Time.timeScale = 1f;
 		GameIsPaused = false;
 	}
 	
 	public void Pause(){
 		pauseMenuUI.SetActive(true);
         pauseMenuUI.transform.SetAsLastSibling();
-		Time.timeScale = 0f;
+
+        for(int i = 0; i < cs.queue.Count; i++)
+        {
+            cs.queue[i].GetComponent<Button>().interactable = false;
+        }
+        for (int i = 0; i < pt.queue.Count; i++)
+        {
+            pt.queue[i].GetComponent<Button>().interactable = false;
+        }
+        es.SetSelectedGameObject(resumeButton.gameObject);
+        Time.timeScale = 0f;
 		GameIsPaused = true;
 	}
 	public void LoadMenu(){

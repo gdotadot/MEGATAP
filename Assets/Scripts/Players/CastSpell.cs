@@ -21,7 +21,7 @@ public class CastSpell : MonoBehaviour {
     [SerializeField] private float spellSpeed;
 
     [SerializeField] private int queueSize = 7;
-    private List<GameObject> queue = new List<GameObject>();
+    public List<GameObject> queue { get; private set; }
     [SerializeField] private GameObject spellQueue;
     private int queueIndex;
 
@@ -41,12 +41,14 @@ public class CastSpell : MonoBehaviour {
     private Rigidbody rb;
 
     private List<Camera> allCameras = new List<Camera>();
-    private bool active = true;
+    public bool active { get; private set; }
 
     private PauseMenu pause;
 
     void Start()
     {
+        active = true;
+        queue = new List<GameObject>();
         pause = gm.GetComponent<PauseMenu>();
         //Handle cursor or set buttons if controller connected
         p2Controller = gm.GetControllerTwoState();

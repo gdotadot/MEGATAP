@@ -25,7 +25,7 @@ public class PlaceTrap : MonoBehaviour {
     [SerializeField] private int gridSize;
 
     [SerializeField] private int queueSize = 7;
-    private List<GameObject> queue = new List<GameObject>();
+    public List<GameObject> queue { get; private set; }
     [SerializeField] private GameObject trapQueue;
     private int queueIndex;
 
@@ -39,11 +39,13 @@ public class PlaceTrap : MonoBehaviour {
     private bool p2Controller;
     private bool placeEnabled;
 
-    private bool active = true;
+    public bool active { get; private set; }
 
     private PauseMenu pause;
 
 	void Start () {
+        queue = new List<GameObject>();
+        active = true;
         //Handle cursor or set buttons if controller connected
         p2Controller = gm.GetControllerTwoState();
         pause = gm.GetComponent<PauseMenu>();
