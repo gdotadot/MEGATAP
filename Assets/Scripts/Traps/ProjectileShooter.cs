@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileShooter : MonoBehaviour {
-	private TrapBase trapBase;
+    [SerializeField] private float timeToShoot;
+
+    private TrapBase trapBase;
     private CameraTwoRotator cam;
 	GameObject prefab;
-	private float waitTime = 2.0f;
 	private float timer = 0.0f;
   	GameObject projectile;
     private Rigidbody rb;
@@ -40,12 +41,12 @@ public class ProjectileShooter : MonoBehaviour {
 	void Update () {
 		timer += Time.deltaTime;
 		if(trapBase.enabled == true){
-			if(timer > waitTime){
+			if(timer > timeToShoot){
 				projectile = Instantiate(prefab);
 				projectile.transform.position = transform.position + new Vector3(0,0.5f,0);
                 rb = projectile.GetComponent<Rigidbody>();
                 rb.velocity = velocity;
-				timer = timer - waitTime;
+				timer = timer - timeToShoot;
 			}
 		}
 	}
