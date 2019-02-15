@@ -41,10 +41,12 @@ public class PlaceTrap : MonoBehaviour {
 
     private bool active = true;
 
+    private PauseMenu pause;
+
 	void Start () {
         //Handle cursor or set buttons if controller connected
         p2Controller = gm.GetControllerTwoState();
-
+        pause = gm.GetComponent<PauseMenu>();
         CreateTrapQueue();
 
         placeEnabled = false;
@@ -66,7 +68,8 @@ public class PlaceTrap : MonoBehaviour {
 	void Update () {
         //Move controller cursor & get input
         p2Controller = gm.GetControllerTwoState();
-        if (p2Controller)
+
+        if (p2Controller && !pause.GameIsPaused)
         {
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal_Joy_2")) > 0.6f || Mathf.Abs(Input.GetAxisRaw("Vertical_Joy_2")) > 0.6f)
             {
@@ -80,7 +83,7 @@ public class PlaceTrap : MonoBehaviour {
         }
         MoveGhost();
 
-        if (Input.GetButtonDown("Submit_Joy_2"))
+        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused)
         {
             DestroyGhost();
             ClearTrapQueue();
@@ -91,7 +94,7 @@ public class PlaceTrap : MonoBehaviour {
             }
         }
 
-        if (Input.GetButtonDown("Swap_Queue"))
+        if (Input.GetButtonDown("Swap_Queue") && !pause.GameIsPaused)
         {
             DestroyGhost();
             SwitchQueue();
@@ -161,7 +164,7 @@ public class PlaceTrap : MonoBehaviour {
     //Called from event trigger on center column of tower when player clicks on it
     public void OnClickTower()
     {
-        if(!Input.GetMouseButtonUp(1))
+        if(!Input.GetMouseButtonUp(1) && !pause.GameIsPaused)
         {
             SetTrap();
         }
@@ -275,7 +278,7 @@ public class PlaceTrap : MonoBehaviour {
                 Vector3 position = GetGridPosition().Value;
                 ghostTrap.transform.position = position;
 
-                if (Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2"))
+                if ((Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2")) && !pause.GameIsPaused)
                 {
                     DestroyGhost();
 
@@ -298,7 +301,7 @@ public class PlaceTrap : MonoBehaviour {
         {
             RaycastHit hit = RaycastFromCam().Value;
 
-            if (Input.GetButtonDown("RotateLeft_Joy_2"))
+            if (Input.GetButtonDown("RotateLeft_Joy_2") && !pause.GameIsPaused)
             {
                 if (hit.normal.x == -1 || hit.normal.x == 1)
                 {
@@ -309,7 +312,7 @@ public class PlaceTrap : MonoBehaviour {
                     trapRot++;
                 }
             }
-            else if (Input.GetButtonDown("RotateRight_Joy_2"))
+            else if (Input.GetButtonDown("RotateRight_Joy_2") && !pause.GameIsPaused)
             {
                 if (hit.normal.x == -1 || hit.normal.x == 1)
                 {

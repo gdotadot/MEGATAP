@@ -43,8 +43,11 @@ public class CastSpell : MonoBehaviour {
     private List<Camera> allCameras = new List<Camera>();
     private bool active = true;
 
+    private PauseMenu pause;
+
     void Start()
     {
+        pause = gm.GetComponent<PauseMenu>();
         //Handle cursor or set buttons if controller connected
         p2Controller = gm.GetControllerTwoState();
         if (p2Controller)
@@ -73,7 +76,7 @@ public class CastSpell : MonoBehaviour {
     {
         //Move controller cursor & get input
         p2Controller = gm.GetControllerTwoState();
-        if (p2Controller)
+        if (p2Controller && !pause.GameIsPaused)
         {
             if (Mathf.Abs(Input.GetAxisRaw("Horizontal_Joy_2")) > 0.6f || Mathf.Abs(Input.GetAxisRaw("Vertical_Joy_2")) > 0.6f)
             {
@@ -92,7 +95,7 @@ public class CastSpell : MonoBehaviour {
 
         if (spell != null && spellTarget != null) CheckValidLocation();
 
-        if (Input.GetButtonDown("Submit_Joy_2"))
+        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused)
         {
             DestroyTarget();
             //For testing purposes currently
@@ -104,7 +107,7 @@ public class CastSpell : MonoBehaviour {
             }
         }
 
-        if (Input.GetButtonDown("Swap_Queue"))
+        if (Input.GetButtonDown("Swap_Queue") && !pause.GameIsPaused)
         {
             DestroyTarget();
             SwitchQueue();

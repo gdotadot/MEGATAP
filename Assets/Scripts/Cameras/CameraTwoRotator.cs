@@ -8,7 +8,7 @@ public class CameraTwoRotator : MonoBehaviour {
     [SerializeField] private Camera playerTwoCam;
     [SerializeField] private float moveSpeed;
     [SerializeField] private Image gridUI;
-
+    [SerializeField] private GameManager gm;
     //Change these static variables iff tower is scaled
     private static int camPosHorizontal = 150;
     private static int camPosVertical = 20;
@@ -31,9 +31,10 @@ public class CameraTwoRotator : MonoBehaviour {
     private int currentPos, floor;
 
     private bool moveEnabled = true;
-
+    private PauseMenu pause;
     private void Start()
     {
+        pause = gm.GetComponent<PauseMenu>();
         Vector3 startPos = basePositions[0] + new Vector3(0, 20, 0);
         playerTwoCam.transform.position = startPos;
         playerTwoCam.transform.rotation = baseRotations[0];
@@ -49,7 +50,7 @@ public class CameraTwoRotator : MonoBehaviour {
     { 
         if (moveEnabled)
         {
-            if (Input.GetButton("Submit_Joy_2"))
+            if (Input.GetButton("Submit_Joy_2") && !pause.GameIsPaused)
             {
                 moveEnabled = false;
 
