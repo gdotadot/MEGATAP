@@ -14,11 +14,7 @@ public class CastSpell : MonoBehaviour {
     [SerializeField] private Camera cam2;
     [SerializeField] private GameObject playerOne;
 
-
-    [SerializeField] private int cursorSpeed;
-    [SerializeField] private int gridSize;
-
-    [SerializeField] private float spellSpeed;
+    private float spellSpeed;
 
     [SerializeField] private int queueSize = 7;
     public List<GameObject> queue { get; private set; }
@@ -52,14 +48,6 @@ public class CastSpell : MonoBehaviour {
         pause = gm.GetComponent<PauseMenu>();
         //Handle cursor or set buttons if controller connected
         p2Controller = gm.GetControllerTwoState();
-        if (p2Controller)
-        {
-            controllerCursor.enabled = true;
-        }
-        else
-        {
-            controllerCursor.enabled = false;
-        }
 
         //For testing purposes right now
         CreateSpellQueue();
@@ -76,15 +64,8 @@ public class CastSpell : MonoBehaviour {
 
     void Update()
     {
-        //Move controller cursor & get input
-        p2Controller = gm.GetControllerTwoState();
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Mathf.Abs(Input.GetAxisRaw("Horizontal_Joy_2")) > 0.6f || Mathf.Abs(Input.GetAxisRaw("Vertical_Joy_2")) > 0.6f)
-            {
-                controllerCursor.transform.Translate(Input.GetAxisRaw("Horizontal_Joy_2") * cursorSpeed, Input.GetAxisRaw("Vertical_Joy_2") * cursorSpeed, 0);
-            }
-
             if (Input.GetButton("Place_Joy_2") && placeEnabled)
             {
                 SpellCast();

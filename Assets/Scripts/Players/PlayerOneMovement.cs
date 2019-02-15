@@ -4,18 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerOneMovement : MonoBehaviour {
-    //camera
-    [SerializeField] private CameraOneRotator cam;
-    private int state = 1;
-
-    
-	//movement
+    //movement vars serialized for designers
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpHeight;
-    [SerializeField] private GameManager gameManager;
-    [SerializeField] private TrapBase trapBase;
-    private float inputAxis;
 
+    //other movement vars
+    private Vector3 movementVector;
     private bool crouching;
     private bool grounded;
     private bool jumping;
@@ -26,28 +20,33 @@ public class PlayerOneMovement : MonoBehaviour {
     private float speed; //Change this when crouching, etc.; set it back to moveSpeed when done
     private float jumpH; // change this when in sap etc.; set it back to jumpHeight when done
 
+    //camera
+    [SerializeField] private CameraOneRotator cam;
+    private int camOneState = 1;
+
+    [SerializeField] private GameManager gameManager;
+
+    private float inputAxis; //used to get input axis from controller/keyboard
+
 	private Rigidbody rb;
     
 
-    private Vector3 movementVector;
 
-    [SerializeField] private Animator animator;
-
-   // private bool right = true;
-    //private float negVelocity;
+    private Animator animator;
 
     void Start() {
 		rb = GetComponent<Rigidbody>();
+        animator = GetComponent<Animator>();
+
         speed = moveSpeed;
         jumpH = jumpHeight;
 
         move = true;
-        animator = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        state = cam.GetState();
+        camOneState = cam.GetState();
 
         if (move == true)
         {
@@ -73,7 +72,7 @@ public class PlayerOneMovement : MonoBehaviour {
             animator.SetBool("Running", move);
         }
 
-        switch (state)
+        switch (camOneState)
         {
             case 1:
                 movementVector = new Vector3(inputAxis * speed, rb.velocity.y, 0);
@@ -141,7 +140,7 @@ public class PlayerOneMovement : MonoBehaviour {
     /////////////////////////////////////////////
     public int GetState()
     {
-        return state;
+        return camOneState;
     }
 
     public float GetJumpHeight()
