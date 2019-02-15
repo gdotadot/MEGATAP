@@ -9,12 +9,15 @@ public class PauseMenu : MonoBehaviour {
 	[HideInInspector] public bool GameIsPaused = false;
 	
 	[SerializeField] GameObject pauseMenuUI;
+    [SerializeField] Button[] pauseButtons;
+    [SerializeField] GameObject controlsCanvas;
     [SerializeField] Button resumeButton;
     [SerializeField] GameObject playerTwo;
     [SerializeField] EventSystem es;
 
     private PlaceTrap pt;
     private CastSpell cs;
+    private bool controlsUp;
 
     private void Start()
     {
@@ -33,6 +36,16 @@ public class PauseMenu : MonoBehaviour {
             else
             {
                 Pause();
+            }
+
+            if(controlsUp)
+            {
+                controlsCanvas.SetActive(false);
+                controlsUp = false;
+                for (int i = 0; i < pauseButtons.Length; i++)
+                {
+                    pauseButtons[i].interactable = true;
+                }
             }
         }
 	}
@@ -83,7 +96,15 @@ public class PauseMenu : MonoBehaviour {
 		Debug.Log("Load Menu");
 	}
 	public void ControlScreen(){
-		SceneManager.LoadScene("Control");
+        //SceneManager.LoadScene("Control");
+        controlsUp = true;
+        controlsCanvas.SetActive(true);
+
+        for(int i = 0; i < pauseButtons.Length; i++)
+        {
+            pauseButtons[i].interactable = false;
+        }
+
 		Time.timeScale = 1f;
 		Debug.Log("Control Scene");
 	}
