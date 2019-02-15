@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour {
 			hit = true;
             GetComponent<MeshRenderer>().enabled = false;
 		}
-		else if(col.gameObject.name == "Boundary" || col.gameObject.name == "Platform"){
+		else if(col.gameObject.tag == "Boundary" || col.gameObject.tag == "Platform"){
 			Destroy(gameObject);
 		}
 	}

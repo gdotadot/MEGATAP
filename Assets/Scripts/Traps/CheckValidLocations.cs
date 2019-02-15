@@ -6,7 +6,7 @@ public class CheckValidLocations : MonoBehaviour {
     private TrapBase tb;
     private Location toCheck;
     public bool Valid { get; private set; }
-
+    public bool Placed;
     private void Start()
     {
         tb = GetComponentInParent<TrapBase>();
@@ -29,7 +29,7 @@ public class CheckValidLocations : MonoBehaviour {
     //and what direction it is facing.
     private void SetValidBool(bool valid, string tag)
     {
-        if (tag == "Platform")
+        if (tag == "Platform" && !Placed)
         {
             Direction dir = GameObject.Find("Player 2").GetComponent<PlaceTrap>().CurrentDirection;
             switch (toCheck)
@@ -38,7 +38,7 @@ public class CheckValidLocations : MonoBehaviour {
                     Valid = valid;
                     break;
                 case Location.Floor:
-                    if(dir == Direction.Up)
+                    if (dir == Direction.Up)
                     {
                         Valid = valid;
                     }
