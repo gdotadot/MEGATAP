@@ -937,6 +937,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 913634022136ee24598a17fcd2a39918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stunDuration: 2
 --- !u!114 &114292116882680800
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -972,6 +973,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbf2235687e9d2e46a10f47635a01ed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Placed: 0
 --- !u!137 &137392517076042870
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
