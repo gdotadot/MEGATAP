@@ -286,7 +286,19 @@ public class PlaceTrap : MonoBehaviour {
 
                     if (p2Controller)
                     {
-                        //eventSystem.SetSelectedGameObject(previouslySelected);
+                        if (active)
+                        {
+                            bool buttonSet = false;
+                            for (int i = 0; i < queue.Count; i++)
+                            {
+                                if (queue[i].activeInHierarchy && !buttonSet)
+                                {
+                                    eventSystem.SetSelectedGameObject(queue[i]);
+                                    buttonSet = true;
+                                }
+                            }
+
+                        }
                         placeEnabled = false;
                     }
                 }
@@ -428,7 +440,7 @@ public class PlaceTrap : MonoBehaviour {
         for(int i = 0; i < queueSize; i++)
         {
             int random = Random.Range(0, trapButtons.Length);
-            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-150f + 50f*i, 0f, 0), Quaternion.identity) as GameObject;
+            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-140f + 40f*i, -10f, 0), Quaternion.identity) as GameObject;
             newTrap.transform.SetParent(trapQueue.transform, false);
 
             //Add click listeners for all trap buttons

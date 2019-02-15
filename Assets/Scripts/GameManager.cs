@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 	public static bool GameIsPaused = false;
 	private PauseMenu pause;
-
+    [SerializeField] private GameObject avoidVinesText;
 
     //Game Over Status
     [SerializeField] private PlayerOneLose lost;
@@ -37,6 +37,11 @@ public class GameManager : MonoBehaviour {
         }
 
         CheckControllers();
+
+        if(Time.time > 35f && Time.time <= 38f)
+        {
+            avoidVinesText.SetActive(true);
+        }
 
 	}
 
