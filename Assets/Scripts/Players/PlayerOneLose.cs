@@ -14,12 +14,12 @@ public class PlayerOneLose : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        time = timer.getTime();
-		if(time < 0)
-        {
-            lose = true;
-            GameOver();
-        }
+  //      time = timer.getTime();
+		//if(time < 0)
+  //      {
+  //          lose = true;
+  //          GameOver();
+  //      }
     }
 
     void OnTriggerEnter(Collider other)
