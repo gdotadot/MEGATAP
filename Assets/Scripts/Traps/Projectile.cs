@@ -45,6 +45,7 @@ public class Projectile : MonoBehaviour {
         }
 		else if(col.gameObject.tag == "Boundary" || col.gameObject.tag == "Platform"){
             Unrender();
+            StartCoroutine(Death(stunDuration));
         }
 	}
 
@@ -54,5 +55,12 @@ public class Projectile : MonoBehaviour {
         {
             r.enabled = false;
         }
+    }
+
+    private IEnumerator Death(float stunDuration)
+    {
+        yield return new WaitForSeconds(stunDuration + 2f);
+
+        Destroy(this.gameObject);
     }
 }
