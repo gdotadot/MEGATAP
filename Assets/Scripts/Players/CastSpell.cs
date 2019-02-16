@@ -80,6 +80,7 @@ public class CastSpell : MonoBehaviour {
 
         if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused)
         {
+            DestroyTarget();
             //For testing purposes currently
             CreateSpellQueue();
             if(active)
@@ -181,22 +182,22 @@ public class CastSpell : MonoBehaviour {
                     switch (PlayerOneState)
                     {
                         case 1:
-                            castedSpell = spell.InstantiateSpell(50, playerOne.GetComponent<PlayerOneMovement>().transform.position.y, -42);
+                            castedSpell = spell.InstantiateSpell(50, playerOne.GetComponent<PlayerOneMovement>().transform.position.y + 1.5f, -42);
                             movementVector = new Vector3(-spellSpeed, 0, 0);
                             rb = castedSpell.GetComponent<Rigidbody>();
                             break;
                         case 2:
-                            castedSpell = spell.InstantiateSpell(42, playerOne.GetComponent<PlayerOneMovement>().transform.position.y, 50);
+                            castedSpell = spell.InstantiateSpell(42, playerOne.GetComponent<PlayerOneMovement>().transform.position.y + 1.5f, 50);
                             movementVector = new Vector3(0, 0, -spellSpeed);
                             rb = castedSpell.GetComponent<Rigidbody>();
                             break;
                         case 3:
-                            castedSpell = spell.InstantiateSpell(-50, playerOne.GetComponent<PlayerOneMovement>().transform.position.y, 42);
+                            castedSpell = spell.InstantiateSpell(-50, playerOne.GetComponent<PlayerOneMovement>().transform.position.y + 1.5f, 42);
                             movementVector = new Vector3(spellSpeed, 0, 0);
                             rb = castedSpell.GetComponent<Rigidbody>();
                             break;
                         case 4:
-                            castedSpell = spell.InstantiateSpell(-42, playerOne.GetComponent<PlayerOneMovement>().transform.position.y, -50);
+                            castedSpell = spell.InstantiateSpell(-42, playerOne.GetComponent<PlayerOneMovement>().transform.position.y + 1.5f, -50);
                             movementVector = new Vector3(0, 0, spellSpeed);
                             rb = castedSpell.GetComponent<Rigidbody>();
                             break;
