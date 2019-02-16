@@ -325,7 +325,7 @@ public class CastSpell : MonoBehaviour {
         for (int i = 0; i < queueSize; i++)
         {
             int random = 0; //Random.Range(0, spellButtons.Length);
-            GameObject newSpell = Instantiate(spellButtons[random], new Vector3(-115f + 40f * i, 15f, 0), Quaternion.identity) as GameObject;
+            GameObject newSpell = Instantiate(spellButtons[random], new Vector3(-108f + 40f * i, 20f, 0), Quaternion.identity) as GameObject;
             newSpell.transform.SetParent(spellQueue.transform, false);
 
 
@@ -394,7 +394,7 @@ public class CastSpell : MonoBehaviour {
         if (active == true)
         {
             spellQueue.transform.SetAsFirstSibling();
-            spellQueue.transform.position += new Vector3(35f, 35f, 0);
+            spellQueue.transform.position += new Vector3(15f, 15f, 0);
             for (int i = 0; i < queue.Count; i++)
             {
                 queue[i].GetComponent<Button>().interactable = false;
@@ -405,7 +405,7 @@ public class CastSpell : MonoBehaviour {
         {
             bool buttonSet = false;
             spellQueue.transform.SetAsLastSibling();
-            spellQueue.transform.position -= new Vector3(35f, 35f, 0);
+            spellQueue.transform.position -= new Vector3(15f, 15f, 0);
             for (int i = 0; i < queue.Count; i++)
             {
                 queue[i].GetComponent<Button>().interactable = true;
