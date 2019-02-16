@@ -17,7 +17,7 @@ public class CastSpell : MonoBehaviour {
     private float spellSpeed;
 
     [SerializeField] private int queueSize = 7;
-    public List<GameObject> queue { get; private set; }
+    public GameObject[] queue { get; private set; }
     [SerializeField] private GameObject spellQueue;
     private int queueIndex;
 
@@ -44,7 +44,7 @@ public class CastSpell : MonoBehaviour {
     void Start()
     {
         active = true;
-        queue = new List<GameObject>();
+        queue = new GameObject[queueSize];
         pause = gameManager.GetComponent<PauseMenu>();
         //Handle cursor or set buttons if controller connected
         p2Controller = gameManager.GetComponent<CheckControllers>().GetControllerTwoState();
@@ -80,9 +80,7 @@ public class CastSpell : MonoBehaviour {
 
         if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused)
         {
-            DestroyTarget();
             //For testing purposes currently
-            ClearSpellQueue();
             CreateSpellQueue();
             if(active)
             {
@@ -95,6 +93,7 @@ public class CastSpell : MonoBehaviour {
             DestroyTarget();
             SwitchQueue();
         }
+
     }
 
     void FixedUpdate()
@@ -212,7 +211,7 @@ public class CastSpell : MonoBehaviour {
                 if (p2Controller)
                 {
                     //eventSystem.SetSelectedGameObject(previouslySelected);
-                    for (int i = queue.Count - 1; i >= 0; i--)
+                    for (int i = queue.Length - 1; i >= 0; i--)
                     {
                         if (queue[i].activeInHierarchy)
                         {
@@ -272,7 +271,7 @@ public class CastSpell : MonoBehaviour {
                         if(active)
                         {
                             bool buttonSet = false;
-                            for(int i = 0; i < queue.Count; i++)
+                            for(int i = 0; i < queue.Length; i++)
                             {
                                 if(queue[i].activeInHierarchy && !buttonSet)
                                 {
@@ -324,38 +323,46 @@ public class CastSpell : MonoBehaviour {
     {
         for (int i = 0; i < queueSize; i++)
         {
-            int random = 0; //Random.Range(0, spellButtons.Length);
-            GameObject newSpell = Instantiate(spellButtons[random], new Vector3(-108f + 40f * i, 20f, 0), Quaternion.identity) as GameObject;
-            newSpell.transform.SetParent(spellQueue.transform, false);
-
-
-            //Add click listeners for all trap buttons
-            newSpell.GetComponent<Button>().onClick.AddListener(() => OnClickSpell(random));
-            newSpell.GetComponent<ButtonIndex>().ButtonIndexing(i);
-            newSpell.GetComponent<Button>().onClick.AddListener(() => GetIndex(newSpell));
-
-            queue.Add(newSpell);
-
-            if (active == false)
+            if (queue[i] == null)
             {
-                queue[i].GetComponent<Button>().interactable = false;
+                int random = 0; //Random.Range(0, spellButtons.Length);
+                GameObject newSpell = Instantiate(spellButtons[random], new Vector3(-108f + 40f * i, 20f, 0), Quaternion.identity) as GameObject;
+                newSpell.transform.SetParent(spellQueue.transform, false);
+
+
+                //Add click listeners for all trap buttons
+                newSpell.GetComponent<Button>().onClick.AddListener(() => OnClickSpell(random));
+                newSpell.GetComponent<ButtonIndex>().ButtonIndexing(i);
+                newSpell.GetComponent<Button>().onClick.AddListener(() => GetIndex(newSpell));
+
+                queue[i] = newSpell;
+
+                if (active == false)
+                {
+                    queue[i].GetComponent<Button>().interactable = false;
+                }
+                return;
             }
         }
-
     }
 
-    private void ClearSpellQueue()
+    /*private void ClearSpellQueue()
     {
-        for (int i = 0; i < queue.Count; i++)
+        for (int i = 0; i < queue.Length; i++)
         {
-            Destroy(queue[i]);
+            if (!queue[i].activeSelf)
+            {
+               Destroy(queue[i]);
+            }
         }
-        queue.Clear();
-    }
+    }*/
 
     private void ClearButton()
     {
-        queue[queueIndex].SetActive(false);
+        // queue[queueIndex].SetActive(false);
+        Destroy(queue[queueIndex]);
+        queue[queueIndex] = null;
+
     }
 
     //Make player wait .5 seconds after pressing button to be able to place trap.
@@ -395,9 +402,12 @@ public class CastSpell : MonoBehaviour {
         {
             spellQueue.transform.SetAsFirstSibling();
             spellQueue.transform.position += new Vector3(15f, 15f, 0);
-            for (int i = 0; i < queue.Count; i++)
+            for (int i = 0; i < queue.Length; i++)
             {
-                queue[i].GetComponent<Button>().interactable = false;
+                if (queue[i] != null)
+                {
+                    queue[i].GetComponent<Button>().interactable = false;
+                }
             }
         }
 
@@ -406,14 +416,18 @@ public class CastSpell : MonoBehaviour {
             bool buttonSet = false;
             spellQueue.transform.SetAsLastSibling();
             spellQueue.transform.position -= new Vector3(15f, 15f, 0);
-            for (int i = 0; i < queue.Count; i++)
+            for (int i = 0; i < queue.Length; i++)
             {
-                queue[i].GetComponent<Button>().interactable = true;
-
-                if (queue[i].activeInHierarchy && !buttonSet)
+                if (queue[i] != null)
                 {
-                    eventSystem.SetSelectedGameObject(queue[i]);
-                    buttonSet = true;
+                    queue[i].GetComponent<Button>().interactable = true;
+
+
+                    if (queue[i].activeInHierarchy && !buttonSet)
+                    {
+                        eventSystem.SetSelectedGameObject(queue[i]);
+                        buttonSet = true;
+                    }
                 }
             }
         }

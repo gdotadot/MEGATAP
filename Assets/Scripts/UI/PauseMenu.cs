@@ -53,7 +53,7 @@ public class PauseMenu : MonoBehaviour {
 	public void Resume(){
 		pauseMenuUI.SetActive(false);
         bool buttonSet = false;
-        for (int i = 0; i < cs.queue.Count; i++)
+        for (int i = 0; i < cs.queue.Length; i++)
         {
             if(cs.active) cs.queue[i].GetComponent<Button>().interactable = true;
             if(cs.active && cs.queue[i].activeInHierarchy && !buttonSet)
@@ -80,7 +80,7 @@ public class PauseMenu : MonoBehaviour {
 		pauseMenuUI.SetActive(true);
         pauseMenuUI.transform.SetAsLastSibling();
 
-        for(int i = 0; i < cs.queue.Count; i++)
+        for(int i = 0; i < cs.queue.Length; i++)
         {
             cs.queue[i].GetComponent<Button>().interactable = false;
         }
