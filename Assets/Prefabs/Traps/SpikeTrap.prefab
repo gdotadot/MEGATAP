@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 114374902745233234}
   - component: {fileID: 114682944826940940}
   - component: {fileID: 65978272839940726}
+  - component: {fileID: 136305195678973362}
   m_Layer: 0
   m_Name: SpikeTrap
   m_TagString: Trap
@@ -74,7 +75,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1781992477154930}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.05000007, y: 24.741793, z: -43.725708}
+  m_LocalPosition: {x: -28.813396, y: 5.1696777, z: -45.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4242921753063166}
@@ -213,7 +214,7 @@ BoxCollider:
   m_GameObject: {fileID: 1781992477154930}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 2, y: 1, z: 4.0646286}
   m_Center: {x: 0, y: 0, z: 0.018608093}
@@ -228,6 +229,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbf2235687e9d2e46a10f47635a01ed6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Placed: 0
 --- !u!114 &114374902745233234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -265,3 +267,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nearbyTrap: 0
+--- !u!136 &136305195678973362
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1781992477154930}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.70424795
+  m_Height: 4.1821785
+  m_Direction: 2
+  m_Center: {x: 0, y: 0.04179144, z: 0.11205864}
