@@ -24,19 +24,20 @@ public class PlayerOneMovement : MonoBehaviour {
     [SerializeField] private CameraOneRotator cam;
     private int camOneState = 1;
 
-    [SerializeField] private GameManager gameManager;
+    [SerializeField] private GameObject gameManager;
 
     private float inputAxis; //used to get input axis from controller/keyboard
 
 	private Rigidbody rb;
-    
 
 
+    private CheckControllers checkControllers;
     private Animator animator;
 
     void Start() {
 		rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
+        checkControllers = gameManager.GetComponent<CheckControllers>();
 
         speed = moveSpeed;
         jumpH = jumpHeight;
@@ -50,7 +51,7 @@ public class PlayerOneMovement : MonoBehaviour {
 
         if (move == true)
         {
-            inputAxis = gameManager.GetInputAxis();
+            inputAxis = checkControllers.GetInputAxis();
 
             //jumping
             if (Input.GetButtonDown("Jump_Joy_1") && grounded)

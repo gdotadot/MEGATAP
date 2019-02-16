@@ -8,7 +8,6 @@ public class CheckControllers : MonoBehaviour {
     private bool controllerOne;
     private bool controllerTwo;
 
-
     private void Awake()
     {
         joysticks = Input.GetJoystickNames();
@@ -24,7 +23,8 @@ public class CheckControllers : MonoBehaviour {
 
     private void CheckConnected()
     {
-        if (Input.GetJoystickNames().Length > 0)
+        joysticks = Input.GetJoystickNames();
+        if (joysticks.Length > 0)
         {
             for (int i = 0; i < joysticks.Length; i++)
             {

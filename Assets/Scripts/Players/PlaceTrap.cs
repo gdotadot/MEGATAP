@@ -17,7 +17,7 @@ public class PlaceTrap : MonoBehaviour {
     [SerializeField] private TrapBase[] trapPrefabs;
     [SerializeField] private Image controllerCursor;
     [SerializeField] private EventSystem eventSystem;
-    [SerializeField] private GameManager gm;
+    [SerializeField] private GameObject gameManager;
     [SerializeField] private Camera cam;
 
 
@@ -42,13 +42,15 @@ public class PlaceTrap : MonoBehaviour {
     public bool active { get; private set; }
 
     private PauseMenu pause;
+    private CheckControllers checkControllers;
 
 	void Start () {
         queue = new List<GameObject>();
         active = true;
         //Handle cursor or set buttons if controller connected
-        p2Controller = gm.GetControllerTwoState();
-        pause = gm.GetComponent<PauseMenu>();
+        checkControllers = gameManager.GetComponent<CheckControllers>();
+        p2Controller = checkControllers.GetControllerTwoState();
+        pause = gameManager.GetComponent<PauseMenu>();
         CreateTrapQueue();
 
         placeEnabled = false;
@@ -69,7 +71,7 @@ public class PlaceTrap : MonoBehaviour {
 
 	void Update () {
         //Move controller cursor & get input
-        p2Controller = gm.GetControllerTwoState();
+        p2Controller = checkControllers.GetControllerTwoState();
 
         if (p2Controller && !pause.GameIsPaused)
         {

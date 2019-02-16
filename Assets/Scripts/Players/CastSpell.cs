@@ -9,7 +9,7 @@ public class CastSpell : MonoBehaviour {
     [SerializeField] private SpellBase[] spellPrefabs;
     [SerializeField] private Image controllerCursor;
     [SerializeField] private EventSystem eventSystem;
-    [SerializeField] private GameManager gm;
+    [SerializeField] private GameObject gameManager;
     [SerializeField] private Camera cam;
     [SerializeField] private Camera cam2;
     [SerializeField] private GameObject playerOne;
@@ -45,9 +45,9 @@ public class CastSpell : MonoBehaviour {
     {
         active = true;
         queue = new List<GameObject>();
-        pause = gm.GetComponent<PauseMenu>();
+        pause = gameManager.GetComponent<PauseMenu>();
         //Handle cursor or set buttons if controller connected
-        p2Controller = gm.GetControllerTwoState();
+        p2Controller = gameManager.GetComponent<CheckControllers>().GetControllerTwoState();
 
         //For testing purposes right now
         CreateSpellQueue();
