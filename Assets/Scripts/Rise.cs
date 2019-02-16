@@ -79,9 +79,9 @@ public class Rise : MonoBehaviour {
     void moveUp()
     {
         //sized up on the y-axis
-        rightWall.transform.localScale += new Vector3(0, yMov, 0);
-        leftWall.transform.localScale += new Vector3(0, yMov, 0);
-        botWall.transform.localScale += new Vector3(0, yMov, 0);
-        topWall.transform.localScale += new Vector3(0, yMov, 0);
+        rightWall.transform.localScale += new Vector3(0, yMov * Time.deltaTime, 0);
+        leftWall.transform.localScale += new Vector3(0, yMov * Time.deltaTime, 0);
+        botWall.transform.localScale += new Vector3(0, yMov * Time.deltaTime, 0);
+        topWall.transform.localScale += new Vector3(0, yMov * Time.deltaTime, 0);
     }
 }
