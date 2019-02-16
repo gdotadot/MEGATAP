@@ -106,7 +106,6 @@ public class CameraTwoRotator : MonoBehaviour {
 
         targetPos.y *= floor;
         targetPos.y -= offsetFromAbove;
-        Debug.Log(targetPos.y);
         for (float t = 0; t < time; t += Time.deltaTime)
         {
             playerTwoCam.transform.position = Vector3.Lerp(currentPos, targetPos, t/time);
