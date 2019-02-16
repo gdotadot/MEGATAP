@@ -8,6 +8,15 @@ TagManager:
   - Trigger2
   - Trigger3
   - Trigger4
+  - Wall1
+  - Wall2
+  - Wall3
+  - Wall4
+  - Platform
+  - rise
+  - Trap
+  - Boundary
+  - PlayerSpell
   layers:
   - Default
   - TransparentFX
@@ -18,8 +27,8 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
-  - 
+  - TrapOverlap
+  - Tower
   - 
   - 
   - 
