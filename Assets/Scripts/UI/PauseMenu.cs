@@ -55,11 +55,14 @@ public class PauseMenu : MonoBehaviour {
         bool buttonSet = false;
         for (int i = 0; i < cs.queue.Length; i++)
         {
-            if(cs.active) cs.queue[i].GetComponent<Button>().interactable = true;
-            if(cs.active && cs.queue[i].activeInHierarchy && !buttonSet)
+            if (cs.queue[i] != null)
             {
-                es.SetSelectedGameObject(cs.queue[i]);
-                buttonSet = true;
+                if (cs.active) cs.queue[i].GetComponent<Button>().interactable = true;
+                if (cs.active && cs.queue[i].activeInHierarchy && !buttonSet)
+                {
+                    es.SetSelectedGameObject(cs.queue[i]);
+                    buttonSet = true;
+                }
             }
         }
         for (int i = 0; i < pt.queue.Count; i++)
@@ -82,7 +85,10 @@ public class PauseMenu : MonoBehaviour {
 
         for(int i = 0; i < cs.queue.Length; i++)
         {
-            cs.queue[i].GetComponent<Button>().interactable = false;
+            if (cs.queue[i] != null)
+            {
+                cs.queue[i].GetComponent<Button>().interactable = false;
+            }
         }
         for (int i = 0; i < pt.queue.Count; i++)
         {
