@@ -78,7 +78,20 @@ public class PlayerOneMovement : MonoBehaviour {
             case 1:
                 movementVector = new Vector3(inputAxis * speed * Time.deltaTime, rb.velocity.y, 0);
                 //Debug.Log(movementVector);
-                animator.SetFloat("Velocity", rb.velocity.x);
+                if (inputAxis > 0)
+                {
+                    transform.eulerAngles = new Vector3(0, 90, 0);
+                    animator.SetFloat("Velocity", rb.velocity.x);
+                }
+                else if (inputAxis < 0)
+                {
+                    transform.eulerAngles = new Vector3(0, 270, 0);
+                    animator.SetFloat("Velocity", -rb.velocity.x);
+                }
+                else
+                {
+                    animator.SetFloat("Velocity", rb.velocity.x);
+                }
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
                 break;
             case 2:
