@@ -11,7 +11,7 @@ public class Rise : MonoBehaviour {
 
     //For speed of vines
     private float targetPosition = 43f;
-    private float targetSize = 87f;
+    private float targetSize = 89f;
     private float currentPosition;
     private float currentSize;
     private float position;
@@ -30,8 +30,8 @@ public class Rise : MonoBehaviour {
         time = 0;
         currentPosition = rightWall.transform.position.x;
         currentSize = rightWall.transform.localScale.z;
-        position = (currentPosition - targetPosition) / 30f;
-        scale = (currentSize - targetSize) / 30f;
+        position = (currentPosition - targetPosition) / 60f;
+        scale = (currentSize - targetSize) / 60f;
 	}
 	
 	// Update is called once per frame
@@ -49,13 +49,13 @@ public class Rise : MonoBehaviour {
         }
 
         //Vines begin to move in over a certain period of time
-        if (time >= 11f && time <= 41f)
+        if (time >= 11f && time <= 71f)
         {
             moveIn();
         }
 
         //Vines crawl up until tower height is reached
-        if (time >= 41f && rightWall.transform.localScale.y <= 400)
+        if (time >= 71f && rightWall.transform.localScale.y <= 500)
         {
             moveUp();
         }
