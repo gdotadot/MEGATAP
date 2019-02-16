@@ -23,6 +23,7 @@ public class Projectile : MonoBehaviour {
 			if (hit)
 			{
 				trapBase.Stun(player, stunDuration, this.gameObject);
+                hit = false;
 			}
 			else
 			{
@@ -40,7 +41,8 @@ public class Projectile : MonoBehaviour {
             GetComponent<MeshRenderer>().enabled = false;
 		}
 		else if(col.gameObject.tag == "Boundary" || col.gameObject.tag == "Platform"){
-			Destroy(gameObject);
-		}
+            GetComponent<MeshRenderer>().enabled = false;
+            //Destroy(gameObject);
+        }
 	}
 }
