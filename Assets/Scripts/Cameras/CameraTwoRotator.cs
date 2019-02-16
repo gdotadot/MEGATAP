@@ -8,9 +8,12 @@ public class CameraTwoRotator : MonoBehaviour {
     [SerializeField] private Camera playerTwoCam;
     [SerializeField] private float moveSpeed;
     [SerializeField] private Image gridUI;
+    [SerializeField] private int offsetFromAbove;
+    [SerializeField] private GameObject faceTwoInstructions;
+    [SerializeField] private GameObject faceOneInstructions;
     [SerializeField] private GameManager gm;
     //Change these static variables iff tower is scaled
-    private static int camPosHorizontal = 150;
+    private static int camPosHorizontal = 140;
     private static int camPosVertical = 20;
     private static int camRotationX = 5;
     private static int numFloors = 7;
@@ -35,7 +38,7 @@ public class CameraTwoRotator : MonoBehaviour {
     private void Start()
     {
         pause = gm.GetComponent<PauseMenu>();
-        Vector3 startPos = basePositions[0] + new Vector3(0, 20, 0);
+        Vector3 startPos = basePositions[0] + new Vector3(0, 20 - offsetFromAbove, 0);
         playerTwoCam.transform.position = startPos;
         playerTwoCam.transform.rotation = baseRotations[0];
 
@@ -83,6 +86,16 @@ public class CameraTwoRotator : MonoBehaviour {
         camTween = TweenToPosition(goalPos, goalRot, moveSpeed);
         StartCoroutine(camTween);
         MoveGrid();
+
+        //Play instructions text for face 2
+        if(currentPos == 2 && floor == 2)
+        {
+            faceTwoInstructions.SetActive(true);
+            if(faceOneInstructions != null)
+            {
+                Destroy(faceOneInstructions);
+            }
+        }
     }
 
     //Camera movement coroutine
@@ -92,7 +105,8 @@ public class CameraTwoRotator : MonoBehaviour {
         Quaternion currentRot = playerTwoCam.transform.rotation;
 
         targetPos.y *= floor;
-
+        targetPos.y -= offsetFromAbove;
+        Debug.Log(targetPos.y);
         for (float t = 0; t < time; t += Time.deltaTime)
         {
             playerTwoCam.transform.position = Vector3.Lerp(currentPos, targetPos, t/time);

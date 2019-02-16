@@ -9,16 +9,12 @@ public class CastSpell : MonoBehaviour {
     [SerializeField] private SpellBase[] spellPrefabs;
     [SerializeField] private Image controllerCursor;
     [SerializeField] private EventSystem eventSystem;
-    [SerializeField] private GameManager gm;
+    [SerializeField] private GameObject gameManager;
     [SerializeField] private Camera cam;
     [SerializeField] private Camera cam2;
     [SerializeField] private GameObject playerOne;
 
-
-    [SerializeField] private int cursorSpeed;
-    [SerializeField] private int gridSize;
-
-    [SerializeField] private float spellSpeed;
+    private float spellSpeed;
 
     [SerializeField] private int queueSize = 7;
     public List<GameObject> queue { get; private set; }
@@ -49,17 +45,9 @@ public class CastSpell : MonoBehaviour {
     {
         active = true;
         queue = new List<GameObject>();
-        pause = gm.GetComponent<PauseMenu>();
+        pause = gameManager.GetComponent<PauseMenu>();
         //Handle cursor or set buttons if controller connected
-        p2Controller = gm.GetControllerTwoState();
-        if (p2Controller)
-        {
-            controllerCursor.enabled = true;
-        }
-        else
-        {
-            controllerCursor.enabled = false;
-        }
+        p2Controller = gameManager.GetComponent<CheckControllers>().GetControllerTwoState();
 
         //For testing purposes right now
         CreateSpellQueue();
@@ -76,15 +64,8 @@ public class CastSpell : MonoBehaviour {
 
     void Update()
     {
-        //Move controller cursor & get input
-        p2Controller = gm.GetControllerTwoState();
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Mathf.Abs(Input.GetAxisRaw("Horizontal_Joy_2")) > 0.6f || Mathf.Abs(Input.GetAxisRaw("Vertical_Joy_2")) > 0.6f)
-            {
-                controllerCursor.transform.Translate(Input.GetAxisRaw("Horizontal_Joy_2") * cursorSpeed, Input.GetAxisRaw("Vertical_Joy_2") * cursorSpeed, 0);
-            }
-
             if (Input.GetButton("Place_Joy_2") && placeEnabled)
             {
                 SpellCast();
@@ -288,7 +269,19 @@ public class CastSpell : MonoBehaviour {
 
                     if (p2Controller)
                     {
-                        //eventSystem.SetSelectedGameObject(previouslySelected);
+                        if(active)
+                        {
+                            bool buttonSet = false;
+                            for(int i = 0; i < queue.Count; i++)
+                            {
+                                if(queue[i].activeInHierarchy && !buttonSet)
+                                {
+                                    eventSystem.SetSelectedGameObject(queue[i]);
+                                    buttonSet = true;
+                                }
+                            }
+
+                        }
                         placeEnabled = false;
                     }
                 }
@@ -332,7 +325,7 @@ public class CastSpell : MonoBehaviour {
         for (int i = 0; i < queueSize; i++)
         {
             int random = 0; //Random.Range(0, spellButtons.Length);
-            GameObject newSpell = Instantiate(spellButtons[random], new Vector3(-125f + 50f * i, 25f, 0), Quaternion.identity) as GameObject;
+            GameObject newSpell = Instantiate(spellButtons[random], new Vector3(-115f + 40f * i, 15f, 0), Quaternion.identity) as GameObject;
             newSpell.transform.SetParent(spellQueue.transform, false);
 
 
@@ -401,7 +394,7 @@ public class CastSpell : MonoBehaviour {
         if (active == true)
         {
             spellQueue.transform.SetAsFirstSibling();
-            spellQueue.transform.position += new Vector3(15f, 15f, 0);
+            spellQueue.transform.position += new Vector3(35f, 35f, 0);
             for (int i = 0; i < queue.Count; i++)
             {
                 queue[i].GetComponent<Button>().interactable = false;
@@ -412,7 +405,7 @@ public class CastSpell : MonoBehaviour {
         {
             bool buttonSet = false;
             spellQueue.transform.SetAsLastSibling();
-            spellQueue.transform.position -= new Vector3(15f, 15f, 0);
+            spellQueue.transform.position -= new Vector3(35f, 35f, 0);
             for (int i = 0; i < queue.Count; i++)
             {
                 queue[i].GetComponent<Button>().interactable = true;

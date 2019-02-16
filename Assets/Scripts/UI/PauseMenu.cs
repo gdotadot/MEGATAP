@@ -97,7 +97,6 @@ public class PauseMenu : MonoBehaviour {
 	public void LoadMenu(){
 		SceneManager.LoadScene("Menu");
 		Time.timeScale = 1f;
-		Debug.Log("Load Menu");
 	}
 	public void ControlScreen(){
         //SceneManager.LoadScene("Control");
@@ -108,7 +107,6 @@ public class PauseMenu : MonoBehaviour {
         {
             pauseButtons[i].interactable = false;
         }
-		Debug.Log("Control Scene");
 	}
     public void QuitGame()
     {

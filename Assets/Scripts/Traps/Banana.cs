@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Banana : MonoBehaviour {
     private TrapBase trapBase;
-
+    [SerializeField] private float stunDuration;
     // let the FixedUpdate method know that there was a collision
     private bool hit = false;
     // the player (or whatever collided with this trap)
@@ -23,7 +23,7 @@ public class Banana : MonoBehaviour {
         {
             if (hit)
             {
-                trapBase.Stun(player, 2, this.gameObject);
+                trapBase.Stun(player, stunDuration, this.gameObject);
             }
         }
     }

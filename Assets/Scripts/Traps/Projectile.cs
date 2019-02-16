@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Projectile : MonoBehaviour {
-	private TrapBase trapBase;
+    [SerializeField] private float stunDuration;
+
+    private TrapBase trapBase;
 
 
 	private bool hit = false;
@@ -18,15 +20,14 @@ public class Projectile : MonoBehaviour {
 	void FixedUpdate(){
 		if (player != null)
 		{
-				if (hit)
-				{
-					trapBase.Stun(player, 3, this.gameObject);
-				}
-				else
-				{
-					hit = false;
-				}
-
+			if (hit)
+			{
+				trapBase.Stun(player, stunDuration, this.gameObject);
+			}
+			else
+			{
+				hit = false;
+			}
 		}
 	}
 
