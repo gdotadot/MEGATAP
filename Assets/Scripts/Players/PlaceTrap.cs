@@ -424,7 +424,7 @@ public class PlaceTrap : MonoBehaviour {
     private void OnClickTrap(int trapNum)
     {
         trap = trapPrefabs[trapNum];
-
+        trapRot = 0;
         eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         DestroyGhost();
