@@ -82,6 +82,7 @@ public class PauseMenu : MonoBehaviour {
 
         for(int i = 0; i < cs.queue.Length; i++)
         {
+            Debug.Log(cs.queue[i].GetComponent<Button>());
             cs.queue[i].GetComponent<Button>().interactable = false;
         }
         for (int i = 0; i < pt.queue.Count; i++)
