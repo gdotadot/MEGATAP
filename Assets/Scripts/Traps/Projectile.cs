@@ -10,12 +10,14 @@ public class Projectile : MonoBehaviour {
 
 	private bool hit = false;
 	private GameObject player = null;
+    private Renderer[] child;
 
 	// Use this for initialization
 	void Start () {
 		trapBase = GetComponent<TrapBase>();
 		Destroy(gameObject, 5.0f);
-	}
+        child = GetComponentsInChildren<Renderer>();
+    }
 
 	void FixedUpdate(){
 		if (player != null)
@@ -38,11 +40,19 @@ public class Projectile : MonoBehaviour {
 		if(col.gameObject.tag == "Player"){
 			player = col.gameObject;
 			hit = true;
-            GetComponent<MeshRenderer>().enabled = false;
-		}
+            Unrender();
+
+        }
 		else if(col.gameObject.tag == "Boundary" || col.gameObject.tag == "Platform"){
-            GetComponent<MeshRenderer>().enabled = false;
-            //Destroy(gameObject);
+            Unrender();
         }
 	}
+
+    private void Unrender()
+    {
+        foreach(Renderer r in child)
+        {
+            r.enabled = false;
+        }
+    }
 }
