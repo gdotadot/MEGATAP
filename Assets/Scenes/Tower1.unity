@@ -1050,7 +1050,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1097627726277776, guid: 55547465b04163a44860ef2fa847f9d0, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224540943782103410, guid: 55547465b04163a44860ef2fa847f9d0,
         type: 2}
@@ -1149,6 +1149,21 @@ Prefab:
     - target: {fileID: 95729289748820026, guid: 55547465b04163a44860ef2fa847f9d0,
         type: 2}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114979607709967708, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114979607709967708, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114979607709967708, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_ScreenMatchMode
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
