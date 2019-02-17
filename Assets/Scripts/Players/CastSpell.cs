@@ -214,7 +214,7 @@ public class CastSpell : MonoBehaviour {
                     //eventSystem.SetSelectedGameObject(previouslySelected);
                     for (int i = queue.Length - 1; i >= 0; i--)
                     {
-                        if (queue[i].activeInHierarchy)
+                        if (queue[i].activeInHierarchy && queue[i] !=null)
                         {
                             eventSystem.SetSelectedGameObject(queue[i]);
                         }
