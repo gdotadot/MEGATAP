@@ -1070,7 +1070,7 @@ Prefab:
     - target: {fileID: 224965687167768858, guid: 55547465b04163a44860ef2fa847f9d0,
         type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 224333296806231180, guid: 55547465b04163a44860ef2fa847f9d0,
         type: 2}
@@ -1085,12 +1085,12 @@ Prefab:
     - target: {fileID: 224887855449916876, guid: 55547465b04163a44860ef2fa847f9d0,
         type: 2}
       propertyPath: m_RootOrder
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 224051868352545444, guid: 55547465b04163a44860ef2fa847f9d0,
         type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 224089907799422504, guid: 55547465b04163a44860ef2fa847f9d0,
         type: 2}
@@ -1100,10 +1100,70 @@ Prefab:
     - target: {fileID: 224295141319413610, guid: 55547465b04163a44860ef2fa847f9d0,
         type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1989823597951292, guid: 55547465b04163a44860ef2fa847f9d0, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114991398234152678, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_text
+      value: Press START or ESCAPE to return to game.
+      objectReference: {fileID: 0}
+    - target: {fileID: 114991398234152678, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 114991398234152678, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 114991398234152678, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_textInfo.wordCount
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114991398234152678, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_fontColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114991398234152678, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114991398234152678, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114991398234152678, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_fontColor32.rgba
+      value: 4278190335
+      objectReference: {fileID: 0}
+    - target: {fileID: 95729289748820026, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114979607709967708, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114979607709967708, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114979607709967708, guid: 55547465b04163a44860ef2fa847f9d0,
+        type: 2}
+      propertyPath: m_ScreenMatchMode
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
