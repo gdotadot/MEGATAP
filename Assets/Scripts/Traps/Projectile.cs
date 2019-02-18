@@ -7,8 +7,7 @@ public class Projectile : MonoBehaviour {
 
     private TrapBase trapBase;
 
-
-	private bool hit = false;
+    private bool hit = false;
 	private GameObject player = null;
     private Renderer[] child;
 
@@ -17,6 +16,7 @@ public class Projectile : MonoBehaviour {
 		trapBase = GetComponent<TrapBase>();
 		Destroy(gameObject, 5.0f);
         child = GetComponentsInChildren<Renderer>();
+        hit = false;
     }
 
 	void FixedUpdate(){
@@ -25,11 +25,6 @@ public class Projectile : MonoBehaviour {
 			if (hit)
 			{
 				trapBase.Stun(player, stunDuration, this.gameObject);
-                hit = false;
-			}
-			else
-			{
-				hit = false;
 			}
 		}
 	}
@@ -44,8 +39,15 @@ public class Projectile : MonoBehaviour {
 
         }
 		else if(col.gameObject.tag == "Boundary" || col.gameObject.tag == "Platform"){
-            Unrender();
-            StartCoroutine(Death(stunDuration));
+            if (hit == true)
+            {
+                Unrender();
+                StartCoroutine(Death(stunDuration));
+            }
+            else if(hit == false)
+            {
+                Destroy(this.gameObject);
+            }
         }
 	}
 
