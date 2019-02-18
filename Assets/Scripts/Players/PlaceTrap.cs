@@ -281,16 +281,16 @@ public class PlaceTrap : MonoBehaviour {
                 switch (cam.GetComponent<CameraTwoRotator>().GetState())
                 {
                     case 1:
-                        ghostTrap.transform.eulerAngles = new Vector3(0, 0, 0);
+                        ghostTrap.transform.eulerAngles = new Vector3(ghostTrap.transform.eulerAngles.x, 0, ghostTrap.transform.eulerAngles.z);
                         break;
                     case 2:
-                        ghostTrap.transform.eulerAngles = new Vector3(0, 270, 0);
+                        ghostTrap.transform.eulerAngles = new Vector3(ghostTrap.transform.eulerAngles.x, 270, ghostTrap.transform.eulerAngles.z);
                         break;
                     case 3:
-                        ghostTrap.transform.eulerAngles = new Vector3(0, 180, 0);
+                        ghostTrap.transform.eulerAngles = new Vector3(ghostTrap.transform.eulerAngles.x, 180, ghostTrap.transform.eulerAngles.z);
                         break;
                     case 4:
-                        ghostTrap.transform.eulerAngles = new Vector3(0, 90, 0);
+                        ghostTrap.transform.eulerAngles = new Vector3(ghostTrap.transform.eulerAngles.x, 90, ghostTrap.transform.eulerAngles.z);
                         break;
                 }
                 Vector3 position = GetGridPosition().Value;
