@@ -451,6 +451,24 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c130ae0761b27334089036b39347c937, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &378012455 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114432147260009832, guid: c130ae0761b27334089036b39347c937,
+    type: 2}
+  m_PrefabInternal: {fileID: 378012454}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!114 &378012456 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114958971114074792, guid: c130ae0761b27334089036b39347c937,
+    type: 2}
+  m_PrefabInternal: {fileID: 378012454}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!114 &378012457 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114375043952648214, guid: c130ae0761b27334089036b39347c937,
+    type: 2}
+  m_PrefabInternal: {fileID: 378012454}
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!20 &412805862 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 20558474140203254, guid: 295df6c694235764eac79c393ed826dc,
@@ -611,7 +629,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GameIsPaused: 0
   pauseMenuUI: {fileID: 577860162}
-  pauseButtons: []
+  pauseButtons:
+  - {fileID: 1566570390}
+  - {fileID: 378012457}
+  - {fileID: 378012456}
+  - {fileID: 378012455}
   controlsCanvas: {fileID: 1241385922}
   resumeButton: {fileID: 1566570390}
   playerTwo: {fileID: 1027381073}
