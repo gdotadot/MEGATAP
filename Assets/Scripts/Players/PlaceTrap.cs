@@ -87,7 +87,7 @@ public class PlaceTrap : MonoBehaviour {
         }
         MoveGhost();
 
-        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused)
+        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == 7 && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
         {
             DestroyGhost();
             ClearTrapQueue();
