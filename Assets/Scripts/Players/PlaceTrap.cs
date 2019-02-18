@@ -265,7 +265,6 @@ public class PlaceTrap : MonoBehaviour {
             ghostTrap.GetComponentInChildren<MeshRenderer>().material.color = color;
         }
         
-       	
        	ghostTrap.GetComponent<TrapBase>().enabled = false;
 
     }
@@ -279,6 +278,21 @@ public class PlaceTrap : MonoBehaviour {
 
             if (GetGridPosition() != null)
             {
+                switch (cam.GetComponent<CameraTwoRotator>().GetState())
+                {
+                    case 1:
+                        ghostTrap.transform.eulerAngles = new Vector3(0, 0, 0);
+                        break;
+                    case 2:
+                        ghostTrap.transform.eulerAngles = new Vector3(0, 270, 0);
+                        break;
+                    case 3:
+                        ghostTrap.transform.eulerAngles = new Vector3(0, 180, 0);
+                        break;
+                    case 4:
+                        ghostTrap.transform.eulerAngles = new Vector3(0, 90, 0);
+                        break;
+                }
                 Vector3 position = GetGridPosition().Value;
                 ghostTrap.transform.position = position;
 
