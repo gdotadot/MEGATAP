@@ -53,7 +53,7 @@ public class CameraTwoRotator : MonoBehaviour {
     { 
         if (moveEnabled)
         {
-            if (Input.GetButton("Submit_Joy_2") && !pause.GameIsPaused)
+            if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused)
             {
                 moveEnabled = false;
 

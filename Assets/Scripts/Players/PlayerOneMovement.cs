@@ -76,24 +76,76 @@ public class PlayerOneMovement : MonoBehaviour {
         switch (camOneState)
         {
             case 1:
-                movementVector = new Vector3(inputAxis * speed * Time.deltaTime, rb.velocity.y, 0);
+                movementVector = new Vector3(inputAxis * speed, rb.velocity.y, 0);
                 //Debug.Log(movementVector);
-                animator.SetFloat("Velocity", rb.velocity.x);
+                if (inputAxis > 0)
+                {
+                    transform.eulerAngles = new Vector3(0, 90, 0);
+                    animator.SetFloat("Velocity", rb.velocity.x);
+                }
+                else if (inputAxis < 0)
+                {
+                    transform.eulerAngles = new Vector3(0, 270, 0);
+                    animator.SetFloat("Velocity", -rb.velocity.x);
+                }
+                else
+                {
+                    animator.SetFloat("Velocity", rb.velocity.x);
+                }
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
                 break;
             case 2:
-                movementVector = new Vector3(0, rb.velocity.y, inputAxis * speed * Time.deltaTime);
-                animator.SetFloat("Velocity", rb.velocity.z);
+                movementVector = new Vector3(0, rb.velocity.y, inputAxis * speed);
+                if (inputAxis > 0)
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    animator.SetFloat("Velocity", rb.velocity.z);
+                }
+                else if (inputAxis < 0)
+                {
+                    transform.eulerAngles = new Vector3(0, 180, 0);
+                    animator.SetFloat("Velocity", -rb.velocity.z);
+                }
+                else
+                {
+                    animator.SetFloat("Velocity", -rb.velocity.z);
+                }
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
                 break;
             case 3:
-                movementVector = new Vector3(-inputAxis * speed * Time.deltaTime, rb.velocity.y, 0);
-                animator.SetFloat("Velocity", -rb.velocity.x);
+                movementVector = new Vector3(-inputAxis * speed, rb.velocity.y, 0);
+                if (inputAxis > 0)
+                {
+                    transform.eulerAngles = new Vector3(0, 270, 0);
+                    animator.SetFloat("Velocity", -rb.velocity.x);
+                }
+                else if (inputAxis < 0)
+                {
+                    transform.eulerAngles = new Vector3(0, 90, 0);
+                    animator.SetFloat("Velocity", rb.velocity.x);
+                }
+                else
+                {
+                    animator.SetFloat("Velocity", -rb.velocity.x);
+                }
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
                 break;
             case 4:
-                movementVector = new Vector3(0, rb.velocity.y, -inputAxis * speed * Time.deltaTime);
-                animator.SetFloat("Velocity", -rb.velocity.z);
+                movementVector = new Vector3(0, rb.velocity.y, -inputAxis * speed);
+                if (inputAxis > 0)
+                {
+                    transform.eulerAngles = new Vector3(0, 180, 0);
+                    animator.SetFloat("Velocity", -rb.velocity.z);
+                }
+                else if (inputAxis < 0)
+                {
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    animator.SetFloat("Velocity", rb.velocity.z);
+                }
+                else
+                {
+                    animator.SetFloat("Velocity", -rb.velocity.z);
+                }
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
                 break;
         }

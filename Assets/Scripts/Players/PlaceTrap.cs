@@ -87,7 +87,7 @@ public class PlaceTrap : MonoBehaviour {
         }
         MoveGhost();
 
-        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused)
+        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == 7 && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
         {
             DestroyGhost();
             ClearTrapQueue();
@@ -265,7 +265,6 @@ public class PlaceTrap : MonoBehaviour {
             ghostTrap.GetComponentInChildren<MeshRenderer>().material.color = color;
         }
         
-       	
        	ghostTrap.GetComponent<TrapBase>().enabled = false;
 
     }
@@ -279,6 +278,21 @@ public class PlaceTrap : MonoBehaviour {
 
             if (GetGridPosition() != null)
             {
+                switch (cam.GetComponent<CameraTwoRotator>().GetState())
+                {
+                    case 1:
+                        ghostTrap.transform.eulerAngles = new Vector3(ghostTrap.transform.eulerAngles.x, 0, ghostTrap.transform.eulerAngles.z);
+                        break;
+                    case 2:
+                        ghostTrap.transform.eulerAngles = new Vector3(ghostTrap.transform.eulerAngles.x, 270, ghostTrap.transform.eulerAngles.z);
+                        break;
+                    case 3:
+                        ghostTrap.transform.eulerAngles = new Vector3(ghostTrap.transform.eulerAngles.x, 180, ghostTrap.transform.eulerAngles.z);
+                        break;
+                    case 4:
+                        ghostTrap.transform.eulerAngles = new Vector3(ghostTrap.transform.eulerAngles.x, 90, ghostTrap.transform.eulerAngles.z);
+                        break;
+                }
                 Vector3 position = GetGridPosition().Value;
                 ghostTrap.transform.position = position;
 
@@ -442,7 +456,7 @@ public class PlaceTrap : MonoBehaviour {
         for(int i = 0; i < queueSize; i++)
         {
             int random = Random.Range(0, trapButtons.Length);
-            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-140f + 40f*i, -10f, 0), Quaternion.identity) as GameObject;
+            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-140f + 40f*i, -11f, 0), Quaternion.identity) as GameObject;
             newTrap.transform.SetParent(trapQueue.transform, false);
 
             //Add click listeners for all trap buttons
