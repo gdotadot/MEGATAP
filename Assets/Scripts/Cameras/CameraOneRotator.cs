@@ -6,7 +6,7 @@ using UnityEngine;
 //        the edge of each face of the tower. 
 public class CameraOneRotator : MonoBehaviour
 {
-
+    [SerializeField] private GameObject tower;
     [SerializeField] private Camera playerOneCam;
     [SerializeField] private float moveSpeed;
     [SerializeField] private GameObject playerModel;
@@ -20,7 +20,7 @@ public class CameraOneRotator : MonoBehaviour
     private static int camPosVertical = 13;
     private static int camRotationX = 5;
     private static int camRotationY = 0;
-    private static int numFloors = 7;
+    private static int numFloors;
 
     private Vector3[] basePositions = new[] {  new Vector3(0,                 camPosVertical, -camPosHorizontal),
                                                new Vector3(camPosHorizontal,  camPosVertical, 0),
@@ -38,6 +38,7 @@ public class CameraOneRotator : MonoBehaviour
 
     private void Start()
     {
+        numFloors = tower.GetComponent<NumberOfFloors>().NumFloors;
         playerOneCam.transform.localPosition = basePositions[0];
         playerOneCam.transform.rotation = rotations[0];
         cameraState = 1;

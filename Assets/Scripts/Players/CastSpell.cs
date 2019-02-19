@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class CastSpell : MonoBehaviour {
+    [SerializeField] private GameObject tower;
     [SerializeField] private GameObject[] spellButtons;
     [SerializeField] private SpellBase[] spellPrefabs;
     [SerializeField] private Image controllerCursor;
@@ -78,7 +79,7 @@ public class CastSpell : MonoBehaviour {
 
         if (spell != null && spellTarget != null) CheckValidLocation();
 
-        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == 7 && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
+        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == tower.GetComponent<NumberOfFloors>().NumFloors && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
         {
             DestroyTarget();
             //For testing purposes currently

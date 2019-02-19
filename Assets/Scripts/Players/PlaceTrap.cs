@@ -13,6 +13,7 @@ public enum Direction
 
 
 public class PlaceTrap : MonoBehaviour {
+    [SerializeField] private GameObject tower;
     [SerializeField] private GameObject[] trapButtons;
     [SerializeField] private TrapBase[] trapPrefabs;
     [SerializeField] private Image controllerCursor;
@@ -87,7 +88,7 @@ public class PlaceTrap : MonoBehaviour {
         }
         MoveGhost();
 
-        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == 7 && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
+        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == tower.GetComponent<NumberOfFloors>().NumFloors && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
         {
             DestroyGhost();
             ClearTrapQueue();
