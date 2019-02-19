@@ -73,26 +73,34 @@ public class CameraOneRotator : MonoBehaviour
         {
             case "Trigger1":
                 StartMove(new Vector3(playerModel.transform.position.x + camPosHorizontal, playerOneCam.transform.position.y, playerModel.transform.position.z + 5), rotations[1], 2);
+                Destroy(other.gameObject);
                 break;
             case "Trigger2":
                 StartMove(new Vector3(playerModel.transform.position.x - 5, playerOneCam.transform.position.y, playerModel.transform.position.z + camPosHorizontal), rotations[2], 3);
+                Destroy(other.gameObject);
                 break;
             case "Trigger3":
                 StartMove(new Vector3(playerModel.transform.position.x - camPosHorizontal, playerOneCam.transform.position.y, playerModel.transform.position.z), rotations[3], 4);
+                Destroy(other.gameObject);
                 break;
             case "Trigger4":
-                if (floor < numFloors)
+                if (cameraState == 4)
                 {
-                    floor++;
-                    MovePlayerUp();
-                    StartMove(new Vector3(playerModel.transform.position.x, playerOneCam.transform.position.y + 20, playerModel.transform.position.z - camPosHorizontal), rotations[0], 1);
-                    break;
+                    Destroy(other.gameObject);
+                    if (floor < numFloors)
+                    {
+                        floor++;
+                        MovePlayerUp();
+                        StartMove(new Vector3(playerModel.transform.position.x, playerOneCam.transform.position.y + 20, playerModel.transform.position.z - camPosHorizontal), rotations[0], 1);
+                        break;
+                    }
+                    else
+                    {
+                        StartMove(new Vector3(playerModel.transform.position.x, playerOneCam.transform.position.y + 20, playerModel.transform.position.z - camPosHorizontal), rotations[0], 1);
+                        break;
+                    }
                 }
-                else
-                {
-                    StartMove(new Vector3(playerModel.transform.position.x, playerOneCam.transform.position.y + 20, playerModel.transform.position.z - camPosHorizontal), rotations[0], 1);
-                    break;
-                }
+                break;
         }
     }
 
