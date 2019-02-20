@@ -78,7 +78,7 @@ public class CastSpell : MonoBehaviour {
 
         if (spell != null && spellTarget != null) CheckValidLocation();
 
-        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused)
+        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == 7 && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
         {
             DestroyTarget();
             //For testing purposes currently
@@ -212,11 +212,13 @@ public class CastSpell : MonoBehaviour {
                 if (p2Controller)
                 {
                     //eventSystem.SetSelectedGameObject(previouslySelected);
+                    bool buttonSet = false;
                     for (int i = queue.Length - 1; i >= 0; i--)
                     {
-                        if (queue[i].activeInHierarchy)
+                        if (queue[i] != null && queue[i].activeInHierarchy && !buttonSet)
                         {
                             eventSystem.SetSelectedGameObject(queue[i]);
+                            buttonSet = true;
                         }
                     }
                     placeEnabled = false;

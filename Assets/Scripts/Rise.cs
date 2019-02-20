@@ -10,8 +10,9 @@ public class Rise : MonoBehaviour {
     [SerializeField] private GameObject topWall;
 
     //For speed of vines
-    private float targetPosition = 43f;
-    private float targetSize = 89f;
+    [SerializeField] private float targetPosition = 43f;
+    [SerializeField] private float targetSize = 89f;
+    [SerializeField] private int moveInTime = 60;
     private float currentPosition;
     private float currentSize;
     private float position;
@@ -22,6 +23,7 @@ public class Rise : MonoBehaviour {
 
     //Timing
     private float time;
+    [SerializeField] private float targetTime = 10f;
 
 
     // Use this for initialization
@@ -30,8 +32,8 @@ public class Rise : MonoBehaviour {
         time = 0;
         currentPosition = rightWall.transform.position.x;
         currentSize = rightWall.transform.localScale.z;
-        position = (currentPosition - targetPosition) / 60f;
-        scale = (currentSize - targetSize) / 60f;
+        position = (currentPosition - targetPosition) / moveInTime;
+        scale = (currentSize - targetSize) / moveInTime;
 	}
 	
 	// Update is called once per frame
@@ -40,7 +42,7 @@ public class Rise : MonoBehaviour {
         time += Time.deltaTime;
 
         //start vines after certain time
-        if (time >= 10 && time <= 11f)
+        if (time >= targetTime && time <= (targetTime + 1f))
         {
             rightWall.transform.position = new Vector3(140f, 1f, 0);
             leftWall.transform.position = new Vector3(-140f, 1f, 0);
@@ -49,13 +51,13 @@ public class Rise : MonoBehaviour {
         }
 
         //Vines begin to move in over a certain period of time
-        if (time >= 11f && time <= 71f)
+        if (time >= (targetTime + 1f) && time <= (targetTime + 1f + moveInTime))
         {
             moveIn();
         }
 
         //Vines crawl up until tower height is reached
-        if (time >= 71f && rightWall.transform.localScale.y <= 500)
+        if (time >= (targetTime + 1f + moveInTime) && rightWall.transform.localScale.y <= 500)
         {
             moveUp();
         }
@@ -69,7 +71,7 @@ public class Rise : MonoBehaviour {
         botWall.transform.Translate(Vector3.forward * Time.deltaTime * position, Space.World);
         topWall.transform.Translate(-Vector3.forward * Time.deltaTime * position, Space.World);
         
-        //sized dinwards appropriately
+        //sized inwards appropriately
         rightWall.transform.localScale -= new Vector3(0, 0, scale * Time.deltaTime);
         leftWall.transform.localScale -= new Vector3(0, 0, scale * Time.deltaTime);
         botWall.transform.localScale -= new Vector3(scale * Time.deltaTime, 0, 0);

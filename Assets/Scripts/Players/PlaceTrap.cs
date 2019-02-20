@@ -87,7 +87,7 @@ public class PlaceTrap : MonoBehaviour {
         }
         MoveGhost();
 
-        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused)
+        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == 7 && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
         {
             DestroyGhost();
             ClearTrapQueue();
@@ -265,7 +265,6 @@ public class PlaceTrap : MonoBehaviour {
             ghostTrap.GetComponentInChildren<MeshRenderer>().material.color = color;
         }
         
-       	
        	ghostTrap.GetComponent<TrapBase>().enabled = false;
 
     }
@@ -279,6 +278,21 @@ public class PlaceTrap : MonoBehaviour {
 
             if (GetGridPosition() != null)
             {
+                switch (cam.GetComponent<CameraTwoRotator>().GetState())
+                {
+                    case 1:
+                        ghostTrap.transform.eulerAngles = new Vector3(ghostTrap.transform.eulerAngles.x, 0, ghostTrap.transform.eulerAngles.z);
+                        break;
+                    case 2:
+                        ghostTrap.transform.eulerAngles = new Vector3(ghostTrap.transform.eulerAngles.x, 270, ghostTrap.transform.eulerAngles.z);
+                        break;
+                    case 3:
+                        ghostTrap.transform.eulerAngles = new Vector3(ghostTrap.transform.eulerAngles.x, 180, ghostTrap.transform.eulerAngles.z);
+                        break;
+                    case 4:
+                        ghostTrap.transform.eulerAngles = new Vector3(ghostTrap.transform.eulerAngles.x, 90, ghostTrap.transform.eulerAngles.z);
+                        break;
+                }
                 Vector3 position = GetGridPosition().Value;
                 ghostTrap.transform.position = position;
 
