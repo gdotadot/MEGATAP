@@ -13,50 +13,73 @@ public enum Direction
 
 
 public class PlaceTrap : MonoBehaviour {
+    [SerializeField] private int gridSize;
+
+    [Header("Programmers - GameObjects -----")]
     [SerializeField] private GameObject tower;
+
     [SerializeField] private GameObject[] trapButtons;
     [SerializeField] private TrapBase[] trapPrefabs;
+    [SerializeField] private GameObject trapQueue;
+
     [SerializeField] private Image controllerCursor;
+
     [SerializeField] private EventSystem eventSystem;
     [SerializeField] private GameObject gameManager;
     [SerializeField] private Camera cam;
 
-
-    [SerializeField] private int cursorSpeed;
-    [SerializeField] private int gridSize;
-
-    [SerializeField] private int queueSize = 7;
-    public List<GameObject> queue { get; private set; }
-    [SerializeField] private GameObject trapQueue;
-    private int queueIndex;
-
-    private TrapBase trap;
-    public Direction CurrentDirection { get; private set; }
-    private GameObject ghostTrap;
-    private GameObject previouslySelected;
-    private float gridXOffset, gridZOffset, gridYOffset = 0.35f; //changed when trap is rotated so that it still properly aligns with grid.
-
-
-    private bool p2Controller;
-    private bool placeEnabled;
-
-    public bool active { get; private set; }
-
     private PauseMenu pause;
     private CheckControllers checkControllers;
 
+    [Header("Queue Size -----")]
+    [SerializeField] private int queueSize = 7;
+
+    [Header("Controller Values -----")]
+    [SerializeField] private float cursorDelay;
+    [SerializeField] private float cursorGrid;
+    [Tooltip("Higher # = Lower Sensitivity")] [SerializeField] private float stickSensitivity;
+   
+    //Andy's Queue Stuff
+    public List<GameObject> queue { get; private set; }
+    private int queueIndex;
+    [HideInInspector]
+    public bool active { get; private set; }
+
+    //Alex's Trap Stuff
+    private TrapBase trap;
+    public Direction CurrentDirection { get; private set; }
+    private GameObject ghostTrap;
+    //private GameObject previouslySelected;
+    private float gridXOffset, gridZOffset, gridYOffset = 0.35f; //changed when trap is rotated so that it still properly aligns with grid.
+
+    //Controller Stuff
+    private bool p2Controller;
+    private bool placeEnabled;
+    private bool cursorMove = true;
+
+    private float screenWidth; //Need to calculate edges of screen manually for cursor clamping because our canvas is set to match height.
+    private float screenHeight;
+
 	void Start () {
+        pause = gameManager.GetComponent<PauseMenu>();
+
+        //Screen size
+        CanvasScaler scaler = controllerCursor.GetComponentInParent<CanvasScaler>();
+        float expectedAspectRatio = scaler.referenceResolution.x / scaler.referenceResolution.y;
+        float aspectRatio = (float)Screen.width / (float)Screen.height;
+        screenWidth = (aspectRatio / expectedAspectRatio) * (scaler.referenceResolution.x / 2);
+        screenHeight = scaler.referenceResolution.y / 2;
+
+        //Queue Initialization
         queue = new List<GameObject>();
         active = true;
+        CreateTrapQueue();
+        trapQueue.transform.SetAsLastSibling();
+
         //Handle cursor or set buttons if controller connected
         checkControllers = gameManager.GetComponent<CheckControllers>();
         p2Controller = checkControllers.GetControllerTwoState();
-        pause = gameManager.GetComponent<PauseMenu>();
-        CreateTrapQueue();
-
         placeEnabled = false;
-        trapQueue.transform.SetAsLastSibling();
-
 
         if (p2Controller)
         {
@@ -73,14 +96,34 @@ public class PlaceTrap : MonoBehaviour {
 	void Update () {
         //Move controller cursor & get input
         p2Controller = checkControllers.GetControllerTwoState();
-
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Mathf.Abs(Input.GetAxisRaw("Horizontal_Joy_2")) > 0.6f || Mathf.Abs(Input.GetAxisRaw("Vertical_Joy_2")) > 0.6f)
+            Vector3 cursorPos = controllerCursor.GetComponent<RectTransform>().localPosition;
+            if(Input.GetAxisRaw("Horizontal_Joy_2") > stickSensitivity && cursorMove && cursorPos.x < screenWidth)
             {
-                controllerCursor.transform.Translate(Input.GetAxisRaw("Horizontal_Joy_2") * cursorSpeed, Input.GetAxisRaw("Vertical_Joy_2") * cursorSpeed, 0);
+                controllerCursor.GetComponent<RectTransform>().localPosition += new Vector3(cursorGrid, 0, 0);
+                cursorMove = false;
+                StartCoroutine(EnableCursorMove());
             }
-            
+            else if (Input.GetAxisRaw("Horizontal_Joy_2") < -stickSensitivity && cursorMove && cursorPos.x > -screenWidth)
+            {
+                controllerCursor.GetComponent<RectTransform>().localPosition -= new Vector3(cursorGrid, 0, 0);
+                cursorMove = false;
+                StartCoroutine(EnableCursorMove());
+            }
+            else if (Input.GetAxisRaw("Vertical_Joy_2") > stickSensitivity && cursorMove && cursorPos.y < screenHeight)
+            {
+                controllerCursor.GetComponent<RectTransform>().localPosition += new Vector3(0, cursorGrid, 0);
+                cursorMove = false;
+                StartCoroutine(EnableCursorMove());
+            }
+            else if (Input.GetAxisRaw("Vertical_Joy_2") < -stickSensitivity && cursorMove && cursorPos.y > -screenHeight)
+            {
+                controllerCursor.GetComponent<RectTransform>().localPosition -= new Vector3(0, cursorGrid, 0);
+                cursorMove = false;
+                StartCoroutine(EnableCursorMove());
+            }
+
             if (Input.GetButton("Place_Joy_2") && placeEnabled)
             {
                 SetTrap();
@@ -495,6 +538,12 @@ public class PlaceTrap : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.5f);
         placeEnabled = true;
+    }
+
+    IEnumerator EnableCursorMove()
+    {
+        yield return new WaitForSeconds(cursorDelay);
+        cursorMove = true;
     }
 
     private void SwitchQueue()

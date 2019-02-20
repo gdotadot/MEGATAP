@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda5a611920cf1c49bab03c41c7f740b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridSize: 2
   tower: {fileID: 0}
   trapButtons:
   - {fileID: 1148860999998904, guid: ad3241910d1b2f54db2ac80af833dd05, type: 2}
@@ -181,14 +182,15 @@ MonoBehaviour:
   - {fileID: 114603356562152718, guid: 14716dac1aa2c7a488003f7bba1968d3, type: 2}
   - {fileID: 114426541480001402, guid: 7b86cd6111e958843812033b42c97d80, type: 2}
   - {fileID: 114173747208991380, guid: b34de131824cbe447931d0a2d1e0696b, type: 2}
+  trapQueue: {fileID: 0}
   controllerCursor: {fileID: 0}
   eventSystem: {fileID: 0}
   gameManager: {fileID: 0}
   cam: {fileID: 0}
-  cursorSpeed: 5
-  gridSize: 2
   queueSize: 7
-  trapQueue: {fileID: 0}
+  cursorDelay: 0.05
+  cursorGrid: 23
+  stickSensitivity: 0.6
 --- !u!114 &114871698429783546
 MonoBehaviour:
   m_ObjectHideFlags: 1
