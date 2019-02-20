@@ -10,13 +10,15 @@ public class MoveControllerCursor : MonoBehaviour {
     private PauseMenu pause;
 
     [Header("Controller Values -----")]
-    [SerializeField] private float cursorDelay; //How long the script waits before moving cursor to next grid pos while stick is held down.
+    [SerializeField] private float cursorDelayHorizontal; //How long the script waits before moving cursor to next grid pos while stick is held down.
+    [SerializeField] private float cursorDelayVertical;
     [SerializeField] private float cursorGrid;  //Size of the cursor grid - DIFFERENT from the size of the worldspace/trap grid. Should be fine at 23 but might need to be tweaked if we change UI.
     [Tooltip("Higher # = Lower Sensitivity")] [SerializeField] private float stickSensitivity; //Between 0-1 ; how far the player needs to push the stick for it to move the cursor
                                                                                                //Needed to set it higher because some controller sticks naturally move left/right a little.
 
     private bool p2Controller;
-    private bool cursorMove = true;
+    private bool cursorHorizontalMove = true;
+    private bool cursorVerticalMove = true;
 
     private float screenWidth, screenHeight;
 
@@ -45,36 +47,42 @@ public class MoveControllerCursor : MonoBehaviour {
         if (p2Controller && !pause.GameIsPaused)
         {
             Vector3 cursorPos = controllerCursor.GetComponent<RectTransform>().localPosition;
-            if (Input.GetAxisRaw("Horizontal_Joy_2") > stickSensitivity && cursorMove && cursorPos.x < screenWidth)
+            if (Input.GetAxisRaw("Horizontal_Joy_2") > stickSensitivity && cursorHorizontalMove && cursorPos.x < screenWidth)
             {
                 controllerCursor.GetComponent<RectTransform>().localPosition += new Vector3(cursorGrid, 0, 0);
-                cursorMove = false;
-                StartCoroutine(EnableCursorMove());
+                cursorHorizontalMove = false;
+                StartCoroutine(EnableHorizontalCursorMove());
             }
-            else if (Input.GetAxisRaw("Horizontal_Joy_2") < -stickSensitivity && cursorMove && cursorPos.x > -screenWidth)
+            else if (Input.GetAxisRaw("Horizontal_Joy_2") < -stickSensitivity && cursorHorizontalMove && cursorPos.x > -screenWidth)
             {
                 controllerCursor.GetComponent<RectTransform>().localPosition -= new Vector3(cursorGrid, 0, 0);
-                cursorMove = false;
-                StartCoroutine(EnableCursorMove());
+                cursorHorizontalMove = false;
+                StartCoroutine(EnableHorizontalCursorMove());
             }
-            else if (Input.GetAxisRaw("Vertical_Joy_2") > stickSensitivity && cursorMove && cursorPos.y < screenHeight)
+            else if (Input.GetAxisRaw("Vertical_Joy_2") > stickSensitivity && cursorVerticalMove && cursorPos.y < screenHeight)
             {
                 controllerCursor.GetComponent<RectTransform>().localPosition += new Vector3(0, cursorGrid, 0);
-                cursorMove = false;
-                StartCoroutine(EnableCursorMove());
+                cursorVerticalMove = false;
+                StartCoroutine(EnableVerticalCursorMove());
             }
-            else if (Input.GetAxisRaw("Vertical_Joy_2") < -stickSensitivity && cursorMove && cursorPos.y > -screenHeight)
+            else if (Input.GetAxisRaw("Vertical_Joy_2") < -stickSensitivity && cursorVerticalMove && cursorPos.y > -screenHeight)
             {
                 controllerCursor.GetComponent<RectTransform>().localPosition -= new Vector3(0, cursorGrid, 0);
-                cursorMove = false;
-                StartCoroutine(EnableCursorMove());
+                cursorVerticalMove = false;
+                StartCoroutine(EnableVerticalCursorMove());
             }
         }
     }
 
-    IEnumerator EnableCursorMove()
+    IEnumerator EnableHorizontalCursorMove()
     {
-        yield return new WaitForSeconds(cursorDelay);
-        cursorMove = true;
+        yield return new WaitForSeconds(cursorDelayHorizontal);
+        cursorHorizontalMove = true;
+    }
+
+    IEnumerator EnableVerticalCursorMove()
+    {
+        yield return new WaitForSeconds(cursorDelayVertical);
+        cursorVerticalMove = true;
     }
 }
