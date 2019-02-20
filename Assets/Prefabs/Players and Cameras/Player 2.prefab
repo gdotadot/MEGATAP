@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33140998972759548}
   - component: {fileID: 23349369097790388}
   - component: {fileID: 136189357046121884}
+  - component: {fileID: 114169544570823518}
   - component: {fileID: 114220156261559540}
   - component: {fileID: 114871698429783546}
   m_Layer: 0
@@ -159,6 +160,22 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134238031081466}
   m_Mesh: {fileID: 0}
+--- !u!114 &114169544570823518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1134238031081466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d64fb07f6ee1840af9a9c3970d7512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  controllerCursor: {fileID: 0}
+  cursorDelay: 0.03
+  cursorGrid: 23
+  stickSensitivity: 0.6
 --- !u!114 &114220156261559540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -188,9 +205,6 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   cam: {fileID: 0}
   queueSize: 7
-  cursorDelay: 0.05
-  cursorGrid: 23
-  stickSensitivity: 0.6
 --- !u!114 &114871698429783546
 MonoBehaviour:
   m_ObjectHideFlags: 1

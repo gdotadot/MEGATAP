@@ -15,7 +15,7 @@ public enum Direction
 public class PlaceTrap : MonoBehaviour {
     [SerializeField] private int gridSize;
 
-    [Header("Programmers - GameObjects -----")]
+    [Header("Programmers - GameObjects/Scripts -----")]
     [SerializeField] private GameObject tower;
 
     [SerializeField] private GameObject[] trapButtons;
@@ -34,10 +34,10 @@ public class PlaceTrap : MonoBehaviour {
     [Header("Queue Size -----")]
     [SerializeField] private int queueSize = 7;
 
-    [Header("Controller Values -----")]
-    [SerializeField] private float cursorDelay;
-    [SerializeField] private float cursorGrid;
-    [Tooltip("Higher # = Lower Sensitivity")] [SerializeField] private float stickSensitivity;
+    //[Header("Controller Values -----")]
+    //[SerializeField] private float cursorDelay;
+    //[SerializeField] private float cursorGrid;
+    //[Tooltip("Higher # = Lower Sensitivity")] [SerializeField] private float stickSensitivity;
    
     //Andy's Queue Stuff
     public List<GameObject> queue { get; private set; }
@@ -49,26 +49,18 @@ public class PlaceTrap : MonoBehaviour {
     private TrapBase trap;
     public Direction CurrentDirection { get; private set; }
     private GameObject ghostTrap;
-    //private GameObject previouslySelected;
     private float gridXOffset, gridZOffset, gridYOffset = 0.35f; //changed when trap is rotated so that it still properly aligns with grid.
 
     //Controller Stuff
     private bool p2Controller;
     private bool placeEnabled;
-    private bool cursorMove = true;
+    //private bool cursorMove = true;
 
     private float screenWidth; //Need to calculate edges of screen manually for cursor clamping because our canvas is set to match height.
     private float screenHeight;
 
 	void Start () {
         pause = gameManager.GetComponent<PauseMenu>();
-
-        //Screen size
-        CanvasScaler scaler = controllerCursor.GetComponentInParent<CanvasScaler>();
-        float expectedAspectRatio = scaler.referenceResolution.x / scaler.referenceResolution.y;
-        float aspectRatio = (float)Screen.width / (float)Screen.height;
-        screenWidth = (aspectRatio / expectedAspectRatio) * (scaler.referenceResolution.x / 2);
-        screenHeight = scaler.referenceResolution.y / 2;
 
         //Queue Initialization
         queue = new List<GameObject>();
@@ -83,54 +75,26 @@ public class PlaceTrap : MonoBehaviour {
 
         if (p2Controller)
         {
-            controllerCursor.enabled = true;
             eventSystem.SetSelectedGameObject(queue[0].gameObject);
-        }
-        else
-        {
-            controllerCursor.enabled = false;
         }
     }
 	
 
 	void Update () {
-        //Move controller cursor & get input
+        //Get controller select
         p2Controller = checkControllers.GetControllerTwoState();
         if (p2Controller && !pause.GameIsPaused)
         {
-            Vector3 cursorPos = controllerCursor.GetComponent<RectTransform>().localPosition;
-            if(Input.GetAxisRaw("Horizontal_Joy_2") > stickSensitivity && cursorMove && cursorPos.x < screenWidth)
-            {
-                controllerCursor.GetComponent<RectTransform>().localPosition += new Vector3(cursorGrid, 0, 0);
-                cursorMove = false;
-                StartCoroutine(EnableCursorMove());
-            }
-            else if (Input.GetAxisRaw("Horizontal_Joy_2") < -stickSensitivity && cursorMove && cursorPos.x > -screenWidth)
-            {
-                controllerCursor.GetComponent<RectTransform>().localPosition -= new Vector3(cursorGrid, 0, 0);
-                cursorMove = false;
-                StartCoroutine(EnableCursorMove());
-            }
-            else if (Input.GetAxisRaw("Vertical_Joy_2") > stickSensitivity && cursorMove && cursorPos.y < screenHeight)
-            {
-                controllerCursor.GetComponent<RectTransform>().localPosition += new Vector3(0, cursorGrid, 0);
-                cursorMove = false;
-                StartCoroutine(EnableCursorMove());
-            }
-            else if (Input.GetAxisRaw("Vertical_Joy_2") < -stickSensitivity && cursorMove && cursorPos.y > -screenHeight)
-            {
-                controllerCursor.GetComponent<RectTransform>().localPosition -= new Vector3(0, cursorGrid, 0);
-                cursorMove = false;
-                StartCoroutine(EnableCursorMove());
-            }
-
             if (Input.GetButton("Place_Joy_2") && placeEnabled)
             {
                 SetTrap();
             }
         }
+
+        //Move ghost with cursor
         MoveGhost();
 
+        //Reset queue's when tower rotates
         if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == tower.GetComponent<NumberOfFloors>().NumFloors && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
         {
             DestroyGhost();
@@ -142,6 +106,7 @@ public class PlaceTrap : MonoBehaviour {
             }
         }
 
+        //Swap spells and traps
         if (Input.GetButtonDown("Swap_Queue") && !pause.GameIsPaused)
         {
             DestroyGhost();
@@ -149,6 +114,7 @@ public class PlaceTrap : MonoBehaviour {
         }
     }
 
+    //Returns cursor position on tower as a grid location rather than free-floating
     private Vector3? GetGridPosition()
     {
         if (RaycastFromCam() != null)
@@ -181,10 +147,12 @@ public class PlaceTrap : MonoBehaviour {
         else return null;
     }
 
+    //Raycast from the camera to tower
     private RaycastHit? RaycastFromCam()
     {
         RaycastHit hit;
         Ray ray;
+        //Ray to controller cursor
         if (p2Controller && controllerCursor.transform.position.y > Screen.height / 2)
         {
             ray = cam.ScreenPointToRay(controllerCursor.transform.position);
@@ -194,6 +162,7 @@ public class PlaceTrap : MonoBehaviour {
             }
             else return null;
         }
+        //Ray to mouse cursor
         else if(Input.mousePosition.y > Screen.height / 2)
         {
             ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -209,7 +178,8 @@ public class PlaceTrap : MonoBehaviour {
         }
     }
 
-    //Called from event trigger on center column of tower when player clicks on it
+    //Called from custom event trigger script on floor prefabs column when it is clicked on w/ computer mouse
+    //ONLY computer mouse - controller cursor is handled in Update
     public void OnClickTower()
     {
         if(!Input.GetMouseButtonUp(1) && !pause.GameIsPaused)
@@ -247,9 +217,9 @@ public class PlaceTrap : MonoBehaviour {
                     trap = null;
                     DestroyGhost();
 
+                    //Set the selected trap button
                     if (p2Controller)
                     {
-                        //eventSystem.SetSelectedGameObject(previouslySelected);
                         for (int i = queue.Count - 1; i >= 0; i--)
                         {
                             if (queue[i].activeInHierarchy)
@@ -274,7 +244,6 @@ public class PlaceTrap : MonoBehaviour {
 
         return (hitY >= lowerLimit && hitY <= upperLimit);
     }
-
 
     private bool CheckNearby()
     {
@@ -322,6 +291,7 @@ public class PlaceTrap : MonoBehaviour {
 
             if (GetGridPosition() != null)
             {
+                //Rotate trap based on side of tower
                 switch (cam.GetComponent<CameraTwoRotator>().GetState())
                 {
                     case 1:
@@ -340,6 +310,7 @@ public class PlaceTrap : MonoBehaviour {
                 Vector3 position = GetGridPosition().Value;
                 ghostTrap.transform.position = position;
 
+                //Cancel the trap
                 if ((Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2")) && !pause.GameIsPaused)
                 {
                     DestroyGhost();
@@ -479,6 +450,7 @@ public class PlaceTrap : MonoBehaviour {
         }
     }
 
+    //Called from trap button
     private void OnClickTrap(int trapNum)
     {
         trap = trapPrefabs[trapNum];
@@ -489,6 +461,18 @@ public class PlaceTrap : MonoBehaviour {
         SetGhost();
     }
 
+    //Make player wait .5 seconds after pressing button to be able to place trap.
+    //Gets rid of controller bug where pressing A to select a trap also immediately places it
+    IEnumerator EnableInput()
+    {
+        yield return new WaitForSeconds(0.5f);
+        placeEnabled = true;
+    }
+
+
+    /// --------------------------------------------------------
+    /// QUEUE/ BUTTON STUFF
+    /// --------------------------------------------------------
     private void GetIndex(GameObject trap)
     {
         queueIndex = trap.GetComponent<ButtonIndex>().GetIndex();
@@ -530,20 +514,6 @@ public class PlaceTrap : MonoBehaviour {
     private void ClearButton()
     { 
         queue[queueIndex].SetActive(false);
-    }
-
-    //Make player wait .5 seconds after pressing button to be able to place trap.
-    //Gets rid of controller bug where pressing A to select a trap also immediately places it
-    IEnumerator EnableInput()
-    {
-        yield return new WaitForSeconds(0.5f);
-        placeEnabled = true;
-    }
-
-    IEnumerator EnableCursorMove()
-    {
-        yield return new WaitForSeconds(cursorDelay);
-        cursorMove = true;
     }
 
     private void SwitchQueue()
