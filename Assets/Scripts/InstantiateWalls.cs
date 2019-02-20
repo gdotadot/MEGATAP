@@ -18,17 +18,20 @@ public class InstantiateWalls : MonoBehaviour {
         switch (other.tag)
         {
             case "Wall1":
-                wallPos = new Vector3(wallTriggers[0].transform.position.x, wallY, wallTriggers[0].transform.position.z - 4);
+                wallPos = new Vector3(wallTriggers[0].transform.position.x, wallY, wallTriggers[0].transform.position.z - 1);
                 Instantiate(wall, wallPos, wallRot);
+                Destroy(other.gameObject);
                 break;
             case "Wall2":
-                wallPos = new Vector3(wallTriggers[1].transform.position.x + 3, wallY, wallTriggers[1].transform.position.z);
+                wallPos = new Vector3(wallTriggers[1].transform.position.x + 1, wallY, wallTriggers[1].transform.position.z);
                 wallRot = Quaternion.Euler(wall.transform.rotation.x, wall.transform.rotation.y, wall.transform.rotation.z);
                 Instantiate(wall, wallPos, wallRot);
+                Destroy(other.gameObject);
                 break;
             case "Wall3":
-                wallPos = new Vector3(wallTriggers[2].transform.position.x, wallY, wallTriggers[2].transform.position.z + 4);
+                wallPos = new Vector3(wallTriggers[2].transform.position.x, wallY, wallTriggers[2].transform.position.z + 1);
                 Instantiate(wall, wallPos, wallRot);
+                Destroy(other.gameObject);
                 break;
         }
     }

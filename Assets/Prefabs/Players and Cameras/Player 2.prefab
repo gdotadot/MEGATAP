@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33140998972759548}
   - component: {fileID: 23349369097790388}
   - component: {fileID: 136189357046121884}
+  - component: {fileID: 114169544570823518}
   - component: {fileID: 114220156261559540}
   - component: {fileID: 114871698429783546}
   m_Layer: 0
@@ -159,6 +160,22 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134238031081466}
   m_Mesh: {fileID: 0}
+--- !u!114 &114169544570823518
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1134238031081466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62d64fb07f6ee1840af9a9c3970d7512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  controllerCursor: {fileID: 0}
+  cursorDelay: 0.03
+  cursorGrid: 23
+  stickSensitivity: 0.6
 --- !u!114 &114220156261559540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -170,6 +187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda5a611920cf1c49bab03c41c7f740b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridSize: 2
+  tower: {fileID: 0}
   trapButtons:
   - {fileID: 1148860999998904, guid: ad3241910d1b2f54db2ac80af833dd05, type: 2}
   - {fileID: 1110785462397992, guid: beb48e7d73b8a5949836542f424745f8, type: 2}
@@ -180,14 +199,12 @@ MonoBehaviour:
   - {fileID: 114603356562152718, guid: 14716dac1aa2c7a488003f7bba1968d3, type: 2}
   - {fileID: 114426541480001402, guid: 7b86cd6111e958843812033b42c97d80, type: 2}
   - {fileID: 114173747208991380, guid: b34de131824cbe447931d0a2d1e0696b, type: 2}
+  trapQueue: {fileID: 0}
   controllerCursor: {fileID: 0}
   eventSystem: {fileID: 0}
   gameManager: {fileID: 0}
   cam: {fileID: 0}
-  cursorSpeed: 5
-  gridSize: 2
   queueSize: 7
-  trapQueue: {fileID: 0}
 --- !u!114 &114871698429783546
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -199,6 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d032921ba3418214a94eaa4e868fe41a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tower: {fileID: 0}
   spellButtons:
   - {fileID: 1113329559578948, guid: 9caafb2bc87b57a46a16da291b5e206d, type: 2}
   spellPrefabs:
