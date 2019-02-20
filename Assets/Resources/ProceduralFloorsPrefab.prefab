@@ -70,6 +70,8 @@ GameObject:
   - component: {fileID: 33145033527202426}
   - component: {fileID: 23905172907051760}
   - component: {fileID: 65522808793442882}
+  - component: {fileID: 114658828760999092}
+  - component: {fileID: 114552044101684424}
   m_Layer: 10
   m_Name: CenterColumn
   m_TagString: Untagged
@@ -871,3 +873,29 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114552044101684424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1247744277350636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ac49a65d006d4240be25e04f9f63501, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114658828760999092
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1247744277350636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6bfdc3e85a30e3489fc892449c15397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
+  CastSpell: {fileID: 0}
+  PlaceTrap: {fileID: 0}
