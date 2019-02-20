@@ -16,7 +16,7 @@ public class Projectile : MonoBehaviour {
 	void Start () {
 		trapBase = GetComponent<TrapBase>();
 		Destroy(gameObject, 5.0f);
-        child = GetComponentsInChildren<Renderer>();
+        child = this.GetComponentsInChildren<Renderer>();
         hit = false;
 
         cam = GameObject.Find("Player 2 Camera").GetComponent<CameraTwoRotator>();
