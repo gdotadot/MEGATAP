@@ -1,15 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallandChain : MonoBehaviour {
+public class Petrify : MonoBehaviour {
 
     private SpellBase spellBase;
-
-    [SerializeField] private float slowRun = 0.5f;
-    [SerializeField] private float reduceJump = 0.5f;
-    [SerializeField] private float spellDuration = 5f;
-
+    [SerializeField] private int stunDuration;
     // let the FixedUpdate method know that there was a collision
     private bool hit = false;
     // the player (or whatever collided with this trap)
@@ -20,17 +16,14 @@ public class BallandChain : MonoBehaviour {
     {
         spellBase = GetComponent<SpellBase>();
     }
-    // Update is called once per frame
-    // knockback has a knockback velocity, knockup velocity, and a knockTimer to
-    // force the knockback into an arc shape.
+
     void FixedUpdate()
     {
         if (player != null)
         {
-            // if colliding, give an amount of slow
             if (hit)
             {
-                spellBase.Slow(player, slowRun, reduceJump, spellDuration);
+                spellBase.Stun(player, stunDuration);
             }
         }
     }
@@ -45,11 +38,5 @@ public class BallandChain : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.CompareTag("Boundary"))
-        {
-            Destroy(this);
-        }
-    }
+
 }
