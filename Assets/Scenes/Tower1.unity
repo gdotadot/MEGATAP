@@ -770,16 +770,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 114169544570823518, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: gameManager
-      value: 
-      objectReference: {fileID: 1016487807}
-    - target: {fileID: 114169544570823518, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: controllerCursor
-      value: 
-      objectReference: {fileID: 1513495130}
     - target: {fileID: 114220156261559540, guid: 7c17f18a57460024ba6258242e429410,
         type: 2}
       propertyPath: tower
@@ -810,6 +800,16 @@ Prefab:
       propertyPath: cam
       value: 
       objectReference: {fileID: 412805862}
+    - target: {fileID: 114169544570823518, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1016487807}
+    - target: {fileID: 114169544570823518, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: controllerCursor
+      value: 
+      objectReference: {fileID: 1513495130}
     - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
         type: 2}
       propertyPath: tower
@@ -850,16 +850,6 @@ Prefab:
       propertyPath: spellQueue
       value: 
       objectReference: {fileID: 10065831}
-    - target: {fileID: 114169544570823518, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: cursorDelayHorizontal
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 114169544570823518, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: cursorDelayVertical
-      value: 0.2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c17f18a57460024ba6258242e429410, type: 2}
   m_IsPrefabAsset: 0

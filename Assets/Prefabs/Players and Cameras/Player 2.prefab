@@ -173,7 +173,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
   controllerCursor: {fileID: 0}
-  cursorDelay: 0.03
+  cursorDelayHorizontal: 0.05
+  cursorDelayVertical: 0.2
   cursorGrid: 23
   stickSensitivity: 0.6
 --- !u!114 &114220156261559540
@@ -219,8 +220,16 @@ MonoBehaviour:
   tower: {fileID: 0}
   spellButtons:
   - {fileID: 1113329559578948, guid: 9caafb2bc87b57a46a16da291b5e206d, type: 2}
+  - {fileID: 1113329559578948, guid: 2419b2b2f16cd924db2dfdd07893b05c, type: 2}
+  - {fileID: 1113329559578948, guid: 4fcae1fa39201f24cb3eb5a005187de5, type: 2}
+  - {fileID: 1113329559578948, guid: 6a89e440e2925b14c9bb31d09e4d2c2f, type: 2}
+  - {fileID: 1113329559578948, guid: d5688845a27f247f8856e27dbb5cf2e8, type: 2}
   spellPrefabs:
   - {fileID: 114692542700711350, guid: 1be1b6caab1fd324698fced99786f928, type: 2}
+  - {fileID: 114692542700711350, guid: 7a8dfb4bd9fe5404c9de268e4b6a114f, type: 2}
+  - {fileID: 114692542700711350, guid: a1877a9fcd9b1044b903f7eb78d4662f, type: 2}
+  - {fileID: 114692542700711350, guid: 4ccad5a5f67c07f48b38c70dbdfb34cb, type: 2}
+  - {fileID: 114692542700711350, guid: 80156f25595d343399a190b204285c71, type: 2}
   controllerCursor: {fileID: 0}
   eventSystem: {fileID: 0}
   gameManager: {fileID: 0}

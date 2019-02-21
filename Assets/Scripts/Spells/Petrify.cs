@@ -5,7 +5,7 @@ using UnityEngine;
 public class Petrify : MonoBehaviour {
 
     private SpellBase spellBase;
-
+    [SerializeField] private int stunDuration;
     // let the FixedUpdate method know that there was a collision
     private bool hit = false;
     // the player (or whatever collided with this trap)
@@ -23,7 +23,7 @@ public class Petrify : MonoBehaviour {
         {
             if (hit)
             {
-                spellBase.Stun(player, 5f);
+                spellBase.Stun(player, stunDuration);
             }
         }
     }
