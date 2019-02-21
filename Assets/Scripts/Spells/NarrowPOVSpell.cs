@@ -2,13 +2,13 @@
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 
-public class BlurSpell : MonoBehaviour {
+public class NarrowPOVSpell : MonoBehaviour {
     [SerializeField] private float spellTime;
 
     private Camera bottomCam;
 
     private PostProcessVolume postProcess;
-    private DepthOfField blur = null;
+    private Vignette vignette = null;
 
     private SpellBase sb;
 
@@ -18,22 +18,22 @@ public class BlurSpell : MonoBehaviour {
     }
     private void Update()
     {
-        if(sb.SpellCast)
+        if (sb.SpellCast)
         {
             bottomCam = GameObject.Find("Player 1 Camera").GetComponent<Camera>();
             postProcess = bottomCam.GetComponent<PostProcessVolume>();
-            postProcess.profile.TryGetSettings(out blur);
+            postProcess.profile.TryGetSettings(out vignette);
 
-            blur.active = true;
+            vignette.active = true;
 
             StartCoroutine(StopBlur());
         }
     }
-    
+
     IEnumerator StopBlur()
     {
         yield return new WaitForSeconds(spellTime);
-        blur.active = false;
+        vignette.active = false;
         Destroy(this.gameObject);
     }
 }

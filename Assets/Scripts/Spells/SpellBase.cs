@@ -18,6 +18,7 @@ public class SpellBase : MonoBehaviour {
 
     [EnumFlag] [SerializeField] public SpellDirection CastDirection;
 
+    [HideInInspector]
     public bool SpellCast; //Keep track of if the spell was cast - for checking instant spells (alex - post processing spells)
     //Spell speed towards player
     [SerializeField] private float speed;
