@@ -13,6 +13,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool crouching;
     private bool grounded;
     private bool jumping;
+    private bool landing;
 
     //Control if player can have input
     private bool move;
@@ -22,6 +23,7 @@ public class PlayerOneMovement : MonoBehaviour {
 
     //camera
     [SerializeField] private CameraOneRotator cam;
+    [SerializeField] private float distanceFromGround = 2f;
     private int camOneState = 1;
 
     [SerializeField] private GameObject gameManager;
@@ -167,8 +169,29 @@ public class PlayerOneMovement : MonoBehaviour {
             movementVector = new Vector3(0, movementVector.y, 0);
         }
         rb.velocity = movementVector;
+
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(-Vector3.up), out hit, distanceFromGround, LayerMask.GetMask("Platform")) && grounded == false)
+        {
+            //Debug.DrawRay(transform.position, transform.TransformDirection(-Vector3.up) * hit.distance, Color.yellow);
+            landing = true;
+        }
+        else
+        {
+        }
+        animator.SetBool("Landing", landing);
+        animator.SetBool("Grounded", grounded);
+        animator.SetFloat("YVelocity", rb.velocity.y);
     }
-    
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Platform")
+        {
+            landing = false;
+        }
+    }
+
 
     private void OnCollisionStay(Collision collision)
     {
@@ -178,6 +201,10 @@ public class PlayerOneMovement : MonoBehaviour {
         }
         else if (Physics.Raycast(transform.position, -transform.right, 1))
         {
+        }
+        else
+        {
+
         }
     }
 
