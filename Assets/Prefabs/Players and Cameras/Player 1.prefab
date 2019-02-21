@@ -234,7 +234,6 @@ GameObject:
   - component: {fileID: 54241147669559020}
   - component: {fileID: 114940724036334842}
   - component: {fileID: 114614076012222384}
-  - component: {fileID: 114559352700593616}
   - component: {fileID: 136407975964972082}
   - component: {fileID: 114452904007992328}
   - component: {fileID: 95974463458835562}
@@ -1596,23 +1595,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: {fileID: 0}
---- !u!114 &114559352700593616
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1428506183960842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa7f555502503904b81924ffbb98e351, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallTriggers:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  wall: {fileID: 1304183516199084, guid: db135b0f7b963ae48b5599f5a08f5d03, type: 2}
-  camOneRotator: {fileID: 114614076012222384}
 --- !u!114 &114614076012222384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1624,6 +1606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a99e4dd110c91541b836d45d1d5ecd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tower: {fileID: 0}
   playerOneCam: {fileID: 0}
   moveSpeed: 0.5
   playerModel: {fileID: 1428506183960842}
@@ -1644,12 +1627,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0287b94620a0be046bc297479c9d2885, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 114614076012222384}
   moveSpeed: 15
   jumpHeight: 25
+  cam: {fileID: 114614076012222384}
   gameManager: {fileID: 0}
-  trapBase: {fileID: 114835074479586106, guid: d2dde8bac47aaa841a71958adfdc26e0, type: 2}
-  animator: {fileID: 95974463458835562}
 --- !u!136 &136407975964972082
 CapsuleCollider:
   m_ObjectHideFlags: 1

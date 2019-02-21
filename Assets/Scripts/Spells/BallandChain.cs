@@ -6,6 +6,10 @@ public class BallandChain : MonoBehaviour {
 
     private SpellBase spellBase;
 
+    [SerializeField] private float slowRun = 0.5f;
+    [SerializeField] private float reduceJump = 0.5f;
+    [SerializeField] private float spellDuration = 5f;
+
     // let the FixedUpdate method know that there was a collision
     private bool hit = false;
     // the player (or whatever collided with this trap)
@@ -26,7 +30,7 @@ public class BallandChain : MonoBehaviour {
             // if colliding, give an amount of slow
             if (hit)
             {
-                spellBase.Slow(player, 0.5f, 0.5f, 5f);
+                spellBase.Slow(player, slowRun, reduceJump, spellDuration);
             }
         }
     }
