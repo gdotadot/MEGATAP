@@ -124,6 +124,7 @@ public class SpellBase : MonoBehaviour {
             once = true;
             StartCoroutine(WaitStun(player, stunDuration));
         }
+
     }
 
     private IEnumerator WaitStun(GameObject player, float stunDuration)
@@ -138,7 +139,7 @@ public class SpellBase : MonoBehaviour {
         {
             player.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
             player.GetComponent<PlayerOneMovement>().SetSpeed(player.GetComponent<PlayerOneMovement>().GetConstantSpeed());
-            once = false;
+            //once = false;
             waitActive = true;
         }
     }
