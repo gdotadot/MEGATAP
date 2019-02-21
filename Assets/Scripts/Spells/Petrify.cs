@@ -1,8 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallandChain : MonoBehaviour {
+public class Petrify : MonoBehaviour {
 
     private SpellBase spellBase;
 
@@ -16,17 +16,14 @@ public class BallandChain : MonoBehaviour {
     {
         spellBase = GetComponent<SpellBase>();
     }
-    // Update is called once per frame
-    // knockback has a knockback velocity, knockup velocity, and a knockTimer to
-    // force the knockback into an arc shape.
+
     void FixedUpdate()
     {
         if (player != null)
         {
-            // if colliding, give an amount of slow
             if (hit)
             {
-                spellBase.Slow(player, 0.5f, 0.5f, 5f);
+                spellBase.Stun(player, 5f);
             }
         }
     }
@@ -41,11 +38,5 @@ public class BallandChain : MonoBehaviour {
         }
     }
 
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.CompareTag("Boundary"))
-        {
-            Destroy(this);
-        }
-    }
+
 }
