@@ -158,7 +158,9 @@ public class PlayerOneMovement : MonoBehaviour {
         if(jumping)
         {
             movementVector = new Vector3(movementVector.x, jumpH, movementVector.z);
+            animator.Play("Armature|JumpStart", 0);
             jumping = false;
+            landing = false;
         }
         else if(crouching)
         {
@@ -173,23 +175,16 @@ public class PlayerOneMovement : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(-Vector3.up), out hit, distanceFromGround, LayerMask.GetMask("Platform")) && grounded == false)
         {
-            //Debug.DrawRay(transform.position, transform.TransformDirection(-Vector3.up) * hit.distance, Color.yellow);
+            Debug.DrawRay(transform.position, transform.TransformDirection(-Vector3.up) * hit.distance, Color.yellow);
             landing = true;
         }
         else
         {
         }
+        
         animator.SetBool("Landing", landing);
         animator.SetBool("Grounded", grounded);
         animator.SetFloat("YVelocity", rb.velocity.y);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Platform")
-        {
-            landing = false;
-        }
     }
 
 
