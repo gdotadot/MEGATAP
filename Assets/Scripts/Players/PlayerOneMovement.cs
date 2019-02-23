@@ -111,15 +111,18 @@ public class PlayerOneMovement : MonoBehaviour {
                 {
                     transform.eulerAngles = new Vector3(0, 0, 0);
                     animator.SetFloat("Velocity", speed);
+                    if (grounded) animator.SetBool("Running", true);
                 }
                 else if (inputAxis < 0)
                 {
                     transform.eulerAngles = new Vector3(0, 180, 0);
                     animator.SetFloat("Velocity", -speed);
+                    if (grounded) animator.SetBool("Running", true);
                 }
                 else
                 {
                     animator.SetFloat("Velocity", 0);
+                    if (grounded) animator.SetBool("Running", false);
                 }
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
                 break;
@@ -129,15 +132,18 @@ public class PlayerOneMovement : MonoBehaviour {
                 {
                     transform.eulerAngles = new Vector3(0, 270, 0);
                     animator.SetFloat("Velocity", -speed);
+                    if (grounded) animator.SetBool("Running", true);
                 }
                 else if (inputAxis < 0)
                 {
                     transform.eulerAngles = new Vector3(0, 90, 0);
                     animator.SetFloat("Velocity", speed);
+                    if (grounded) animator.SetBool("Running", true);
                 }
                 else
                 {
                     animator.SetFloat("Velocity", -rb.velocity.x);
+                    if (grounded) animator.SetBool("Running", false);
                 }
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
                 break;
@@ -147,15 +153,18 @@ public class PlayerOneMovement : MonoBehaviour {
                 {
                     transform.eulerAngles = new Vector3(0, 180, 0);
                     animator.SetFloat("Velocity", -speed);
+                    if (grounded) animator.SetBool("Running", true);
                 }
                 else if (inputAxis < 0)
                 {
                     transform.eulerAngles = new Vector3(0, 0, 0);
                     animator.SetFloat("Velocity", speed);
+                    if (grounded) animator.SetBool("Running", true);
                 }
                 else
                 {
                     animator.SetFloat("Velocity", 0);
+                    if (grounded) animator.SetBool("Running", false);
                 }
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
                 break;
