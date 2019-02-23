@@ -53,9 +53,9 @@ public class Sap : MonoBehaviour {
             {
                 //Animation ends 1 frame earlier than slow so that the next instance of sap touched will do the animation properly
                 //If this ended at the same time as the slow (= 0) then the previous instance of sap touched will call this function over and over again.
-                Debug.Log("hit2: " + hit);
+                //Debug.Log("hit2: " + hit);
                 anim.SetBool("Slowed", hit);
-                Debug.Log(hit);
+                //Debug.Log(hit);
             }
             // tick timer down if there is any
             if (slowTimer > 0)
