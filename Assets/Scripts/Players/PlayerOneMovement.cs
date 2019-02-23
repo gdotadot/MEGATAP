@@ -268,4 +268,9 @@ public class PlayerOneMovement : MonoBehaviour {
     {
         move = m;
     }
+
+    public Animator GetAnim()
+    {
+        return animator;
+    }
 }
