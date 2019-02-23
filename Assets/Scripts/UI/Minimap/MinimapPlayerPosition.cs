@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 //<Alex>
 [RequireComponent(typeof(Image))]
@@ -9,6 +10,10 @@ public class MinimapPlayerPosition : MonoBehaviour {
     [SerializeField] private NumberOfFloors numberOfFloors;
     [SerializeField] private Image topPlayerImage;
     [SerializeField] private Image bottomPlayerImage;
+    [SerializeField] private TextMeshProUGUI topText;
+    [SerializeField] private TextMeshProUGUI bottomText;
+
+
     [SerializeField] private CameraTwoRotator camTwo;
     [SerializeField] private CameraOneRotator camOne;
 
@@ -33,6 +38,8 @@ public class MinimapPlayerPosition : MonoBehaviour {
         topPlayerImage.rectTransform.anchoredPosition = new Vector3(topPlayerImage.rectTransform.anchoredPosition.x,
                                                                  highestMinimapPoint * position - (highestMinimapPoint / numberOfFloors.NumFloors),
                                                                  0);
+
+        topText.text = "TOP: " + floor;
     }
 
     private void GetBottomPlayerPosition()
@@ -43,5 +50,7 @@ public class MinimapPlayerPosition : MonoBehaviour {
         bottomPlayerImage.rectTransform.anchoredPosition = new Vector3(bottomPlayerImage.rectTransform.anchoredPosition.x,
                                                                  highestMinimapPoint * position - (highestMinimapPoint / numberOfFloors.NumFloors),
                                                                  0);
+
+        bottomText.text = "BOT: " + floor;
     }
 }
