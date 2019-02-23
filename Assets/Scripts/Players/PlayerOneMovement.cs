@@ -14,6 +14,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool grounded;
     private bool jumping;
     private bool landing;
+    private bool wallJumping;
 
     //Control if player can have input
     private bool move;
@@ -50,7 +51,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private void Update()
     {
         camOneState = cam.GetState();
-
+        Debug.DrawRay(transform.position, transform.forward * 6, Color.green);
         if (move == true)
         {
             inputAxis = checkControllers.GetInputAxis();
@@ -78,106 +79,115 @@ public class PlayerOneMovement : MonoBehaviour {
             }
             //animator.SetBool("Running", move);
         }
-
-        switch (camOneState)
+        if(grounded)
         {
-            case 1:
-                movementVector = new Vector3(inputAxis * speed, rb.velocity.y, 0);
-                //Debug.Log(movementVector);
-                if (inputAxis > 0)
-                {
-                    transform.eulerAngles = new Vector3(0, 90, 0);
-                    animator.SetFloat("Velocity", speed);
-                    if(grounded) animator.SetBool("Running", true);
-                }
-                else if (inputAxis < 0)
-                {
-                    transform.eulerAngles = new Vector3(0, 270, 0);
-                    animator.SetFloat("Velocity", -speed);
+            switch (camOneState)
+            {
+                case 1:
+                    movementVector = new Vector3(inputAxis * speed, rb.velocity.y, 0);
+                    //Debug.Log(movementVector);
+                    if (inputAxis > 0)
+                    {
+                        transform.eulerAngles = new Vector3(0, 90, 0);
+                        animator.SetFloat("Velocity", speed);
+                        if (grounded) animator.SetBool("Running", true);
+                    }
+                    else if (inputAxis < 0)
+                    {
+                        transform.eulerAngles = new Vector3(0, 270, 0);
+                        animator.SetFloat("Velocity", -speed);
 
-                    if (grounded) animator.SetBool("Running", true);
-                }
-                else
-                {
-                    animator.SetFloat("Velocity", 0);
+                        if (grounded) animator.SetBool("Running", true);
+                    }
+                    else
+                    {
+                        animator.SetFloat("Velocity", 0);
 
-                    if (grounded) animator.SetBool("Running", false);
-                }
-                rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
-                break;
-            case 2:
-                movementVector = new Vector3(0, rb.velocity.y, inputAxis * speed);
-                if (inputAxis > 0)
-                {
-                    transform.eulerAngles = new Vector3(0, 0, 0);
-                    animator.SetFloat("Velocity", speed);
-                    if (grounded) animator.SetBool("Running", true);
-                }
-                else if (inputAxis < 0)
-                {
-                    transform.eulerAngles = new Vector3(0, 180, 0);
-                    animator.SetFloat("Velocity", -speed);
-                    if (grounded) animator.SetBool("Running", true);
-                }
-                else
-                {
-                    animator.SetFloat("Velocity", 0);
-                    if (grounded) animator.SetBool("Running", false);
-                }
-                rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
-                break;
-            case 3:
-                movementVector = new Vector3(-inputAxis * speed, rb.velocity.y, 0);
-                if (inputAxis > 0)
-                {
-                    transform.eulerAngles = new Vector3(0, 270, 0);
-                    animator.SetFloat("Velocity", -speed);
-                    if (grounded) animator.SetBool("Running", true);
-                }
-                else if (inputAxis < 0)
-                {
-                    transform.eulerAngles = new Vector3(0, 90, 0);
-                    animator.SetFloat("Velocity", speed);
-                    if (grounded) animator.SetBool("Running", true);
-                }
-                else
-                {
-                    animator.SetFloat("Velocity", -rb.velocity.x);
-                    if (grounded) animator.SetBool("Running", false);
-                }
-                rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
-                break;
-            case 4:
-                movementVector = new Vector3(0, rb.velocity.y, -inputAxis * speed);
-                if (inputAxis > 0)
-                {
-                    transform.eulerAngles = new Vector3(0, 180, 0);
-                    animator.SetFloat("Velocity", -speed);
-                    if (grounded) animator.SetBool("Running", true);
-                }
-                else if (inputAxis < 0)
-                {
-                    transform.eulerAngles = new Vector3(0, 0, 0);
-                    animator.SetFloat("Velocity", speed);
-                    if (grounded) animator.SetBool("Running", true);
-                }
-                else
-                {
-                    animator.SetFloat("Velocity", 0);
-                    if (grounded) animator.SetBool("Running", false);
-                }
-                rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
-                break;
+                        if (grounded) animator.SetBool("Running", false);
+                    }
+                    rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+                    break;
+                case 2:
+                    movementVector = new Vector3(0, rb.velocity.y, inputAxis * speed);
+                    if (inputAxis > 0)
+                    {
+                        transform.eulerAngles = new Vector3(0, 0, 0);
+                        animator.SetFloat("Velocity", speed);
+                        if (grounded) animator.SetBool("Running", true);
+                    }
+                    else if (inputAxis < 0)
+                    {
+                        transform.eulerAngles = new Vector3(0, 180, 0);
+                        animator.SetFloat("Velocity", -speed);
+                        if (grounded) animator.SetBool("Running", true);
+                    }
+                    else
+                    {
+                        animator.SetFloat("Velocity", 0);
+                        if (grounded) animator.SetBool("Running", false);
+                    }
+                    rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
+                    break;
+                case 3:
+                    movementVector = new Vector3(-inputAxis * speed, rb.velocity.y, 0);
+                    if (inputAxis > 0)
+                    {
+                        transform.eulerAngles = new Vector3(0, 270, 0);
+                        animator.SetFloat("Velocity", -speed);
+                        if (grounded) animator.SetBool("Running", true);
+                    }
+                    else if (inputAxis < 0)
+                    {
+                        transform.eulerAngles = new Vector3(0, 90, 0);
+                        animator.SetFloat("Velocity", speed);
+                        if (grounded) animator.SetBool("Running", true);
+                    }
+                    else
+                    {
+                        animator.SetFloat("Velocity", -rb.velocity.x);
+                        if (grounded) animator.SetBool("Running", false);
+                    }
+                    rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
+                    break;
+                case 4:
+                    movementVector = new Vector3(0, rb.velocity.y, -inputAxis * speed);
+                    if (inputAxis > 0)
+                    {
+                        transform.eulerAngles = new Vector3(0, 180, 0);
+                        animator.SetFloat("Velocity", -speed);
+                        if (grounded) animator.SetBool("Running", true);
+                    }
+                    else if (inputAxis < 0)
+                    {
+                        transform.eulerAngles = new Vector3(0, 0, 0);
+                        animator.SetFloat("Velocity", speed);
+                        if (grounded) animator.SetBool("Running", true);
+                    }
+                    else
+                    {
+                        animator.SetFloat("Velocity", 0);
+                        if (grounded) animator.SetBool("Running", false);
+                    }
+                    rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
+                    break;
+            }
         }
     }
 
     private void FixedUpdate()
     {
+        Debug.DrawRay(transform.position, ((-transform.forward + transform.up) + -transform.forward).normalized * 6);
         if(jumping)
         {
             movementVector = new Vector3(movementVector.x, jumpH, movementVector.z);
             animator.Play("Armature|JumpStart", 0);
             jumping = false;
+            landing = false;
+        }
+        else if(wallJumping)
+        {
+            movementVector = (((-transform.forward + transform.up) + -transform.forward).normalized * 100);
+            wallJumping = false;
             landing = false;
         }
         else if(crouching)
@@ -205,16 +215,29 @@ public class PlayerOneMovement : MonoBehaviour {
 
     private void OnCollisionStay(Collision collision)
     {
-        if(collision.gameObject.tag == "Platform")
+        if (collision.gameObject.tag == "Platform")
         {
-            grounded = true;
-        }
-        else if (Physics.Raycast(transform.position, -transform.right, 1))
-        {
-        }
-        else
-        {
-
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 1))
+            {
+                if (hit.transform.tag == "Platform" && Input.GetButtonDown("Jump_Joy_1"))
+                {
+                    wallJumping = true;
+                    jumping = false;
+                    //rb.AddForce(-transform.forward * 60);
+                }
+            }
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 1))
+            {
+                if (hit.transform.tag == "Platform" && jumping)
+                {
+                    Debug.Log("WallJumpLeft");
+                }
+            }
+            else
+            {
+                grounded = true;
+            }
         }
     }
 
