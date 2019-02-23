@@ -46,7 +46,6 @@ public class MinimapPlayerPosition : MonoBehaviour {
     {
         int floor = camOne.GetFloor();
         float position = 1 - (((float)numberOfFloors.NumFloors - (float)floor) / (float)numberOfFloors.NumFloors);
-        Debug.Log(position);
         bottomPlayerImage.rectTransform.anchoredPosition = new Vector3(bottomPlayerImage.rectTransform.anchoredPosition.x,
                                                                  highestMinimapPoint * position - (highestMinimapPoint / numberOfFloors.NumFloors),
                                                                  0);
