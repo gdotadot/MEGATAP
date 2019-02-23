@@ -50,6 +50,8 @@ public class CameraOneRotator : MonoBehaviour
 
     private void Update()
     {
+        //Don't delete this comment block - in case we switch back from Cinemachine
+        //=========================================================================
         //switch (cameraState)
         //{
         //    case 1:
