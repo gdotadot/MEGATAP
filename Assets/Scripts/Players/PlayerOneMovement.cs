@@ -273,4 +273,9 @@ public class PlayerOneMovement : MonoBehaviour {
     {
         return animator;
     }
+
+    public float GetInputAxis()
+    {
+        return inputAxis;
+    }
 }

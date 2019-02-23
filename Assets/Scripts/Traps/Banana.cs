@@ -5,11 +5,14 @@ using UnityEngine;
 public class Banana : MonoBehaviour {
     private TrapBase trapBase;
     [SerializeField] private float stunDuration;
+    [SerializeField] private float stunAnimSpeed = 1f;
+
     // let the FixedUpdate method know that there was a collision
     private bool hit = false;
     // the player (or whatever collided with this trap)
     private GameObject player = null;
-    // keep track of how many frames of knockback have passed
+    // Player's animator for animation
+    private Animator anim = null;
 
     private void Start()
     {
@@ -34,6 +37,9 @@ public class Banana : MonoBehaviour {
         {
             hit = true;
             player = other.gameObject;
+            anim = player.GetComponent<PlayerOneMovement>().GetAnim();
+            anim.SetFloat("StunAnimSpeed", stunAnimSpeed);
+            anim.Play("FaceplantStart", 0);
         }
     }
 }
