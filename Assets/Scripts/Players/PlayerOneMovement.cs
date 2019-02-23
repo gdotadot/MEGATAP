@@ -268,4 +268,14 @@ public class PlayerOneMovement : MonoBehaviour {
     {
         move = m;
     }
+
+    public Animator GetAnim()
+    {
+        return animator;
+    }
+
+    public float GetInputAxis()
+    {
+        return inputAxis;
+    }
 }
