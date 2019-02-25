@@ -1615,6 +1615,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 15
   jumpHeight: 25
+  wallJumpTime: 0.25
+  wallJumpDivider: 1
+  wallJumpDirectionDivider: 1
   cam: {fileID: 114614076012222384}
   distanceFromGround: 0.25
   gameManager: {fileID: 0}
