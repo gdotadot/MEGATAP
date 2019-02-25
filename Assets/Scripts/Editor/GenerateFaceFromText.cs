@@ -5,7 +5,7 @@ using UnityEditor;
 using System.Text;
 using System.IO;
 
-public class GenerateFaceFromText : MonoBehaviour {
+public class GenerateFaceFromText {
 
     // CHANGE TO USE
     // the name of the platform prefab you wish to use
@@ -14,15 +14,17 @@ public class GenerateFaceFromText : MonoBehaviour {
 
     [MenuItem("GameObject/Generate Face", false, 12)]
     private static void Create()
-    { 
-
+    {
+        Debug.Log("Generating Faces");
         Load(textfile1);
     }
 
 
     private static bool Load(string file)
     {
-
+        string temp = "XXX";
+        char temp1 = (char)temp[0];
+        Debug.Log("is it " + temp1.Equals('X'));
         // Handle any problems that might arise when reading the text
         try
         {
@@ -30,22 +32,24 @@ public class GenerateFaceFromText : MonoBehaviour {
             int lineNumber = 0; // the line we are on to get height correctly
             // Create a new StreamReader, tell it which file to read and what encoding the file
             // was saved as
-            StreamReader theReader = new StreamReader("Assets/TextLevels/" + textfile1, Encoding.Default);
+            StreamReader theReader = new StreamReader("Assets/TextLevels/" + textfile1 + ".txt", Encoding.Default);
             using (theReader)
             {
                 // While there's lines left in the text file, do this:
                 do
                 {
                     line = theReader.ReadLine();
-
+                    Debug.Log("reading line");
                     if (line != null)
                     {
                         lineNumber++;
                         for(int i = 0; i < 40; i++)
                         {
-                            if(line[i].Equals("x") || line [i].Equals("X"))
+                            if(line[i].Equals("X"))
                             {
-                                Instantiate(GameObject.Find(platform), new Vector3(i*2, lineNumber * 2, 0), Quaternion.identity);
+                                GameObject spawnedPlatform = PrefabUtility.InstantiatePrefab(GameObject.Find(platform)) as GameObject;
+                                spawnedPlatform.transform.position = new Vector3(i * 2, lineNumber * 2, 0);
+                                Debug.Log("spawned platform");
                             }
                         }
                         
