@@ -22,9 +22,6 @@ public class GenerateFaceFromText {
 
     private static bool Load(string file)
     {
-        string temp = "XXX";
-        char temp1 = (char)temp[0];
-        Debug.Log("is it " + temp1.Equals('X'));
         // Handle any problems that might arise when reading the text
         try
         {
@@ -39,16 +36,16 @@ public class GenerateFaceFromText {
                 do
                 {
                     line = theReader.ReadLine();
-                    Debug.Log("reading line");
                     if (line != null)
                     {
                         lineNumber++;
                         for(int i = 0; i < 40; i++)
                         {
-                            if(line[i].Equals("X"))
+                            if(line[i].Equals('X'))
                             {
-                                GameObject spawnedPlatform = PrefabUtility.InstantiatePrefab(GameObject.Find(platform)) as GameObject;
-                                spawnedPlatform.transform.position = new Vector3(i * 2, lineNumber * 2, 0);
+                                Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Platforms/" + platform + ".prefab", typeof(GameObject));
+                                GameObject spawnedPlatform = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+                                spawnedPlatform.transform.position = new Vector3(i * 2, lineNumber * -2, 0);
                                 Debug.Log("spawned platform");
                             }
                         }
