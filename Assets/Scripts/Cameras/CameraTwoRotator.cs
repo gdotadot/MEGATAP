@@ -66,7 +66,7 @@ public class CameraTwoRotator : MonoBehaviour {
                     {
                         moveEnabled = false;
                         floor++;
-                        cameraTarget.transform.position = new Vector3(cameraTarget.transform.position.x, cameraTarget.transform.position.y + 20, cameraTarget.transform.position.z);
+                        //cameraTarget.transform.position = new Vector3(cameraTarget.transform.position.x, cameraTarget.transform.position.y + 20, cameraTarget.transform.position.z);
 
                         StartMove(basePositions[0], baseRotations[0], 1);
                     }
@@ -136,13 +136,14 @@ public class CameraTwoRotator : MonoBehaviour {
 
     private IEnumerator TargetTween(Vector3 targetPos, Quaternion targetRot, float time)
     {
-        Vector3 currentPos = playerTwoCam.transform.position;
+        Vector3 currentPos = cameraTarget.transform.position;
         Quaternion currentRot = playerTwoCam.transform.rotation;
 
-        targetPos.y *= floor;
-        targetPos.y -= offsetFromAbove;
+        targetPos.x = targetPos.z = 0;
+        targetPos.y = floor * 20 - 40;
         for (float t = 0; t < time; t += Time.deltaTime)
         {
+            cameraTarget.transform.position = Vector3.Lerp(currentPos, targetPos, t / time);
             cameraTarget.transform.rotation = Quaternion.Slerp(currentRot, targetRot, t / time);
 
             yield return null;
