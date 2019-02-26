@@ -5,7 +5,7 @@ using UnityEngine.UI;
 //<alexc> This class rotates and moves the Player 2 (right side camera) on a given input.
 public class CameraTwoRotator : MonoBehaviour {
     [SerializeField] private GameObject tower;
-    [SerializeField] private Camera playerTwoCam;
+    [SerializeField] private GameObject playerTwoCam;
     [SerializeField] private float moveSpeed;
     [SerializeField] private Image gridUI;
     [SerializeField] private int offsetFromAbove;
@@ -13,9 +13,9 @@ public class CameraTwoRotator : MonoBehaviour {
     [SerializeField] private GameObject faceOneInstructions;
     [SerializeField] private GameManager gm;
     //Change these static variables iff tower is scaled
-    private static int camPosHorizontal = 140;
+    private static int camPosHorizontal = 75;
     private static int camPosVertical = 20;
-    private static int camRotationX = 5;
+    private static int camRotationX = 0;
     private static int numFloors;
     
 
