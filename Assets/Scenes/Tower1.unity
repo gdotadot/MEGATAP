@@ -132,7 +132,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4758679635353836, guid: cfd428a7fbb7c3042a80eb1763f22607, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.00000047683716
       objectReference: {fileID: 0}
     - target: {fileID: 4758679635353836, guid: cfd428a7fbb7c3042a80eb1763f22607, type: 2}
       propertyPath: m_LocalPosition.y
@@ -171,7 +171,7 @@ Prefab:
         type: 2}
       propertyPath: m_LookAt
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1798907610}
     - target: {fileID: 114584904814216998, guid: cfd428a7fbb7c3042a80eb1763f22607,
         type: 2}
       propertyPath: m_CameraDistance
@@ -186,6 +186,31 @@ Prefab:
         type: 2}
       propertyPath: m_MaximumFOV
       value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 114584904814216998, guid: cfd428a7fbb7c3042a80eb1763f22607,
+        type: 2}
+      propertyPath: m_SoftZoneWidth
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114584904814216998, guid: cfd428a7fbb7c3042a80eb1763f22607,
+        type: 2}
+      propertyPath: m_MinimumDistance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114584904814216998, guid: cfd428a7fbb7c3042a80eb1763f22607,
+        type: 2}
+      propertyPath: m_MaximumDistance
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 114584904814216998, guid: cfd428a7fbb7c3042a80eb1763f22607,
+        type: 2}
+      propertyPath: m_AdjustmentMode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114584904814216998, guid: cfd428a7fbb7c3042a80eb1763f22607,
+        type: 2}
+      propertyPath: m_YDamping
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cfd428a7fbb7c3042a80eb1763f22607, type: 2}
@@ -3389,7 +3414,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4940846812731354, guid: 295df6c694235764eac79c393ed826dc, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.00000047683716
       objectReference: {fileID: 0}
     - target: {fileID: 4940846812731354, guid: 295df6c694235764eac79c393ed826dc, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3426,7 +3451,12 @@ Prefab:
       objectReference: {fileID: 1219273410}
     - target: {fileID: 114956843716667498, guid: 295df6c694235764eac79c393ed826dc,
         type: 2}
-      propertyPath: gridUI
+      propertyPath: playerTwoCam
+      value: 
+      objectReference: {fileID: 1153211532}
+    - target: {fileID: 114956843716667498, guid: 295df6c694235764eac79c393ed826dc,
+        type: 2}
+      propertyPath: cameraTarget
       value: 
       objectReference: {fileID: 132904150}
     - target: {fileID: 114956843716667498, guid: 295df6c694235764eac79c393ed826dc,
@@ -3444,26 +3474,6 @@ Prefab:
       propertyPath: gm
       value: 
       objectReference: {fileID: 1016487807}
-    - target: {fileID: 114956843716667498, guid: 295df6c694235764eac79c393ed826dc,
-        type: 2}
-      propertyPath: playerTwoCam
-      value: 
-      objectReference: {fileID: 1153211532}
-    - target: {fileID: 20558474140203254, guid: 295df6c694235764eac79c393ed826dc,
-        type: 2}
-      propertyPath: field of view
-      value: 35
-      objectReference: {fileID: 0}
-    - target: {fileID: 114956843716667498, guid: 295df6c694235764eac79c393ed826dc,
-        type: 2}
-      propertyPath: moveSpeed
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114956843716667498, guid: 295df6c694235764eac79c393ed826dc,
-        type: 2}
-      propertyPath: cameraTarget
-      value: 
-      objectReference: {fileID: 132904150}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 295df6c694235764eac79c393ed826dc, type: 2}
   m_IsPrefabAsset: 0
