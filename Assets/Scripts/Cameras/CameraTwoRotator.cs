@@ -7,7 +7,7 @@ public class CameraTwoRotator : MonoBehaviour {
     [SerializeField] private GameObject tower;
     [SerializeField] private GameObject playerTwoCam;
     [SerializeField] private float moveSpeed;
-    [SerializeField] private Image gridUI;
+    [SerializeField] private GameObject cameraTarget;
     [SerializeField] private int offsetFromAbove;
     [SerializeField] private GameObject faceTwoInstructions;
     [SerializeField] private GameObject faceOneInstructions;
@@ -66,6 +66,7 @@ public class CameraTwoRotator : MonoBehaviour {
                         floor++;
                         StartMove(basePositions[0], baseRotations[0], 1);
                     }
+                    cameraTarget.transform.position = new Vector3(cameraTarget.transform.position.x, cameraTarget.transform.position.y + 20, cameraTarget.transform.position.z);
                 }
                 else
                 {
@@ -109,7 +110,7 @@ public class CameraTwoRotator : MonoBehaviour {
         targetPos.y -= offsetFromAbove;
         for (float t = 0; t < time; t += Time.deltaTime)
         {
-            playerTwoCam.transform.position = Vector3.Lerp(currentPos, targetPos, t/time);
+            //playerTwoCam.transform.position = Vector3.Lerp(currentPos, targetPos, t/time);
             playerTwoCam.transform.rotation = Quaternion.Slerp(currentRot, targetRot, t/time);
             yield return null;
         }
@@ -124,21 +125,23 @@ public class CameraTwoRotator : MonoBehaviour {
     //Rotate and move worldspace grid UI with camera
     private void MoveGrid()
     {
-        gridUI.transform.Rotate(0, 90, 0);
+        //gridUI.transform.Rotate(0, 90, 0);
+        cameraTarget.transform.Rotate(0, -90, 0);
         switch (currentPos)
         {
             case 1:
                 //Move up 20 when it hits face 1 again
-                gridUI.transform.position = new Vector3(0, gridUI.transform.position.y + 20, -40.1f);
+                //gridUI.transform.position = new Vector3(0, gridUI.transform.position.y + 20, -40.1f);
                 break;
             case 2:
-                gridUI.transform.position = new Vector3(40.1f, gridUI.transform.position.y, 0);
+                //gridUI.transform.position = new Vector3(40.1f, gridUI.transform.position.y, 0);
                 break;
             case 3:
-                gridUI.transform.position = new Vector3(0, gridUI.transform.position.y, 40.1f);
+                //gridUI.transform.position = new Vector3(0, gridUI.transform.position.y, 40.1f);
                 break;
             case 4:
-                gridUI.transform.position = new Vector3(-40.1f, gridUI.transform.position.y, 0);
+                //gridUI.transform.position = new Vector3(-40.1f, gridUI.transform.position.y, 0);
+//                cameraTarget.transform.position = new Vector3(cameraTarget.transform.position.x, cameraTarget.transform.position.y + 20, cameraTarget.transform.position.z);
                 break;
         }
     }
