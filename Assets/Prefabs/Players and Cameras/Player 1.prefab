@@ -1594,8 +1594,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   playerOneCam: {fileID: 0}
-  moveSpeed: 0.5
+  cinemachineSpeccy: {fileID: 0}
+  moveSpeed: 0.75
   playerModel: {fileID: 1428506183960842}
+  vcamLock: {fileID: 0}
   rotateTriggers:
   - {fileID: 0}
   - {fileID: 0}
@@ -1615,8 +1617,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 15
   jumpHeight: 25
-  wallJumpTime: 0.25
-  wallJumpDivider: 1
+  wallJumpTime: 0.2
+  wallJumpDivider: 1.5
   wallJumpDirectionDivider: 1
   cam: {fileID: 114614076012222384}
   distanceFromGround: 0.25

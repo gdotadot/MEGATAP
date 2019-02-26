@@ -8,8 +8,8 @@ public class PlayerOneMovement : MonoBehaviour {
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpHeight;
     [Tooltip("How long the wall jump force lasts.")][SerializeField] private float wallJumpTime;
-    [Tooltip("WallJumpForce = jumpHeight / this")][SerializeField] private int wallJumpDivider;
-    [Tooltip("How far between -transform.fwd & transform.up the angle is.")][SerializeField] private int wallJumpDirectionDivider;
+    [Tooltip("WallJumpForce = jumpHeight / this")][SerializeField] private float wallJumpDivider;
+    [Tooltip("How far between -transform.fwd & transform.up the angle is.")][SerializeField] private float wallJumpDirectionDivider;
 
     //other movement vars
     private Vector3 movementVector;
