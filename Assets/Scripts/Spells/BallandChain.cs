@@ -27,7 +27,7 @@ public class BallandChain : MonoBehaviour {
     {
         if (player != null)
         {
-            // if colliding, give an amount of slow
+            // if colliding, give an amount of stun
             if (hit)
             {
                 spellBase.Slow(player, slowRun, reduceJump, spellDuration);

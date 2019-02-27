@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 23513321566408302}
   - component: {fileID: 136067776974424564}
   - component: {fileID: 114692542700711350}
+  - component: {fileID: 114189518481710524}
   - component: {fileID: 54586173101670240}
   m_Layer: 0
   m_Name: Lightning
@@ -101,6 +102,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114189518481710524
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1858304420472382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7316432edce66764e8605e54221f6b2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunDuration: 3
 --- !u!114 &114692542700711350
 MonoBehaviour:
   m_ObjectHideFlags: 1
