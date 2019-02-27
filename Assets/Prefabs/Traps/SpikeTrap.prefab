@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 65616139103359960}
   - component: {fileID: 114814731164819766}
   - component: {fileID: 54340820329988354}
+  - component: {fileID: 95941102223367670}
   m_Layer: 9
   m_Name: WoodenSpikes
   m_TagString: Trap
@@ -218,6 +219,24 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 1, z: 4.0646286}
   m_Center: {x: 0, y: 0, z: 0.018608093}
+--- !u!95 &95941102223367670
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1591993895637878}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 6f259e6f20dea714d9cc7407ce185dfb, type: 3}
+  m_Controller: {fileID: 9100000, guid: ec442b9f48464504f8084fb628b6fd28, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &114165052816273324
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -255,6 +274,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackValue: 75
   knockUpValue: 32
+  stunDuration: 1
 --- !u!114 &114814731164819766
 MonoBehaviour:
   m_ObjectHideFlags: 1
