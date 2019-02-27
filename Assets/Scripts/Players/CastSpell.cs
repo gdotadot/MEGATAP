@@ -14,6 +14,7 @@ public class CastSpell : MonoBehaviour {
     [SerializeField] private Camera cam;
     [SerializeField] private Camera cam2;
     [SerializeField] private GameObject playerOne;
+    [SerializeField] private GameObject[] targeting;
 
     private float spellSpeed;
 
@@ -183,22 +184,22 @@ public class CastSpell : MonoBehaviour {
                     switch (PlayerOneState)
                     {
                         case 1:
-                            castedSpell = spell.InstantiateSpell(50, playerOne.GetComponent<PlayerOneMovement>().transform.position.y + 1.5f, -42);
+                            castedSpell = spell.InstantiateSpell(50, spellTarget.transform.position.y, -42);
                             movementVector = new Vector3(-spellSpeed, 0, 0);
                             rb = castedSpell.GetComponent<Rigidbody>();
                             break;
                         case 2:
-                            castedSpell = spell.InstantiateSpell(42, playerOne.GetComponent<PlayerOneMovement>().transform.position.y + 1.5f, 50);
+                            castedSpell = spell.InstantiateSpell(42, spellTarget.transform.position.y, 50);
                             movementVector = new Vector3(0, 0, -spellSpeed);
                             rb = castedSpell.GetComponent<Rigidbody>();
                             break;
                         case 3:
-                            castedSpell = spell.InstantiateSpell(-50, playerOne.GetComponent<PlayerOneMovement>().transform.position.y + 1.5f, 42);
+                            castedSpell = spell.InstantiateSpell(-50, spellTarget.transform.position.y, 42);
                             movementVector = new Vector3(spellSpeed, 0, 0);
                             rb = castedSpell.GetComponent<Rigidbody>();
                             break;
                         case 4:
-                            castedSpell = spell.InstantiateSpell(-42, playerOne.GetComponent<PlayerOneMovement>().transform.position.y + 1.5f, -50);
+                            castedSpell = spell.InstantiateSpell(-42, spellTarget.transform.position.y, -50);
                             movementVector = new Vector3(0, 0, spellSpeed);
                             rb = castedSpell.GetComponent<Rigidbody>();
                             break;
@@ -255,9 +256,21 @@ public class CastSpell : MonoBehaviour {
     {
         if (spell != null)
         {
-            spellTarget = spell.InstantiateSpell(Vector3.zero);
             ValidLocation = spell.GetComponent<SpellBase>().GetLocation();
-            spellDirection = spell.GetComponent<SpellBase>().GetDirection(); 
+            spellDirection = spell.GetComponent<SpellBase>().GetDirection();
+
+            if (spellDirection == SpellDirection.Right || spellDirection == SpellDirection.Left)
+            {
+                spellTarget = Instantiate(targeting[1], transform.position, Quaternion.identity);
+            }
+            else if (spellDirection == SpellDirection.Ceiling || spellDirection == SpellDirection.Floor)
+            {
+                spellTarget = Instantiate(targeting[0], transform.position, Quaternion.identity);
+            }
+            else
+            {
+                spellTarget = spell.InstantiateSpell(Vector3.zero);
+            }
         }
         Destroy(spellTarget.GetComponent<Collider>());    
 
@@ -270,7 +283,53 @@ public class CastSpell : MonoBehaviour {
             if (GetGridPosition() != null)
             {
                 Vector3 position = GetGridPosition().Value;
-                spellTarget.transform.position = position;
+                if (spellDirection == SpellDirection.Right || spellDirection == SpellDirection.Left)
+                {
+                    switch (PlayerOneState)
+                    {
+                        case 1:
+                            spellTarget.transform.eulerAngles = new Vector3(0, 0, 90);
+                            spellTarget.transform.position = new Vector3(transform.position.x, position.y, -42);
+                            break;
+                        case 2:
+                            spellTarget.transform.eulerAngles = new Vector3(90, 0, 0);
+                            spellTarget.transform.position = new Vector3(42, position.y, transform.position.z);
+                            break;
+                        case 3:
+                            spellTarget.transform.eulerAngles = new Vector3(0, 0, 90);
+                            spellTarget.transform.position = new Vector3(transform.position.x, position.y, 42);
+                            break;
+                        case 4:
+                            spellTarget.transform.eulerAngles = new Vector3(90, 0, 0);
+                            spellTarget.transform.position = new Vector3(-42, position.y, transform.position.z);
+                            break;
+                    }
+                }
+
+                else if (spellDirection == SpellDirection.Ceiling || spellDirection == SpellDirection.Floor)
+                {
+                    int playerFloor = playerOne.GetComponent<CameraOneRotator>().GetFloor() * 10;
+                    switch (PlayerOneState)
+                    {
+                        case 1:
+                            spellTarget.transform.position = new Vector3(position.x, playerFloor, -42);
+                            break;
+                        case 3:
+                            spellTarget.transform.position = new Vector3(position.x, playerFloor, 42);
+                            break;
+                        case 2:
+                            spellTarget.transform.position = new Vector3(42, playerFloor, position.z);
+                            break;
+                        case 4:
+                            spellTarget.transform.position = new Vector3(-42, playerFloor, position.z);
+                            break;
+                    }
+
+                }
+                else
+                {
+                    spellTarget.transform.position = position;
+                }
 
                 if (Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2"))
                 {

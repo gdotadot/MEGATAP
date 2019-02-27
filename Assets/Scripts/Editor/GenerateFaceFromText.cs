@@ -5,12 +5,13 @@ using UnityEditor;
 using System.Text;
 using System.IO;
 
-public class GenerateFaceFromText {
+public class GenerateFaceFromText
+{
 
     // CHANGE TO USE
     // the name of the platform prefab you wish to use
     private static string platform = "1x1Platform";
-    private static string textfile1 = "Sample_File_2";
+    private static string textfile1 = "Sample_File_1";
 
     [MenuItem("GameObject/Generate Face", false, 12)]
     private static void Create()
@@ -42,10 +43,10 @@ public class GenerateFaceFromText {
                     {
                         lineNumber++;
                         // for each line, read to 40 (length we have determined)
-                        for(int i = 0; i < 40; i++)
+                        for (int i = 0; i < 40; i++)
                         {
                             // spawn a platform when appropriate
-                            if(line[i].Equals('X'))
+                            if (line[i].Equals('X'))
                             {
                                 // load designated prefab, must be from proper folder
                                 Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Platforms/" + platform + ".prefab", typeof(GameObject));
@@ -57,7 +58,7 @@ public class GenerateFaceFromText {
 
                             }
                         }
-                        
+
                     }
                 }
                 while (line != null);
