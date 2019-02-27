@@ -10,7 +10,7 @@ public class GenerateFaceFromText {
     // CHANGE TO USE
     // the name of the platform prefab you wish to use
     private static string platform = "1x1Platform";
-    private static string textfile1 = "Sample_File_1";
+    private static string textfile1 = "Sample_File_2";
 
     [MenuItem("GameObject/Generate Face", false, 12)]
     private static void Create()
@@ -71,10 +71,10 @@ public class GenerateFaceFromText {
                 foreach (Transform t in transformList)
                 {
                     t.transform.SetParent(finalFab.transform);
-                    Debug.Log("create prefab!'");
                 }
                 PrefabUtility.ReplacePrefab(finalFab.gameObject, finalEmpty, ReplacePrefabOptions.ConnectToPrefab);
                 UnityEngine.Object.DestroyImmediate(finalFab);
+                Debug.Log("Prefab Created!");
                 return true;
             }
         }
