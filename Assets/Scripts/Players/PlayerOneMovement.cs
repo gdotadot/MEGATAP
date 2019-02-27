@@ -7,13 +7,18 @@ public class PlayerOneMovement : MonoBehaviour {
     //movement vars serialized for designers
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpHeight;
+    [Tooltip("How long the wall jump force lasts.")][SerializeField] private float wallJumpTime;
+    [Tooltip("WallJumpForce = jumpHeight / this")][SerializeField] private float wallJumpDivider;
+    [Tooltip("How far between -transform.fwd & transform.up the angle is.")][SerializeField] private float wallJumpDirectionDivider;
 
     //other movement vars
     private Vector3 movementVector;
+    private Vector3 wallJumpVector;
     private bool crouching;
     private bool grounded;
     private bool jumping;
     private bool landing;
+    private bool wallJumping;
 
     //Control if player can have input
     private bool move;
@@ -50,7 +55,6 @@ public class PlayerOneMovement : MonoBehaviour {
     private void Update()
     {
         camOneState = cam.GetState();
-
         if (move == true)
         {
             inputAxis = checkControllers.GetInputAxis();
@@ -88,7 +92,7 @@ public class PlayerOneMovement : MonoBehaviour {
                 {
                     transform.eulerAngles = new Vector3(0, 90, 0);
                     animator.SetFloat("Velocity", speed);
-                    if(grounded) animator.SetBool("Running", true);
+                    if (grounded) animator.SetBool("Running", true);
                 }
                 else if (inputAxis < 0)
                 {
@@ -169,6 +173,7 @@ public class PlayerOneMovement : MonoBehaviour {
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
                 break;
         }
+        
     }
 
     private void FixedUpdate()
@@ -188,12 +193,14 @@ public class PlayerOneMovement : MonoBehaviour {
         {
             movementVector = new Vector3(0, movementVector.y, 0);
         }
-        rb.velocity = movementVector;
 
+        if (!wallJumping) rb.velocity = movementVector;
+        else rb.velocity = wallJumpVector;
+        
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, distanceFromGround, LayerMask.GetMask("Platform")) && grounded == false)
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(-Vector3.up) * hit.distance, Color.yellow);
+            //Debug.DrawRay(transform.position, transform.TransformDirection(-Vector3.up) * hit.distance, Color.yellow);
             landing = true;
         }
         
@@ -205,16 +212,27 @@ public class PlayerOneMovement : MonoBehaviour {
 
     private void OnCollisionStay(Collision collision)
     {
-        if(collision.gameObject.tag == "Platform")
+        if (collision.gameObject.tag == "Platform")
         {
-            grounded = true;
-        }
-        else if (Physics.Raycast(transform.position, -transform.right, 1))
-        {
-        }
-        else
-        {
-
+            //CHECK WALL JUMP
+            RaycastHit hit;
+            RaycastHit downHit;
+            bool raycastDown = Physics.Raycast(transform.position, -transform.up, out downHit, 1);
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 1) && !raycastDown)
+            {
+                if (hit.transform.tag == "Platform" && Input.GetButtonDown("Jump_Joy_1"))
+                {
+                    wallJumpVector = (-transform.forward + transform.up / wallJumpDirectionDivider).normalized * (jumpH / wallJumpDivider);
+                    wallJumping = true;
+                    jumping = false;
+                    StartCoroutine(DisableWallJump());
+                }
+            }
+            //NOT WALL JUMPING
+            else
+            {
+                grounded = true;
+            }
         }
     }
 
@@ -224,6 +242,13 @@ public class PlayerOneMovement : MonoBehaviour {
         {
             grounded = false;
         }
+    }
+
+    private IEnumerator DisableWallJump()
+    {
+        yield return new WaitForSeconds(wallJumpTime);
+        wallJumping = false;
+        wallJumpVector = Vector3.zero;
     }
 
     /////////////////////////////////////////////
