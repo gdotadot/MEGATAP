@@ -22,6 +22,8 @@ public class GenerateFaceFromText {
 
     private static bool Load(string file)
     {
+        // store transforms of all platforms to eventually place into the prefab
+        List<Transform> transformList = new List<Transform>();
         // Handle any problems that might arise when reading the text
         try
         {
@@ -39,14 +41,20 @@ public class GenerateFaceFromText {
                     if (line != null)
                     {
                         lineNumber++;
+                        // for each line, read to 40 (length we have determined)
                         for(int i = 0; i < 40; i++)
                         {
+                            // spawn a platform when appropriate
                             if(line[i].Equals('X'))
                             {
+                                // load designated prefab, must be from proper folder
                                 Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Platforms/" + platform + ".prefab", typeof(GameObject));
                                 GameObject spawnedPlatform = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
                                 spawnedPlatform.transform.position = new Vector3(i * 2, lineNumber * -2, 0);
-                                Debug.Log("spawned platform");
+
+                                //store transform
+                                transformList.Add(spawnedPlatform.transform);
+
                             }
                         }
                         
@@ -55,6 +63,18 @@ public class GenerateFaceFromText {
                 while (line != null);
                 // Done reading, close the reader and return true to broadcast success    
                 theReader.Close();
+
+                // create an empty prefab that will hold our new prefab soon
+                Object finalEmpty = PrefabUtility.CreateEmptyPrefab("Assets/Prefabs/Faces/" + textfile1 + ".prefab");
+                // empty game object to attatch all of the platforms too 
+                GameObject finalFab = new GameObject();
+                foreach (Transform t in transformList)
+                {
+                    t.transform.SetParent(finalFab.transform);
+                    Debug.Log("create prefab!'");
+                }
+                PrefabUtility.ReplacePrefab(finalFab.gameObject, finalEmpty, ReplacePrefabOptions.ConnectToPrefab);
+                UnityEngine.Object.DestroyImmediate(finalFab);
                 return true;
             }
         }
