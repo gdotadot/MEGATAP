@@ -9,48 +9,45 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1858304420472382}
+  m_RootGameObject: {fileID: 1424637060701814}
   m_IsPrefabAsset: 1
---- !u!1 &1858304420472382
+--- !u!1 &1424637060701814
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4820203812461420}
-  - component: {fileID: 33386717450564926}
-  - component: {fileID: 23513321566408302}
-  - component: {fileID: 136067776974424564}
-  - component: {fileID: 114734091321866432}
-  - component: {fileID: 114692542700711350}
-  - component: {fileID: 54586173101670240}
+  - component: {fileID: 4719126580475488}
+  - component: {fileID: 33863842256037380}
+  - component: {fileID: 23928746108561552}
+  - component: {fileID: 136985171243055736}
   m_Layer: 0
-  m_Name: SlowTarget
+  m_Name: HorizontalTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4820203812461420
+--- !u!4 &4719126580475488
 Transform:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1858304420472382}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.32, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_GameObject: {fileID: 1424637060701814}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -35.8, y: 5.9, z: -42.1}
+  m_LocalScale: {x: 1, y: 45, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &23513321566408302
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!23 &23928746108561552
 MeshRenderer:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1858304420472382}
+  m_GameObject: {fileID: 1424637060701814}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -80,63 +77,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &33386717450564926
+--- !u!33 &33863842256037380
 MeshFilter:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1858304420472382}
+  m_GameObject: {fileID: 1424637060701814}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54586173101670240
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1858304420472382}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &114692542700711350
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1858304420472382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cad7df6e29991ae4aa6005d91e8199d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LocationCast: 1
-  CastDirection: 8
-  SpellCast: 0
-  speed: 20
---- !u!114 &114734091321866432
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1858304420472382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4281a506996cf2f4b8859d0931aabac6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slowRun: 0.5
-  reduceJump: 0.5
-  spellDuration: 5
---- !u!136 &136067776974424564
+--- !u!136 &136985171243055736
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1858304420472382}
+  m_GameObject: {fileID: 1424637060701814}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
