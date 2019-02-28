@@ -277,15 +277,12 @@ public class PlaceTrap : MonoBehaviour {
         }
         //Make half transparent
 
-        MeshRenderer[] mrs = GetComponentsInChildren<MeshRenderer>();
-        for(int i = 0; i < mrs.Length; i++)
+        MeshRenderer[] mrs = ghostTrap.GetComponentsInChildren<MeshRenderer>();
+        foreach (MeshRenderer mr in mrs)
         {
-            if (ghostTrap.GetComponentInChildren<MeshRenderer>() != null)
-            {
-                Color color = ghostTrap.GetComponentInChildren<MeshRenderer>().material.color;
-                color.a = 0.5f;
-                ghostTrap.GetComponentInChildren<MeshRenderer>().material.color = color;
-            }
+            Color color = mr.material.color;
+            color.a = 0.5f;
+            mr.material.color = color;
         }
 
        	ghostTrap.GetComponent<TrapBase>().enabled = false;
