@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+//<alex>
+[RequireComponent(typeof(BoxCollider))]
 public class CheckValidLocations : MonoBehaviour {
     private TrapBase tb;
     private Location toCheck;

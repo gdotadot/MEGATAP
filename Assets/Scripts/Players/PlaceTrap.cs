@@ -194,8 +194,14 @@ public class PlaceTrap : MonoBehaviour {
         {
             //Check if trap is on correct surface
             bool validLocation;
+            CheckMultipleBases bases = ghostTrap.GetComponentInChildren<CheckMultipleBases>();
             CheckValidLocations check = ghostTrap.GetComponentInChildren<CheckValidLocations>();
-            if(check != null)
+
+            if (bases != null)
+            {
+                validLocation = bases.Valid;
+            }
+            else if (check != null)
             {
                 validLocation = check.Valid;
             }
@@ -212,7 +218,8 @@ public class PlaceTrap : MonoBehaviour {
                 if (ghostTrap != null && CheckFloor(position.y))
                 {
                     trap.InstantiateTrap(position, ghostTrap.transform.rotation);
-                    check.Placed = true;
+                    if (check != null) check.Placed = true;
+                    //if (bases != null) bases.Placed = true;
                     ClearButton();
                     trap = null;
                     DestroyGhost();
