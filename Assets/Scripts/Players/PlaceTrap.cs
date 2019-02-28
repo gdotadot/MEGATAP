@@ -275,17 +275,35 @@ public class PlaceTrap : MonoBehaviour {
         {
             Destroy(ghostTrap.GetComponent<Spikes>());
         }
-        //Make half transparent
-
+        //Make half transparent------------------------------------------------
+        //Check for both mesh renderer and skinned mesh renderers
         MeshRenderer[] mrs = ghostTrap.GetComponentsInChildren<MeshRenderer>();
+        SkinnedMeshRenderer[] smrs = ghostTrap.GetComponentsInChildren<SkinnedMeshRenderer>();
+        //each mr can also have multiple materials
+        List<Material> mats = new List<Material>();
+
         foreach (MeshRenderer mr in mrs)
         {
-            Color color = mr.material.color;
-            color.a = 0.5f;
-            mr.material.color = color;
+            mr.GetMaterials(mats);
+            foreach(Material mat in mats)
+            {
+                Color color = mat.color;
+                color.a = 0.5f;
+                mat.color = color;
+            }
         }
 
-       	ghostTrap.GetComponent<TrapBase>().enabled = false;
+        foreach (SkinnedMeshRenderer smr in smrs)
+        {
+            smr.GetMaterials(mats);
+            foreach (Material mat in mats)
+            {
+                Color color = mat.color;
+                color.a = 0.5f;
+                mat.color = color;
+            }
+        }
+        ghostTrap.GetComponent<TrapBase>().enabled = false;
 
     }
 
