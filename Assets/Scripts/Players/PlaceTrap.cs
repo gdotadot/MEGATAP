@@ -269,7 +269,12 @@ public class PlaceTrap : MonoBehaviour {
         
         
         Destroy(ghostTrap.GetComponent<Collider>());
-
+        
+        //Delete spikes script so animation doesn't play
+        if(ghostTrap.GetComponentInChildren<Spikes>() != null)
+        {
+            Destroy(ghostTrap.GetComponent<Spikes>());
+        }
         //Make half transparent
         if (ghostTrap.GetComponentInChildren<MeshRenderer>() != null)
         {

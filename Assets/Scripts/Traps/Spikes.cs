@@ -5,6 +5,10 @@ using UnityEngine;
 public class Spikes : MonoBehaviour {
     private TrapBase trapBase;
 
+    private SkinnedMeshRenderer[] meshRenderers;
+    private float key;
+    [SerializeField] private float animationSpeed;
+
     // custom to this trap
     [SerializeField] private int knockBackValue = 75;
     [SerializeField] private int knockUpValue = 25;
@@ -22,6 +26,10 @@ public class Spikes : MonoBehaviour {
     // Use this for initialization
     void Start () {
         trapBase = GetComponent<TrapBase>();
+        meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
+        key = meshRenderers[0].GetBlendShapeWeight(0);
+
+        InvokeRepeating("Scale", 0f, 0.001f);
 	}
 	
 	// Update is called once per frame
@@ -61,5 +69,20 @@ public class Spikes : MonoBehaviour {
             anim.Play("Knockback", 0);
             anim.SetBool("Knockback", hit);
         }
+    }
+
+    private void Scale()
+    {
+        if(key >= 100)
+        {
+            CancelInvoke("Scale");
+        }
+
+        key -= animationSpeed;
+        foreach(SkinnedMeshRenderer mr in meshRenderers)
+        {
+            mr.SetBlendShapeWeight(0, key);
+        }
+        
     }
 }

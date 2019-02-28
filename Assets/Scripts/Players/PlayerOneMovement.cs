@@ -212,7 +212,7 @@ public class PlayerOneMovement : MonoBehaviour {
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.tag == "Platform" || collision.gameObject.tag == "Trap")
         {
             //CHECK WALL JUMP
             RaycastHit hit;
