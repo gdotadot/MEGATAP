@@ -27,11 +27,9 @@ public class Lightning : MonoBehaviour
     {
         if (player != null)
         {
-            Debug.Log("Player not null");
             // if colliding, give an amount of slow
             if (hit)
             {
-                Debug.Log("hit is true");
                 spellBase.Stun(player, stunDuration);
             }
         }
@@ -42,11 +40,7 @@ public class Lightning : MonoBehaviour
         if (other.tag == "Player")
         {
             hit = true;
-            Debug.Log("zzap");
             player = other.gameObject;
-            Debug.Log(player);
-            
-
         }
     }
 }
