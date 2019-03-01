@@ -211,6 +211,33 @@ public class CastSpell : MonoBehaviour {
                     castedSpell = spell.InstantiateSpell(spell.transform.position);
                     castedSpell.GetComponent<SpellBase>().SpellCast = true;
                 }
+                if(spellDirection == SpellDirection.Ceiling)
+                {
+                    switch (PlayerOneState)
+                    {
+                        case 1:
+                            castedSpell = spell.InstantiateSpell(spellTarget.transform.position.x, spellTarget.transform.position.y + 200, -42);
+                            movementVector = new Vector3(0, -spellSpeed, 0);
+                            rb = castedSpell.GetComponent<Rigidbody>();
+                            break;
+                        case 2:
+                            castedSpell = spell.InstantiateSpell(42, spellTarget.transform.position.y + 200, spellTarget.transform.position.z);
+                            movementVector = new Vector3(0, -spellSpeed, 0);
+                            rb = castedSpell.GetComponent<Rigidbody>();
+                            break;
+                        case 3:
+                            castedSpell = spell.InstantiateSpell(spellTarget.transform.position.x, spellTarget.transform.position.y + 200, 42);
+                            movementVector = new Vector3(0, -spellSpeed, 0);
+                            rb = castedSpell.GetComponent<Rigidbody>();
+                            break;
+                        case 4:
+                            castedSpell = spell.InstantiateSpell(-42, spellTarget.transform.position.y + 200, spellTarget.transform.position.z);
+                            movementVector = new Vector3(0, -spellSpeed, 0);
+                            rb = castedSpell.GetComponent<Rigidbody>();
+                            break;
+                    }
+                    castedSpell.GetComponent<SpellBase>().SpellCast = true;
+                }
 
                 spell = null;
                 ClearButton();
