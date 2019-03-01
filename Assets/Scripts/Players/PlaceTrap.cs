@@ -194,8 +194,14 @@ public class PlaceTrap : MonoBehaviour {
         {
             //Check if trap is on correct surface
             bool validLocation;
+            CheckMultipleBases bases = ghostTrap.GetComponentInChildren<CheckMultipleBases>();
             CheckValidLocations check = ghostTrap.GetComponentInChildren<CheckValidLocations>();
-            if(check != null)
+
+            if (bases != null)
+            {
+                validLocation = bases.Valid;
+            }
+            else if (check != null)
             {
                 validLocation = check.Valid;
             }
@@ -212,7 +218,8 @@ public class PlaceTrap : MonoBehaviour {
                 if (ghostTrap != null && CheckFloor(position.y))
                 {
                     trap.InstantiateTrap(position, ghostTrap.transform.rotation);
-                    check.Placed = true;
+                    if (check != null) check.Placed = true;
+                    //if (bases != null) bases.Placed = true;
                     ClearButton();
                     trap = null;
                     DestroyGhost();
@@ -275,15 +282,35 @@ public class PlaceTrap : MonoBehaviour {
         {
             Destroy(ghostTrap.GetComponent<Spikes>());
         }
-        //Make half transparent
-        if (ghostTrap.GetComponentInChildren<MeshRenderer>() != null)
+        //Make half transparent------------------------------------------------
+        //Check for both mesh renderer and skinned mesh renderers
+        MeshRenderer[] mrs = ghostTrap.GetComponentsInChildren<MeshRenderer>();
+        SkinnedMeshRenderer[] smrs = ghostTrap.GetComponentsInChildren<SkinnedMeshRenderer>();
+        //each mr can also have multiple materials
+        List<Material> mats = new List<Material>();
+
+        foreach (MeshRenderer mr in mrs)
         {
-            Color color = ghostTrap.GetComponentInChildren<MeshRenderer>().material.color;
-            color.a = 0.5f;
-            ghostTrap.GetComponentInChildren<MeshRenderer>().material.color = color;
+            mr.GetMaterials(mats);
+            foreach(Material mat in mats)
+            {
+                Color color = mat.color;
+                color.a = 0.5f;
+                mat.color = color;
+            }
         }
-        
-       	ghostTrap.GetComponent<TrapBase>().enabled = false;
+
+        foreach (SkinnedMeshRenderer smr in smrs)
+        {
+            smr.GetMaterials(mats);
+            foreach (Material mat in mats)
+            {
+                Color color = mat.color;
+                color.a = 0.5f;
+                mat.color = color;
+            }
+        }
+        ghostTrap.GetComponent<TrapBase>().enabled = false;
 
     }
 
