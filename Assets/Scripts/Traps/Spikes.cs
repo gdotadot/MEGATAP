@@ -23,8 +23,15 @@ public class Spikes : MonoBehaviour {
     //Player's animator for knockback animation
     private Animator anim = null;
 
+    // SFX
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip clip;
+
     // Use this for initialization
     void Start () {
+        audioSource = GetComponent<AudioSource>();
+
         trapBase = GetComponent<TrapBase>();
         meshRenderers = GetComponentsInChildren<SkinnedMeshRenderer>();
         key = meshRenderers[0].GetBlendShapeWeight(0);
@@ -68,6 +75,7 @@ public class Spikes : MonoBehaviour {
             anim = player.GetComponent<PlayerOneMovement>().GetAnim();
             anim.Play("Knockback", 0);
             anim.SetBool("Knockback", hit);
+            audioSource.PlayOneShot(clip);
         }
     }
 

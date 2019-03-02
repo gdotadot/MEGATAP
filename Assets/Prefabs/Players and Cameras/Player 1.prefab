@@ -237,8 +237,7 @@ GameObject:
   - component: {fileID: 136407975964972082}
   - component: {fileID: 114452904007992328}
   - component: {fileID: 95974463458835562}
-  - component: {fileID: 114248606661435480}
-  - component: {fileID: 114340503502342274}
+  - component: {fileID: 114692266925298726}
   - component: {fileID: 82333417526295136}
   - component: {fileID: 223606388147917922}
   m_Layer: 0
@@ -1541,34 +1540,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &114248606661435480
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1428506183960842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 033bd17af5f8ccf4caf9b5edb2afb77c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clips:
-  - {fileID: 8300000, guid: d724da124818f1649ab520e831076417, type: 3}
-  - {fileID: 8300000, guid: bcbd917027481b348871fc2e86ce115a, type: 3}
---- !u!114 &114340503502342274
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1428506183960842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 131b8f8880c8a9f4c9cd7f707ae1ee13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clips:
-  - {fileID: 8300000, guid: 9efc43597e927314fa6672b46cf3b2d5, type: 3}
-  - {fileID: 8300000, guid: 808939b8e9dbc494f90e38fd13919c8e, type: 3}
 --- !u!114 &114452904007992328
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1604,6 +1575,31 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   floorSpawn: {fileID: 0}
+--- !u!114 &114692266925298726
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1428506183960842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8c23a45a1411142ac34de9808c7538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BodySFX:
+  - {fileID: 8300000, guid: d724da124818f1649ab520e831076417, type: 3}
+  - {fileID: 8300000, guid: bcbd917027481b348871fc2e86ce115a, type: 3}
+  - {fileID: 8300000, guid: 808939b8e9dbc494f90e38fd13919c8e, type: 3}
+  JumpVoiceSFX:
+  - {fileID: 8300000, guid: a0e39d780b2450e4890b18f0b6d129ce, type: 3}
+  - {fileID: 8300000, guid: 758230dc84b1ff049b4989b97ccccb2f, type: 3}
+  - {fileID: 8300000, guid: 58cafdbbc3a36ef4a88cfc2b1d4d0748, type: 3}
+  OofVoiceSFX:
+  - {fileID: 8300000, guid: feb4ba600b151814ba7a0c7e2c3f681f, type: 3}
+  - {fileID: 8300000, guid: f3f464633b3e8344c993f614365df9aa, type: 3}
+  - {fileID: 8300000, guid: aa291a851cc771d48bf5af6399935bbc, type: 3}
+  - {fileID: 8300000, guid: 79a31afd5c288eb41b7f83c2f45e384e, type: 3}
+  - {fileID: 8300000, guid: 199fc6a88d301524590c12af7905031f, type: 3}
 --- !u!114 &114940724036334842
 MonoBehaviour:
   m_ObjectHideFlags: 1

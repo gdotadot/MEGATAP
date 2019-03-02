@@ -15,10 +15,15 @@ public class BallandChain : MonoBehaviour {
     // the player (or whatever collided with this trap)
     private GameObject player = null;
 
+    // SFX
+    private AudioSource audioSource;
+    [SerializeField]
+    private AudioClip clip;
 
     private void Start()
     {
         spellBase = GetComponent<SpellBase>();
+        audioSource = GetComponent<AudioSource>();
     }
     // Update is called once per frame
     // knockback has a knockback velocity, knockup velocity, and a knockTimer to
@@ -42,6 +47,7 @@ public class BallandChain : MonoBehaviour {
             hit = true;
             player = other.gameObject;
             this.GetComponent<Renderer>().enabled = false;
+            audioSource.PlayOneShot(clip);
         }
     }
 
