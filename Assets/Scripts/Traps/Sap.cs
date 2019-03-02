@@ -49,7 +49,7 @@ public class Sap : MonoBehaviour {
                 player.GetComponent<PlayerOneMovement>().SetSpeed(player.GetComponent<PlayerOneMovement>().GetConstantSpeed());
                 slowTriggered = false;
             }
-            if(slowTimer == 1)
+            if(slowTimer == 1 && anim != null)
             {
                 //Animation ends 1 frame earlier than slow so that the next instance of sap touched will do the animation properly
                 //If this ended at the same time as the slow (= 0) then the previous instance of sap touched will call this function over and over again.
