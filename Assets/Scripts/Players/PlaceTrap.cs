@@ -412,28 +412,29 @@ public class PlaceTrap : MonoBehaviour {
         {
             RaycastHit hit = RaycastFromCam().Value;
 
-            if (Input.GetButtonDown("RotateLeft_Joy_2") && !pause.GameIsPaused)
-            {
-                if (hit.normal.x == -1 || hit.normal.x == 1)
-                {
-                    trapRot--;
-                }
-                else
-                {
-                    trapRot++;
-                }
-            }
-            else if (Input.GetButtonDown("RotateRight_Joy_2") && !pause.GameIsPaused)
-            {
-                if (hit.normal.x == -1 || hit.normal.x == 1)
-                {
-                    trapRot++;
-                }
-                else
-                {
-                    trapRot--;
-                }
-            }
+            //Commented out while we are not doing trap rotation - KEEP for later
+            //if (Input.GetButtonDown("RotateLeft_Joy_2") && !pause.GameIsPaused)
+            //{
+            //    if (hit.normal.x == -1 || hit.normal.x == 1)
+            //    {
+            //        trapRot--;
+            //    }
+            //    else
+            //    {
+            //        trapRot++;
+            //    }
+            //}
+            //else if (Input.GetButtonDown("RotateRight_Joy_2") && !pause.GameIsPaused)
+            //{
+            //    if (hit.normal.x == -1 || hit.normal.x == 1)
+            //    {
+            //        trapRot++;
+            //    }
+            //    else
+            //    {
+            //        trapRot--;
+            //    }
+            //}
 
             //Add Offsets so they still stick to grid
             if(trapRot % 4 == 0)
