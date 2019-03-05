@@ -517,12 +517,12 @@ public class PlaceTrap : MonoBehaviour {
         }
     }
 
-    //Called from trap button
-    private void OnClickTrap(int trapNum)
+    //Called from trap button / CallClick script
+    public void OnClickTrap(int trapNum)
     {
         trap = trapPrefabs[trapNum];
         trapRot = 0;
-        eventSystem.SetSelectedGameObject(null);
+//        eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         DestroyGhost();
         SetGhost();
