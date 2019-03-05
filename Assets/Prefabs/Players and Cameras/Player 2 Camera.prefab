@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1611476453772502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00000047683716, y: 29.999992, z: -88.21618}
+  m_LocalPosition: {x: 0.00000047683716, y: 29.999998, z: -80.20629}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -147,10 +147,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tower: {fileID: 0}
   playerTwoCam: {fileID: 0}
-  rotateSpeed: 0.5
-  moveSpeed: 0.5
+  gridUI: {fileID: 0}
   cameraTarget: {fileID: 0}
-  offsetFromAbove: 10
+  gm: {fileID: 0}
   faceTwoInstructions: {fileID: 0}
   faceOneInstructions: {fileID: 0}
-  gm: {fileID: 0}
+  rotateSpeed: 0.5
+  moveSpeed: 0.5
+  offsetFromAbove: 10
