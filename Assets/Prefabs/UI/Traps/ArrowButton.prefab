@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 114530735876987144}
   - component: {fileID: 114141432409571628}
   - component: {fileID: 114118963812608380}
+  - component: {fileID: 114970654227177398}
   m_Layer: 5
   m_Name: ArrowButton
   m_TagString: Untagged
@@ -218,6 +219,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114970654227177398
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1342018372598374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a03df69b55fbe1b4f98c1a471dad6a65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114979118939355728
 MonoBehaviour:
   m_ObjectHideFlags: 1

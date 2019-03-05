@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114212024053020012}
   - component: {fileID: 114119646824503020}
   - component: {fileID: 114565153920350312}
+  - component: {fileID: 114795143022525818}
   m_Layer: 5
   m_Name: Blur Spell Button
   m_TagString: Untagged
@@ -161,6 +162,17 @@ MonoBehaviour:
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   delegates: []
+--- !u!114 &114795143022525818
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1113329559578948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a03df69b55fbe1b4f98c1a471dad6a65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114965091370105328
 MonoBehaviour:
   m_ObjectHideFlags: 1
