@@ -412,28 +412,29 @@ public class PlaceTrap : MonoBehaviour {
         {
             RaycastHit hit = RaycastFromCam().Value;
 
-            if (Input.GetButtonDown("RotateLeft_Joy_2") && !pause.GameIsPaused)
-            {
-                if (hit.normal.x == -1 || hit.normal.x == 1)
-                {
-                    trapRot--;
-                }
-                else
-                {
-                    trapRot++;
-                }
-            }
-            else if (Input.GetButtonDown("RotateRight_Joy_2") && !pause.GameIsPaused)
-            {
-                if (hit.normal.x == -1 || hit.normal.x == 1)
-                {
-                    trapRot++;
-                }
-                else
-                {
-                    trapRot--;
-                }
-            }
+            //Commented out while we are not doing trap rotation - KEEP for later
+            //if (Input.GetButtonDown("RotateLeft_Joy_2") && !pause.GameIsPaused)
+            //{
+            //    if (hit.normal.x == -1 || hit.normal.x == 1)
+            //    {
+            //        trapRot--;
+            //    }
+            //    else
+            //    {
+            //        trapRot++;
+            //    }
+            //}
+            //else if (Input.GetButtonDown("RotateRight_Joy_2") && !pause.GameIsPaused)
+            //{
+            //    if (hit.normal.x == -1 || hit.normal.x == 1)
+            //    {
+            //        trapRot++;
+            //    }
+            //    else
+            //    {
+            //        trapRot--;
+            //    }
+            //}
 
             //Add Offsets so they still stick to grid
             if(trapRot % 4 == 0)
@@ -516,12 +517,12 @@ public class PlaceTrap : MonoBehaviour {
         }
     }
 
-    //Called from trap button
-    private void OnClickTrap(int trapNum)
+    //Called from trap button / CallClick script
+    public void OnClickTrap(int trapNum)
     {
         trap = trapPrefabs[trapNum];
         trapRot = 0;
-        eventSystem.SetSelectedGameObject(null);
+//        eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         DestroyGhost();
         SetGhost();
