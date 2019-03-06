@@ -55,7 +55,7 @@ public class BallandChain : MonoBehaviour {
     {
         if (col.gameObject.CompareTag("Boundary"))
         {
-            Destroy(this);
+            Destroy(this.gameObject);
         }
     }
 }
