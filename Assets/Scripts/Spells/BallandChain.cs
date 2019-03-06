@@ -15,6 +15,11 @@ public class BallandChain : MonoBehaviour {
     // the player (or whatever collided with this trap)
     private GameObject player = null;
 
+    //Hit two boundaries to die
+    private bool once = false;
+
+
+
     // SFX
     private AudioSource audioSource;
     [SerializeField]
@@ -24,6 +29,21 @@ public class BallandChain : MonoBehaviour {
     {
         spellBase = GetComponent<SpellBase>();
         audioSource = GetComponent<AudioSource>();
+        switch(GameObject.Find("Player 1").GetComponent<CameraOneRotator>().GetState())
+        {
+            case 1:
+                break;
+            case 2:
+                transform.eulerAngles = new Vector3(0, -90, 0);
+                break;
+            case 3:
+                transform.eulerAngles = new Vector3(0, 180, 0);
+                break;
+            case 4:
+                transform.eulerAngles = new Vector3(0, 90, 0);
+                break;
+
+        }
     }
     // Update is called once per frame
     // knockback has a knockback velocity, knockup velocity, and a knockTimer to
@@ -49,13 +69,20 @@ public class BallandChain : MonoBehaviour {
             this.GetComponent<Renderer>().enabled = false;
             audioSource.PlayOneShot(clip);
         }
+
+        if (hit == false && other.tag == "Boundary" && once == false)
+        {
+            StartCoroutine(WaitToDie(2f));
+        }
+        if (hit == false && other.tag == "Boundary" && once == true)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
-    void OnCollisionEnter(Collision col)
+    private IEnumerator WaitToDie(float time)
     {
-        if (col.gameObject.CompareTag("Boundary"))
-        {
-            Destroy(this);
-        }
+        yield return new WaitForSeconds(time);
+        once = true;
     }
 }
