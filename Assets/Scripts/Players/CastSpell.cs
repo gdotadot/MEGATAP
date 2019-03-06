@@ -286,17 +286,22 @@ public class CastSpell : MonoBehaviour {
             ValidLocation = spell.GetComponent<SpellBase>().GetLocation();
             spellDirection = spell.GetComponent<SpellBase>().GetDirection();
 
-            Debug.Log(spellTarget);
-
-            if(spellTarget == null)
+            //if(spellTarget == null)
+            //{
+            Vector3 pos = Vector3.zero;
+            if (spellTarget != null)
             {
+                pos = spellTarget.transform.position;
+                Destroy(spellTarget.gameObject);
+                
+            }
                 if (spellDirection == SpellDirection.Right || spellDirection == SpellDirection.Left)
                 {
-                    spellTarget = Instantiate(targeting[1], transform.position, Quaternion.identity);
+                    spellTarget = Instantiate(targeting[1], pos, Quaternion.identity);
                 }
                 else if (spellDirection == SpellDirection.Ceiling || spellDirection == SpellDirection.Floor)
                 {
-                    spellTarget = Instantiate(targeting[0], transform.position, Quaternion.identity);
+                    spellTarget = Instantiate(targeting[0], pos, Quaternion.identity);
                 }
                 else
                 {
@@ -305,7 +310,7 @@ public class CastSpell : MonoBehaviour {
 
                 //Debug.Log(spellTarget.transform.position, spellTarget);
                 Destroy(spellTarget.GetComponent<Collider>());
-            }
+//            }
         }
 
     }
