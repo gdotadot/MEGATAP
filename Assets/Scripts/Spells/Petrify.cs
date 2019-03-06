@@ -38,8 +38,7 @@ public class Petrify : MonoBehaviour {
             if (hit)
             {
                 child = player.GetComponentsInChildren<Renderer>();
-                TurnIntoStone();
-                spellBase.Stun(player, stunDuration);
+                spellBase.Stun(player, stunDuration, turnStone);
                 StartCoroutine(Wait(this.gameObject));
             }
         }
@@ -60,14 +59,6 @@ public class Petrify : MonoBehaviour {
         if(hit == false && other.tag == "Boundary" && once == true)
         {
             Destroy(this.gameObject);
-        }
-    }
-
-    private void TurnIntoStone()
-    {
-        foreach (Renderer r in child)
-        {
-            r.material = turnStone;
         }
     }
 
