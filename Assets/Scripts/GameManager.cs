@@ -11,7 +11,13 @@ public class GameManager : MonoBehaviour {
 
     private void Awake()
     {
-        SceneManager.LoadScene("Tower1_Platforms", LoadSceneMode.Additive);
+        Scene currScene = SceneManager.GetActiveScene();
+
+        if (currScene.name.Equals("Tower1"))
+        {
+            SceneManager.LoadScene("Tower1_Platforms", LoadSceneMode.Additive);
+        }
+        
     }
 
     private void Update ()
