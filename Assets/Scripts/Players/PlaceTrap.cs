@@ -50,6 +50,7 @@ public class PlaceTrap : MonoBehaviour {
     public Direction CurrentDirection { get; private set; }
     private GameObject ghostTrap;
     private float gridXOffset, gridZOffset, gridYOffset = 0.35f; //changed when trap is rotated so that it still properly aligns with grid.
+    private SpriteRenderer[] placementSquares;
 
     //Controller Stuff
     private bool p2Controller;
@@ -222,8 +223,13 @@ public class PlaceTrap : MonoBehaviour {
                     //if (bases != null) bases.Placed = true;
                     ClearButton();
                     trap = null;
+                    foreach(SpriteRenderer sr in placementSquares)
+                    {
+                        sr.enabled = false;
+                    }
+                    placementSquares = null;
                     DestroyGhost();
-
+                    
                     //Set the selected trap button
                     if (p2Controller)
                     {
@@ -272,6 +278,7 @@ public class PlaceTrap : MonoBehaviour {
         if(trap != null)
         {
             ghostTrap = trap.InstantiateTrap(Vector3.zero);
+            placementSquares = ghostTrap.GetComponentInChildren<Canvas>().gameObject.GetComponentsInChildren<SpriteRenderer>();
         }
         
         
@@ -320,7 +327,34 @@ public class PlaceTrap : MonoBehaviour {
         {
             UpdateRotationInput();
             FinalizeRotationInput();
+            bool validLocation;
+            CheckMultipleBases bases = ghostTrap.GetComponentInChildren<CheckMultipleBases>();
+            CheckValidLocations check = ghostTrap.GetComponentInChildren<CheckValidLocations>();
 
+            if (bases != null)
+            {
+                validLocation = bases.Valid;
+            }
+            else if (check != null)
+            {
+                validLocation = check.Valid;
+            }
+            else
+            {
+                validLocation = true;
+                Debug.Log("Warning: Trap not set up correctly; valid location is always true.");
+            }
+
+            if(validLocation && CheckNearby() && GetGridPosition() != null && placementSquares.Length == 2)
+            {
+                placementSquares[0].enabled = false;
+                placementSquares[1].enabled = true;
+            }
+            else if (placementSquares.Length == 2)
+            { 
+                placementSquares[0].enabled = true;
+                placementSquares[1].enabled = false;
+            }
             if (GetGridPosition() != null)
             {
                 //Rotate trap based on side of tower
@@ -346,7 +380,7 @@ public class PlaceTrap : MonoBehaviour {
                 if ((Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2")) && !pause.GameIsPaused)
                 {
                     DestroyGhost();
-
+                    placementSquares = null;
                     if (p2Controller)
                     {
                         if (active)
@@ -378,28 +412,29 @@ public class PlaceTrap : MonoBehaviour {
         {
             RaycastHit hit = RaycastFromCam().Value;
 
-            if (Input.GetButtonDown("RotateLeft_Joy_2") && !pause.GameIsPaused)
-            {
-                if (hit.normal.x == -1 || hit.normal.x == 1)
-                {
-                    trapRot--;
-                }
-                else
-                {
-                    trapRot++;
-                }
-            }
-            else if (Input.GetButtonDown("RotateRight_Joy_2") && !pause.GameIsPaused)
-            {
-                if (hit.normal.x == -1 || hit.normal.x == 1)
-                {
-                    trapRot++;
-                }
-                else
-                {
-                    trapRot--;
-                }
-            }
+            //Commented out while we are not doing trap rotation - KEEP for later
+            //if (Input.GetButtonDown("RotateLeft_Joy_2") && !pause.GameIsPaused)
+            //{
+            //    if (hit.normal.x == -1 || hit.normal.x == 1)
+            //    {
+            //        trapRot--;
+            //    }
+            //    else
+            //    {
+            //        trapRot++;
+            //    }
+            //}
+            //else if (Input.GetButtonDown("RotateRight_Joy_2") && !pause.GameIsPaused)
+            //{
+            //    if (hit.normal.x == -1 || hit.normal.x == 1)
+            //    {
+            //        trapRot++;
+            //    }
+            //    else
+            //    {
+            //        trapRot--;
+            //    }
+            //}
 
             //Add Offsets so they still stick to grid
             if(trapRot % 4 == 0)
@@ -482,12 +517,12 @@ public class PlaceTrap : MonoBehaviour {
         }
     }
 
-    //Called from trap button
-    private void OnClickTrap(int trapNum)
+    //Called from trap button / CallClick script
+    public void OnClickTrap(int trapNum)
     {
         trap = trapPrefabs[trapNum];
         trapRot = 0;
-        eventSystem.SetSelectedGameObject(null);
+//        eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         DestroyGhost();
         SetGhost();

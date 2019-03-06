@@ -8,7 +8,7 @@ public class CheckMultipleBases : MonoBehaviour {
 	public bool Valid { get; private set; }
     public bool Placed;
 
-	void Start () {
+	void Awake () {
         checkLocations = GetComponentsInChildren<CheckValidLocations>();	
 	}
 
