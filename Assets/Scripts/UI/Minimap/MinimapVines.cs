@@ -8,7 +8,7 @@ public class MinimapVines : MonoBehaviour {
     [SerializeField] private NumberOfFloors numberOfFloors;
 
     private float highestVinePoint;
-    private float highestMinimapPoint;
+    //private float highestMinimapPoint;
 
     private GameObject vine;
     [SerializeField] private Image minimapBackground;
@@ -20,7 +20,7 @@ public class MinimapVines : MonoBehaviour {
         vine = GameObject.Find("botWall");
         vineBar = GetComponent<Image>();
 
-        highestMinimapPoint = minimapBackground.rectTransform.sizeDelta.y;
+        //highestMinimapPoint = minimapBackground.rectTransform.sizeDelta.y;
         highestVinePoint = 40 * numberOfFloors.NumFloors;
     }
 	
@@ -33,8 +33,11 @@ public class MinimapVines : MonoBehaviour {
             float currentVinePosition = 1 - ((highestVinePoint - vine.transform.localScale.y) / highestVinePoint);
             
             //Calculate position on minimap bar as value between 0 and 1
-            vineBar.rectTransform.sizeDelta = new Vector2(vineBar.rectTransform.sizeDelta.x,
-                                                          highestMinimapPoint * currentVinePosition);
+            //Vector2 sizeDelta = new Vector2(vineBar.rectTransform.sizeDelta.x,
+            //                                              highestMinimapPoint * currentVinePosition);
+
+            vineBar.fillAmount = currentVinePosition;
+            Debug.Log(vineBar.fillAmount);
         }
         else
         {
