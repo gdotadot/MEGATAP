@@ -286,8 +286,6 @@ public class CastSpell : MonoBehaviour {
             ValidLocation = spell.GetComponent<SpellBase>().GetLocation();
             spellDirection = spell.GetComponent<SpellBase>().GetDirection();
 
-            Debug.Log(spellTarget);
-
             if(spellTarget == null)
             {
                 if (spellDirection == SpellDirection.Right || spellDirection == SpellDirection.Left)
