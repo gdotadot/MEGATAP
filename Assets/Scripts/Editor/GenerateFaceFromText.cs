@@ -57,6 +57,14 @@ public class GenerateFaceFromText
                                 transformList.Add(spawnedPlatform.transform);
 
                             }
+                            if (line[i].Equals('O'))
+                            {
+                                Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Pickups/Placeholder Pickup.prefab", typeof(GameObject));
+                                GameObject spawnedPlaceholder = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+                                spawnedPlaceholder.transform.position = new Vector3(i * 2, lineNumber * -2, 0);
+
+                                transformList.Add(spawnedPlaceholder.transform);
+                            }
                         }
 
                     }
