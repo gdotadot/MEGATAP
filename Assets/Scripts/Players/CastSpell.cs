@@ -331,15 +331,15 @@ public class CastSpell : MonoBehaviour {
                             spellTarget.transform.position = new Vector3(transform.position.x, position.y, -42);
                             break;
                         case 2:
-                            spellTarget.transform.eulerAngles = new Vector3(90, 0, 0);
+                            spellTarget.transform.eulerAngles = new Vector3(180, 90, 90);
                             spellTarget.transform.position = new Vector3(42, position.y, transform.position.z);
                             break;
                         case 3:
-                            spellTarget.transform.eulerAngles = new Vector3(0, 0, 90);
+                            spellTarget.transform.eulerAngles = new Vector3(180, 0, 90);
                             spellTarget.transform.position = new Vector3(transform.position.x, position.y, 42);
                             break;
                         case 4:
-                            spellTarget.transform.eulerAngles = new Vector3(90, 0, 0);
+                            spellTarget.transform.eulerAngles = new Vector3(0, 90, 90);
                             spellTarget.transform.position = new Vector3(-42, position.y, transform.position.z);
                             break;
                     }
@@ -354,12 +354,15 @@ public class CastSpell : MonoBehaviour {
                             spellTarget.transform.position = new Vector3(position.x, playerFloor, -42);
                             break;
                         case 3:
+                            spellTarget.transform.eulerAngles = new Vector3(0, 180, 0);
                             spellTarget.transform.position = new Vector3(position.x, playerFloor, 42);
                             break;
                         case 2:
+                            spellTarget.transform.eulerAngles = new Vector3(0, -90, 0);
                             spellTarget.transform.position = new Vector3(42, playerFloor, position.z);
                             break;
                         case 4:
+                            spellTarget.transform.eulerAngles = new Vector3(0, 90, 0);
                             spellTarget.transform.position = new Vector3(-42, playerFloor, position.z);
                             break;
                     }
