@@ -7,6 +7,7 @@ public class MoveControllerCursor : MonoBehaviour {
     [SerializeField] private GameManager gameManager;
     [SerializeField] private Image controllerCursor;
     private CheckControllers checkControllers;
+    private Camera bottomCam;
     private PauseMenu pause;
 
     [Header("Controller Values -----")]
@@ -31,7 +32,7 @@ public class MoveControllerCursor : MonoBehaviour {
 
     void Start () {
         pause = gameManager.GetComponent<PauseMenu>();
-
+        bottomCam = GameObject.Find("Player 1 Camera").GetComponent<Camera>();
         checkControllers = gameManager.GetComponent<CheckControllers>();
 
         p2Controller = checkControllers.GetControllerTwoState();
@@ -93,9 +94,24 @@ public class MoveControllerCursor : MonoBehaviour {
                     clampedPosition.y = Mathf.Clamp(controllerCursor.transform.localPosition.y, -screenHeight + 10, -15);
                     controllerCursor.transform.localPosition = clampedPosition;
                 }
-                if (Mathf.Abs(Input.GetAxisRaw("Horizontal_Joy_2")) > stickSensitivity)
+                if (Input.GetAxisRaw("Horizontal_Joy_2") < stickSensitivity)
                 {
-                    controllerCursor.transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal_Joy_2") * freeRoamSpellSpeed, 0f, 0f));
+                    Vector3 pos = controllerCursor.transform.localPosition;
+                    pos.z = 35;
+                    if(bottomCam.ScreenToWorldPoint(pos).x > -70 && controllerCursor.transform.localPosition.x > -screenWidth)
+                    {
+                        controllerCursor.transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal_Joy_2") * freeRoamSpellSpeed, 0f, 0f));
+                    }
+                }
+                if(Input.GetAxisRaw("Horizontal_Joy_2") > stickSensitivity)
+                {
+                    Vector3 pos = controllerCursor.transform.localPosition;
+                    pos.z = 35;
+                    Debug.Log(bottomCam.ScreenToWorldPoint(pos).x);
+                    if (bottomCam.ScreenToWorldPoint(pos).x < 6 && controllerCursor.transform.localPosition.x < screenWidth)
+                    {
+                        controllerCursor.transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal_Joy_2") * freeRoamSpellSpeed, 0f, 0f));
+                    }
                 }
             }
             else if(SpellCastDirection == SpellDirection.Right)

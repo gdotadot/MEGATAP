@@ -145,7 +145,7 @@ public class CastSpell : MonoBehaviour {
                 ray = cam.ScreenPointToRay(Input.mousePosition);
             }
         }
-        if (Physics.Raycast(ray, out hit, float.MaxValue/*,LayerMask.GetMask("Tower"))*/))
+        if (Physics.Raycast(ray, out hit, float.MaxValue,LayerMask.GetMask("Tower")))
         {
             return hit;
         }
