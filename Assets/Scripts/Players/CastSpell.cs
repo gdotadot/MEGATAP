@@ -383,7 +383,7 @@ public class CastSpell : MonoBehaviour {
                             bool buttonSet = false;
                             for(int i = 0; i < queue.Length; i++)
                             {
-                                if(queue[i].activeInHierarchy && !buttonSet)
+                                if(queue[i].activeInHierarchy && !buttonSet && queue[i] != null)
                                 {
                                     eventSystem.SetSelectedGameObject(queue[i]);
                                     buttonSet = true;
