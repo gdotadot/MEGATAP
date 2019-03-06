@@ -347,6 +347,7 @@ GameObject:
   - component: {fileID: 95974463458835562}
   - component: {fileID: 114692266925298726}
   - component: {fileID: 82333417526295136}
+  - component: {fileID: 114968298396959114}
   - component: {fileID: 223606388147917922}
   m_Layer: 0
   m_Name: Player 1
@@ -1706,6 +1707,23 @@ MonoBehaviour:
   cam: {fileID: 114614076012222384}
   distanceFromGround: 0.25
   gameManager: {fileID: 0}
+--- !u!114 &114968298396959114
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1428506183960842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8c23a45a1411142ac34de9808c7538, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BodySFX:
+  - {fileID: 8300000, guid: d724da124818f1649ab520e831076417, type: 3}
+  - {fileID: 8300000, guid: bcbd917027481b348871fc2e86ce115a, type: 3}
+  - {fileID: 8300000, guid: 808939b8e9dbc494f90e38fd13919c8e, type: 3}
+  JumpVoiceSFX: []
+  OofVoiceSFX: []
 --- !u!136 &136407975964972082
 CapsuleCollider:
   m_ObjectHideFlags: 1
