@@ -55,12 +55,10 @@ public class Petrify : MonoBehaviour {
         }
         if (hit == false && other.tag == "Boundary" && once == false)
         {
-            Debug.Log("this");
             StartCoroutine(WaitToDie(2f));
         }
         if(hit == false && other.tag == "Boundary" && once == true)
         {
-            Debug.Log("this2");
             Destroy(this.gameObject);
         }
     }

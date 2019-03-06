@@ -15,6 +15,9 @@ public class BallandChain : MonoBehaviour {
     // the player (or whatever collided with this trap)
     private GameObject player = null;
 
+    //Hit two boundaries to die
+    private bool once = false;
+
     // SFX
     private AudioSource audioSource;
     [SerializeField]
@@ -49,14 +52,20 @@ public class BallandChain : MonoBehaviour {
             this.GetComponent<Renderer>().enabled = false;
             audioSource.PlayOneShot(clip);
         }
-    }
 
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.CompareTag("Boundary"))
+        if (hit == false && other.tag == "Boundary" && once == false)
         {
-            Debug.Log("this");
+            StartCoroutine(WaitToDie(2f));
+        }
+        if (hit == false && other.tag == "Boundary" && once == true)
+        {
             Destroy(this.gameObject);
         }
+    }
+
+    private IEnumerator WaitToDie(float time)
+    {
+        yield return new WaitForSeconds(time);
+        once = true;
     }
 }
