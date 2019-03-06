@@ -4,12 +4,29 @@ using UnityEngine;
 
 public class SpeccySounds : MonoBehaviour {
 
+    [SerializeField] [Range(0, 1)]
+    private float jumpVolume;
+    [SerializeField] [Range(0, 1)]
+    private float landingVolume;
+    [SerializeField] [Range(0, 1)]
+    private float footstepVolume;
+    [SerializeField] [Range(0, 1)]
+    private float knockbackOofVolume;
+    [SerializeField] [Range(0, 1)]
+    private float sapStepVolume;
+    [SerializeField] [Range(0, 1)]
+    private float slipVolume;
+    [SerializeField] [Range(0, 1)]
+    private float sighVolume;
+
     [SerializeField]
     private AudioClip[] BodySFX;
     [SerializeField]
     private AudioClip[] JumpVoiceSFX;
     [SerializeField]
     private AudioClip[] OofVoiceSFX;
+    [SerializeField]
+    private AudioClip[] sapSteps;
 
     int jumps = 0;
     int oofs = 0;
@@ -31,12 +48,14 @@ public class SpeccySounds : MonoBehaviour {
     private void  RightFootstep()
     {
         AudioClip clip = GetRightFootClip();
+        audioSource.volume = footstepVolume;
         audioSource.PlayOneShot(clip);
     }
 
     private void LeftFootstep()
     {
         AudioClip clip = GetLeftFootClip();
+        audioSource.volume = footstepVolume;
         audioSource.PlayOneShot(clip);
     }
 
@@ -54,6 +73,7 @@ public class SpeccySounds : MonoBehaviour {
     private void JumpLanding()
     {
         AudioClip clip = GetLandingClip();
+        audioSource.volume = landingVolume;
         audioSource.PlayOneShot(clip);
     }
 
@@ -68,6 +88,7 @@ public class SpeccySounds : MonoBehaviour {
     private void JumpHyuh()
     {
         AudioClip clip = GetJumpingClip();
+        audioSource.volume = jumpVolume;
         audioSource.PlayOneShot(clip);
     }
 
@@ -83,12 +104,14 @@ public class SpeccySounds : MonoBehaviour {
     private void OofSlip()
     {
         AudioClip clip = GetSlip();
+        audioSource.volume = slipVolume;
         audioSource.PlayOneShot(clip);
     }
 
     private void GetUpSigh()
     {
         AudioClip clip = OofVoiceSFX[4];
+        audioSource.volume = sighVolume;
         audioSource.PlayOneShot(clip);
     }
 
@@ -103,12 +126,26 @@ public class SpeccySounds : MonoBehaviour {
     private void OofKB()
     {
         AudioClip clip = GetKB();
+        audioSource.volume = knockbackOofVolume;
         audioSource.PlayOneShot(clip);
     }
 
     private AudioClip GetKB()
     {
         return OofVoiceSFX[3];
+    }
+
+    //Slime steps
+    private void SapStepLeft()
+    {
+        audioSource.volume = sapStepVolume;
+        audioSource.PlayOneShot(sapSteps[0]);
+    }
+
+    private void SapStepRight()
+    {
+        audioSource.volume = sapStepVolume;
+        audioSource.PlayOneShot(sapSteps[1]);
     }
 
 }

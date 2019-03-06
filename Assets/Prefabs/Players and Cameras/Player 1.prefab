@@ -1525,7 +1525,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.55
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1673,6 +1673,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e8c23a45a1411142ac34de9808c7538, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpVolume: 0.76
+  landingVolume: 0.55
+  footstepVolume: 1
+  knockbackOofVolume: 0
+  sapStepVolume: 0.25
+  slipVolume: 0.55
+  sighVolume: 0.55
   BodySFX:
   - {fileID: 8300000, guid: d724da124818f1649ab520e831076417, type: 3}
   - {fileID: 8300000, guid: bcbd917027481b348871fc2e86ce115a, type: 3}
@@ -1687,6 +1694,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: aa291a851cc771d48bf5af6399935bbc, type: 3}
   - {fileID: 8300000, guid: 79a31afd5c288eb41b7f83c2f45e384e, type: 3}
   - {fileID: 8300000, guid: 199fc6a88d301524590c12af7905031f, type: 3}
+  sapSteps:
+  - {fileID: 8300000, guid: 77d1864985f5a574387ff5ad47eb4816, type: 3}
+  - {fileID: 8300000, guid: 55755609799d75444b4a629c6ee201dd, type: 3}
 --- !u!114 &114940724036334842
 MonoBehaviour:
   m_ObjectHideFlags: 1
