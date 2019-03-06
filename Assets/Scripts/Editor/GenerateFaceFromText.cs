@@ -11,13 +11,17 @@ public class GenerateFaceFromText
     // CHANGE TO USE
     // the name of the platform prefab you wish to use
     private static string platform = "1x1Platform";
-    private static string textfile1 = "Sample_File_1";
 
     [MenuItem("GameObject/Generate Face", false, 12)]
     private static void Create()
     {
-        Debug.Log("Generating Faces");
-        Load(textfile1);
+        // Loops through full directory and generates prefabs by name
+        DirectoryInfo dir = new DirectoryInfo("Assets/TextLevels/");
+        FileInfo[] info = dir.GetFiles("*.txt");
+        foreach( FileInfo f in info)
+        {
+           Load(f.Name);
+        }
     }
 
 
@@ -32,7 +36,7 @@ public class GenerateFaceFromText
             int lineNumber = 0; // the line we are on to get height correctly
             // Create a new StreamReader, tell it which file to read and what encoding the file
             // was saved as
-            StreamReader theReader = new StreamReader("Assets/TextLevels/" + textfile1 + ".txt", Encoding.Default);
+            StreamReader theReader = new StreamReader("Assets/TextLevels/" + file, Encoding.Default);
             using (theReader)
             {
                 // While there's lines left in the text file, do this:
@@ -57,6 +61,14 @@ public class GenerateFaceFromText
                                 transformList.Add(spawnedPlatform.transform);
 
                             }
+                            if (line[i].Equals('O'))
+                            {
+                                Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Pickups/Placeholder Pickup.prefab", typeof(GameObject));
+                                GameObject spawnedPlaceholder = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+                                spawnedPlaceholder.transform.position = new Vector3(i * 2, lineNumber * -2, 0);
+
+                                transformList.Add(spawnedPlaceholder.transform);
+                            }
                         }
 
                     }
@@ -66,7 +78,7 @@ public class GenerateFaceFromText
                 theReader.Close();
 
                 // create an empty prefab that will hold our new prefab soon
-                Object finalEmpty = PrefabUtility.CreateEmptyPrefab("Assets/Prefabs/Faces/" + textfile1 + ".prefab");
+                Object finalEmpty = PrefabUtility.CreateEmptyPrefab("Assets/Prefabs/Faces/" + file + ".prefab");
                 // empty game object to attatch all of the platforms too 
                 GameObject finalFab = new GameObject();
                 foreach (Transform t in transformList)
@@ -75,7 +87,7 @@ public class GenerateFaceFromText
                 }
                 PrefabUtility.ReplacePrefab(finalFab.gameObject, finalEmpty, ReplacePrefabOptions.ConnectToPrefab);
                 UnityEngine.Object.DestroyImmediate(finalFab);
-                Debug.Log("Prefab Created!");
+                Debug.Log("Prefab " + file + ".prefab Created!");
                 return true;
             }
         }
