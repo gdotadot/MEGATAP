@@ -39,6 +39,7 @@ public class BallandChain : MonoBehaviour {
             if (hit)
             {
                 spellBase.Slow(player, slowRun, reduceJump, spellDuration);
+                StartCoroutine(Wait(this.gameObject));
             }
         }
     }
@@ -61,6 +62,12 @@ public class BallandChain : MonoBehaviour {
         {
             Destroy(this.gameObject);
         }
+    }
+
+    private IEnumerator Wait(GameObject obj)
+    {
+        yield return new WaitForSeconds(spellDuration);
+        Destroy(obj);
     }
 
     private IEnumerator WaitToDie(float time)
