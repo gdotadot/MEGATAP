@@ -98,7 +98,7 @@ public class MoveControllerCursor : MonoBehaviour {
                 {
                     Vector3 pos = controllerCursor.transform.localPosition;
                     pos.z = 35;
-                    if(bottomCam.ScreenToWorldPoint(pos).x > -70 && controllerCursor.transform.localPosition.x > -screenWidth)
+                    if(bottomCam.ScreenToWorldPoint(pos).x > -80 && controllerCursor.transform.localPosition.x > -screenWidth)
                     {
                         controllerCursor.transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal_Joy_2") * freeRoamSpellSpeed, 0f, 0f));
                     }
