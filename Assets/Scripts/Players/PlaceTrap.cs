@@ -14,7 +14,7 @@ public enum Direction
 
 public class PlaceTrap : MonoBehaviour {
     [SerializeField] private int gridSize;
-
+    [SerializeField] private int cursorDistFromCenter;
     [Header("Programmers - GameObjects/Scripts -----")]
     [SerializeField] private GameObject tower;
 
@@ -597,6 +597,8 @@ public class PlaceTrap : MonoBehaviour {
 
         if (active == false)
         {
+            controllerCursor.transform.position = new Vector3(Screen.width / 2, Screen.height / 2 + cursorDistFromCenter, 0);
+            GetComponent<MoveControllerCursor>().MovingTraps = true;
             bool buttonSet = false;
             trapQueue.transform.SetAsLastSibling();
             trapQueue.transform.position -= new Vector3(15f, 15f, 0);
