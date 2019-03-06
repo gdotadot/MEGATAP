@@ -7,7 +7,7 @@ using System.IO;
 public class GenerateFacesOnTower : MonoBehaviour {
 
     //Change to Use
-    private static int NumFloors = 7;
+    //private static int NumFloors = 7;
 
     private static int state = 1;
     private static int floor = 1;
@@ -26,28 +26,28 @@ public class GenerateFacesOnTower : MonoBehaviour {
              switch (state)
              {
                  case 1:
-                     Instantiate(Faces[index], new Vector3(-39f, (20f * floor), -42.15f), Quaternion.Euler(0, 0, 0));
+                     Instantiate(Faces[index], new Vector3(-39f, (20.5f * floor), -42.15f), Quaternion.Euler(0, 0, 0));
                      state++;
                      index++;
                      break;
                  case 2:
-                     Instantiate(Faces[index], new Vector3(42.15f, (20f * floor), -39), Quaternion.Euler(0, -90, 0));
+                     Instantiate(Faces[index], new Vector3(42.15f, (20.5f * floor), -39), Quaternion.Euler(0, -90, 0));
                      state++;
                      index++;
                      break;
                  case 3:
-                     Instantiate(Faces[index], new Vector3(39f, (20f * floor), 42.15f), Quaternion.Euler(0, 180, 0));
+                     Instantiate(Faces[index], new Vector3(39f, (20.5f * floor), 42.15f), Quaternion.Euler(0, 180, 0));
                      state++;
                      index++;
                      break;
                  case 4:
-                     Instantiate(Faces[index], new Vector3(-42.15f, (20f * floor), 39f), Quaternion.Euler(0, -270, 0));
+                     Instantiate(Faces[index], new Vector3(-42.15f, (20.5f * floor), 39f), Quaternion.Euler(0, -270, 0));
                      state = 1;
                      floor++;
                      index++;
                      break;
              }
-             if(index >= 28)
+             if(index >= Faces.Count)
              {
                  loop = false;
              }
@@ -81,10 +81,10 @@ public class GenerateFacesOnTower : MonoBehaviour {
             result.Add((GameObject)al[i]);
         }
         
-        for(int i = 0; i <= 4 * NumFloors; i++)
+        for(int i = 0; i < result.Count; i++)
         {
-            int random = Random.Range(0, result.Count);
-            list.Add(result[random]);
+            //int random = Random.Range(0, result.Count);
+            list.Add(result[i]);
         }
         return list;
     }
