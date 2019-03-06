@@ -68,8 +68,9 @@ public class CastSpell : MonoBehaviour {
     {
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Input.GetButton("Place_Joy_2") && placeEnabled)
+            if (Input.GetButton("Place_Joy_2") && placeEnabled && spellTarget != null)
             {
+                //Debug.Log(spellTarget.transform.localPosition.y, spellTarget);
                 SpellCast();
             }
         }
@@ -246,7 +247,6 @@ public class CastSpell : MonoBehaviour {
 
                 if (p2Controller)
                 {
-                    //eventSystem.SetSelectedGameObject(previouslySelected);
                     bool buttonSet = false;
                     for (int i = queue.Length - 1; i >= 0; i--)
                     {
@@ -286,20 +286,27 @@ public class CastSpell : MonoBehaviour {
             ValidLocation = spell.GetComponent<SpellBase>().GetLocation();
             spellDirection = spell.GetComponent<SpellBase>().GetDirection();
 
-            if (spellDirection == SpellDirection.Right || spellDirection == SpellDirection.Left)
+            Debug.Log(spellTarget);
+
+            if(spellTarget == null)
             {
-                spellTarget = Instantiate(targeting[1], transform.position, Quaternion.identity);
-            }
-            else if (spellDirection == SpellDirection.Ceiling || spellDirection == SpellDirection.Floor)
-            {
-                spellTarget = Instantiate(targeting[0], transform.position, Quaternion.identity);
-            }
-            else
-            {
-                spellTarget = spell.InstantiateSpell(Vector3.zero);
+                if (spellDirection == SpellDirection.Right || spellDirection == SpellDirection.Left)
+                {
+                    spellTarget = Instantiate(targeting[1], transform.position, Quaternion.identity);
+                }
+                else if (spellDirection == SpellDirection.Ceiling || spellDirection == SpellDirection.Floor)
+                {
+                    spellTarget = Instantiate(targeting[0], transform.position, Quaternion.identity);
+                }
+                else
+                {
+                    spellTarget = spell.InstantiateSpell(Vector3.zero);
+                }
+
+                //Debug.Log(spellTarget.transform.position, spellTarget);
+                Destroy(spellTarget.GetComponent<Collider>());
             }
         }
-        Destroy(spellTarget.GetComponent<Collider>());    
 
     }
 
@@ -401,10 +408,10 @@ public class CastSpell : MonoBehaviour {
     {
         spell = spellPrefabs[spellNum];
 
-        eventSystem.SetSelectedGameObject(null);
+        //eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         
-        DestroyTarget();
+        //DestroyTarget();
         SetTarget();
         spellSpeed = spell.GetComponent<SpellBase>().GetSpeed();
     }
@@ -465,7 +472,7 @@ public class CastSpell : MonoBehaviour {
     //Gets rid of controller bug where pressing A to select a trap also immediately places it
     IEnumerator EnableInput()
     {
-        placeEnabled = false;
+        //placeEnabled = false;
         yield return new WaitForSeconds(0.5f);
         placeEnabled = true;
     }
