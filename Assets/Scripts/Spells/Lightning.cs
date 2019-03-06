@@ -15,12 +15,22 @@ public class Lightning : MonoBehaviour
     void Start()
     {
         spellBase = this.GetComponent<SpellBase>();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
+        switch (GameObject.Find("Player 1").GetComponent<CameraOneRotator>().GetState())
+        {
+            case 1:
+                break;
+            case 2:
+                transform.eulerAngles = new Vector3(0, -90, 0);
+                break;
+            case 3:
+                transform.eulerAngles = new Vector3(0, 180, 0);
+                break;
+            case 4:
+                transform.eulerAngles = new Vector3(0, 90, 0);
+                break;
 
+        }
     }
 
     void FixedUpdate()
