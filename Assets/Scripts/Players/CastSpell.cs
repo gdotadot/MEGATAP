@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class CastSpell : MonoBehaviour {
+    [SerializeField] private int cursorDistFromCenter;
     [SerializeField] private GameObject tower;
     [SerializeField] private GameObject[] spellButtons;
     [SerializeField] private SpellBase[] spellPrefabs;
@@ -144,7 +145,7 @@ public class CastSpell : MonoBehaviour {
                 ray = cam.ScreenPointToRay(Input.mousePosition);
             }
         }
-        if (Physics.Raycast(ray, out hit, float.MaxValue, LayerMask.GetMask("Tower")))
+        if (Physics.Raycast(ray, out hit, float.MaxValue/*,LayerMask.GetMask("Tower"))*/))
         {
             return hit;
         }
@@ -286,8 +287,6 @@ public class CastSpell : MonoBehaviour {
             ValidLocation = spell.GetComponent<SpellBase>().GetLocation();
             spellDirection = spell.GetComponent<SpellBase>().GetDirection();
 
-            //if(spellTarget == null)
-            //{
             Vector3 pos = Vector3.zero;
             if (spellTarget != null)
             {
@@ -295,22 +294,19 @@ public class CastSpell : MonoBehaviour {
                 Destroy(spellTarget.gameObject);
                 
             }
-                if (spellDirection == SpellDirection.Right || spellDirection == SpellDirection.Left)
-                {
-                    spellTarget = Instantiate(targeting[1], pos, Quaternion.identity);
-                }
-                else if (spellDirection == SpellDirection.Ceiling || spellDirection == SpellDirection.Floor)
-                {
-                    spellTarget = Instantiate(targeting[0], pos, Quaternion.identity);
-                }
-                else
-                {
-                    spellTarget = spell.InstantiateSpell(Vector3.zero);
-                }
-
-                //Debug.Log(spellTarget.transform.position, spellTarget);
-                Destroy(spellTarget.GetComponent<Collider>());
-//            }
+            if (spellDirection == SpellDirection.Right || spellDirection == SpellDirection.Left)
+            {
+                spellTarget = Instantiate(targeting[1], pos, Quaternion.identity);
+            }
+            else if (spellDirection == SpellDirection.Ceiling || spellDirection == SpellDirection.Floor)
+            {
+                spellTarget = Instantiate(targeting[0], pos, Quaternion.identity);
+            }
+            else
+            {
+                spellTarget = spell.InstantiateSpell(Vector3.zero);
+            }
+            Destroy(spellTarget.GetComponent<Collider>());
         }
 
     }
@@ -324,6 +320,7 @@ public class CastSpell : MonoBehaviour {
                 Vector3 position = GetGridPosition().Value;
                 if (spellDirection == SpellDirection.Right || spellDirection == SpellDirection.Left)
                 {
+                    GetComponent<MoveControllerCursor>().SpellCastDirection = SpellDirection.Right;
                     switch (PlayerOneState)
                     {
                         case 1:
@@ -347,6 +344,7 @@ public class CastSpell : MonoBehaviour {
 
                 else if (spellDirection == SpellDirection.Ceiling || spellDirection == SpellDirection.Floor)
                 {
+                    GetComponent<MoveControllerCursor>().SpellCastDirection = SpellDirection.Ceiling;
                     int playerFloor = playerOne.GetComponent<CameraOneRotator>().GetFloor() * 10;
                     switch (PlayerOneState)
                     {
@@ -370,6 +368,7 @@ public class CastSpell : MonoBehaviour {
                 }
                 else
                 {
+                    GetComponent<MoveControllerCursor>().SpellCastDirection = SpellDirection.Instant;
                     spellTarget.transform.position = position;
                 }
 
@@ -524,6 +523,8 @@ public class CastSpell : MonoBehaviour {
 
         if (active == false)
         {
+            controllerCursor.transform.position = new Vector3(Screen.width / 2, Screen.height / 2 - cursorDistFromCenter, 0);
+            GetComponent<MoveControllerCursor>().MovingTraps = false;
             bool buttonSet = false;
             spellQueue.transform.SetAsLastSibling();
             spellQueue.transform.position -= new Vector3(15f, 15f, 0);
