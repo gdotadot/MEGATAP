@@ -13,6 +13,9 @@ public class Petrify : MonoBehaviour {
     [SerializeField] private Material normalPoncho;
     [SerializeField] private Material turnStone;
 
+    //Hit two boundaries to die
+    private bool once = false;
+
     private Renderer[] child;
 
     // let the FixedUpdate method know that there was a collision
@@ -25,7 +28,6 @@ public class Petrify : MonoBehaviour {
     private void Start()
     {
         spellBase = GetComponent<SpellBase>();
-        WaitToDie(this.gameObject);
 
     }
 
@@ -38,7 +40,7 @@ public class Petrify : MonoBehaviour {
                 child = player.GetComponentsInChildren<Renderer>();
                 TurnIntoStone();
                 spellBase.Stun(player, stunDuration);
-                StartCoroutine(Wait());
+                StartCoroutine(Wait(this.gameObject));
             }
         }
     }
@@ -51,13 +53,15 @@ public class Petrify : MonoBehaviour {
             player = other.gameObject;
             this.GetComponent<Renderer>().enabled = false;
         }
-    }
-
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.CompareTag("Boundary"))
+        if (hit == false && other.tag == "Boundary" && once == false)
         {
-                Destroy(this);
+            Debug.Log("this");
+            StartCoroutine(WaitToDie(2f));
+        }
+        if(hit == false && other.tag == "Boundary" && once == true)
+        {
+            Debug.Log("this2");
+            Destroy(this.gameObject);
         }
     }
 
@@ -77,15 +81,17 @@ public class Petrify : MonoBehaviour {
         child[4].material = normalPoncho;
     }
 
-    private IEnumerator Wait()
+    private IEnumerator Wait(GameObject obj)
     {
         yield return new WaitForSeconds(stunDuration - 0.2f);
         Revert();
+        yield return new WaitForSeconds(0.2f);
+        Destroy(obj);
     }
 
-    private IEnumerator WaitToDie(GameObject obj)
+    private IEnumerator WaitToDie(float time)
     {
-        yield return new WaitForSeconds(stunDuration * 2);
-        Destroy(obj);
+        yield return new WaitForSeconds(time);
+        once = true;
     }
 }
