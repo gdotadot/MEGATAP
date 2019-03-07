@@ -65,7 +65,7 @@ public class CallClick : MonoBehaviour, ISelectHandler// required interface when
         {
             foreach (GameObject t in pt.queue)
             {
-                if (t.activeInHierarchy)
+                if (t != null && t.activeInHierarchy)
                 {
                     currentFirstTrap = t;
                     return;
@@ -80,7 +80,7 @@ public class CallClick : MonoBehaviour, ISelectHandler// required interface when
         {
             for(int s = cs.queue.Length - 1; s >= 0; s--)
             {
-                if(cs.queue[s].activeInHierarchy)
+                if(cs.queue[s] != null && cs.queue[s].activeInHierarchy)
                 {
                     currentLastSpell = cs.queue[s];
                     return;
