@@ -41,6 +41,7 @@ public class CallClick : MonoBehaviour, ISelectHandler// required interface when
 
                 }
             }
+            cursorMove.MovingTraps = true;
         }
         else
         {
@@ -54,8 +55,9 @@ public class CallClick : MonoBehaviour, ISelectHandler// required interface when
                     cursorMove.MovingTraps = false;
                 }
             }
-
+            cursorMove.MovingTraps = false;
         }
+        
         GetComponent<Button>().onClick.Invoke();
     }
 
