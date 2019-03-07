@@ -37,7 +37,6 @@ public class MinimapVines : MonoBehaviour {
             //                                              highestMinimapPoint * currentVinePosition);
 
             vineBar.fillAmount = currentVinePosition;
-            Debug.Log(vineBar.fillAmount);
         }
         else
         {
