@@ -36,7 +36,6 @@ public class CallClick : MonoBehaviour, ISelectHandler// required interface when
                 if (currentFirstTrap.gameObject == this.gameObject)
                 {
                     currentFirstTrap = null;
-                    Debug.Log(this.name);
                     controllerCursor.transform.localPosition = new Vector3(0, 130);
                     cursorMove.MovingTraps = true;
 
@@ -51,7 +50,6 @@ public class CallClick : MonoBehaviour, ISelectHandler// required interface when
                 pt.DestroyGhost();
                 if(currentLastSpell.gameObject == this.gameObject)
                 {
-                    Debug.Log(this.name);
                     controllerCursor.transform.localPosition = new Vector3(0, -100);
                     cursorMove.MovingTraps = false;
                 }
