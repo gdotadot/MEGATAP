@@ -87,12 +87,12 @@ public class PlayerOneMovement : MonoBehaviour {
         {
             case 1:
                 movementVector = new Vector3(inputAxis * speed, rb.velocity.y, 0);
-                //Debug.Log(movementVector);
                 if (inputAxis > 0)
                 {
                     transform.eulerAngles = new Vector3(0, 90, 0);
                     animator.SetFloat("Velocity", speed);
                     if (grounded) animator.SetBool("Running", true);
+                    animator.SetBool("CrouchWalk", true);
                 }
                 else if (inputAxis < 0)
                 {
@@ -100,12 +100,14 @@ public class PlayerOneMovement : MonoBehaviour {
                     animator.SetFloat("Velocity", -speed);
 
                     if (grounded) animator.SetBool("Running", true);
+                    animator.SetBool("CrouchWalk", true);
                 }
                 else
                 {
                     animator.SetFloat("Velocity", 0);
 
                     if (grounded) animator.SetBool("Running", false);
+                    animator.SetBool("CrouchWalk", false);
                 }
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
                 break;
@@ -184,6 +186,7 @@ public class PlayerOneMovement : MonoBehaviour {
             animator.Play("Armature|JumpStart", 0);
             jumping = false;
             landing = false;
+            crouching = false;
         }
         else if(crouching)
         {
@@ -206,6 +209,7 @@ public class PlayerOneMovement : MonoBehaviour {
         
         animator.SetBool("Landing", landing);
         animator.SetBool("Grounded", grounded);
+        animator.SetBool("Crouched", crouching);
         animator.SetFloat("YVelocity", rb.velocity.y);
     }
 
