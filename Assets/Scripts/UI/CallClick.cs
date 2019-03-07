@@ -12,8 +12,8 @@ public class CallClick : MonoBehaviour, ISelectHandler// required interface when
     private PlaceTrap pt;
     private Image controllerCursor;
     private MoveControllerCursor cursorMove;
-    private int currentLastSpell;
-    private int currentFirstTrap;
+    private GameObject currentLastSpell;
+    private GameObject currentFirstTrap;
 
     private void Start()
     {
@@ -29,23 +29,65 @@ public class CallClick : MonoBehaviour, ISelectHandler// required interface when
     {
         if(isThisTrap)
         {
+            GetCurrentFirstTrap();
             if(Input.GetAxis("Horizontal_Menu") > 0)
             {
                 cs.DestroyTarget();
-                controllerCursor.transform.localPosition = new Vector3(0, 130);
-                cursorMove.MovingTraps = true;
+                if (currentFirstTrap.gameObject == this.gameObject)
+                {
+                    currentFirstTrap = null;
+                    Debug.Log(this.name);
+                    controllerCursor.transform.localPosition = new Vector3(0, 130);
+                    cursorMove.MovingTraps = true;
+
+                }
             }
         }
         else
         {
+            GetCurrentLastSpell();
             if (Input.GetAxis("Horizontal_Menu") < 0)
             {
                 pt.DestroyGhost();
-                controllerCursor.transform.localPosition = new Vector3(0, -100);
-                cursorMove.MovingTraps = false;
+                if(currentLastSpell.gameObject == this.gameObject)
+                {
+                    Debug.Log(this.name);
+                    controllerCursor.transform.localPosition = new Vector3(0, -100);
+                    cursorMove.MovingTraps = false;
+                }
             }
 
         }
         GetComponent<Button>().onClick.Invoke();
+    }
+
+    private void GetCurrentFirstTrap()
+    {
+        if(pt != null)
+        {
+            foreach (GameObject t in pt.queue)
+            {
+                if (t.activeInHierarchy)
+                {
+                    currentFirstTrap = t;
+                    return;
+                }
+            }
+        }
+    }
+
+    private void GetCurrentLastSpell()
+    {
+        if(cs != null)
+        {
+            for(int s = cs.queue.Length - 1; s >= 0; s--)
+            {
+                if(cs.queue[s].activeInHierarchy)
+                {
+                    currentLastSpell = cs.queue[s];
+                    return;
+                }
+            }
+        }
     }
 }
