@@ -102,21 +102,29 @@ public class SpellBase : MonoBehaviour {
 
     // apply stun to inputted
     // goes to enumerator for its waitforseconds
-    public void Stun(GameObject player, float stunDuration)
+    public void Stun(GameObject player, float stunDuration, Material mat = null)
     {
+        Renderer[] child = player.GetComponentsInChildren<Renderer>();
         if (once == false)
         {
             once = true;
-            StartCoroutine(WaitStun(player, stunDuration));
+            StartCoroutine(WaitStun(player, stunDuration, mat, child));
         }
 
     }
 
-    private IEnumerator WaitStun(GameObject player, float stunDuration)
+    private IEnumerator WaitStun(GameObject player, float stunDuration, Material mat, Renderer[] child = null)
     {
         player.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(0);
         player.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
         player.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, player.gameObject.GetComponent<Rigidbody>().velocity.y, 0);
+        if(mat != null)
+        {
+            foreach (Renderer r in child)
+            {
+                r.material = mat;
+            }
+        }
         yield return new WaitForSeconds(stunDuration);
         player.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
         player.GetComponent<PlayerOneMovement>().SetSpeed(player.GetComponent<PlayerOneMovement>().GetConstantSpeed());

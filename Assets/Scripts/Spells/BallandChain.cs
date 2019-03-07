@@ -56,6 +56,7 @@ public class BallandChain : MonoBehaviour {
             if (hit)
             {
                 spellBase.Slow(player, slowRun, reduceJump, spellDuration);
+                StartCoroutine(Wait(this.gameObject));
             }
         }
     }
@@ -88,7 +89,7 @@ public class BallandChain : MonoBehaviour {
             this.GetComponent<Renderer>().enabled = false;
             audioSource.PlayOneShot(clip);
         }
-
+      
         if (hit == false && other.tag == "Boundary" && once == false)
         {
             StartCoroutine(WaitToDie(2f));
@@ -97,6 +98,12 @@ public class BallandChain : MonoBehaviour {
         {
             Destroy(this.gameObject);
         }
+    }
+
+    private IEnumerator Wait(GameObject obj)
+    {
+        yield return new WaitForSeconds(spellDuration);
+        Destroy(obj);
     }
 
     private IEnumerator WaitToDie(float time)
