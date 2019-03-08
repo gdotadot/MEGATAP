@@ -122,7 +122,7 @@ public class SpellBase : MonoBehaviour {
         {
             foreach (Renderer r in child)
             {
-                r.material = mat;
+               if(r.name != "SlowEffect") r.material = mat;
             }
         }
         yield return new WaitForSeconds(stunDuration);

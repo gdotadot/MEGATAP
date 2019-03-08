@@ -28,7 +28,8 @@ public class CastSpell : MonoBehaviour {
     private GameObject spellTarget;
     private GameObject previouslySelected;
     private GameObject castedSpell;
-
+    private PlaceTrap pt;
+    //private MoveControllerCursor cursorMove;
     private bool p2Controller;
     private bool placeEnabled;
 
@@ -48,10 +49,11 @@ public class CastSpell : MonoBehaviour {
     {
         active = true;
         queue = new GameObject[queueSize];
+        pt = GetComponent<PlaceTrap>();
         pause = gameManager.GetComponent<PauseMenu>();
         //Handle cursor or set buttons if controller connected
         p2Controller = gameManager.GetComponent<CheckControllers>().GetControllerTwoState();
-
+        //cursorMove = GetComponent<MoveControllerCursor>();
         //For testing purposes right now
         CreateSpellQueue();
 
@@ -60,8 +62,8 @@ public class CastSpell : MonoBehaviour {
         allCameras.Add(cam);
         allCameras.Add(cam2);
 
-        spellQueue.transform.SetAsFirstSibling();
-        SwitchQueue();
+       // spellQueue.transform.SetAsFirstSibling();
+       // SwitchQueue();
     }
 
 
@@ -69,7 +71,7 @@ public class CastSpell : MonoBehaviour {
     {
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Input.GetButton("Place_Joy_2") && placeEnabled && spellTarget != null)
+            if (Input.GetButtonDown("Place_Joy_2") && placeEnabled && spellTarget != null)
             {
                 //Debug.Log(spellTarget.transform.localPosition.y, spellTarget);
                 SpellCast();
@@ -87,17 +89,13 @@ public class CastSpell : MonoBehaviour {
             DestroyTarget();
             //For testing purposes currently
             CreateSpellQueue();
-            if(active)
-            {
-                eventSystem.SetSelectedGameObject(queue[0]);
-            }
         }
 
-        if (Input.GetButtonDown("Swap_Queue") && !pause.GameIsPaused)
-        {
-            DestroyTarget();
-            SwitchQueue();
-        }
+        //if (Input.GetButtonDown("Swap_Queue") && !pause.GameIsPaused)
+        //{
+        //    DestroyTarget();
+        //    SwitchQueue();
+        //}
 
     }
 
@@ -257,6 +255,19 @@ public class CastSpell : MonoBehaviour {
                             buttonSet = true;
                         }
                     }
+                    if(!buttonSet)
+                    {
+                        for(int i = 0; i < pt.queue.Count; i++)
+                        {
+                            if(pt.queue[i] != null && pt.queue[i].activeInHierarchy && !buttonSet)
+                            {
+
+                                controllerCursor.transform.localPosition = new Vector3(0, 130);
+                                eventSystem.SetSelectedGameObject(pt.queue[i]);
+                                buttonSet = true;
+                            }
+                        }
+                    }
                     placeEnabled = false;
                 }
             }
@@ -399,7 +410,7 @@ public class CastSpell : MonoBehaviour {
     }
 
 
-    private void DestroyTarget()
+    public void DestroyTarget()
     {
         if (spellTarget != null)
         {
@@ -436,7 +447,7 @@ public class CastSpell : MonoBehaviour {
             if (queue[i] == null)
             {
                 int random = Random.Range(0, spellButtons.Length);
-                GameObject newSpell = Instantiate(spellButtons[random], new Vector3(-108f + 40f * i, 20f, 0), Quaternion.identity) as GameObject;
+                GameObject newSpell = Instantiate(spellButtons[random], new Vector3(-170f + 40f * i, 20f, 0), Quaternion.identity) as GameObject;
                 newSpell.transform.SetParent(spellQueue.transform, false);
 
 
@@ -447,11 +458,10 @@ public class CastSpell : MonoBehaviour {
 
                 queue[i] = newSpell;
 
-                if (active == false)
-                {
-                    queue[i].GetComponent<Button>().interactable = false;
-                }
-                return;
+                //if (active == false)
+                //{
+                //    queue[i].GetComponent<Button>().interactable = false;
+                //}
             }
         }
     }

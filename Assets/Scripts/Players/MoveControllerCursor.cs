@@ -94,7 +94,7 @@ public class MoveControllerCursor : MonoBehaviour {
                     clampedPosition.y = Mathf.Clamp(controllerCursor.transform.localPosition.y, -screenHeight + 10, -15);
                     controllerCursor.transform.localPosition = clampedPosition;
                 }
-                if (Input.GetAxisRaw("Horizontal_Joy_2") < stickSensitivity)
+                if (Input.GetAxisRaw("Horizontal_Joy_2") < -stickSensitivity)
                 {
                     Vector3 pos = controllerCursor.transform.localPosition;
                     pos.z = 35;
@@ -107,7 +107,6 @@ public class MoveControllerCursor : MonoBehaviour {
                 {
                     Vector3 pos = controllerCursor.transform.localPosition;
                     pos.z = 35;
-                    Debug.Log(bottomCam.ScreenToWorldPoint(pos).x);
                     if (bottomCam.ScreenToWorldPoint(pos).x < 6 && controllerCursor.transform.localPosition.x < screenWidth)
                     {
                         controllerCursor.transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal_Joy_2") * freeRoamSpellSpeed, 0f, 0f));
