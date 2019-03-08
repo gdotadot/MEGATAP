@@ -21,7 +21,7 @@ public class MoveControllerCursor : MonoBehaviour {
 
     [Header("Audio-------------")]
     [SerializeField] private AudioClip spaceSelectionSFX;
-    private AudioSource audioSource;
+    //private AudioSource audioSource;
 
     private bool p2Controller;
     private bool cursorHorizontalMove = true;
@@ -38,7 +38,7 @@ public class MoveControllerCursor : MonoBehaviour {
         pause = gameManager.GetComponent<PauseMenu>();
         bottomCam = GameObject.Find("Player 1 Camera").GetComponent<Camera>();
         checkControllers = gameManager.GetComponent<CheckControllers>();
-        audioSource = GetComponent<AudioSource>();
+        //audioSource = GetComponent<AudioSource>();
         p2Controller = checkControllers.GetControllerTwoState();
 
 
