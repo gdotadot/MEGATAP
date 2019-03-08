@@ -68,6 +68,7 @@ public class PlaceTrap : MonoBehaviour {
         cursorMove = GetComponent<MoveControllerCursor>();
         active = true;
         CreateTrapQueue();
+        trapQueue.transform.SetAsLastSibling();
 
         //Handle cursor or set buttons if controller connected
         checkControllers = gameManager.GetComponent<CheckControllers>();
