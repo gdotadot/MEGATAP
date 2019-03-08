@@ -87,7 +87,7 @@ public class PlaceTrap : MonoBehaviour {
         p2Controller = checkControllers.GetControllerTwoState();
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Input.GetButton("Place_Joy_2") && placeEnabled)
+            if (Input.GetButtonDown("Place_Joy_2") && placeEnabled)
             {
                 SetTrap();
             }

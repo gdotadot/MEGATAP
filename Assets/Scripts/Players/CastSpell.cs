@@ -71,7 +71,7 @@ public class CastSpell : MonoBehaviour {
     {
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Input.GetButton("Place_Joy_2") && placeEnabled && spellTarget != null)
+            if (Input.GetButtonDown("Place_Joy_2") && placeEnabled && spellTarget != null)
             {
                 //Debug.Log(spellTarget.transform.localPosition.y, spellTarget);
                 SpellCast();
