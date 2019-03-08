@@ -19,6 +19,10 @@ public class MoveControllerCursor : MonoBehaviour {
     [Tooltip("Higher # = Lower Sensitivity")] [SerializeField] private float stickSensitivity; //Between 0-1 ; how far the player needs to push the stick for it to move the cursor
                                                                                                //Needed to set it higher because some controller sticks naturally move left/right a little.
 
+    [Header("Audio-------------")]
+    [SerializeField] private AudioClip spaceSelectionSFX;
+    private AudioSource audioSource;
+
     private bool p2Controller;
     private bool cursorHorizontalMove = true;
     private bool cursorVerticalMove = true;
@@ -34,7 +38,7 @@ public class MoveControllerCursor : MonoBehaviour {
         pause = gameManager.GetComponent<PauseMenu>();
         bottomCam = GameObject.Find("Player 1 Camera").GetComponent<Camera>();
         checkControllers = gameManager.GetComponent<CheckControllers>();
-
+        audioSource = GetComponent<AudioSource>();
         p2Controller = checkControllers.GetControllerTwoState();
 
 
@@ -61,24 +65,29 @@ public class MoveControllerCursor : MonoBehaviour {
                 controllerCursor.GetComponent<RectTransform>().localPosition += new Vector3(cursorGrid, 0, 0);
                 cursorHorizontalMove = false;
                 StartCoroutine(EnableHorizontalCursorMove());
+
+                //audioSource.PlayOneShot(spaceSelectionSFX);
             }
             else if (Input.GetAxisRaw("Horizontal_Joy_2") < -stickSensitivity && cursorHorizontalMove && cursorPos.x > -screenWidth)
             {
                 controllerCursor.GetComponent<RectTransform>().localPosition -= new Vector3(cursorGrid, 0, 0);
                 cursorHorizontalMove = false;
                 StartCoroutine(EnableHorizontalCursorMove());
+                //audioSource.PlayOneShot(spaceSelectionSFX);
             }
             else if (Input.GetAxisRaw("Vertical_Joy_2") > stickSensitivity && cursorVerticalMove && cursorPos.y < screenHeight)
             {
                 controllerCursor.GetComponent<RectTransform>().localPosition += new Vector3(0, cursorGrid, 0);
                 cursorVerticalMove = false;
                 StartCoroutine(EnableVerticalCursorMove());
+               // audioSource.PlayOneShot(spaceSelectionSFX);
             }
             else if (Input.GetAxisRaw("Vertical_Joy_2") < -stickSensitivity && cursorVerticalMove && cursorPos.y > 0)
             {
                 controllerCursor.GetComponent<RectTransform>().localPosition -= new Vector3(0, cursorGrid, 0);
                 cursorVerticalMove = false;
                 StartCoroutine(EnableVerticalCursorMove());
+                //audioSource.PlayOneShot(spaceSelectionSFX);
             }
         }
         else if (p2Controller && !pause.GameIsPaused && !MovingTraps)

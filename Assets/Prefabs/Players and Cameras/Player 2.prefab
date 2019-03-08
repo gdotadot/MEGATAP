@@ -172,7 +172,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -275,6 +275,7 @@ MonoBehaviour:
   spellBarSpeedMultiplier: 0.25
   cursorGrid: 23
   stickSensitivity: 0.6
+  spaceSelectionSFX: {fileID: 8300000, guid: 19373b9b585127845b0fcd08b0cb88fd, type: 3}
   MovingTraps: 1
   SpellCastDirection: 16
 --- !u!114 &114220156261559540
