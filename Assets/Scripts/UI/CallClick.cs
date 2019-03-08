@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;// Required when using Event data.
 public class CallClick : MonoBehaviour, ISelectHandler// required interface when using the OnSelect method.
 {
     [SerializeField] private bool isThisTrap;
-
+    
     private CastSpell cs;
     private PlaceTrap pt;
     private Image controllerCursor;
@@ -15,9 +15,12 @@ public class CallClick : MonoBehaviour, ISelectHandler// required interface when
     private GameObject currentLastSpell;
     private GameObject currentFirstTrap;
 
+    private AudioSource audioSource;
+
     private void Start()
     {
         GameObject player = GameObject.Find("Player 2");
+        audioSource = GetComponentInParent<AudioSource>();
         cs = player.GetComponent<CastSpell>();
         pt = player.GetComponent<PlaceTrap>();
         controllerCursor = GameObject.Find("ControllerCursor").GetComponent<Image>();
@@ -27,6 +30,7 @@ public class CallClick : MonoBehaviour, ISelectHandler// required interface when
     //Do this when the selectable UI object is selected.
     public void OnSelect(BaseEventData eventData)
     {
+        if(audioSource != null) audioSource.Play();
         if (isThisTrap)
         {
             GetCurrentFirstTrap();
