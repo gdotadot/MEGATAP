@@ -87,7 +87,7 @@ public class PlaceTrap : MonoBehaviour {
         p2Controller = checkControllers.GetControllerTwoState();
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Input.GetButtonDown("Place_Joy_2") && placeEnabled)
+            if (Input.GetButton("Place_Joy_2") && placeEnabled)
             {
                 SetTrap();
             }
@@ -233,14 +233,28 @@ public class PlaceTrap : MonoBehaviour {
                     //Set the selected trap button
                     if (p2Controller)
                     {
-                        for (int i = queue.Count - 1; i >= 0; i--)
+
+                        bool buttonSet = false;
+                        for (int i = 0; i < queue.Count; i++)
                         {
-                            if (queue[i].activeInHierarchy)
+                            if (queue[i].activeInHierarchy && !buttonSet)
                             {
                                 eventSystem.SetSelectedGameObject(queue[i]);
+                                buttonSet = true;
                             }
                         }
                         placeEnabled = false;
+
+                        if(eventSystem.currentSelectedGameObject == null || !buttonSet)
+                        {
+                            for(int i = 0; i < cs.queue.Length; i++)
+                            {
+                                eventSystem.SetSelectedGameObject(cs.queue[i]);
+                                controllerCursor.transform.localPosition = new Vector3(0, -100);
+                                buttonSet = true;
+                                
+                            }
+                        }
                     }
                 }
             }
@@ -400,6 +414,7 @@ public class PlaceTrap : MonoBehaviour {
                                 {
                                     if (cs.queue[i] != null && cs.queue[i].activeInHierarchy && !buttonSet)
                                     {
+                                        controllerCursor.transform.localPosition = new Vector3(0, -100);
                                         eventSystem.SetSelectedGameObject(cs.queue[i]);
                                         buttonSet = true;
                                     }

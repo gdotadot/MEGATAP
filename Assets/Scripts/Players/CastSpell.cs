@@ -261,6 +261,8 @@ public class CastSpell : MonoBehaviour {
                         {
                             if(pt.queue[i] != null && pt.queue[i].activeInHierarchy && !buttonSet)
                             {
+
+                                controllerCursor.transform.localPosition = new Vector3(0, 130);
                                 eventSystem.SetSelectedGameObject(pt.queue[i]);
                                 buttonSet = true;
                             }

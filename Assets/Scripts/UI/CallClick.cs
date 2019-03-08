@@ -20,20 +20,20 @@ public class CallClick : MonoBehaviour, ISelectHandler// required interface when
         GameObject player = GameObject.Find("Player 2");
         cs = player.GetComponent<CastSpell>();
         pt = player.GetComponent<PlaceTrap>();
-        controllerCursor = GameObject.Find("ControllerCursor").GetComponent<Image>() ;
+        controllerCursor = GameObject.Find("ControllerCursor").GetComponent<Image>();
         cursorMove = player.GetComponent<MoveControllerCursor>();
     }
-    
+
     //Do this when the selectable UI object is selected.
     public void OnSelect(BaseEventData eventData)
     {
-        if(isThisTrap)
+        if (isThisTrap)
         {
             GetCurrentFirstTrap();
-            if(Input.GetAxis("Horizontal_Menu") > 0)
+            if (Input.GetAxis("Horizontal_Menu") > 0 || IsSpellQueueNull())
             {
-                cs.DestroyTarget();
-                if (currentFirstTrap.gameObject == this.gameObject)
+                if(cs != null) cs.DestroyTarget();
+                if (currentFirstTrap != null && currentFirstTrap.gameObject == this.gameObject)
                 {
                     currentFirstTrap = null;
                     controllerCursor.transform.localPosition = new Vector3(0, 130);
@@ -41,29 +41,29 @@ public class CallClick : MonoBehaviour, ISelectHandler// required interface when
 
                 }
             }
-            if(cursorMove != null) cursorMove.MovingTraps = true;
+            if (cursorMove != null) cursorMove.MovingTraps = true;
         }
         else
         {
             GetCurrentLastSpell();
-            if (Input.GetAxis("Horizontal_Menu") < 0)
+            if (Input.GetAxis("Horizontal_Menu") < 0 || IsTrapQueueNull())
             {
-                pt.DestroyGhost();
-                if(currentLastSpell.gameObject == this.gameObject)
+                if(pt != null) pt.DestroyGhost();
+                if (currentLastSpell != null && currentLastSpell.gameObject == this.gameObject)
                 {
                     controllerCursor.transform.localPosition = new Vector3(0, -100);
                     cursorMove.MovingTraps = false;
                 }
             }
-            if(cursorMove != null) cursorMove.MovingTraps = false;
+            if (cursorMove != null) cursorMove.MovingTraps = false;
         }
-        
+
         GetComponent<Button>().onClick.Invoke();
     }
 
     private void GetCurrentFirstTrap()
     {
-        if(pt != null)
+        if (pt != null)
         {
             foreach (GameObject t in pt.queue)
             {
@@ -78,16 +78,48 @@ public class CallClick : MonoBehaviour, ISelectHandler// required interface when
 
     private void GetCurrentLastSpell()
     {
-        if(cs != null)
+        if (cs != null)
         {
-            for(int s = cs.queue.Length - 1; s >= 0; s--)
+            for (int s = cs.queue.Length - 1; s >= 0; s--)
             {
-                if(cs.queue[s] != null && cs.queue[s].activeInHierarchy)
+                if (cs.queue[s] != null && cs.queue[s].activeInHierarchy)
                 {
                     currentLastSpell = cs.queue[s];
                     return;
                 }
             }
         }
+    }
+
+    private bool IsTrapQueueNull()
+    {
+        if(pt!= null)
+        {
+            for (int s = cs.queue.Length - 1; s >= 0; s--)
+            {
+                if (cs.queue[s] != null && cs.queue[s].activeInHierarchy)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private bool IsSpellQueueNull()
+    {
+        if (cs != null)
+        {
+            for (int s = pt.queue.Count - 1; s >= 0; s--)
+            {
+                if (pt.queue[s] != null && pt.queue[s].activeInHierarchy)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
