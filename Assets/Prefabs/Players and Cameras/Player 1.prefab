@@ -1082,7 +1082,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1514202164219258}
   m_LocalRotation: {x: -0.7071069, y: -0, z: -0, w: 0.70710677}
-  m_LocalPosition: {x: -0.0030804428, y: 4.4930487, z: 0.61707026}
+  m_LocalPosition: {x: -0.0030804428, y: 4.26, z: 0.61707026}
   m_LocalScale: {x: 15.915496, y: 15.915496, z: 15.915492}
   m_Children: []
   m_Father: {fileID: 224718593104698382}
@@ -1532,7 +1532,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 6a3b9446bfaac4042afe72f60c7e0968, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1888,7 +1888,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100004, guid: b385349909a71af41b3e0ac660e324b3, type: 3}
+  - {fileID: 2100000, guid: 6a3b9446bfaac4042afe72f60c7e0968, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2048,9 +2048,9 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100006, guid: b385349909a71af41b3e0ac660e324b3, type: 3}
-  - {fileID: 2100008, guid: b385349909a71af41b3e0ac660e324b3, type: 3}
-  - {fileID: 2100010, guid: b385349909a71af41b3e0ac660e324b3, type: 3}
+  - {fileID: 2100000, guid: 66c5a03acff3aa443907f31e745fe907, type: 2}
+  - {fileID: 2100000, guid: 66c5a03acff3aa443907f31e745fe907, type: 2}
+  - {fileID: 2100000, guid: 66c5a03acff3aa443907f31e745fe907, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2130,7 +2130,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: b385349909a71af41b3e0ac660e324b3, type: 3}
+  - {fileID: 2100000, guid: d5e6d12031561594d8658903acdebe24, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2237,6 +2237,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -36.4, y: 3.92}
+  m_AnchoredPosition: {x: -36.4, y: 2.18}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
