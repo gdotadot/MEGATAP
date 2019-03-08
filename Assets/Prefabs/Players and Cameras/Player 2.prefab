@@ -195,11 +195,7 @@ MonoBehaviour:
   gridSize: 2
   cursorDistFromCenter: 100
   tower: {fileID: 0}
-  trapButtons:
-  - {fileID: 1148860999998904, guid: ad3241910d1b2f54db2ac80af833dd05, type: 2}
-  - {fileID: 1110785462397992, guid: beb48e7d73b8a5949836542f424745f8, type: 2}
-  - {fileID: 1881833347296892, guid: abd8a9fa5d7d7f24096cab103761e9a2, type: 2}
-  - {fileID: 1342018372598374, guid: 208c22d5edce409439fa7b3eb12a8ab6, type: 2}
+  trapButtons: []
   trapPrefabs:
   - {fileID: 114374902745233234, guid: 978902421daf7ca4eb1ed6dc15ac1645, type: 2}
   - {fileID: 114603356562152718, guid: 14716dac1aa2c7a488003f7bba1968d3, type: 2}
@@ -222,14 +218,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d032921ba3418214a94eaa4e868fe41a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorDistFromCenter: 100
+  cursorDistFromCenter: 0
   tower: {fileID: 0}
   spellButtons:
-  - {fileID: 1113329559578948, guid: 9caafb2bc87b57a46a16da291b5e206d, type: 2}
-  - {fileID: 1113329559578948, guid: 2419b2b2f16cd924db2dfdd07893b05c, type: 2}
-  - {fileID: 1113329559578948, guid: 4fcae1fa39201f24cb3eb5a005187de5, type: 2}
-  - {fileID: 1113329559578948, guid: 6a89e440e2925b14c9bb31d09e4d2c2f, type: 2}
-  - {fileID: 1113329559578948, guid: d5688845a27f247f8856e27dbb5cf2e8, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 1113329559578948, guid: a515d837040864ce486d259b379aca39, type: 2}
   spellPrefabs:
   - {fileID: 114692542700711350, guid: 1be1b6caab1fd324698fced99786f928, type: 2}
@@ -247,7 +243,7 @@ MonoBehaviour:
   targeting:
   - {fileID: 1046908235356196, guid: 0ded149890f182d4685b20ceb6c49d1b, type: 2}
   - {fileID: 1424637060701814, guid: e34ed2dd750177e4ba19c7100de1f5df, type: 2}
-  queueSize: 7
+  queueSize: 3
   spellQueue: {fileID: 0}
 --- !u!136 &136189357046121884
 CapsuleCollider:

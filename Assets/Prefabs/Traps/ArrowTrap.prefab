@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 65069310957188318}
   - component: {fileID: 54485937420740482}
   - component: {fileID: 114458546575408374}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Crossbow_Animated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 65457368768333654}
   - component: {fileID: 114173747208991380}
   - component: {fileID: 114745965582017596}
+  - component: {fileID: 114003431253313008}
   m_Layer: 0
   m_Name: ArrowTrap
   m_TagString: Trap
@@ -786,7 +787,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1174657169313092}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.28, y: 28.62, z: -42.08}
+  m_LocalPosition: {x: -9.804408, y: 27.760897, z: -44.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4206720927860222}
@@ -1414,6 +1415,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114003431253313008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1174657169313092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e3cd663b13bc554ea0b38928418ed91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114029245449873878
 MonoBehaviour:
   m_ObjectHideFlags: 1
