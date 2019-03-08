@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
     [SerializeField] private float stunDuration;
-
+    [SerializeField] private AudioClip impactSFX;
+    [SerializeField] private AudioClip releaseSFX;
+    private AudioSource audioSource;
     private TrapBase trapBase;
     //private CameraTwoRotator cam;
 
@@ -18,31 +20,9 @@ public class Projectile : MonoBehaviour {
 		Destroy(gameObject, 5.0f);
         child = this.GetComponentsInChildren<Renderer>();
         hit = false;
-
-        //cam = GameObject.Find("Player 2 Camera").GetComponent<CameraTwoRotator>();
-
-        //switch (cam.GetState())
-        //{
-        //    case 1:
-        //        transform.eulerAngles = new Vector3(0, 0, 0);
-        //        break;
-        //    case 2:
-        //        transform.eulerAngles = new Vector3(0, 270, 0);
-        //        break;
-        //    case 3:
-        //        transform.eulerAngles = new Vector3(0, 180, 0);
-        //        break;
-        //    case 4:
-        //        transform.eulerAngles = new Vector3(0, 90, 0);
-        //        break;
-        //}
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(releaseSFX);
     }
-
-    void update()
-    {
-        
-    }
-
 	void FixedUpdate(){
 		if (player != null)
 		{
@@ -58,6 +38,7 @@ public class Projectile : MonoBehaviour {
 	{
 		if(col.gameObject.tag == "Player"){
 			player = col.gameObject;
+            audioSource.PlayOneShot(impactSFX);
 			hit = true;
             Unrender();
 
