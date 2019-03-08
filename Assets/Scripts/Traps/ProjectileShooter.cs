@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ProjectileShooter : MonoBehaviour {
     [SerializeField] private float timeToShoot;
+    [SerializeField] private int FaceNumberIfPrePlaced;
 
     private TrapBase trapBase;
     private CameraTwoRotator cam;
@@ -23,28 +24,57 @@ public class ProjectileShooter : MonoBehaviour {
         cam = GameObject.Find("Player 2 Camera").GetComponent<CameraTwoRotator>();
         animator = GetComponentInChildren<Animator>();
 
-        switch (cam.GetState())
+        if (!GetComponentInChildren<CheckMultipleBases>().Placed)
         {
-            case 1:
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                projectileRotation = Quaternion.identity;
-                velocity = new Vector3(-20, 0, 0);
-                break;
-            case 2:
-                transform.eulerAngles = new Vector3(0, 270, 0);
-                projectileRotation = Quaternion.Euler(0, -90, 0);
-                velocity = new Vector3(0, 0, -20);
-                break;
-            case 3:
-                transform.eulerAngles = new Vector3(0, 180, 0);
-                projectileRotation = Quaternion.Euler(0, -180, 0);
-                velocity = new Vector3(20, 0, 0);
-                break;
-            case 4:
-                transform.eulerAngles = new Vector3(0, 90, 0);
-                projectileRotation = Quaternion.Euler(0, -270, 0);
-                velocity = new Vector3(0, 0, 20);
-                break;
+            switch (cam.GetState())
+            {
+                case 1:
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    projectileRotation = Quaternion.identity;
+                    velocity = new Vector3(-20, 0, 0);
+                    break;
+                case 2:
+                    transform.eulerAngles = new Vector3(0, 270, 0);
+                    projectileRotation = Quaternion.Euler(0, -90, 0);
+                    velocity = new Vector3(0, 0, -20);
+                    break;
+                case 3:
+                    transform.eulerAngles = new Vector3(0, 180, 0);
+                    projectileRotation = Quaternion.Euler(0, -180, 0);
+                    velocity = new Vector3(20, 0, 0);
+                    break;
+                case 4:
+                    transform.eulerAngles = new Vector3(0, 90, 0);
+                    projectileRotation = Quaternion.Euler(0, -270, 0);
+                    velocity = new Vector3(0, 0, 20);
+                    break;
+            }
+        }
+        else
+        {
+            switch (FaceNumberIfPrePlaced)
+            {
+                case 1:
+                    transform.eulerAngles = new Vector3(0, 0, 0);
+                    projectileRotation = Quaternion.identity;
+                    velocity = new Vector3(-20, 0, 0);
+                    break;
+                case 2:
+                    transform.eulerAngles = new Vector3(0, 270, 0);
+                    projectileRotation = Quaternion.Euler(0, -90, 0);
+                    velocity = new Vector3(0, 0, -20);
+                    break;
+                case 3:
+                    transform.eulerAngles = new Vector3(0, 180, 0);
+                    projectileRotation = Quaternion.Euler(0, -180, 0);
+                    velocity = new Vector3(20, 0, 0);
+                    break;
+                case 4:
+                    transform.eulerAngles = new Vector3(0, 90, 0);
+                    projectileRotation = Quaternion.Euler(0, -270, 0);
+                    velocity = new Vector3(0, 0, 20);
+                    break;
+            }
         }
     }
 
