@@ -40,11 +40,13 @@ public class PlayerOneMovement : MonoBehaviour {
 
     private CheckControllers checkControllers;
     private Animator animator;
+    private CapsuleCollider col;
 
     void Start() {
 		rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         checkControllers = gameManager.GetComponent<CheckControllers>();
+        col = GetComponent<CapsuleCollider>();
 
         speed = moveSpeed;
         jumpH = jumpHeight;
@@ -69,10 +71,17 @@ public class PlayerOneMovement : MonoBehaviour {
             if (Input.GetButton("Crouch_Joy_1") && grounded)
             {
                 crouching = true;
+                speed = moveSpeed / 2;
+                col.height = 2.25f;
+                col.center = new Vector3(0, 1.1f, 0);
+
             }
             if (Input.GetButtonUp("Crouch_Joy_1") && grounded)
             {
                 crouching = false;
+                speed = moveSpeed;
+                col.height = 4.5f;
+                col.center = new Vector3(0, 2.2f, 0);
             }
             // Animation parameters update
             animator.SetBool("Jumping", jumping);
@@ -92,7 +101,6 @@ public class PlayerOneMovement : MonoBehaviour {
                     transform.eulerAngles = new Vector3(0, 90, 0);
                     animator.SetFloat("Velocity", speed);
                     if (grounded) animator.SetBool("Running", true);
-                    animator.SetBool("CrouchWalk", true);
                 }
                 else if (inputAxis < 0)
                 {
@@ -100,14 +108,12 @@ public class PlayerOneMovement : MonoBehaviour {
                     animator.SetFloat("Velocity", -speed);
 
                     if (grounded) animator.SetBool("Running", true);
-                    animator.SetBool("CrouchWalk", true);
                 }
                 else
                 {
                     animator.SetFloat("Velocity", 0);
 
                     if (grounded) animator.SetBool("Running", false);
-                    animator.SetBool("CrouchWalk", false);
                 }
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ;
                 break;
