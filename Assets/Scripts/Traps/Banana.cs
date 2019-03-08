@@ -7,6 +7,9 @@ public class Banana : MonoBehaviour {
     [SerializeField] private float stunDuration;
     [SerializeField] private float stunAnimSpeed = 1f;
 
+    private Animator thisAnim;
+
+
     // let the FixedUpdate method know that there was a collision
     private bool hit = false;
     // the player (or whatever collided with this trap)
@@ -23,6 +26,7 @@ public class Banana : MonoBehaviour {
     {
         trapBase = GetComponent<TrapBase>();
         audioSource = GetComponent<AudioSource>();
+        thisAnim = GetComponentInChildren<Animator>();
     }
     // Stun has player object, stun time in seconds, trap itself
     // player has normal y velocity but is stopped in all other velocities and cannot move controls
@@ -44,6 +48,7 @@ public class Banana : MonoBehaviour {
             hit = true;
             player = other.gameObject;
             anim = player.GetComponent<PlayerOneMovement>().GetAnim();
+            thisAnim.SetTrigger("Collide");
             anim.SetFloat("StunAnimSpeed", stunAnimSpeed);
             anim.Play("FaceplantStart", 0);
             audioSource.PlayOneShot(clip);
