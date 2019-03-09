@@ -10,13 +10,11 @@ public class GameManager : MonoBehaviour {
 
     private void Awake()
     {
-        Scene currScene = SceneManager.GetActiveScene();
-
-        if (currScene.name.Equals("Tower1"))
+        if(SceneManager.GetActiveScene().name == "Tower1")
         {
             SceneManager.LoadScene("Tower1_Platforms", LoadSceneMode.Additive);
+            SceneManager.LoadScene("Tower1_Traps", LoadSceneMode.Additive);
         }
-        
     }
 
     private void Update ()

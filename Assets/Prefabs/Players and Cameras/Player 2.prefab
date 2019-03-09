@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114169544570823518}
   - component: {fileID: 114220156261559540}
   - component: {fileID: 114871698429783546}
+  - component: {fileID: 82713190498109326}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -160,6 +161,101 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134238031081466}
   m_Mesh: {fileID: 0}
+--- !u!82 &82713190498109326
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1134238031081466}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 1000
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &114169544570823518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,6 +275,7 @@ MonoBehaviour:
   spellBarSpeedMultiplier: 0.25
   cursorGrid: 23
   stickSensitivity: 0.6
+  spaceSelectionSFX: {fileID: 8300000, guid: 19373b9b585127845b0fcd08b0cb88fd, type: 3}
   MovingTraps: 1
   SpellCastDirection: 16
 --- !u!114 &114220156261559540
@@ -210,6 +307,8 @@ MonoBehaviour:
   eventSystem: {fileID: 0}
   gameManager: {fileID: 0}
   cam: {fileID: 0}
+  trapPlacementGood: {fileID: 8300000, guid: 6f7b61c54b3d3904d9e08ffdca119496, type: 3}
+  trapPlacementBad: {fileID: 8300000, guid: 146332e6c2633ee4bbced98f867e9780, type: 3}
   queueSize: 7
 --- !u!114 &114871698429783546
 MonoBehaviour:
@@ -222,7 +321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d032921ba3418214a94eaa4e868fe41a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorDistFromCenter: 100
+  cursorDistFromCenter: 0
   tower: {fileID: 0}
   spellButtons:
   - {fileID: 1113329559578948, guid: 9caafb2bc87b57a46a16da291b5e206d, type: 2}
@@ -247,7 +346,7 @@ MonoBehaviour:
   targeting:
   - {fileID: 1046908235356196, guid: 0ded149890f182d4685b20ceb6c49d1b, type: 2}
   - {fileID: 1424637060701814, guid: e34ed2dd750177e4ba19c7100de1f5df, type: 2}
-  queueSize: 7
+  queueSize: 3
   spellQueue: {fileID: 0}
 --- !u!136 &136189357046121884
 CapsuleCollider:

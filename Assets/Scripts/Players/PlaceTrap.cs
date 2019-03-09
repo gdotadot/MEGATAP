@@ -31,9 +31,14 @@ public class PlaceTrap : MonoBehaviour {
     private PauseMenu pause;
     private CheckControllers checkControllers;
 
+    [Header("Audio-----------------------------")]
+    [SerializeField] private AudioClip trapPlacementGood;
+    [SerializeField] private AudioClip trapPlacementBad;
+    private AudioSource audioSource;
+
     [Header("Queue Size -----")]
     [SerializeField] private int queueSize = 7;
-
+    private MoveControllerCursor cursorMove;
     //[Header("Controller Values -----")]
     //[SerializeField] private float cursorDelay;
     //[SerializeField] private float cursorGrid;
@@ -51,7 +56,7 @@ public class PlaceTrap : MonoBehaviour {
     private GameObject ghostTrap;
     private float gridXOffset, gridZOffset, gridYOffset = 0.35f; //changed when trap is rotated so that it still properly aligns with grid.
     private SpriteRenderer[] placementSquares;
-
+    private CastSpell cs;
     //Controller Stuff
     private bool p2Controller;
     private bool placeEnabled;
@@ -62,9 +67,11 @@ public class PlaceTrap : MonoBehaviour {
 
 	void Start () {
         pause = gameManager.GetComponent<PauseMenu>();
-
+        cs = GetComponent<CastSpell>();
+        audioSource = GetComponent<AudioSource>();
         //Queue Initialization
         queue = new List<GameObject>();
+        cursorMove = GetComponent<MoveControllerCursor>();
         active = true;
         CreateTrapQueue();
         trapQueue.transform.SetAsLastSibling();
@@ -101,17 +108,9 @@ public class PlaceTrap : MonoBehaviour {
             DestroyGhost();
             ClearTrapQueue();
             CreateTrapQueue();
-            if (active)
-            {
-                eventSystem.SetSelectedGameObject(queue[0]);
-            }
-        }
-
-        //Swap spells and traps
-        if (Input.GetButtonDown("Swap_Queue") && !pause.GameIsPaused)
-        {
-            DestroyGhost();
-            SwitchQueue();
+            eventSystem.SetSelectedGameObject(queue[0]);
+            cursorMove.MovingTraps = true;
+            controllerCursor.transform.localPosition = new Vector3(0, 130);
         }
     }
 
@@ -218,31 +217,54 @@ public class PlaceTrap : MonoBehaviour {
                 Vector3 position = GetGridPosition().Value;
                 if (ghostTrap != null && CheckFloor(position.y))
                 {
+                    audioSource.PlayOneShot(trapPlacementGood);
                     trap.InstantiateTrap(position, ghostTrap.transform.rotation);
                     if (check != null) check.Placed = true;
                     //if (bases != null) bases.Placed = true;
                     ClearButton();
                     trap = null;
-                    foreach(SpriteRenderer sr in placementSquares)
+                    foreach (SpriteRenderer sr in placementSquares)
                     {
                         sr.enabled = false;
                     }
                     placementSquares = null;
                     DestroyGhost();
-                    
+
                     //Set the selected trap button
                     if (p2Controller)
                     {
-                        for (int i = queue.Count - 1; i >= 0; i--)
+
+                        bool buttonSet = false;
+                        for (int i = 0; i < queue.Count; i++)
                         {
-                            if (queue[i].activeInHierarchy)
+                            if (queue[i].activeInHierarchy && !buttonSet)
                             {
                                 eventSystem.SetSelectedGameObject(queue[i]);
+                                buttonSet = true;
                             }
                         }
                         placeEnabled = false;
+
+                        if (eventSystem.currentSelectedGameObject == null || !buttonSet)
+                        {
+                            for (int i = 0; i < cs.queue.Length; i++)
+                            {
+                                eventSystem.SetSelectedGameObject(cs.queue[i]);
+                                controllerCursor.transform.localPosition = new Vector3(0, -100);
+                                buttonSet = true;
+
+                            }
+                        }
                     }
                 }
+                else
+                {
+                    audioSource.PlayOneShot(trapPlacementBad);
+                }
+            }
+            else
+            {
+                //audioSource.PlayOneShot(trapPlacementBad);
             }
 
         }
@@ -394,6 +416,18 @@ public class PlaceTrap : MonoBehaviour {
                                     buttonSet = true;
                                 }
                             }
+                            if (!buttonSet)
+                            {
+                                for (int i = 0; i < cs.queue.Length; i++)
+                                {
+                                    if (cs.queue[i] != null && cs.queue[i].activeInHierarchy && !buttonSet)
+                                    {
+                                        controllerCursor.transform.localPosition = new Vector3(0, -100);
+                                        eventSystem.SetSelectedGameObject(cs.queue[i]);
+                                        buttonSet = true;
+                                    }
+                                }
+                            }
 
                         }
                         placeEnabled = false;
@@ -508,7 +542,7 @@ public class PlaceTrap : MonoBehaviour {
         }
     }
 
-    private void DestroyGhost()
+    public void DestroyGhost()
     {
         if(ghostTrap != null)
         {
@@ -525,6 +559,7 @@ public class PlaceTrap : MonoBehaviour {
 //        eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         DestroyGhost();
+        GetComponent<CastSpell>().DestroyTarget();
         SetGhost();
     }
 
@@ -551,7 +586,7 @@ public class PlaceTrap : MonoBehaviour {
         for(int i = 0; i < queueSize; i++)
         {
             int random = Random.Range(0, trapButtons.Length);
-            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-140f + 40f*i, -11f, 0), Quaternion.identity) as GameObject;
+            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-80f + 40f*i, -11f, 0), Quaternion.identity) as GameObject;
             newTrap.transform.SetParent(trapQueue.transform, false);
 
             //Add click listeners for all trap buttons

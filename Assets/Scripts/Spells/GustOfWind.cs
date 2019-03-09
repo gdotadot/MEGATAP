@@ -11,9 +11,14 @@ public class GustOfWind : MonoBehaviour {
     private CameraTwoRotator cam2;
     [SerializeField] private int windForce = 10;
     private Vector3 direction;
+
+    //Hit two boundaries to die
+    private bool once = false;
+
     private void Start()
     {
-        
+        once = false;
+
        	cam = GameObject.Find("Player 1").GetComponent<CameraOneRotator>();
       
         switch (cam.GetState())
@@ -81,6 +86,15 @@ public class GustOfWind : MonoBehaviour {
           //player = other.gameObject;
           trig = true;
       }
+
+        if (other.tag == "Boundary" && once == false)
+        {
+            StartCoroutine(WaitToDie(4f));
+        }
+        if (other.tag == "Boundary" && once == true)
+        {
+            StartCoroutine(DeathWait(4f));
+        }
     }
 
 	void OnTriggerStay(Collider other)
@@ -115,5 +129,15 @@ public class GustOfWind : MonoBehaviour {
 
 	}
 
+    private IEnumerator WaitToDie(float time)
+    {
+        yield return new WaitForSeconds(time);
+        once = true;
+    }
 
+    private IEnumerator DeathWait(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Destroy(this.gameObject);
+    }
 }
