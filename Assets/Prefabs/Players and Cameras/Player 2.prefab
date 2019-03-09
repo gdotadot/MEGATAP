@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114169544570823518}
   - component: {fileID: 114220156261559540}
   - component: {fileID: 114871698429783546}
+  - component: {fileID: 82713190498109326}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Untagged
@@ -160,6 +161,101 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1134238031081466}
   m_Mesh: {fileID: 0}
+--- !u!82 &82713190498109326
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1134238031081466}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 1000
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!114 &114169544570823518
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -179,6 +275,7 @@ MonoBehaviour:
   spellBarSpeedMultiplier: 0.25
   cursorGrid: 23
   stickSensitivity: 0.6
+  spaceSelectionSFX: {fileID: 8300000, guid: 19373b9b585127845b0fcd08b0cb88fd, type: 3}
   MovingTraps: 1
   SpellCastDirection: 16
 --- !u!114 &114220156261559540
@@ -195,7 +292,11 @@ MonoBehaviour:
   gridSize: 2
   cursorDistFromCenter: 100
   tower: {fileID: 0}
-  trapButtons: []
+  trapButtons:
+  - {fileID: 1148860999998904, guid: ad3241910d1b2f54db2ac80af833dd05, type: 2}
+  - {fileID: 1110785462397992, guid: beb48e7d73b8a5949836542f424745f8, type: 2}
+  - {fileID: 1881833347296892, guid: abd8a9fa5d7d7f24096cab103761e9a2, type: 2}
+  - {fileID: 1342018372598374, guid: 208c22d5edce409439fa7b3eb12a8ab6, type: 2}
   trapPrefabs:
   - {fileID: 114374902745233234, guid: 978902421daf7ca4eb1ed6dc15ac1645, type: 2}
   - {fileID: 114603356562152718, guid: 14716dac1aa2c7a488003f7bba1968d3, type: 2}
@@ -206,6 +307,8 @@ MonoBehaviour:
   eventSystem: {fileID: 0}
   gameManager: {fileID: 0}
   cam: {fileID: 0}
+  trapPlacementGood: {fileID: 8300000, guid: 6f7b61c54b3d3904d9e08ffdca119496, type: 3}
+  trapPlacementBad: {fileID: 8300000, guid: 146332e6c2633ee4bbced98f867e9780, type: 3}
   queueSize: 7
 --- !u!114 &114871698429783546
 MonoBehaviour:
@@ -221,11 +324,11 @@ MonoBehaviour:
   cursorDistFromCenter: 0
   tower: {fileID: 0}
   spellButtons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1113329559578948, guid: 9caafb2bc87b57a46a16da291b5e206d, type: 2}
+  - {fileID: 1113329559578948, guid: 2419b2b2f16cd924db2dfdd07893b05c, type: 2}
+  - {fileID: 1113329559578948, guid: 4fcae1fa39201f24cb3eb5a005187de5, type: 2}
+  - {fileID: 1113329559578948, guid: 6a89e440e2925b14c9bb31d09e4d2c2f, type: 2}
+  - {fileID: 1113329559578948, guid: d5688845a27f247f8856e27dbb5cf2e8, type: 2}
   - {fileID: 1113329559578948, guid: a515d837040864ce486d259b379aca39, type: 2}
   spellPrefabs:
   - {fileID: 114692542700711350, guid: 1be1b6caab1fd324698fced99786f928, type: 2}
