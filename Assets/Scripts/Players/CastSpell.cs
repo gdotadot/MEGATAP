@@ -429,7 +429,8 @@ public class CastSpell : MonoBehaviour {
         //eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         
-        //DestroyTarget();
+        DestroyTarget();
+        GetComponent<PlaceTrap>().DestroyGhost();
         SetTarget();
         spellSpeed = spell.GetComponent<SpellBase>().GetSpeed();
     }
