@@ -218,10 +218,18 @@ public class PlayerOneMovement : MonoBehaviour {
         else rb.velocity = wallJumpVector;
         
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, distanceFromGround, LayerMask.GetMask("Platform")) && grounded == false)
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, LayerMask.GetMask("Platform")))
         {
-            //Debug.DrawRay(transform.position, transform.TransformDirection(-Vector3.up) * hit.distance, Color.yellow);
-            landing = true;
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 1, Color.yellow);
+            if (hit.distance <= distanceFromGround)
+            {
+                landing = true;
+                Debug.Log("here");
+            }
+            if (hit.distance > distanceFromGround)
+            {
+                landing = false;
+            }
         }
         
         animator.SetBool("Landing", landing);
