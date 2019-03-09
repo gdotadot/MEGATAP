@@ -264,7 +264,7 @@ public class PlaceTrap : MonoBehaviour {
             }
             else
             {
-                audioSource.PlayOneShot(trapPlacementBad);
+                //audioSource.PlayOneShot(trapPlacementBad);
             }
 
         }
