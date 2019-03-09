@@ -220,11 +220,10 @@ public class PlayerOneMovement : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, LayerMask.GetMask("Platform")))
         {
-            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 1, Color.yellow);
+            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 1, Color.yellow);
             if (hit.distance <= distanceFromGround)
             {
                 landing = true;
-                Debug.Log("here");
             }
             if (hit.distance > distanceFromGround)
             {
