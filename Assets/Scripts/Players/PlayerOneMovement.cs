@@ -19,6 +19,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool jumping;
     private bool landing;
     private bool wallJumping;
+    private bool canStandUp;
 
     //Control if player can have input
     private bool move;
@@ -40,11 +41,13 @@ public class PlayerOneMovement : MonoBehaviour {
 
     private CheckControllers checkControllers;
     private Animator animator;
+    private CapsuleCollider col;
 
     void Start() {
 		rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         checkControllers = gameManager.GetComponent<CheckControllers>();
+        col = GetComponent<CapsuleCollider>();
 
         speed = moveSpeed;
         jumpH = jumpHeight;
@@ -70,9 +73,15 @@ public class PlayerOneMovement : MonoBehaviour {
             {
                 crouching = true;
             }
-            if (Input.GetButtonUp("Crouch_Joy_1") && grounded)
+            if (Input.GetButtonUp("Crouch_Joy_1") || (!Input.GetButton("Crouch_Joy_1") && canStandUp == false))
             {
-                crouching = false;
+                if (canStandUp == false)
+                {
+                    crouching = false;
+                    speed = moveSpeed;
+                    col.height = 4.5f;
+                    col.center = new Vector3(0, 2.2f, 0);
+                }
             }
             // Animation parameters update
             animator.SetBool("Jumping", jumping);
@@ -87,7 +96,6 @@ public class PlayerOneMovement : MonoBehaviour {
         {
             case 1:
                 movementVector = new Vector3(inputAxis * speed, rb.velocity.y, 0);
-                //Debug.Log(movementVector);
                 if (inputAxis > 0)
                 {
                     transform.eulerAngles = new Vector3(0, 90, 0);
@@ -173,7 +181,15 @@ public class PlayerOneMovement : MonoBehaviour {
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
                 break;
         }
-        
+
+        if(crouching == true)
+        {
+            speed = moveSpeed / 2;
+            col.height = 2.25f;
+            col.center = new Vector3(0, 1.1f, 0);
+        }
+
+        canStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
     }
 
     private void FixedUpdate()
@@ -184,6 +200,13 @@ public class PlayerOneMovement : MonoBehaviour {
             animator.Play("Armature|JumpStart", 0);
             jumping = false;
             landing = false;
+            if(crouching == true)
+            {
+                speed = moveSpeed;
+                col.height = 4.5f;
+                col.center = new Vector3(0, 2.2f, 0);
+                crouching = false;
+            }
         }
         else if(crouching)
         {
@@ -198,14 +221,22 @@ public class PlayerOneMovement : MonoBehaviour {
         else rb.velocity = wallJumpVector;
         
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, distanceFromGround, LayerMask.GetMask("Platform")) && grounded == false)
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, LayerMask.GetMask("Platform")))
         {
-            //Debug.DrawRay(transform.position, transform.TransformDirection(-Vector3.up) * hit.distance, Color.yellow);
-            landing = true;
+            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 1, Color.yellow);
+            if (hit.distance <= distanceFromGround)
+            {
+                landing = true;
+            }
+            if (hit.distance > distanceFromGround)
+            {
+                landing = false;
+            }
         }
         
         animator.SetBool("Landing", landing);
         animator.SetBool("Grounded", grounded);
+        animator.SetBool("Crouched", crouching);
         animator.SetFloat("YVelocity", rb.velocity.y);
     }
 
