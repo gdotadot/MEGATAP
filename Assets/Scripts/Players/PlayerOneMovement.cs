@@ -72,10 +72,6 @@ public class PlayerOneMovement : MonoBehaviour {
             if (Input.GetButton("Crouch_Joy_1") && grounded)
             {
                 crouching = true;
-                speed = moveSpeed / 2;
-                col.height = 2.25f;
-                col.center = new Vector3(0, 1.1f, 0);
-
             }
             if (Input.GetButtonUp("Crouch_Joy_1") || (!Input.GetButton("Crouch_Joy_1") && canStandUp == false))
             {
@@ -184,6 +180,13 @@ public class PlayerOneMovement : MonoBehaviour {
                 }
                 rb.constraints = RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionX;
                 break;
+        }
+
+        if(crouching == true)
+        {
+            speed = moveSpeed / 2;
+            col.height = 2.25f;
+            col.center = new Vector3(0, 1.1f, 0);
         }
 
         canStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
