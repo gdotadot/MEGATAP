@@ -97,6 +97,11 @@ public class CastSpell : MonoBehaviour {
         //    SwitchQueue();
         //}
 
+        if (Input.GetMouseButtonDown(1) && ValidLocation == 1)
+        {
+            SpellCast();
+        }
+
     }
 
     void FixedUpdate()
