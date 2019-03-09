@@ -559,6 +559,7 @@ public class PlaceTrap : MonoBehaviour {
 //        eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         DestroyGhost();
+        GetComponent<CastSpell>().DestroyTarget();
         SetGhost();
     }
 

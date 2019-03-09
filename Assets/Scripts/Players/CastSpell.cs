@@ -97,6 +97,11 @@ public class CastSpell : MonoBehaviour {
         //    SwitchQueue();
         //}
 
+        if (Input.GetMouseButtonDown(1) && ValidLocation == 1)
+        {
+            SpellCast();
+        }
+
     }
 
     void FixedUpdate()
@@ -429,7 +434,8 @@ public class CastSpell : MonoBehaviour {
         //eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         
-        //DestroyTarget();
+        DestroyTarget();
+        GetComponent<PlaceTrap>().DestroyGhost();
         SetTarget();
         spellSpeed = spell.GetComponent<SpellBase>().GetSpeed();
     }
