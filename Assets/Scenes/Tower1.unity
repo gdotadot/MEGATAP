@@ -621,6 +621,16 @@ Prefab:
       propertyPath: timer
       value: 
       objectReference: {fileID: 1016487810}
+    - target: {fileID: 95974463458835562, guid: 9af0d0883e6a51441b06cd7d26274b01,
+        type: 2}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: b385349909a71af41b3e0ac660e324b3, type: 3}
+    - target: {fileID: 95974463458835562, guid: 9af0d0883e6a51441b06cd7d26274b01,
+        type: 2}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9af0d0883e6a51441b06cd7d26274b01, type: 2}
   m_IsPrefabAsset: 0
