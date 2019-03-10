@@ -190,17 +190,23 @@ public class PlayerOneMovement : MonoBehaviour {
         }
 
         canStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
+
+
+        
+        Move();
     }
 
-    private void FixedUpdate()
+
+    private void Move()
     {
-        if(jumping)
+        //Stuff that used to be in fixedupdate
+        if (jumping)
         {
             movementVector = new Vector3(movementVector.x, jumpH, movementVector.z);
             animator.Play("Armature|JumpStart", 0);
             jumping = false;
             landing = false;
-            if(crouching == true)
+            if (crouching == true)
             {
                 speed = moveSpeed;
                 col.height = 4.5f;
@@ -208,7 +214,7 @@ public class PlayerOneMovement : MonoBehaviour {
                 crouching = false;
             }
         }
-        else if(crouching)
+        else if (crouching)
         {
             //TODO
         }
@@ -219,7 +225,7 @@ public class PlayerOneMovement : MonoBehaviour {
 
         if (!wallJumping) rb.velocity = movementVector;
         else rb.velocity = wallJumpVector;
-        
+
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, LayerMask.GetMask("Platform")))
         {
@@ -233,7 +239,7 @@ public class PlayerOneMovement : MonoBehaviour {
                 landing = false;
             }
         }
-        
+
         animator.SetBool("Landing", landing);
         animator.SetBool("Grounded", grounded);
         animator.SetBool("Crouched", crouching);
