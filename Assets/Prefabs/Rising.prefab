@@ -346,7 +346,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.9, z: 1}
+  m_Size: {x: 1, y: 0.7, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65477602989994888
 BoxCollider:
@@ -358,7 +358,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.9, z: 1}
+  m_Size: {x: 1, y: 0.7, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65634082570411554
 BoxCollider:
@@ -370,7 +370,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.9, z: 1}
+  m_Size: {x: 1, y: 0.7, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65764422085917206
 BoxCollider:
@@ -382,7 +382,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 0.9, z: 1}
+  m_Size: {x: 1, y: 0.7, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114539353123675248
 MonoBehaviour:
@@ -401,6 +401,6 @@ MonoBehaviour:
   topWall: {fileID: 1017661876928618}
   targetPosition: 43
   targetSize: 89
-  moveInTime: 50
-  yMov: 0.25
+  moveInTime: 52
+  yMov: 0.3
   targetTime: 10
