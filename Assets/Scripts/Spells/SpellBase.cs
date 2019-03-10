@@ -145,11 +145,13 @@ public class SpellBase : MonoBehaviour {
     {
         player.gameObject.GetComponent<PlayerOneMovement>().SetJumpHeight(player.gameObject.GetComponent<PlayerOneMovement>().GetJumpHeight() * jumpReductionPercent);
         player.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(player.gameObject.GetComponent<PlayerOneMovement>().GetSpeed() * slowPercent);
+        player.gameObject.GetComponent<PlayerOneMovement>().IsSlowed(true);
 
         yield return new WaitForSeconds(slowDuration);
 
         player.GetComponent<PlayerOneMovement>().SetJumpHeight(player.GetComponent<PlayerOneMovement>().GetConstantJumpHeight());
         player.GetComponent<PlayerOneMovement>().SetSpeed(player.GetComponent<PlayerOneMovement>().GetConstantSpeed());
+        player.gameObject.GetComponent<PlayerOneMovement>().IsSlowed(false);
     }
 
     public void RestartFace(GameObject obj)

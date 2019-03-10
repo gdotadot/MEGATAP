@@ -24,7 +24,8 @@ public class GameManager : MonoBehaviour {
         lose = lost.GameOver();
         if(lose == true)
         {
-            SceneManager.LoadScene("GameOver");
+            //SceneManager.LoadScene("GameOver");
+            Initiate.Fade("GameOver", Color.black, 1);
         }
 
 

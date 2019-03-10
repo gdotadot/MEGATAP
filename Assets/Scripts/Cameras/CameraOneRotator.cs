@@ -7,6 +7,8 @@ using UnityEngine;
 public class CameraOneRotator : MonoBehaviour
 {
     [SerializeField] private GameObject tower;
+    [SerializeField] [Tooltip("Audio Source on Game Manager")] private AudioSource audioSource;
+    [SerializeField] private float windVolIncreasePerLevel;
     [SerializeField] private Camera playerOneCam;
     [SerializeField] private GameObject cinemachineSpeccy;
     [SerializeField] private float moveSpeed;
@@ -24,6 +26,7 @@ public class CameraOneRotator : MonoBehaviour
     private static int camRotationY = 0;
     private static int numFloors;
 
+    
     private Vector3[] basePositions = new[] {  new Vector3(0,                 camPosVertical, -camPosHorizontal),
                                                new Vector3(camPosHorizontal,  camPosVertical, 0),
                                                new Vector3(0,                 camPosVertical, camPosHorizontal),
@@ -95,6 +98,7 @@ public class CameraOneRotator : MonoBehaviour
                     if (floor < numFloors)
                     {
                         floor++;
+                        audioSource.volume += windVolIncreasePerLevel;
                         MovePlayerUp();
                         vcamLock.m_YPosition += 20;
                         StartMove(new Vector3(playerModel.transform.position.x, playerOneCam.transform.position.y + 20, playerModel.transform.position.z - camPosHorizontal), rotations[0], 1);
