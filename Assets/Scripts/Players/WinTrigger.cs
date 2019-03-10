@@ -19,8 +19,8 @@ public class WinTrigger : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
-            SceneManager.LoadScene("VictoryScreen");
-
+            //SceneManager.LoadScene("VictoryScreen");
+            Initiate.Fade("VictoryScreen", Color.black, 1);
         }
     }
 }
