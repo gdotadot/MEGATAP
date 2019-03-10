@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class TutorialController : MonoBehaviour {
 
+    // two serparate lists for player tips
     [SerializeField] private List<GameObject> p1tips;
     [SerializeField] private List<GameObject> p2tips;
 
     // Use this for initialization
     void Start () {
+        // set all of them to invisible, for both lists
 		foreach( GameObject tip in p1tips)
         {
             tip.GetComponent<CanvasRenderer>().SetAlpha(0f);
