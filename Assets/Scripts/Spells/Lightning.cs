@@ -41,6 +41,7 @@ public class Lightning : MonoBehaviour
             if (hit)
             {
                 spellBase.Stun(player, stunDuration);
+                StartCoroutine(Wait(this.gameObject));
             }
         }
     }
@@ -52,5 +53,22 @@ public class Lightning : MonoBehaviour
             hit = true;
             player = other.gameObject;
         }
+        if (hit == false && other.tag == "Boundary")
+        {
+            StartCoroutine(WaitToDie(stunDuration * 2f));
+        }
     }
+
+    private IEnumerator Wait(GameObject obj)
+    {
+        yield return new WaitForSeconds(stunDuration * 2f);
+        Destroy(obj);
+    }
+
+    private IEnumerator WaitToDie(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Destroy(this.gameObject);
+    }
+
 }

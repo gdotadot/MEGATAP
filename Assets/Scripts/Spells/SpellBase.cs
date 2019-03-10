@@ -128,7 +128,6 @@ public class SpellBase : MonoBehaviour {
         yield return new WaitForSeconds(stunDuration);
         player.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
         player.GetComponent<PlayerOneMovement>().SetSpeed(player.GetComponent<PlayerOneMovement>().GetConstantSpeed());
-        //once = false;
     }
 
     // apply slow to inputted
@@ -153,7 +152,6 @@ public class SpellBase : MonoBehaviour {
         player.GetComponent<PlayerOneMovement>().SetSpeed(player.GetComponent<PlayerOneMovement>().GetConstantSpeed());
     }
 
-    // apply knockback to inputted
     public void RestartFace(GameObject obj)
     {
         Debug.Log("RestartFace");
