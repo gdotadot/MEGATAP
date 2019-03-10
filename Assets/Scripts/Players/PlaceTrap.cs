@@ -89,18 +89,19 @@ public class PlaceTrap : MonoBehaviour {
 	
 
 	void Update () {
+        //Move ghost with cursor
+        MoveGhost();
+
         //Get controller select
         p2Controller = checkControllers.GetControllerTwoState();
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Input.GetButton("Place_Joy_2") && placeEnabled)
+            if (Input.GetButtonDown("Place_Joy_2") && placeEnabled)
             {
+                MoveGhost();
                 SetTrap();
             }
         }
-
-        //Move ghost with cursor
-        MoveGhost();
 
         //Reset queue's when tower rotates
         if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == tower.GetComponent<NumberOfFloors>().NumFloors && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
