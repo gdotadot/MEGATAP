@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224885773732973808}
   - component: {fileID: 222413967194894842}
   - component: {fileID: 114914400140470154}
+  - component: {fileID: 225186931361066780}
   m_Layer: 5
   m_Name: Bot Tip 4
   m_TagString: Untagged
@@ -233,6 +234,17 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 10, y: -180}
+  m_AnchoredPosition: {x: 10, y: -237}
   m_SizeDelta: {x: 1853.7, y: 224.7}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225186931361066780
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1757929841292752}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0

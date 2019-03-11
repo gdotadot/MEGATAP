@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 224060267023066058}
   - component: {fileID: 222672225286633498}
   - component: {fileID: 114031023010127118}
+  - component: {fileID: 225493402944213758}
   m_Layer: 5
   m_Name: Top Controls
   m_TagString: Untagged
@@ -1045,7 +1046,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 544.49945, y: 136.4}
+  m_AnchoredPosition: {x: 385.4995, y: 136.4}
   m_SizeDelta: {x: 1411.8, y: 1640}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224135035095765188
@@ -1210,3 +1211,14 @@ RectTransform:
   m_AnchoredPosition: {x: -508.0006, y: -593}
   m_SizeDelta: {x: 26.8, y: 24.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225493402944213758
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1312574647556096}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0

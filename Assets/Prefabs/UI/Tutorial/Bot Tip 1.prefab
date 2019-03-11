@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224885773732973808}
   - component: {fileID: 222413967194894842}
   - component: {fileID: 114914400140470154}
+  - component: {fileID: 225508846148929130}
   m_Layer: 5
   m_Name: Bot Tip 1
   m_TagString: Untagged
@@ -237,3 +238,14 @@ RectTransform:
   m_AnchoredPosition: {x: 10, y: -99}
   m_SizeDelta: {x: 1853.7, y: 560}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225508846148929130
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1757929841292752}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0

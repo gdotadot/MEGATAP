@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 224322171151891872}
   - component: {fileID: 222437234398430794}
   - component: {fileID: 114733672682104168}
+  - component: {fileID: 225998381498279062}
   m_Layer: 5
   m_Name: Bot Controls
   m_TagString: Untagged
@@ -891,7 +892,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 544.4995, y: -156.8}
+  m_AnchoredPosition: {x: 385.49957, y: -156.8}
   m_SizeDelta: {x: 1411.8, y: 1376}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224465753541042464
@@ -984,3 +985,14 @@ RectTransform:
   m_AnchoredPosition: {x: -508.0006, y: 142}
   m_SizeDelta: {x: 26.8, y: 24.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225998381498279062
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1956191534458148}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
