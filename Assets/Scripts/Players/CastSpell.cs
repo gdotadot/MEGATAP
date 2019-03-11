@@ -45,6 +45,10 @@ public class CastSpell : MonoBehaviour {
 
     private PauseMenu pause;
 
+    private int numTimesRotated = 0;
+    private bool resetEnabled = true;
+
+
     void Start()
     {
         active = true;
@@ -57,7 +61,7 @@ public class CastSpell : MonoBehaviour {
         //For testing purposes right now
         CreateSpellQueue();
 
-        placeEnabled = false;
+        placeEnabled = true;
 
         allCameras.Add(cam);
         allCameras.Add(cam2);
@@ -83,8 +87,11 @@ public class CastSpell : MonoBehaviour {
 
         if (spell != null && spellTarget != null) CheckValidLocation();
 
-        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == tower.GetComponent<NumberOfFloors>().NumFloors && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
+        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && resetEnabled && numTimesRotated < 4 * (tower.GetComponentInChildren<NumberOfFloors>().NumFloors - 1) - 1)
         {
+            resetEnabled = false;
+            StartCoroutine(EnableInput());
+
             DestroyTarget();
             //For testing purposes currently
             CreateSpellQueue();
@@ -496,6 +503,7 @@ public class CastSpell : MonoBehaviour {
     {
         //placeEnabled = false;
         yield return new WaitForSeconds(0.5f);
+        resetEnabled = true;
         placeEnabled = true;
     }
 

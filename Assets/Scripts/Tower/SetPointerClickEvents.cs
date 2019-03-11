@@ -10,8 +10,9 @@ public class SetPointerClickEvents : EventTrigger {
 
     public override void OnPointerClick(PointerEventData eventData)
     {
-        base.OnPointerClick(eventData);
 
+        Debug.Log("Click");
+        base.OnPointerClick(eventData);
         CastSpell.OnClickTower();
         PlaceTrap.OnClickTower();
     }
