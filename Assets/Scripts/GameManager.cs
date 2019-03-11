@@ -15,6 +15,10 @@ public class GameManager : MonoBehaviour {
             SceneManager.LoadScene("Tower1_Platforms", LoadSceneMode.Additive);
             SceneManager.LoadScene("Tower1_Traps", LoadSceneMode.Additive);
         }
+        if(SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            SceneManager.LoadScene("Tutorial_Platforms", LoadSceneMode.Additive);
+        }
     }
 
     private void Update ()
