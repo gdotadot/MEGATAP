@@ -36,6 +36,7 @@ public class Sap : MonoBehaviour {
             if (hit)
             {
                 slowTimer = slowDuration;
+                player.gameObject.GetComponent<PlayerOneMovement>().IsSlowed(true);
                 hit = false;
             }
             if (slowTimer > 0 && slowTriggered == false)
@@ -53,9 +54,9 @@ public class Sap : MonoBehaviour {
             {
                 //Animation ends 1 frame earlier than slow so that the next instance of sap touched will do the animation properly
                 //If this ended at the same time as the slow (= 0) then the previous instance of sap touched will call this function over and over again.
-                //Debug.Log("hit2: " + hit);
                 anim.SetBool("Slowed", hit);
-                //Debug.Log(hit);
+                player.gameObject.GetComponent<PlayerOneMovement>().IsSlowed(false);
+
             }
             // tick timer down if there is any
             if (slowTimer > 0)
