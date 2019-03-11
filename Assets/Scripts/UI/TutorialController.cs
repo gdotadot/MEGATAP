@@ -5,8 +5,10 @@ using UnityEngine;
 public class TutorialController : MonoBehaviour {
 
     // two serparate lists for player tips
+    [SerializeField] private int timeBetweenTips; // in seconds
     [SerializeField] private List<GameObject> p1tips;
     [SerializeField] private List<GameObject> p2tips;
+
 
     // Use this for initialization
     void Start () {
@@ -26,33 +28,33 @@ public class TutorialController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         // TOP PLAYER
-        // spawn a tip ever 10 seconds
-        if((int)Time.timeSinceLevelLoad % 10 == 0 && (int)Time.timeSinceLevelLoad/10 < p1tips.Count)
+        // spawn a tip every timeBetweenTips seconds
+        if((int)Time.timeSinceLevelLoad % timeBetweenTips == 0 && (int)Time.timeSinceLevelLoad/timeBetweenTips < p1tips.Count)
         {
-            GameObject tip = p1tips[(int)Time.timeSinceLevelLoad/10];
+            GameObject tip = p1tips[(int)Time.timeSinceLevelLoad/timeBetweenTips];
             tip.GetComponent<CanvasRenderer>().SetAlpha(1f);
             tip.transform.GetChild(0).gameObject.GetComponent<CanvasRenderer>().SetAlpha(1f);
         }
-        // remove the previous tip every 10 seconds
-        if ((int)Time.timeSinceLevelLoad % 10 == 0 && (int)Time.timeSinceLevelLoad / 10 > 0 && (int)Time.timeSinceLevelLoad / 10 < p1tips.Count + 2)
+        // remove the previous tip every timeBetweenTips seconds
+        if ((int)Time.timeSinceLevelLoad % timeBetweenTips == 0 && (int)Time.timeSinceLevelLoad / timeBetweenTips > 0 && (int)Time.timeSinceLevelLoad / timeBetweenTips < p1tips.Count + 1)
         {
-            GameObject tip = p1tips[((int)Time.timeSinceLevelLoad / 10) -1];
+            GameObject tip = p1tips[((int)Time.timeSinceLevelLoad / timeBetweenTips) -1];
             tip.GetComponent<CanvasRenderer>().SetAlpha(0f);
             tip.transform.GetChild(0).gameObject.GetComponent<CanvasRenderer>().SetAlpha(0f);
         }
 
         // BOTTOM PLAYER
-        // spawn a tip ever 10 seconds
-        if ((int)Time.timeSinceLevelLoad % 10 == 0 && (int)Time.timeSinceLevelLoad / 10 < p2tips.Count)
+        // spawn a tip ever timeBetweenTips seconds
+        if ((int)Time.timeSinceLevelLoad % timeBetweenTips == 0 && (int)Time.timeSinceLevelLoad / timeBetweenTips < p2tips.Count)
         {
-            GameObject tip = p2tips[(int)Time.timeSinceLevelLoad / 10];
+            GameObject tip = p2tips[(int)Time.timeSinceLevelLoad / timeBetweenTips];
             tip.GetComponent<CanvasRenderer>().SetAlpha(1f);
             tip.transform.GetChild(0).gameObject.GetComponent<CanvasRenderer>().SetAlpha(1f);
         }
-        // remove the previous tip every 10 seconds
-        if ((int)Time.timeSinceLevelLoad % 10 == 0 && (int)Time.timeSinceLevelLoad / 10 > 0 && (int)Time.timeSinceLevelLoad / 10 < p2tips.Count+2)
+        // remove the previous tip every timeBetweenTips seconds
+        if ((int)Time.timeSinceLevelLoad % timeBetweenTips == 0 && (int)Time.timeSinceLevelLoad / timeBetweenTips > 0 && (int)Time.timeSinceLevelLoad / timeBetweenTips < p2tips.Count+1)
         {
-            GameObject tip = p2tips[((int)Time.timeSinceLevelLoad / 10) - 1];
+            GameObject tip = p2tips[((int)Time.timeSinceLevelLoad / timeBetweenTips) - 1];
             tip.GetComponent<CanvasRenderer>().SetAlpha(0f);
             tip.transform.GetChild(0).gameObject.GetComponent<CanvasRenderer>().SetAlpha(0f);
         }
