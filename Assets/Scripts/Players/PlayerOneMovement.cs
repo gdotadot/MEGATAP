@@ -20,6 +20,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool landing;
     private bool wallJumping;
     private bool canStandUp;
+    private bool slowed = false;
 
     //Control if player can have input
     private bool move;
@@ -69,7 +70,7 @@ public class PlayerOneMovement : MonoBehaviour {
             }
 
             //crouch
-            if (Input.GetButton("Crouch_Joy_1") && grounded)
+            if (Input.GetButton("Crouch_Joy_1") && grounded && slowed == false)
             {
                 crouching = true;
             }
@@ -78,7 +79,10 @@ public class PlayerOneMovement : MonoBehaviour {
                 if (canStandUp == false)
                 {
                     crouching = false;
-                    speed = moveSpeed;
+                    if (slowed == false)
+                    {
+                        speed = moveSpeed;
+                    }
                     col.height = 4.5f;
                     col.center = new Vector3(0, 2.2f, 0);
                 }
@@ -190,17 +194,23 @@ public class PlayerOneMovement : MonoBehaviour {
         }
 
         canStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
+
+
+        
+        Move();
     }
 
-    private void FixedUpdate()
+
+    private void Move()
     {
-        if(jumping)
+        //Stuff that used to be in fixedupdate
+        if (jumping)
         {
             movementVector = new Vector3(movementVector.x, jumpH, movementVector.z);
             animator.Play("Armature|JumpStart", 0);
             jumping = false;
             landing = false;
-            if(crouching == true)
+            if (crouching == true)
             {
                 speed = moveSpeed;
                 col.height = 4.5f;
@@ -208,7 +218,7 @@ public class PlayerOneMovement : MonoBehaviour {
                 crouching = false;
             }
         }
-        else if(crouching)
+        else if (crouching)
         {
             //TODO
         }
@@ -219,7 +229,7 @@ public class PlayerOneMovement : MonoBehaviour {
 
         if (!wallJumping) rb.velocity = movementVector;
         else rb.velocity = wallJumpVector;
-        
+
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, LayerMask.GetMask("Platform")))
         {
@@ -233,7 +243,7 @@ public class PlayerOneMovement : MonoBehaviour {
                 landing = false;
             }
         }
-        
+
         animator.SetBool("Landing", landing);
         animator.SetBool("Grounded", grounded);
         animator.SetBool("Crouched", crouching);
@@ -241,7 +251,7 @@ public class PlayerOneMovement : MonoBehaviour {
     }
 
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider collision)
     {
         if (collision.gameObject.tag == "Platform" || collision.gameObject.tag == "Trap")
         {
@@ -267,7 +277,7 @@ public class PlayerOneMovement : MonoBehaviour {
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.tag == "Platform")
         {
@@ -333,5 +343,10 @@ public class PlayerOneMovement : MonoBehaviour {
     public float GetInputAxis()
     {
         return inputAxis;
+    }
+    
+    public void IsSlowed(bool slow)
+    {
+        slowed = slow;
     }
 }

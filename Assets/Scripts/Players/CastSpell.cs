@@ -69,6 +69,7 @@ public class CastSpell : MonoBehaviour {
 
     void Update()
     {
+        MoveTarget();
         if (p2Controller && !pause.GameIsPaused)
         {
             if (Input.GetButtonDown("Place_Joy_2") && placeEnabled && spellTarget != null)
@@ -79,8 +80,6 @@ public class CastSpell : MonoBehaviour {
         }
 
         PlayerOneState = playerOne.GetComponent<CameraOneRotator>().GetState();
-
-        MoveTarget();
 
         if (spell != null && spellTarget != null) CheckValidLocation();
 
