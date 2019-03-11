@@ -83,7 +83,7 @@ public class PlaceTrap : MonoBehaviour {
         //Handle cursor or set buttons if controller connected
         checkControllers = gameManager.GetComponent<CheckControllers>();
         p2Controller = checkControllers.GetControllerTwoState();
-        placeEnabled = false;
+        placeEnabled = true;
 
         if (p2Controller)
         {
@@ -255,7 +255,7 @@ public class PlaceTrap : MonoBehaviour {
                                 buttonSet = true;
                             }
                         }
-                        placeEnabled = false;
+                        //placeEnabled = false;
 
                         if (eventSystem.currentSelectedGameObject == null || !buttonSet)
                         {
@@ -442,7 +442,7 @@ public class PlaceTrap : MonoBehaviour {
                             }
 
                         }
-                        placeEnabled = false;
+                       // placeEnabled = false;
                     }
                 }
             }
