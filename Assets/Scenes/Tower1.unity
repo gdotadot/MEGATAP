@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.75256175, g: 0.7760851, b: 0.5577871, a: 1}
+  m_IndirectSpecularColor: {r: 0.7524489, g: 0.7763308, b: 0.5577417, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -140,7 +140,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4758679635353836, guid: cfd428a7fbb7c3042a80eb1763f22607, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -80.21216
+      value: -80.20629
       objectReference: {fileID: 0}
     - target: {fileID: 4758679635353836, guid: cfd428a7fbb7c3042a80eb1763f22607, type: 2}
       propertyPath: m_LocalRotation.x
@@ -1007,7 +1007,7 @@ Prefab:
     - target: {fileID: 224747235356569134, guid: c130ae0761b27334089036b39347c937,
         type: 2}
       propertyPath: m_RootOrder
-      value: 15
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 224167673291112124, guid: c130ae0761b27334089036b39347c937,
         type: 2}
@@ -1047,7 +1047,7 @@ Prefab:
     - target: {fileID: 224727115560021200, guid: c130ae0761b27334089036b39347c937,
         type: 2}
       propertyPath: m_RootOrder
-      value: 14
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 224024851018472278, guid: c130ae0761b27334089036b39347c937,
         type: 2}
@@ -1489,7 +1489,7 @@ Prefab:
         type: 2}
       propertyPath: spellButtons.Array.data[1]
       value: 
-      objectReference: {fileID: 1113329559578948, guid: 2419b2b2f16cd924db2dfdd07893b05c,
+      objectReference: {fileID: 1613936015125488, guid: 4a067145d92a94685b6e22ef6edc3f4b,
         type: 2}
     - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
         type: 2}
@@ -1738,7 +1738,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 545b8f67a8d5a7642bd064985b9b5f4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avoidVinesText: {fileID: 1893595276}
   lost: {fileID: 2040656225}
 --- !u!114 &1016487809
 MonoBehaviour:
@@ -3982,7 +3981,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4940846812731354, guid: 295df6c694235764eac79c393ed826dc, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -80.21216
+      value: -80.20629
       objectReference: {fileID: 0}
     - target: {fileID: 4940846812731354, guid: 295df6c694235764eac79c393ed826dc, type: 2}
       propertyPath: m_LocalRotation.x
