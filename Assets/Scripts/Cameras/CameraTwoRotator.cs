@@ -11,8 +11,6 @@ public class CameraTwoRotator : MonoBehaviour {
     [SerializeField] private Toggle gridToggle;
     [SerializeField] private GameObject cameraTarget;
     [SerializeField] private GameManager gm;
-    [SerializeField] private GameObject faceTwoInstructions;
-    [SerializeField] private GameObject faceOneInstructions;
 
     [Header("Designers - Speeds & Offsets -----")]
     [SerializeField] private float rotateSpeed;
@@ -117,15 +115,6 @@ public class CameraTwoRotator : MonoBehaviour {
 
         MoveGrid();
 
-        //Play instructions text for face 2
-        if(currentPos == 2 && floor == 2)
-        {
-            faceTwoInstructions.SetActive(true);
-            if(faceOneInstructions != null)
-            {
-                Destroy(faceOneInstructions);
-            }
-        }
     }
 
     //Camera movement coroutine
