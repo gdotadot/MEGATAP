@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TutorialController : MonoBehaviour {
+public class TutorialController : MonoBehaviour
+{
 
     // two serparate lists for player tips
     [SerializeField] private int timeBetweenTips; // in seconds
@@ -11,9 +12,10 @@ public class TutorialController : MonoBehaviour {
 
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         // set all of them to invisible, for both lists
-		foreach( GameObject tip in p1tips)
+        foreach (GameObject tip in p1tips)
         {
             tip.GetComponent<CanvasRenderer>().SetAlpha(0f);
             tip.transform.GetChild(0).gameObject.GetComponent<CanvasRenderer>().SetAlpha(0f);
@@ -24,21 +26,22 @@ public class TutorialController : MonoBehaviour {
             tip.transform.GetChild(0).gameObject.GetComponent<CanvasRenderer>().SetAlpha(0f);
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         // TOP PLAYER
         // spawn a tip every timeBetweenTips seconds
-        if((int)Time.timeSinceLevelLoad % timeBetweenTips == 0 && (int)Time.timeSinceLevelLoad/timeBetweenTips < p1tips.Count)
+        if ((int)Time.timeSinceLevelLoad % timeBetweenTips == 0 && (int)Time.timeSinceLevelLoad / timeBetweenTips < p1tips.Count)
         {
-            GameObject tip = p1tips[(int)Time.timeSinceLevelLoad/timeBetweenTips];
+            GameObject tip = p1tips[(int)Time.timeSinceLevelLoad / timeBetweenTips];
             tip.GetComponent<CanvasRenderer>().SetAlpha(1f);
             tip.transform.GetChild(0).gameObject.GetComponent<CanvasRenderer>().SetAlpha(1f);
         }
         // remove the previous tip every timeBetweenTips seconds
         if ((int)Time.timeSinceLevelLoad % timeBetweenTips == 0 && (int)Time.timeSinceLevelLoad / timeBetweenTips > 0 && (int)Time.timeSinceLevelLoad / timeBetweenTips < p1tips.Count + 1)
         {
-            GameObject tip = p1tips[((int)Time.timeSinceLevelLoad / timeBetweenTips) -1];
+            GameObject tip = p1tips[((int)Time.timeSinceLevelLoad / timeBetweenTips) - 1];
             tip.GetComponent<CanvasRenderer>().SetAlpha(0f);
             tip.transform.GetChild(0).gameObject.GetComponent<CanvasRenderer>().SetAlpha(0f);
         }
@@ -52,12 +55,17 @@ public class TutorialController : MonoBehaviour {
             tip.transform.GetChild(0).gameObject.GetComponent<CanvasRenderer>().SetAlpha(1f);
         }
         // remove the previous tip every timeBetweenTips seconds
-        if ((int)Time.timeSinceLevelLoad % timeBetweenTips == 0 && (int)Time.timeSinceLevelLoad / timeBetweenTips > 0 && (int)Time.timeSinceLevelLoad / timeBetweenTips < p2tips.Count+1)
+        if ((int)Time.timeSinceLevelLoad % timeBetweenTips == 0 && (int)Time.timeSinceLevelLoad / timeBetweenTips > 0 && (int)Time.timeSinceLevelLoad / timeBetweenTips < p2tips.Count + 1)
         {
             GameObject tip = p2tips[((int)Time.timeSinceLevelLoad / timeBetweenTips) - 1];
             tip.GetComponent<CanvasRenderer>().SetAlpha(0f);
             tip.transform.GetChild(0).gameObject.GetComponent<CanvasRenderer>().SetAlpha(0f);
         }
+
+        if (Input.GetButtonDown("Cancel"))
+        {
+            Initiate.Fade("Tower1", Color.black, 2);
+        }
+
     }
- 
 }

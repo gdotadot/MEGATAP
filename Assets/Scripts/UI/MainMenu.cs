@@ -39,7 +39,8 @@ public class MainMenu : MonoBehaviour {
     public void OnClickPlay()
     {
         //SceneManager.LoadScene("Control");
-        Initiate.Fade("Tower1", Color.black, 2);
+        //Initiate.Fade("Tower1", Color.black, 2);
+        Initiate.Fade("Tutorial", Color.black, 2);
     }
     
     public void QuitGame()
