@@ -1881,10 +1881,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 15
-  jumpHeight: 25
+  jumpHeight: 28
   wallJumpTime: 0.2
-  wallJumpDivider: 1.5
-  wallJumpDirectionDivider: 1
+  wallJumpDivider: 2
+  wallJumpDirectionDivider: 0.75
   cam: {fileID: 114614076012222384}
   distanceFromGround: 0.5
   gameManager: {fileID: 0}
@@ -2277,6 +2277,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -36.4, y: 2.18}
+  m_AnchoredPosition: {x: -36.4, y: 3.92}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}

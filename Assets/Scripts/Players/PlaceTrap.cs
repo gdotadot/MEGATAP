@@ -65,6 +65,10 @@ public class PlaceTrap : MonoBehaviour {
     private float screenWidth; //Need to calculate edges of screen manually for cursor clamping because our canvas is set to match height.
     private float screenHeight;
 
+
+    private int numTimesRotated = 0;
+    private bool resetEnabled = true;
+
 	void Start () {
         pause = gameManager.GetComponent<PauseMenu>();
         cs = GetComponent<CastSpell>();
@@ -79,7 +83,7 @@ public class PlaceTrap : MonoBehaviour {
         //Handle cursor or set buttons if controller connected
         checkControllers = gameManager.GetComponent<CheckControllers>();
         p2Controller = checkControllers.GetControllerTwoState();
-        placeEnabled = false;
+        placeEnabled = true;
 
         if (p2Controller)
         {
@@ -102,10 +106,17 @@ public class PlaceTrap : MonoBehaviour {
                 SetTrap();
             }
         }
-
         //Reset queue's when tower rotates
-        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == tower.GetComponent<NumberOfFloors>().NumFloors && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
+        if (Input.GetButtonDown("Submit_Joy_2") && resetEnabled && !pause.GameIsPaused && numTimesRotated < 4 * (tower.GetComponentInChildren<NumberOfFloors>().NumFloors - 1) - 1)
         {
+            //if(cam.GetComponent<CameraTwoRotator>().GetFloor() == tower.GetComponent<NumberOfFloors>().NumFloors && cam.GetComponent<CameraTwoRotator>().GetState() == 4)
+            //{
+            //    lastFace = true;
+            //}
+            numTimesRotated++;
+            resetEnabled = false;
+            StartCoroutine(EnableInput());
+
             DestroyGhost();
             ClearTrapQueue();
             CreateTrapQueue();
@@ -244,7 +255,7 @@ public class PlaceTrap : MonoBehaviour {
                                 buttonSet = true;
                             }
                         }
-                        placeEnabled = false;
+                        //placeEnabled = false;
 
                         if (eventSystem.currentSelectedGameObject == null || !buttonSet)
                         {
@@ -431,7 +442,7 @@ public class PlaceTrap : MonoBehaviour {
                             }
 
                         }
-                        placeEnabled = false;
+                       // placeEnabled = false;
                     }
                 }
             }
@@ -569,8 +580,9 @@ public class PlaceTrap : MonoBehaviour {
     IEnumerator EnableInput()
     {
         yield return new WaitForSeconds(0.5f);
-        placeEnabled = true;
+        resetEnabled = true;
     }
+
 
 
     /// --------------------------------------------------------
