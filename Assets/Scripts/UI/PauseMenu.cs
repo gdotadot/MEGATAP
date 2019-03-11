@@ -74,7 +74,7 @@ public class PauseMenu : MonoBehaviour {
                 buttonSet = true;
             }
         }
-        es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu";
+        es.GetComponent<StandaloneInputModule>().submitButton = "Nothing";
         Time.timeScale = 1f;
 		GameIsPaused = false;
 	}
