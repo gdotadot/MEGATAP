@@ -204,11 +204,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4758679635353836, guid: cfd428a7fbb7c3042a80eb1763f22607, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 29.999994
+      value: 29.999996
       objectReference: {fileID: 0}
     - target: {fileID: 4758679635353836, guid: cfd428a7fbb7c3042a80eb1763f22607, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -80.19422
+      value: -80.194214
       objectReference: {fileID: 0}
     - target: {fileID: 4758679635353836, guid: cfd428a7fbb7c3042a80eb1763f22607, type: 2}
       propertyPath: m_LocalRotation.x
@@ -488,6 +488,11 @@ Prefab:
       objectReference: {fileID: 1219273410}
     - target: {fileID: 114614076012222384, guid: 9af0d0883e6a51441b06cd7d26274b01,
         type: 2}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 856821946}
+    - target: {fileID: 114614076012222384, guid: 9af0d0883e6a51441b06cd7d26274b01,
+        type: 2}
       propertyPath: playerOneCam
       value: 
       objectReference: {fileID: 834808313}
@@ -506,16 +511,16 @@ Prefab:
       propertyPath: floorSpawn
       value: 
       objectReference: {fileID: 352250307}
-    - target: {fileID: 114452904007992328, guid: 9af0d0883e6a51441b06cd7d26274b01,
+    - target: {fileID: 114940724036334842, guid: 9af0d0883e6a51441b06cd7d26274b01,
         type: 2}
-      propertyPath: timer
-      value: 
+      propertyPath: wallJumpDivider
+      value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 114614076012222384, guid: 9af0d0883e6a51441b06cd7d26274b01,
+    - target: {fileID: 114940724036334842, guid: 9af0d0883e6a51441b06cd7d26274b01,
         type: 2}
-      propertyPath: audioSource
-      value: 
-      objectReference: {fileID: 856821946}
+      propertyPath: wallJumpDirectionDivider
+      value: 0.75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9af0d0883e6a51441b06cd7d26274b01, type: 2}
   m_IsPrefabAsset: 0
@@ -4005,11 +4010,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4940846812731354, guid: 295df6c694235764eac79c393ed826dc, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 29.999994
+      value: 29.999996
       objectReference: {fileID: 0}
     - target: {fileID: 4940846812731354, guid: 295df6c694235764eac79c393ed826dc, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -80.19422
+      value: -80.194214
       objectReference: {fileID: 0}
     - target: {fileID: 4940846812731354, guid: 295df6c694235764eac79c393ed826dc, type: 2}
       propertyPath: m_LocalRotation.x
