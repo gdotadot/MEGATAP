@@ -251,7 +251,7 @@ public class PlayerOneMovement : MonoBehaviour {
     }
 
 
-    private void OnCollisionStay(Collision collision)
+    private void OnTriggerStay(Collider collision)
     {
         if (collision.gameObject.tag == "Platform" || collision.gameObject.tag == "Trap")
         {
@@ -277,7 +277,7 @@ public class PlayerOneMovement : MonoBehaviour {
         }
     }
 
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.tag == "Platform")
         {
