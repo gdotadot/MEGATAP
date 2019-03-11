@@ -66,7 +66,7 @@ public class CastSpell : MonoBehaviour {
         allCameras.Add(cam);
         allCameras.Add(cam2);
 
-       // spellQueue.transform.SetAsFirstSibling();
+        spellQueue.transform.SetAsLastSibling();
        // SwitchQueue();
     }
 
