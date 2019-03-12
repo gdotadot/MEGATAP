@@ -223,7 +223,7 @@ public class PlaceTrap : MonoBehaviour {
             }
             
             //CheckNearby() also checks the collider provided for the "safe zone" around the trap
-            if (GetGridPosition() != null && CheckNearby() && validLocation && CheckClickOnPlatform())
+            if (GetGridPosition() != null && CheckNearby() && validLocation)
             {
                 Vector3 position = GetGridPosition().Value;
                 if (ghostTrap != null && CheckFloor(position.y))
