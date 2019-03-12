@@ -38,7 +38,7 @@ public class Projectile : MonoBehaviour {
 	{
 		if(col.gameObject.tag == "Player"){
 			player = col.gameObject;
-            audioSource.PlayOneShot(impactSFX);
+            if(!hit) audioSource.PlayOneShot(impactSFX);
 			hit = true;
             Unrender();
 

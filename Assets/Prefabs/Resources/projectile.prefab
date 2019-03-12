@@ -21,11 +21,11 @@ GameObject:
   - component: {fileID: 4525287144521176}
   - component: {fileID: 33468517007846552}
   - component: {fileID: 23262491819376812}
-  - component: {fileID: 135035695274582534}
   - component: {fileID: 114209150249379914}
   - component: {fileID: 114183101960201952}
   - component: {fileID: 54422676141630506}
   - component: {fileID: 82982855476971484}
+  - component: {fileID: 136494583783300122}
   m_Layer: 0
   m_Name: projectile
   m_TagString: Untagged
@@ -57,7 +57,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1095368574633302}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.9260247, y: 0.29141235, z: 44.05}
+  m_LocalPosition: {x: 9.582553, y: 11.38967, z: -44.25}
   m_LocalScale: {x: 2, y: 1, z: 2}
   m_Children:
   - {fileID: 4886909372902734}
@@ -298,8 +298,8 @@ MonoBehaviour:
   stunDuration: 1
   impactSFX: {fileID: 8300000, guid: 992c04d576b894f44a759d86e0d28ccc, type: 3}
   releaseSFX: {fileID: 0}
---- !u!135 &135035695274582534
-SphereCollider:
+--- !u!136 &136494583783300122
+CapsuleCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -307,6 +307,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.09353125
+  m_Height: 1.7904706
+  m_Direction: 0
+  m_Center: {x: -0.9404695, y: 0.060251474, z: 0}

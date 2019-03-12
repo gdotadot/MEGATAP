@@ -350,7 +350,7 @@ GameObject:
   - component: {fileID: 114692266925298726}
   - component: {fileID: 82333417526295136}
   - component: {fileID: 223606388147917922}
-  - component: {fileID: 65917932200694102}
+  - component: {fileID: 136537822502040418}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -1570,7 +1570,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: dc6a66afc423fc54fbe0b77db914990a, type: 2}
+  - {fileID: 2100000, guid: 5f02fc38abb98224189d359938aa4ff5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1605,7 +1605,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: dc6a66afc423fc54fbe0b77db914990a, type: 2}
+  - {fileID: 2100000, guid: 5f02fc38abb98224189d359938aa4ff5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1661,18 +1661,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 2
---- !u!65 &65917932200694102
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1428506183960842}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 4.9746966, z: 2.6515906}
-  m_Center: {x: 7.5622106e-16, y: 1.9873478, z: 0.057673}
 --- !u!82 &82333417526295136
 AudioSource:
   m_ObjectHideFlags: 1
@@ -1913,6 +1901,19 @@ CapsuleCollider:
   m_Height: 4.5
   m_Direction: 1
   m_Center: {x: 0, y: 2.2, z: 0}
+--- !u!136 &136537822502040418
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1428506183960842}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.1501592
+  m_Height: 4.2436285
+  m_Direction: 1
+  m_Center: {x: 2.4990276e-15, y: 1.7367859, z: 0.20756459}
 --- !u!137 &137489807720363134
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
