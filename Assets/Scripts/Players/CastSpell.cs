@@ -34,10 +34,11 @@ public class CastSpell : MonoBehaviour {
     private PauseMenu pause;
     private List<Camera> allCameras = new List<Camera>();
 
-    //Andy's Queue Stuff
+    //Queue Stuff
     public GameObject[] queue { get; private set; }
     private int queueIndex;
     [HideInInspector] public bool active { get; private set; }
+
 
     //Spell Stuff
     private SpellBase spell;
@@ -56,8 +57,7 @@ public class CastSpell : MonoBehaviour {
     private bool p2Controller;
     private bool placeEnabled;
 
-    //private int numTimesRotated = 0;
-    //private bool resetEnabled = true;
+    
 
 
     void Start()
@@ -254,6 +254,7 @@ public class CastSpell : MonoBehaviour {
                     castedSpell.GetComponent<SpellBase>().SpellCast = true;
                 }
                 StartCoroutine(StartCooldown(spell.GetComponent<SpellBase>().CooldownTime, queue[queueIndex].transform.localPosition, queueIndex));
+
                 spell = null;
 
                 ClearButton();
@@ -500,12 +501,39 @@ public class CastSpell : MonoBehaviour {
     //Start a cooldown on the button pressed. Needs current button position and queue index to replace.
     private IEnumerator StartCooldown(float cooldownTime, Vector3 buttonPosition, int index)
     {
-        yield return new WaitForSeconds(cooldownTime);
-
+        float cooldownTimePassed = 0;
         Destroy(queue[index]);
         GenerateNewSpell(buttonPosition, index);
-        if (eventSystem.currentSelectedGameObject == null) SetSelectedButton();
+
+        Button button = queue[index].GetComponent<Button>();
+
+        Image[] images = queue[index].GetComponentsInChildren<Image>();
+        Image fillImage = images[0];
+        foreach(Image image in images)
+        {
+            if(image.type == Image.Type.Filled)
+            {
+                fillImage = image;
+                fillImage.fillAmount = 0;
+            }
+        }
+
+        button.interactable = false;
+
+        while (cooldownTimePassed <= cooldownTime)
+        {
+            yield return new WaitForSeconds(Time.deltaTime);
+            cooldownTimePassed += Time.deltaTime;
+            fillImage.fillAmount = cooldownTimePassed / cooldownTime;
+            
+            if(cooldownTimePassed >= cooldownTime)
+            {
+                button.interactable = true;
+                if (eventSystem.currentSelectedGameObject == null) SetSelectedButton();
+            }
+        }
     }
+
 
     private Camera GetCameraForMousePosition()
     {
