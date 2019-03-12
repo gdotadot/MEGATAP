@@ -605,6 +605,7 @@ public class PlaceTrap : MonoBehaviour {
                         if (cs.queue[i] != null && cs.queue[i].activeInHierarchy && !buttonSet)
                         {
                             controllerCursor.transform.localPosition = new Vector3(0, -100);
+                            cs.placeEnabled = false;
                             eventSystem.SetSelectedGameObject(cs.queue[i]);
                             buttonSet = true;
                         }

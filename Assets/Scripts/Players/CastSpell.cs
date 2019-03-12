@@ -55,7 +55,7 @@ public class CastSpell : MonoBehaviour {
 
     //Controller Stuff
     private bool p2Controller;
-    private bool placeEnabled;
+    public bool placeEnabled;
 
     
 
