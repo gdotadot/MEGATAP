@@ -15,12 +15,14 @@ public class GustOfWind : MonoBehaviour {
     //Hit two boundaries to die
     private bool once = false;
 
+    private int count = 0;
+
     private void Start()
     {
         once = false;
-
+        count = 0;
        	cam = GameObject.Find("Player 1").GetComponent<CameraOneRotator>();
-      
+
         switch (cam.GetState())
         {
             case 1:
@@ -40,7 +42,7 @@ public class GustOfWind : MonoBehaviour {
                 direction = new Vector3(0.0f, 0.0f, 1.0f);
                 break;
         }
-         
+
     }
 
     void FixedUpdate()
@@ -85,13 +87,14 @@ public class GustOfWind : MonoBehaviour {
           //Debug.Log("entered");
           //player = other.gameObject;
           trig = true;
+          count++;
       }
 
-        if (other.tag == "Boundary" && once == false)
+        if (other.gameObject.tag == "Boundary" && once == false)
         {
             StartCoroutine(WaitToDie(4f));
         }
-        if (other.tag == "Boundary" && once == true)
+        if (other.gameObject.tag == "Boundary" && once == true)
         {
             StartCoroutine(DeathWait(4f));
         }
@@ -104,27 +107,34 @@ public class GustOfWind : MonoBehaviour {
      	// Other is the object, that should be pushed away
       if(other.gameObject.tag == "Player")
       {
+
         //Debug.Log("Object is in trigger");
      	  Vector3 place = transform.position;
         //Debug.Log("place" + place);
      	  Vector3 targetPosition = other.transform.position;
         //Debug.Log("target position" + targetPosition);
-     	 // Vector3 direction = targetPosition - place;
-      //  Debug.Log("direction" + direction);
-     	 // direction.Normalize();
-      //  Debug.Log("normal direction" + direction);
+     	  // Vector3 direction = targetPosition - place;
+        //  Debug.Log("direction" + direction);
+     	  // direction.Normalize();
+        //  Debug.Log("normal direction" + direction);
+
+        if(count > 1){
+          other.transform.position += direction * windForce/2 * Time.deltaTime;
+        }
+        else{
+          other.transform.position += direction * windForce * Time.deltaTime;
+        }
 
 
-
-     	  other.transform.position += direction * windForce * Time.deltaTime;
       }
-
 	}
+
 	void OnTriggerExit(Collider other)
 	{
     if(other.gameObject.tag == "Player"){
       //Debug.Log("Object left the trigger");
       trig = false;
+      count--;
    }
 
 	}
