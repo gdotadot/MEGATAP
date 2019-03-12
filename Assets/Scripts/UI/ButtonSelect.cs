@@ -19,7 +19,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
 
     private AudioSource audioSource;
     private Vector3 buttonScale;
-
+    EventSystem es;
     private void Start()
     {
         GameObject player = GameObject.Find("Player 2");
@@ -34,12 +34,18 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
                 tooltip.transform.SetAsLastSibling();
             }
         }
-        ChangeTooltip(GameObject.Find("EventSystem").GetComponent<EventSystem>().currentSelectedGameObject.name);
+        es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        if(es.currentSelectedGameObject != null) ChangeTooltip(es.currentSelectedGameObject.name);
 
         cs = player.GetComponent<CastSpell>();
         pt = player.GetComponent<PlaceTrap>();
         controllerCursor = GameObject.Find("ControllerCursor").GetComponent<Image>();
         cursorMove = player.GetComponent<MoveControllerCursor>();
+    }
+
+    public void Update()
+    {
+        //if (es.currentSelectedGameObject == null) tooltip.text = "";
     }
 
     //Do this when the selectable UI object is selected.
@@ -86,6 +92,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     public void OnDeselect(BaseEventData eventData)
     {
         this.transform.localScale = buttonScale;
+        tooltip.text = "";
     }
 
     public void ScaleUp()
