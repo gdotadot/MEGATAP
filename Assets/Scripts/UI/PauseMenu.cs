@@ -57,7 +57,7 @@ public class PauseMenu : MonoBehaviour {
         {
             if (cs.queue[i] != null)
             {
-                if (cs.active) cs.queue[i].GetComponent<Button>().interactable = true;
+                cs.queue[i].GetComponent<Button>().interactable = true;
                 if (cs.active && cs.queue[i].activeInHierarchy && !buttonSet)
                 {
                     es.SetSelectedGameObject(cs.queue[i]);
