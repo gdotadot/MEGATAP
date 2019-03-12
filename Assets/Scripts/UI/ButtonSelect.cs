@@ -77,7 +77,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     public void ScaleUp()
     {
         buttonScale = this.transform.localScale;
-        this.transform.localScale *= 1.35f;
+        if(this.GetComponent<Button>().interactable) this.transform.localScale *= 1.35f;
     }
 
     private void GetCurrentFirstTrap()
