@@ -64,8 +64,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         }
 
         //Button Scaling
-        buttonScale = this.transform.localScale;
-        this.transform.localScale *= 1.35f;
+        ScaleUp();
 
         GetComponent<Button>().onClick.Invoke();
     }
@@ -73,6 +72,12 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     public void OnDeselect(BaseEventData eventData)
     {
         this.transform.localScale = buttonScale;
+    }
+
+    public void ScaleUp()
+    {
+        buttonScale = this.transform.localScale;
+        this.transform.localScale *= 1.35f;
     }
 
     private void GetCurrentFirstTrap()

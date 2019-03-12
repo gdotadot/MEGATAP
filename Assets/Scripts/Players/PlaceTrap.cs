@@ -206,6 +206,7 @@ public class PlaceTrap : MonoBehaviour {
             bool validLocation;
             CheckMultipleBases bases = ghostTrap.GetComponentInChildren<CheckMultipleBases>();
             CheckValidLocations check = ghostTrap.GetComponentInChildren<CheckValidLocations>();
+         
 
             if (bases != null)
             {
@@ -220,9 +221,9 @@ public class PlaceTrap : MonoBehaviour {
                 validLocation = true;
                 Debug.Log("Warning: Trap not set up correctly; valid location is always true.");
             }
-
+            
             //CheckNearby() also checks the collider provided for the "safe zone" around the trap
-            if (GetGridPosition() != null && CheckNearby() && validLocation)
+            if (GetGridPosition() != null && CheckNearby() && validLocation && CheckClickOnPlatform())
             {
                 Vector3 position = GetGridPosition().Value;
                 if (ghostTrap != null && CheckFloor(position.y))
@@ -285,6 +286,39 @@ public class PlaceTrap : MonoBehaviour {
         return false;
     }
 
+    private bool CheckClickOnPlatform()
+    {
+        RaycastHit hit;
+        Ray ray;
+        //Ray to controller cursor
+        if (p2Controller && controllerCursor.transform.position.y > Screen.height / 2)
+        {
+            ray = cam.ScreenPointToRay(controllerCursor.transform.position);
+            if (Physics.Raycast(ray, out hit, float.MaxValue, ~LayerMask.GetMask("Ignore Raycast")))
+            {
+                if (hit.transform.tag == "Platform")
+                {
+                    return false;
+                }
+            }
+            else return true;
+        }
+        //Ray to mouse cursor
+        else if (Input.mousePosition.y > Screen.height / 2)
+        {
+            ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, float.MaxValue, ~LayerMask.GetMask("Ignore Raycast")))
+            {
+                if (hit.transform.tag == "Platform")
+                {
+                    return false;
+                }
+            }
+            else return true;
+        }
+
+        return true;
+    }
     private void SetGhost()
     {
         if(trap != null)
