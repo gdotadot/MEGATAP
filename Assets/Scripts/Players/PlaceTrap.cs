@@ -291,20 +291,21 @@ public class PlaceTrap : MonoBehaviour {
         RaycastHit hit;
         Ray ray;
         //Ray to controller cursor
-        if (p2Controller && controllerCursor.transform.position.y > Screen.height / 2)
-        {
-            ray = cam.ScreenPointToRay(controllerCursor.transform.position);
-            if (Physics.Raycast(ray, out hit, float.MaxValue, ~LayerMask.GetMask("Ignore Raycast")))
-            {
-                if (hit.transform.tag == "Platform")
-                {
-                    return false;
-                }
-            }
-            else return true;
-        }
+        //if (p2Controller && controllerCursor.transform.position.y > Screen.height / 2)
+        //{
+        //    ray = cam.ray
+        //    ray = cam.WorldPointToRay(ghostTrap.transform.position);
+        //    if (Physics.Raycast(ray, out hit, float.MaxValue, ~LayerMask.GetMask("Ignore Raycast")))
+        //    {
+        //        if (hit.transform.tag == "Platform")
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    else return true;
+        //}
         //Ray to mouse cursor
-        else if (Input.mousePosition.y > Screen.height / 2)
+        if (Input.mousePosition.y > Screen.height / 2)
         {
             ray = cam.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit, float.MaxValue, ~LayerMask.GetMask("Ignore Raycast")))
