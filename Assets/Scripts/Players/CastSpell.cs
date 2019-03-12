@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 
 public class CastSpell : MonoBehaviour {
     [Header("Design Values -------------")]
-    [SerializeField] private int cursorDistFromCenter;
     [SerializeField] private int queueSize;
+    [SerializeField] private int verticalSpellSpawnHeight;
 
     //[SerializeField] [Tooltip("Must be in SAME ORDER and SAME AMOUNT of spell prefabs and spell buttons arrays.")]
     //private float[] spellCooldowns;
@@ -34,10 +34,11 @@ public class CastSpell : MonoBehaviour {
     private PauseMenu pause;
     private List<Camera> allCameras = new List<Camera>();
 
-    //Andy's Queue Stuff
+    //Queue Stuff
     public GameObject[] queue { get; private set; }
     private int queueIndex;
     [HideInInspector] public bool active { get; private set; }
+
 
     //Spell Stuff
     private SpellBase spell;
@@ -54,10 +55,9 @@ public class CastSpell : MonoBehaviour {
 
     //Controller Stuff
     private bool p2Controller;
-    private bool placeEnabled;
+    public bool placeEnabled;
 
-    //private int numTimesRotated = 0;
-    //private bool resetEnabled = true;
+    
 
 
     void Start()
@@ -96,22 +96,11 @@ public class CastSpell : MonoBehaviour {
 
         PlayerOneState = playerOne.GetComponent<CameraOneRotator>().GetState();
 
-        //  if (spell != null && spellTarget != null) CheckValidLocation();
-
-
-        //if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == tower.GetComponent<NumberOfFloors>().NumFloors && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
-
-        //{
-        //    DestroyTarget();
-        //    CreateSpellQueue();
-        //}
-
 
         if (Input.GetMouseButtonDown(1) && ValidLocation == 1)
         {
             SpellCast();
         }
-
     }
 
     void FixedUpdate()
@@ -231,22 +220,22 @@ public class CastSpell : MonoBehaviour {
                     switch (PlayerOneState)
                     {
                         case 1:
-                            castedSpell = spell.InstantiateSpell(spellTarget.transform.position.x, spellTarget.transform.position.y + 100, -42);
+                            castedSpell = spell.InstantiateSpell(spellTarget.transform.position.x, spellTarget.transform.position.y + verticalSpellSpawnHeight, -42);
                             movementVector = new Vector3(0, -spellSpeed, 0);
                             rb = castedSpell.GetComponent<Rigidbody>();
                             break;
                         case 2:
-                            castedSpell = spell.InstantiateSpell(42, spellTarget.transform.position.y + 100, spellTarget.transform.position.z);
+                            castedSpell = spell.InstantiateSpell(42, spellTarget.transform.position.y + verticalSpellSpawnHeight, spellTarget.transform.position.z);
                             movementVector = new Vector3(0, -spellSpeed, 0);
                             rb = castedSpell.GetComponent<Rigidbody>();
                             break;
                         case 3:
-                            castedSpell = spell.InstantiateSpell(spellTarget.transform.position.x, spellTarget.transform.position.y + 100, 42);
+                            castedSpell = spell.InstantiateSpell(spellTarget.transform.position.x, spellTarget.transform.position.y + verticalSpellSpawnHeight, 42);
                             movementVector = new Vector3(0, -spellSpeed, 0);
                             rb = castedSpell.GetComponent<Rigidbody>();
                             break;
                         case 4:
-                            castedSpell = spell.InstantiateSpell(-42, spellTarget.transform.position.y + 100, spellTarget.transform.position.z);
+                            castedSpell = spell.InstantiateSpell(-42, spellTarget.transform.position.y + verticalSpellSpawnHeight, spellTarget.transform.position.z);
                             movementVector = new Vector3(0, -spellSpeed, 0);
                             rb = castedSpell.GetComponent<Rigidbody>();
                             break;
@@ -254,6 +243,7 @@ public class CastSpell : MonoBehaviour {
                     castedSpell.GetComponent<SpellBase>().SpellCast = true;
                 }
                 StartCoroutine(StartCooldown(spell.GetComponent<SpellBase>().CooldownTime, queue[queueIndex].transform.localPosition, queueIndex));
+
                 spell = null;
 
                 ClearButton();
@@ -500,12 +490,39 @@ public class CastSpell : MonoBehaviour {
     //Start a cooldown on the button pressed. Needs current button position and queue index to replace.
     private IEnumerator StartCooldown(float cooldownTime, Vector3 buttonPosition, int index)
     {
-        yield return new WaitForSeconds(cooldownTime);
-
+        float cooldownTimePassed = 0;
         Destroy(queue[index]);
         GenerateNewSpell(buttonPosition, index);
-        if (eventSystem.currentSelectedGameObject == null) SetSelectedButton();
+
+        Button button = queue[index].GetComponent<Button>();
+
+        Image[] images = queue[index].GetComponentsInChildren<Image>();
+        Image fillImage = images[0];
+        foreach(Image image in images)
+        {
+            if(image.type == Image.Type.Filled)
+            {
+                fillImage = image;
+                fillImage.fillAmount = 0;
+            }
+        }
+
+        button.interactable = false;
+
+        while (cooldownTimePassed <= cooldownTime)
+        {
+            yield return new WaitForSeconds(Time.deltaTime);
+            cooldownTimePassed += Time.deltaTime;
+            fillImage.fillAmount = cooldownTimePassed / cooldownTime;
+            
+            if(cooldownTimePassed >= cooldownTime)
+            {
+                button.interactable = true;
+                if (eventSystem.currentSelectedGameObject == null) SetSelectedButton();
+            }
+        }
     }
+
 
     private Camera GetCameraForMousePosition()
     {

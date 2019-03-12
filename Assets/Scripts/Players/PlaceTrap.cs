@@ -15,7 +15,6 @@ public enum Direction
 public class PlaceTrap : MonoBehaviour {
     [Header("Design Values -------------")]
     [SerializeField] private int gridSize;
-    [SerializeField] private int cursorDistFromCenter;
 
     [Header("Programmers - GameObjects/Scripts -----")]
     [SerializeField] private GameObject tower;
@@ -119,7 +118,7 @@ public class PlaceTrap : MonoBehaviour {
             DestroyGhost();
             ClearTrapQueue();
             CreateTrapQueue();
-            eventSystem.SetSelectedGameObject(queue[0]);
+            if(p2Controller) eventSystem.SetSelectedGameObject(queue[0]);
             cursorMove.MovingTraps = true;
             controllerCursor.transform.localPosition = new Vector3(0, 130);
         }
@@ -207,6 +206,7 @@ public class PlaceTrap : MonoBehaviour {
             bool validLocation;
             CheckMultipleBases bases = ghostTrap.GetComponentInChildren<CheckMultipleBases>();
             CheckValidLocations check = ghostTrap.GetComponentInChildren<CheckValidLocations>();
+         
 
             if (bases != null)
             {
@@ -221,7 +221,7 @@ public class PlaceTrap : MonoBehaviour {
                 validLocation = true;
                 Debug.Log("Warning: Trap not set up correctly; valid location is always true.");
             }
-
+            
             //CheckNearby() also checks the collider provided for the "safe zone" around the trap
             if (GetGridPosition() != null && CheckNearby() && validLocation)
             {
@@ -286,6 +286,40 @@ public class PlaceTrap : MonoBehaviour {
         return false;
     }
 
+    private bool CheckClickOnPlatform()
+    {
+        RaycastHit hit;
+        Ray ray;
+        //Ray to controller cursor
+        //if (p2Controller && controllerCursor.transform.position.y > Screen.height / 2)
+        //{
+        //    ray = cam.ray
+        //    ray = cam.WorldPointToRay(ghostTrap.transform.position);
+        //    if (Physics.Raycast(ray, out hit, float.MaxValue, ~LayerMask.GetMask("Ignore Raycast")))
+        //    {
+        //        if (hit.transform.tag == "Platform")
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    else return true;
+        //}
+        //Ray to mouse cursor
+        if (Input.mousePosition.y > Screen.height / 2)
+        {
+            ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, float.MaxValue, ~LayerMask.GetMask("Ignore Raycast")))
+            {
+                if (hit.transform.tag == "Platform")
+                {
+                    return false;
+                }
+            }
+            else return true;
+        }
+
+        return true;
+    }
     private void SetGhost()
     {
         if(trap != null)
@@ -550,7 +584,7 @@ public class PlaceTrap : MonoBehaviour {
         for(int i = 0; i < queueSize; i++)
         {
             int random = Random.Range(0, trapButtons.Length);
-            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-80f + 40f*i, -11f, 0), Quaternion.identity) as GameObject;
+            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-80f + 40f*i, -30, 0), Quaternion.identity) as GameObject;
             newTrap.transform.SetParent(trapQueue.transform, false);
 
             //Add click listeners for all trap buttons
@@ -602,9 +636,10 @@ public class PlaceTrap : MonoBehaviour {
                 {
                     for (int i = 0; i < cs.queue.Length; i++)
                     {
-                        if (cs.queue[i] != null && cs.queue[i].activeInHierarchy && !buttonSet)
+                        if (cs.queue[i] != null && cs.queue[i].GetComponent<Button>().interactable && cs.queue[i].activeInHierarchy && !buttonSet)
                         {
                             controllerCursor.transform.localPosition = new Vector3(0, -100);
+                            cs.placeEnabled = false;
                             eventSystem.SetSelectedGameObject(cs.queue[i]);
                             buttonSet = true;
                         }
