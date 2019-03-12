@@ -118,7 +118,7 @@ public class PlaceTrap : MonoBehaviour {
             DestroyGhost();
             ClearTrapQueue();
             CreateTrapQueue();
-            eventSystem.SetSelectedGameObject(queue[0]);
+            if(p2Controller) eventSystem.SetSelectedGameObject(queue[0]);
             cursorMove.MovingTraps = true;
             controllerCursor.transform.localPosition = new Vector3(0, 130);
         }
