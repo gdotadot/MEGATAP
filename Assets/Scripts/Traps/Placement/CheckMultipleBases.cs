@@ -28,4 +28,10 @@ public class CheckMultipleBases : MonoBehaviour {
             Valid = valid;
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Valid = false;
+    }
+
 }
