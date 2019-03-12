@@ -601,7 +601,7 @@ public class PlaceTrap : MonoBehaviour {
                 {
                     for (int i = 0; i < cs.queue.Length; i++)
                     {
-                        if (cs.queue[i] != null && cs.queue[i].activeInHierarchy && !buttonSet)
+                        if (cs.queue[i] != null && cs.queue[i].GetComponent<Button>().interactable && cs.queue[i].activeInHierarchy && !buttonSet)
                         {
                             controllerCursor.transform.localPosition = new Vector3(0, -100);
                             cs.placeEnabled = false;
