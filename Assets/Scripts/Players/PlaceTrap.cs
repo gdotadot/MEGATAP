@@ -275,6 +275,11 @@ public class PlaceTrap : MonoBehaviour {
                 return false;
             }
 
+            if (ghostTrap.GetComponentInChildren<TrapOnlyChecking>() != null && ghostTrap.GetComponentInChildren<TrapOnlyChecking>().nearbyTrap)
+            {
+                return false;
+            }
+
             return true;
         }
 
