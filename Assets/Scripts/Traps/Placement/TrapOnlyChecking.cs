@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrapOverlap : MonoBehaviour {
+public class TrapOnlyChecking : MonoBehaviour {
+
     [HideInInspector]
     public bool nearbyTrap;
 
 
     private void OnTriggerStay(Collider other)
     {
-        if ((other.gameObject.layer == LayerMask.NameToLayer("TrapOverlap") || other.tag == "Platform") && !GameObject.Equals(this.transform.parent, other.transform.parent))
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("TrapOverlap") && !GameObject.Equals(this.transform.parent, other.transform.parent))
         {
             nearbyTrap = true;
         }
