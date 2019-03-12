@@ -40,7 +40,7 @@ public class MinimapVines : MonoBehaviour {
         }
         else
         {
-            Debug.Log("MINIMAP : VINE WALL IS NULL");
+            //Debug.Log("MINIMAP : VINE WALL IS NULL");
         }
 	}
 }
