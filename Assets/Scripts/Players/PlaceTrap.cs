@@ -15,7 +15,6 @@ public enum Direction
 public class PlaceTrap : MonoBehaviour {
     [Header("Design Values -------------")]
     [SerializeField] private int gridSize;
-    [SerializeField] private int cursorDistFromCenter;
 
     [Header("Programmers - GameObjects/Scripts -----")]
     [SerializeField] private GameObject tower;
