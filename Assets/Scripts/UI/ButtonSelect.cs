@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;// Required when using Event data.
+using TMPro;
 
 //Alex
 //Invoke on click when button is selected
@@ -11,6 +12,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     private CastSpell cs;
     private PlaceTrap pt;
     private Image controllerCursor;
+    private TextMeshProUGUI tooltip;
     private MoveControllerCursor cursorMove;
     private GameObject currentLastSpell;
     private GameObject currentFirstTrap;
@@ -22,6 +24,18 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     {
         GameObject player = GameObject.Find("Player 2");
         audioSource = GetComponentInParent<AudioSource>();
+
+        TextMeshProUGUI[] tooltips = transform.parent.parent.GetComponentsInChildren<TextMeshProUGUI>();
+        foreach(TextMeshProUGUI t in tooltips)
+        {
+            if(t.name == "Tooltip")
+            {
+                tooltip = t;
+                tooltip.transform.SetAsLastSibling();
+            }
+        }
+        ChangeTooltip(GameObject.Find("EventSystem").GetComponent<EventSystem>().currentSelectedGameObject.name);
+
         cs = player.GetComponent<CastSpell>();
         pt = player.GetComponent<PlaceTrap>();
         controllerCursor = GameObject.Find("ControllerCursor").GetComponent<Image>();
@@ -78,6 +92,51 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     {
         buttonScale = this.transform.localScale;
         if(this.GetComponent<Button>().interactable) this.transform.localScale *= 1.35f;
+        ChangeTooltip(this.name);
+    }
+
+
+    private void ChangeTooltip(string toCheck)
+    {
+        if(tooltip != null)
+        {
+            switch(toCheck)
+            {
+                //Spells
+                case "Blur Spell Button(Clone)":
+                    tooltip.text = "Blur";
+                    break;
+                case "Gust Spell Button(Clone)":
+                    tooltip.text = "Wind";
+                    break;
+                case "Lightning Spell Button(Clone)":
+                    tooltip.text = "Lightning";
+                    break;
+                case "NarrowPOV Spell Button(Clone)":
+                    tooltip.text = "Narrow Vision";
+                    break;
+                case "Slow Spell Button(Clone)":
+                    tooltip.text = "Slow";
+                    break;
+                case "Stun Spell Button(Clone)":
+                    tooltip.text = "Petrify";
+                    break;
+                //Traps
+                case "ArrowButton(Clone)":
+                    tooltip.text = "Arrow Shooter";
+                    break;
+                case "BananaButton(Clone)":
+                    tooltip.text = "Banana";
+                    break;
+                case "SapButton(Clone)":
+                    tooltip.text = "Sap";
+                    break;
+                case "SpikeButton(Clone)":
+                    tooltip.text = "Spike";
+                    break;
+
+            }
+        }
     }
 
     private void GetCurrentFirstTrap()
