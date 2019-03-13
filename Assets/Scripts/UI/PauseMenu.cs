@@ -101,7 +101,9 @@ public class PauseMenu : MonoBehaviour {
 		GameIsPaused = true;
 	}
 	public void LoadMenu(){
-		SceneManager.LoadScene("Menu");
+        GameObject musicPlayer = GameObject.Find("MusicPlayer");
+        if (musicPlayer != null) Destroy(musicPlayer);
+        Initiate.Fade("Menu", Color.black, 2);
 		Time.timeScale = 1f;
 	}
 	public void ControlScreen(){

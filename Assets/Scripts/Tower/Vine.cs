@@ -9,6 +9,7 @@ public class Vine : MonoBehaviour {
 
     private int floor = 0;
     private int face = 1;
+    public int TotalFaceNumber = 1;
 
     [SerializeField] private GameObject[] vine;
 
@@ -50,6 +51,7 @@ public class Vine : MonoBehaviour {
                     if(growing == true)
                     {
                         face++;
+                        TotalFaceNumber++;
                     }
                     break;
                 case 2:
@@ -63,6 +65,7 @@ public class Vine : MonoBehaviour {
                     if(growing == true)
                     {
                         face++;
+                        TotalFaceNumber++;
                     }
                     break;
                 case 3:
@@ -75,6 +78,7 @@ public class Vine : MonoBehaviour {
                     if (growing == true)
                     {
                         face++;
+                        TotalFaceNumber++;
                     }
                     break;
                 case 4:
@@ -88,6 +92,7 @@ public class Vine : MonoBehaviour {
                     {
                         face = 1;
                         floor++;
+                        TotalFaceNumber++;
                     }
                     break;
 

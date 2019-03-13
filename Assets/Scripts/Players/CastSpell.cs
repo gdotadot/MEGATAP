@@ -296,7 +296,8 @@ public class CastSpell : MonoBehaviour {
             }
             else
             {
-                spellTarget = spell.InstantiateSpell(Vector3.zero);
+                spellTarget = Instantiate(targeting[2], pos, Quaternion.identity);
+                //spellTarget = spell.InstantiateSpell(Vector3.zero);
             }
             Destroy(spellTarget.GetComponent<Collider>());
         }
