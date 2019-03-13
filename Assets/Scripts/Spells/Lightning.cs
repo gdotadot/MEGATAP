@@ -14,6 +14,9 @@ public class Lightning : MonoBehaviour
 
     [SerializeField] private float stunDuration = 3;
 
+    private Animator anim;
+
+
     // Use this for initialization
     void Start()
     {
@@ -45,6 +48,7 @@ public class Lightning : MonoBehaviour
             if (hit)
             {
                 spellBase.Stun(player, stunDuration);
+                anim.SetBool("Stunned", hit);
                 StartCoroutine(Wait(this.gameObject));
             }
         }
@@ -58,6 +62,11 @@ public class Lightning : MonoBehaviour
 
             audioSource.PlayOneShot(impactSFX);
             player = other.gameObject;
+            anim = player.GetComponent<PlayerOneMovement>().GetAnim();
+            if (player.GetComponent<PlayerOneMovement>().IsCrouched() == false)
+            {
+                anim.Play("Stunned", 0);
+            }
         }
         if (hit == false && other.tag == "Boundary")
         {
@@ -67,7 +76,9 @@ public class Lightning : MonoBehaviour
 
     private IEnumerator Wait(GameObject obj)
     {
-        yield return new WaitForSeconds(stunDuration * 2f);
+        yield return new WaitForSeconds(stunDuration);
+        anim.SetBool("Stunned", false);
+        yield return new WaitForSeconds(stunDuration);
         Destroy(obj);
     }
 

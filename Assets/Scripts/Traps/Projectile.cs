@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour {
     private bool hit = false;
 	private GameObject player = null;
     private Renderer[] child;
+    private Animator anim;
 
 	// Use this for initialization
 	void Start () {
@@ -29,7 +30,9 @@ public class Projectile : MonoBehaviour {
 			if (hit)
 			{
 				trapBase.Stun(player, stunDuration, this.gameObject);
-			}
+                anim.SetBool("Stunned", hit);
+                StartCoroutine(Wait());
+            }
 		}
 	}
 
@@ -40,6 +43,11 @@ public class Projectile : MonoBehaviour {
 			player = col.gameObject;
             if(!hit) audioSource.PlayOneShot(impactSFX);
 			hit = true;
+            anim = player.GetComponent<PlayerOneMovement>().GetAnim();
+            if (player.GetComponent<PlayerOneMovement>().IsCrouched() == false)
+            {
+                anim.Play("Stunned", 0);
+            }
             Unrender();
 
         }
@@ -62,6 +70,12 @@ public class Projectile : MonoBehaviour {
         {
             r.enabled = false;
         }
+    }
+
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(stunDuration);
+        anim.SetBool("Stunned", false);
     }
 
     private IEnumerator Death(float stunDuration)
