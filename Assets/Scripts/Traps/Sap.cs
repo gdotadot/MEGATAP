@@ -69,7 +69,7 @@ public class Sap : MonoBehaviour {
 
     void OnTriggerStay(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
             hit = true;
             player = other.gameObject;
@@ -77,7 +77,7 @@ public class Sap : MonoBehaviour {
             if (player.GetComponent<PlayerOneMovement>().GetInputAxis() != 0)
             {
                 anim = player.GetComponent<PlayerOneMovement>().GetAnim();
-                if (player.GetComponent<PlayerOneMovement>().IsCrouched() == false)
+                if (player.GetComponent<PlayerOneMovement>().IsCrouched() == false && player.GetComponent<PlayerOneMovement>().IsStunned() == false)
                 {
                     anim.Play("Trudging", 0);
                 }
