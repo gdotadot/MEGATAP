@@ -229,7 +229,7 @@ public class PlayerOneMovement : MonoBehaviour {
         }
         if (move == false)
         {
-            movementVector = new Vector3(0, movementVector.y, 0);
+            movementVector = new Vector3(0, Physics.gravity.y * 0.255f, 0);
         }
 
         if (!wallJumping) rb.velocity = movementVector;
@@ -272,7 +272,7 @@ public class PlayerOneMovement : MonoBehaviour {
             bool raycastDown = Physics.Raycast(transform.position, -transform.up, out downHit, 1);
             if (Physics.Raycast(transform.position, transform.forward, out hit, 1) && !raycastDown)
             {
-                if (hit.transform.tag == "Platform" && Input.GetButtonDown("Jump_Joy_1") && grounded == false)
+                if (hit.transform.tag == "Platform" && Input.GetButtonDown("Jump_Joy_1") && grounded == false && move == true)
                 {
                     animator.Play("Wall Jump", 0);
                     wallJumpVector = (-transform.forward + transform.up / wallJumpDirectionDivider).normalized * (jumpH / wallJumpDivider);
