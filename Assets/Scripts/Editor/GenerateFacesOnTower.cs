@@ -26,22 +26,22 @@ public class GenerateFacesOnTower : MonoBehaviour {
              switch (state)
              {
                  case 1:
-                     Instantiate(Faces[index], new Vector3(-39f, (20.5f * floor) + 1, -42.15f), Quaternion.Euler(0, 0, 0));
+                     Instantiate(Faces[index], new Vector3(-39f, (20.0f * floor) + 1, -42.15f), Quaternion.Euler(0, 0, 0));
                      state++;
                      index++;
                      break;
                  case 2:
-                     Instantiate(Faces[index], new Vector3(42.15f, (20.5f * floor) + 1, -39), Quaternion.Euler(0, -90, 0));
+                     Instantiate(Faces[index], new Vector3(42.15f, (20.0f * floor) + 1, -39), Quaternion.Euler(0, -90, 0));
                      state++;
                      index++;
                      break;
                  case 3:
-                     Instantiate(Faces[index], new Vector3(39f, (20.5f * floor) + 1, 42.15f), Quaternion.Euler(0, 180, 0));
+                     Instantiate(Faces[index], new Vector3(39f, (20.0f * floor) + 1, 42.15f), Quaternion.Euler(0, 180, 0));
                      state++;
                      index++;
                      break;
                  case 4:
-                     Instantiate(Faces[index], new Vector3(-42.15f, (20.5f * floor) + 1, 39f), Quaternion.Euler(0, -270, 0));
+                     Instantiate(Faces[index], new Vector3(-42.15f, (20.0f * floor) + 1, 39f), Quaternion.Euler(0, -270, 0));
                      state = 1;
                      floor++;
                      index++;
