@@ -77,6 +77,7 @@ public class MeshCollisionBaker
 
         meshCollider.sharedMesh = generatedMesh;
         combinedCollider.tag = "Platform";
+        combinedCollider.GetComponent<MeshCollider>().material = (PhysicMaterial) AssetDatabase.LoadAssetAtPath("Assets/Physics Materials/No Friction.physicMaterial", typeof(PhysicMaterial));
         return combinedCollider;
     }
 
