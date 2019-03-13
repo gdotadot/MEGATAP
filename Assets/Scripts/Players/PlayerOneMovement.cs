@@ -258,7 +258,6 @@ public class PlayerOneMovement : MonoBehaviour {
         animator.SetBool("Grounded", grounded);
         animator.SetBool("Crouched", crouching);
         animator.SetFloat("YVelocity", rb.velocity.y);
-        Debug.Log(grounded);
     }
 
 

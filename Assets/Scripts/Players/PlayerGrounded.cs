@@ -6,19 +6,19 @@ public class PlayerGrounded : MonoBehaviour {
 
     private bool grounded = false;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    // Use this for initialization
+    void Start() {
+
+    }
+
+    // Update is called once per frame
+    void Update() {
+
+    }
 
     private void OnTriggerStay(Collider collision)
     {
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.tag == "Platform" || collision.gameObject.tag == "Trap")
         {
             grounded = true;
         }
@@ -26,7 +26,7 @@ public class PlayerGrounded : MonoBehaviour {
 
     private void OnTriggerExit(Collider collision)
     {
-        if (collision.gameObject.tag == "Platform")
+        if (collision.gameObject.tag == "Platform" || collision.gameObject.tag == "Trap")
         {
             grounded = false;
         }
