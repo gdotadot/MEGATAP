@@ -25,6 +25,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         GameObject player = GameObject.Find("Player 2");
         audioSource = GetComponentInParent<AudioSource>();
 
+        buttonScale = this.transform.localScale;
         TextMeshProUGUI[] tooltips = transform.parent.parent.GetComponentsInChildren<TextMeshProUGUI>();
         foreach(TextMeshProUGUI t in tooltips)
         {
@@ -97,7 +98,6 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
 
     public void ScaleUp()
     {
-        buttonScale = this.transform.localScale;
         if(this.GetComponent<Button>().interactable) this.transform.localScale *= 1.35f;
         ChangeTooltip(this.name);
     }
