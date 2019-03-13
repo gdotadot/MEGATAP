@@ -8,6 +8,9 @@ public class Lightning : MonoBehaviour
     private SpellBase spellBase;
     private GameObject player = null;
     private bool hit = false;
+    private AudioSource audioSource;
+    [SerializeField] private AudioClip startSFX;
+    [SerializeField] private AudioClip impactSFX;
 
     [SerializeField] private float stunDuration = 3;
 
@@ -15,7 +18,8 @@ public class Lightning : MonoBehaviour
     void Start()
     {
         spellBase = this.GetComponent<SpellBase>();
-
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(startSFX);
         switch (GameObject.Find("Player 1").GetComponent<CameraOneRotator>().GetState())
         {
             case 1:
@@ -51,6 +55,8 @@ public class Lightning : MonoBehaviour
         if (other.tag == "Player")
         {
             hit = true;
+
+            audioSource.PlayOneShot(impactSFX);
             player = other.gameObject;
         }
         if (hit == false && other.tag == "Boundary")
