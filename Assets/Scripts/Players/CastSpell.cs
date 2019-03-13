@@ -341,7 +341,7 @@ public class CastSpell : MonoBehaviour {
                 else if (spellDirection == SpellDirection.Ceiling || spellDirection == SpellDirection.Floor)
                 {
                     GetComponent<MoveControllerCursor>().SpellCastDirection = SpellDirection.Ceiling;
-                    int playerFloor = playerOne.GetComponent<CameraOneRotator>().GetFloor() * 10;
+                    int playerFloor = playerOne.GetComponent<CameraOneRotator>().GetFloor() * 20 - 10;
                     switch (PlayerOneState)
                     {
                         case 1:
@@ -366,6 +366,21 @@ public class CastSpell : MonoBehaviour {
                 {
                     GetComponent<MoveControllerCursor>().SpellCastDirection = SpellDirection.Instant;
                     spellTarget.transform.position = position;
+                    switch (PlayerOneState)
+                    {
+                        case 1:
+                            break;
+                        case 3:
+                            spellTarget.transform.eulerAngles = new Vector3(0, 180, 0);
+                            break;
+                        case 2:
+                            spellTarget.transform.eulerAngles = new Vector3(0, -90, 0);
+                            break;
+                        case 4:
+                            spellTarget.transform.eulerAngles = new Vector3(0, 90, 0);
+                            break;
+                    }
+
                 }
 
                 if (Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2"))
