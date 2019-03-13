@@ -77,7 +77,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
                 if(pt != null) pt.DestroyGhost();
                 if (currentLastSpell != null && currentLastSpell.gameObject == this.gameObject)
                 {
-                    controllerCursor.transform.localPosition = new Vector3(0, -100);
+                    controllerCursor.transform.localPosition = new Vector3(0, -130);
                     cursorMove.MovingTraps = false;
                 }
             }
@@ -152,7 +152,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         {
             foreach (GameObject t in pt.queue)
             {
-                if (t != null && t.activeInHierarchy)
+                if (t != null && t.activeInHierarchy && t.GetComponent<Button>().interactable)
                 {
                     currentFirstTrap = t;
                     return;
@@ -167,7 +167,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         {
             for (int s = cs.queue.Length - 1; s >= 0; s--)
             {
-                if (cs.queue[s] != null && cs.queue[s].activeInHierarchy)
+                if (cs.queue[s] != null && cs.queue[s].activeInHierarchy && cs.queue[s].GetComponent<Button>().interactable)
                 {
                     currentLastSpell = cs.queue[s];
                     return;
@@ -182,7 +182,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         {
             for (int s = cs.queue.Length - 1; s >= 0; s--)
             {
-                if (cs.queue[s] != null && cs.queue[s].activeInHierarchy)
+                if (cs.queue[s] != null && cs.queue[s].activeInHierarchy && cs.queue[s].GetComponent<Button>().interactable) 
                 {
                     return false;
                 }
@@ -198,7 +198,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         {
             for (int s = pt.queue.Count - 1; s >= 0; s--)
             {
-                if (pt.queue[s] != null && pt.queue[s].activeInHierarchy)
+                if (pt.queue[s] != null && pt.queue[s].activeInHierarchy && pt.queue[s].GetComponent<Button>().interactable)
                 {
                     return false;
                 }
