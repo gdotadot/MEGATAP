@@ -25,7 +25,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         GameObject player = GameObject.Find("Player 2");
         audioSource = GetComponentInParent<AudioSource>();
 
-        buttonScale = this.transform.localScale;
+        buttonScale = new Vector3(0.75f, 0.75f, 0.75f);
         TextMeshProUGUI[] tooltips = transform.parent.parent.GetComponentsInChildren<TextMeshProUGUI>();
         foreach(TextMeshProUGUI t in tooltips)
         {
