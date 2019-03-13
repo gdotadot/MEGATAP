@@ -77,7 +77,10 @@ public class Sap : MonoBehaviour {
             if (player.GetComponent<PlayerOneMovement>().GetInputAxis() != 0)
             {
                 anim = player.GetComponent<PlayerOneMovement>().GetAnim();
-                anim.Play("Trudging", 0);
+                if (player.GetComponent<PlayerOneMovement>().IsCrouched() == false)
+                {
+                    anim.Play("Trudging", 0);
+                }
                 anim.SetBool("Slowed", hit);
             }
         }

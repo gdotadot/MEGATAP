@@ -7,9 +7,9 @@ public class PlayerOneMovement : MonoBehaviour {
     //movement vars serialized for designers
     [SerializeField] private float moveSpeed;
     [SerializeField] private float jumpHeight;
-    [Tooltip("How long the wall jump force lasts.")][SerializeField] private float wallJumpTime;
-    [Tooltip("WallJumpForce = jumpHeight / this")][SerializeField] private float wallJumpDivider;
-    [Tooltip("How far between -transform.fwd & transform.up the angle is.")][SerializeField] private float wallJumpDirectionDivider;
+    [Tooltip("How long the wall jump force lasts.")] [SerializeField] private float wallJumpTime;
+    [Tooltip("WallJumpForce = jumpHeight / this")] [SerializeField] private float wallJumpDivider;
+    [Tooltip("How far between -transform.fwd & transform.up the angle is.")] [SerializeField] private float wallJumpDirectionDivider;
 
     //other movement vars
     private Vector3 movementVector;
@@ -37,7 +37,7 @@ public class PlayerOneMovement : MonoBehaviour {
 
     private float inputAxis; //used to get input axis from controller/keyboard
 
-	private Rigidbody rb;
+    private Rigidbody rb;
 
 
     private CheckControllers checkControllers;
@@ -45,7 +45,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private CapsuleCollider col;
 
     void Start() {
-		rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         checkControllers = gameManager.GetComponent<CheckControllers>();
         col = GetComponent<CapsuleCollider>();
@@ -70,7 +70,7 @@ public class PlayerOneMovement : MonoBehaviour {
             }
 
             //crouch
-            if (Input.GetButton("Crouch_Joy_1") && grounded && slowed == false)
+            if (Input.GetButton("Crouch_Joy_1") && grounded)
             {
                 crouching = true;
             }
@@ -89,7 +89,7 @@ public class PlayerOneMovement : MonoBehaviour {
             }
             // Animation parameters update
             animator.SetBool("Jumping", jumping);
-            if(jumping)
+            if (jumping)
             {
                 animator.SetBool("Running", false);
             }
@@ -186,9 +186,12 @@ public class PlayerOneMovement : MonoBehaviour {
                 break;
         }
 
-        if(crouching == true)
+        if (crouching == true)
         {
-            speed = moveSpeed / 2;
+            if (slowed == false)
+            {
+                speed = moveSpeed / 2;
+            }
             col.height = 2.25f;
             col.center = new Vector3(0, 1.1f, 0);
         }
@@ -196,7 +199,7 @@ public class PlayerOneMovement : MonoBehaviour {
         canStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
 
 
-        
+
         Move();
     }
 
@@ -344,9 +347,14 @@ public class PlayerOneMovement : MonoBehaviour {
     {
         return inputAxis;
     }
-    
+
     public void IsSlowed(bool slow)
     {
         slowed = slow;
+    }
+
+    public bool IsCrouched()
+    {
+        return crouching;
     }
 }
