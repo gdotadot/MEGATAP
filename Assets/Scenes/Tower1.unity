@@ -931,6 +931,11 @@ Prefab:
       propertyPath: bottomText
       value: 
       objectReference: {fileID: 295635726}
+    - target: {fileID: 114313464798204432, guid: 35a02efdbbfbc8643b8ffc2de772a45c,
+        type: 2}
+      propertyPath: vine
+      value: 
+      objectReference: {fileID: 999460493}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35a02efdbbfbc8643b8ffc2de772a45c, type: 2}
   m_IsPrefabAsset: 0
@@ -1351,7 +1356,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4118745448429798, guid: 4177dabbb2b6dc24aa87ac8ef64cc13e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 9.41088
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4118745448429798, guid: 4177dabbb2b6dc24aa87ac8ef64cc13e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2001,8 +2006,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e03f70f6f578aaf48ae31a198c2fc37c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnTime: 30
+  spawnTime: 5
   numFloors: 7
+  TotalFaceNumber: 1
   vine:
   - {fileID: 1456375438379304, guid: 2d67d622ee3ad774eb1f976cb299a78f, type: 2}
 --- !u!4 &999460494
@@ -2096,7 +2102,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4743651345122740, guid: 415a8da459df20b4ba20fdbb2acbdc98, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 9.41088
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4743651345122740, guid: 415a8da459df20b4ba20fdbb2acbdc98, type: 2}
       propertyPath: m_LocalPosition.z
