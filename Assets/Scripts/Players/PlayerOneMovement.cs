@@ -23,7 +23,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool slowed = false;
 
     //Control if player can have input
-    private bool move;
+    private bool move = true;
 
     private float speed; //Change this when crouching, etc.; set it back to moveSpeed when done
     private float jumpH; // change this when in sap etc.; set it back to jumpHeight when done
@@ -210,7 +210,10 @@ public class PlayerOneMovement : MonoBehaviour {
         if (jumping)
         {
             movementVector = new Vector3(movementVector.x, jumpH, movementVector.z);
-            animator.Play("Armature|JumpStart", 0);
+            if (move == true)
+            {
+                animator.Play("Armature|JumpStart", 0);
+            }
             jumping = false;
             landing = false;
             if (crouching == true)
@@ -356,5 +359,10 @@ public class PlayerOneMovement : MonoBehaviour {
     public bool IsCrouched()
     {
         return crouching;
+    }
+
+    public bool IsStunned()
+    {
+        return !move;
     }
 }
