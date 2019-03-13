@@ -59,6 +59,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private void Update()
     {
         camOneState = cam.GetState();
+        grounded = GetComponentInChildren<PlayerGrounded>().IsGrounded();
         if (move == true)
         {
             inputAxis = checkControllers.GetInputAxis();
@@ -198,8 +199,6 @@ public class PlayerOneMovement : MonoBehaviour {
 
         canStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
 
-
-
         Move();
     }
 
@@ -210,7 +209,7 @@ public class PlayerOneMovement : MonoBehaviour {
         if (jumping)
         {
             movementVector = new Vector3(movementVector.x, jumpH, movementVector.z);
-            if (move == true)
+            if (move == true && wallJumping == false)
             {
                 animator.Play("Armature|JumpStart", 0);
             }
@@ -237,10 +236,10 @@ public class PlayerOneMovement : MonoBehaviour {
         else rb.velocity = wallJumpVector;
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, LayerMask.GetMask("Platform")))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, LayerMask.GetMask("Platform")) && grounded == false)
         {
-            //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * 1, Color.yellow);
-            if (hit.distance <= distanceFromGround)
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down) * distanceFromGround, Color.yellow);
+            if (hit.distance <= distanceFromGround && jumping == false)
             {
                 landing = true;
             }
@@ -250,10 +249,16 @@ public class PlayerOneMovement : MonoBehaviour {
             }
         }
 
+        if(grounded == true)
+        {
+            landing = true;
+        }
+
         animator.SetBool("Landing", landing);
         animator.SetBool("Grounded", grounded);
         animator.SetBool("Crouched", crouching);
         animator.SetFloat("YVelocity", rb.velocity.y);
+        Debug.Log(grounded);
     }
 
 
@@ -267,8 +272,9 @@ public class PlayerOneMovement : MonoBehaviour {
             bool raycastDown = Physics.Raycast(transform.position, -transform.up, out downHit, 1);
             if (Physics.Raycast(transform.position, transform.forward, out hit, 1) && !raycastDown)
             {
-                if (hit.transform.tag == "Platform" && Input.GetButtonDown("Jump_Joy_1"))
+                if (hit.transform.tag == "Platform" && Input.GetButtonDown("Jump_Joy_1") && grounded == false)
                 {
+                    animator.Play("Wall Jump", 0);
                     wallJumpVector = (-transform.forward + transform.up / wallJumpDirectionDivider).normalized * (jumpH / wallJumpDivider);
                     wallJumping = true;
                     jumping = false;
@@ -276,18 +282,6 @@ public class PlayerOneMovement : MonoBehaviour {
                 }
             }
             //NOT WALL JUMPING
-            else
-            {
-                grounded = true;
-            }
-        }
-    }
-
-    private void OnTriggerExit(Collider collision)
-    {
-        if (collision.gameObject.tag == "Platform")
-        {
-            grounded = false;
         }
     }
 
