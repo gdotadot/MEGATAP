@@ -7,29 +7,28 @@ public class Vine : MonoBehaviour {
     [SerializeField] private float spawnTime = 30f;
     [SerializeField] private int numFloors = 7;
 
-    private int floor = 1;
+    private int floor = 0;
     private int face = 1;
 
-    [SerializeField] private Animator anim;
+    [SerializeField] private GameObject[] vine;
 
-    private Animator childAnim;
+    private GameObject child = null;
 
     private bool spawned = false;
 
     private int[,] once;
 
-    private GameObject child;
+    private bool growing = false;
+
 
     // Use this for initialization
     void Start() {
         StartCoroutine(WaitToSpawn(spawnTime));
 
-        anim = GetComponent<Animator>();
-
-        once = new int[4 + 1, numFloors + 1];
+        once = new int[4 + 1, numFloors];
         for(int i = 0; i < 5; i++)
         {
-            for (int j = 0; j < numFloors + 1; j++)
+            for (int j = 0; j < numFloors; j++)
             {
                 once[i, j] = 0;
             }
@@ -38,51 +37,66 @@ public class Vine : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (spawned == true && floor <= numFloors) {
+        if (spawned == true && floor < numFloors) {
             switch (face)
             {
                 case 1:
                     if (once[face, floor] == 0)
                     {
-                        child = Instantiate(this.gameObject, new Vector3(-38f, 3f * floor, -42f), Quaternion.Euler(0, 90, 0));
-                        childAnim = child.GetComponent<Vine>().GetAnim();
-                        childAnim.Play("Vine Attack", 0);
+                        child = Instantiate(vine[0], new Vector3(-38f, 3f + (20f * floor), -42f), Quaternion.Euler(0, 90, 0));
+                        growing = false;
                         once[face, floor]++;
+                    }
+                    if(growing == true)
+                    {
+                        face++;
                     }
                     break;
                 case 2:
                     if (once[face, floor] == 0)
                     {
-                        child = Instantiate(this.gameObject, new Vector3(42f, 3f, -38f), Quaternion.Euler(0, 0, 0));
-                        childAnim = child.GetComponent<Vine>().GetAnim();
-                        childAnim.SetBool("Growing", true);
+                        child = Instantiate(vine[0], new Vector3(42f, 3f + (20f * floor), -38f), Quaternion.Euler(0, 0, 0));
+                        growing = false;
                         once[face, floor]++;
+
+                    }
+                    if(growing == true)
+                    {
+                        face++;
                     }
                     break;
                 case 3:
                     if (once[face, floor] == 0)
                     {
-                        child = Instantiate(this.gameObject, new Vector3(38f, 3f, 42f), Quaternion.Euler(0, -90, 0));
-                        childAnim = child.GetComponent<Vine>().GetAnim();
-                        childAnim.SetBool("Growing", true);
+                        child = Instantiate(vine[0], new Vector3(38f, 3f + (20f * floor), 42f), Quaternion.Euler(0, -90, 0));
+                        growing = false;
                         once[face, floor]++;
+                    }
+                    if (growing == true)
+                    {
+                        face++;
                     }
                     break;
                 case 4:
                     if (once[face, floor] == 0)
                     {
-                        child = Instantiate(this.gameObject, new Vector3(-42f, 3f, 38f), Quaternion.Euler(0, 270, 0));
-                        childAnim = child.GetComponent<Vine>().GetAnim();
-                        childAnim.SetBool("Growing", true);
+                        child = Instantiate(vine[0], new Vector3(-42f, 3f + (20f * floor), 38f), Quaternion.Euler(0, -180, 0));
+                        growing = false;
                         once[face, floor]++;
+                    }
+                    if (growing == true)
+                    {
+                        face = 1;
+                        floor++;
                     }
                     break;
 
             }
         }
-        Debug.Log("face: " + face);
-        Debug.Log("floor: " + floor);
-        Debug.Log("array: [" + face +", " + floor + "] = " + once[face,floor]);
+        if (child != null)
+        {
+            growing = child.GetComponent<VineAnim>().isDone();
+        }
 	}
 
     private IEnumerator WaitToSpawn(float time)
@@ -91,19 +105,4 @@ public class Vine : MonoBehaviour {
         spawned = true;
     }
 
-    private void Growth(){
-        face++;
-        if(face > 4)
-        {
-            face = 1;
-            floor++;
-        }
-    }
-
-    //Gettters
-
-    private Animator GetAnim()
-    {
-        return anim;
-    }
 }
