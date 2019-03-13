@@ -10,7 +10,8 @@ public class GenerateFaceFromText
 
     // CHANGE TO USE
     // the name of the platform prefab you wish to use
-    private static string platform = "1x1Platform";
+    private static string horizontalPlatform = "HorizontalPlatform";
+    private static string verticalPlatform = "VerticalPlatform";
 
     [MenuItem("GameObject/Generate Face", false, 12)]
     private static void Create()
@@ -18,9 +19,9 @@ public class GenerateFaceFromText
         // Loops through full directory and generates prefabs by name
         DirectoryInfo dir = new DirectoryInfo("Assets/TextLevels/");
         FileInfo[] info = dir.GetFiles("*.txt");
-        foreach( FileInfo f in info)
+        foreach (FileInfo f in info)
         {
-           Load(f.Name);
+            Load(f.Name);
         }
     }
 
@@ -53,13 +54,23 @@ public class GenerateFaceFromText
                             if (line[i].Equals('X'))
                             {
                                 // load designated prefab, must be from proper folder
-                                Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Platforms/" + platform + ".prefab", typeof(GameObject));
+                                Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Platforms/" + horizontalPlatform + ".prefab", typeof(GameObject));
                                 GameObject spawnedPlatform = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
                                 spawnedPlatform.transform.position = new Vector3(i * 2, lineNumber * -2, 0);
 
                                 //store transform
                                 transformList.Add(spawnedPlatform.transform);
 
+                            }
+                            if (line[i].Equals('V'))
+                            {
+                                // load designated prefab, must be from proper folder
+                                Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Platforms/" + verticalPlatform + ".prefab", typeof(GameObject));
+                                GameObject spawnedPlatform = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
+                                spawnedPlatform.transform.position = new Vector3(i * 2, lineNumber * -2, 0);
+
+                                //store transform
+                                transformList.Add(spawnedPlatform.transform);
                             }
                             if (line[i].Equals('O'))
                             {
@@ -76,6 +87,23 @@ public class GenerateFaceFromText
                 while (line != null);
                 // Done reading, close the reader and return true to broadcast success    
                 theReader.Close();
+
+                // ADD CORNERS
+                // load designated prefab, must be from proper folder
+                Object corner1 = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Platforms/" + horizontalPlatform + ".prefab", typeof(GameObject));
+                GameObject spawnedCorner1 = PrefabUtility.InstantiatePrefab(corner1) as GameObject;
+                spawnedCorner1.transform.position = new Vector3(80, -20, 0);
+
+                //store transform
+                transformList.Add(spawnedCorner1.transform);
+
+                Object corner2 = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Platforms/" + horizontalPlatform + ".prefab", typeof(GameObject));
+                GameObject spawnedCorner2 = PrefabUtility.InstantiatePrefab(corner2) as GameObject;
+                spawnedCorner2.transform.position = new Vector3(82, -20, 0);
+
+                //store transform
+                transformList.Add(spawnedCorner2.transform);
+
 
                 // create an empty prefab that will hold our new prefab soon
                 Object finalEmpty = PrefabUtility.CreateEmptyPrefab("Assets/Prefabs/Faces/" + file + ".prefab");
