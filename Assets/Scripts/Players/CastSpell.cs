@@ -113,12 +113,15 @@ public class CastSpell : MonoBehaviour {
 
     private Vector3? GetGridPosition()
     {
-        if (RaycastFromCam() != null)
-        {
-            RaycastHit hit = RaycastFromCam().Value;
-            return new Vector3(hit.point.x, hit.point.y, hit.point.z);
-        }
-        else return null;
+        //if (RaycastFromCam() != null)
+        //{
+        //    RaycastHit hit = RaycastFromCam().Value;
+        //    return new Vector3(hit.point.x, hit.point.y, hit.point.z);
+        //}
+        //else return null;
+        Vector3 pos = controllerCursor.transform.position;
+        pos.z = 35;
+        return cam2.ScreenToWorldPoint(pos);
     }
 
     private RaycastHit? RaycastFromCam()
