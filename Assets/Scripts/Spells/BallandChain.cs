@@ -56,6 +56,7 @@ public class BallandChain : MonoBehaviour {
             if (hit)
             {
                 spellBase.Slow(player, slowRun, reduceJump, spellDuration);
+                player.GetComponent<PlayerOneMovement>().IsSlowed(true);
                 StartCoroutine(Wait(this.gameObject));
             }
         }
@@ -96,13 +97,15 @@ public class BallandChain : MonoBehaviour {
         }
         if (hit == false && other.tag == "Boundary" && once == true)
         {
-            Destroy(this.gameObject);
+            StartCoroutine(DestroyObj());
         }
     }
 
     private IEnumerator Wait(GameObject obj)
     {
         yield return new WaitForSeconds(spellDuration);
+        player.GetComponent<PlayerOneMovement>().IsSlowed(false);
+        yield return new WaitForSeconds(0.1f);
         Destroy(obj);
     }
 
@@ -110,6 +113,16 @@ public class BallandChain : MonoBehaviour {
     {
         yield return new WaitForSeconds(time);
         once = true;
+    }
+
+    private IEnumerator DestroyObj()
+    {
+        if (player != null)
+        {
+            player.GetComponent<PlayerOneMovement>().IsSlowed(true);
+        }
+        yield return new WaitForSeconds(0.1f);
+        Destroy(this.gameObject);
     }
 
     private IEnumerator DisableSlowEffect()

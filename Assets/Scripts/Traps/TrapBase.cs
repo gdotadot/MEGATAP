@@ -122,7 +122,6 @@ public class TrapBase : MonoBehaviour {
     {
         obj.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(0);
         obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
-
         yield return new WaitForSeconds(stunDuration);
 
         obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
