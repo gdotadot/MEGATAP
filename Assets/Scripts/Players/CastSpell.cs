@@ -129,7 +129,7 @@ public class CastSpell : MonoBehaviour {
         Vector3 pos;
         if (p2Controller) pos = controllerCursor.transform.position;
         else pos = Input.mousePosition;
-        pos.z = 35;
+        pos.z = 30;
         return cam2.ScreenToWorldPoint(pos);
     }
 
@@ -330,19 +330,19 @@ public class CastSpell : MonoBehaviour {
                     {
                         case 1:
                             spellTarget.transform.eulerAngles = new Vector3(0, 0, 90);
-                            spellTarget.transform.position = new Vector3(transform.position.x, position.y, -42);
+                            spellTarget.transform.position = new Vector3(transform.position.x, position.y, -45);
                             break;
                         case 2:
                             spellTarget.transform.eulerAngles = new Vector3(180, 90, 90);
-                            spellTarget.transform.position = new Vector3(42, position.y, transform.position.z);
+                            spellTarget.transform.position = new Vector3(45, position.y, transform.position.z);
                             break;
                         case 3:
                             spellTarget.transform.eulerAngles = new Vector3(180, 0, 90);
-                            spellTarget.transform.position = new Vector3(transform.position.x, position.y, 42);
+                            spellTarget.transform.position = new Vector3(transform.position.x, position.y, 45);
                             break;
                         case 4:
                             spellTarget.transform.eulerAngles = new Vector3(0, 90, 90);
-                            spellTarget.transform.position = new Vector3(-42, position.y, transform.position.z);
+                            spellTarget.transform.position = new Vector3(-45, position.y, transform.position.z);
                             break;
                     }
                 }
@@ -354,19 +354,19 @@ public class CastSpell : MonoBehaviour {
                     switch (PlayerOneState)
                     {
                         case 1:
-                            spellTarget.transform.position = new Vector3(position.x, playerFloor, -42);
+                            spellTarget.transform.position = new Vector3(position.x, playerFloor, -45);
                             break;
                         case 3:
                             spellTarget.transform.eulerAngles = new Vector3(0, 180, 0);
-                            spellTarget.transform.position = new Vector3(position.x, playerFloor, 42);
+                            spellTarget.transform.position = new Vector3(position.x, playerFloor, 45);
                             break;
                         case 2:
                             spellTarget.transform.eulerAngles = new Vector3(0, -90, 0);
-                            spellTarget.transform.position = new Vector3(42, playerFloor, position.z);
+                            spellTarget.transform.position = new Vector3(45, playerFloor, position.z);
                             break;
                         case 4:
                             spellTarget.transform.eulerAngles = new Vector3(0, 90, 0);
-                            spellTarget.transform.position = new Vector3(-42, playerFloor, position.z);
+                            spellTarget.transform.position = new Vector3(-45, playerFloor, position.z);
                             break;
                     }
 
