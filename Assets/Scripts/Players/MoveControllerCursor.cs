@@ -72,7 +72,6 @@ public class MoveControllerCursor : MonoBehaviour {
             }
             else if (Input.GetAxisRaw("Vertical_Joy_2") > stickSensitivity && cursorVerticalMove && cursorPos.y < screenHeight)
             {
-                Debug.Log("Move Up");
                 controllerCursor.GetComponent<RectTransform>().localPosition += new Vector3(0, cursorGrid, 0);
                 cursorVerticalMove = false;
                 StartCoroutine(EnableVerticalCursorMove());
