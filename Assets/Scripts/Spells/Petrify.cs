@@ -78,17 +78,17 @@ public class Petrify : MonoBehaviour {
 
     private void Revert()
     {
-        child[1].material = normalBody;
-        child[2].material = normalHat;
-        child[3].material = normalHatEyes;
-        child[4].material = normalPoncho;
+        child[2].material = normalBody;
+        child[3].material = normalHat;
+        child[4].material = normalHatEyes;
+        child[5].material = normalPoncho;
     }
 
     private IEnumerator Wait(GameObject obj)
     {
-        yield return new WaitForSeconds(stunDuration - 0.2f);
+        yield return new WaitForSeconds(stunDuration - 0.1f);
         Revert();
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         Destroy(obj);
     }
 

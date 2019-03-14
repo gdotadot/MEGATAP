@@ -43,12 +43,14 @@ public class PlayerOneMovement : MonoBehaviour {
     private CheckControllers checkControllers;
     private Animator animator;
     private CapsuleCollider col;
+    private ParticleSystemRenderer stun;
 
     void Start() {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
         checkControllers = gameManager.GetComponent<CheckControllers>();
         col = GetComponent<CapsuleCollider>();
+        stun = GetComponentInChildren<ParticleSystemRenderer>();
 
         speed = moveSpeed;
         jumpH = jumpHeight;
@@ -96,6 +98,7 @@ public class PlayerOneMovement : MonoBehaviour {
             }
             //animator.SetBool("Running", move);
             animator.SetBool("Stunned", false);
+            stun.enabled = false;
         }
 
         switch (camOneState)
@@ -231,6 +234,7 @@ public class PlayerOneMovement : MonoBehaviour {
         if (move == false)
         {
             movementVector = new Vector3(0, Physics.gravity.y * 0.255f, 0);
+            stun.enabled = true;
         }
 
         if (!wallJumping) rb.velocity = movementVector;

@@ -119,11 +119,11 @@ public class SpellBase : MonoBehaviour {
         player.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(0);
         player.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
         player.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, player.gameObject.GetComponent<Rigidbody>().velocity.y, 0);
-        if(mat != null)
+        if (mat != null)
         {
             foreach (Renderer r in child)
             {
-               if(r.name != "SlowEffect") r.material = mat;
+                if (r.name == "Body" || r.name == "Hat" || r.name == "HatEyes" || r.name == "Poncho") r.material = mat;
             }
         }
         yield return new WaitForSeconds(stunDuration);
