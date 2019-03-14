@@ -101,6 +101,13 @@ public class CastSpell : MonoBehaviour {
         {
             SpellCast();
         }
+
+
+        //Safety check to make sure the player's cursor isn't lost / nothing is selected
+        if(p2Controller && eventSystem.currentSelectedGameObject == null)
+        {
+            SetSelectedButton();
+        }
     }
 
     void FixedUpdate()
