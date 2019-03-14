@@ -394,13 +394,13 @@ public class PlaceTrap : MonoBehaviour {
 
             if(validLocation && CheckNearby() && GetGridPosition() != null && placementSquares.Length == 2)
             {
-                placementSquares[0].enabled = false;
-                placementSquares[1].enabled = true;
+                if(placementSquares[0] != null) placementSquares[0].enabled = false;
+                if (placementSquares[1] != null) placementSquares[1].enabled = true;
             }
             else if (placementSquares.Length == 2)
-            { 
-                placementSquares[0].enabled = true;
-                placementSquares[1].enabled = false;
+            {
+                if (placementSquares[0] != null) placementSquares[0].enabled = true;
+                if (placementSquares[1] != null) placementSquares[1].enabled = false;
             }
             if (GetGridPosition() != null)
             {
