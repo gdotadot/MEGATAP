@@ -78,10 +78,25 @@ public class Petrify : MonoBehaviour {
 
     private void Revert()
     {
-        child[2].material = normalBody;
-        child[3].material = normalHat;
-        child[4].material = normalHatEyes;
-        child[5].material = normalPoncho;
+        foreach (Renderer r in child)
+        {
+            if (r.name == "Body")
+            {
+                r.material = normalBody;
+            }
+            if (r.name == "Hat")
+            {
+                r.material = normalHat;
+            }
+            if (r.name == "HatEyes")
+            {
+                r.material = normalHatEyes;
+            }
+            if (r.name == "Poncho")
+            {
+                r.material = normalPoncho;
+            }
+        }
     }
 
     private IEnumerator Wait(GameObject obj)
