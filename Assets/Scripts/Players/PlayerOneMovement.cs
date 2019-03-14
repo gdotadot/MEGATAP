@@ -95,6 +95,7 @@ public class PlayerOneMovement : MonoBehaviour {
                 animator.SetBool("Running", false);
             }
             //animator.SetBool("Running", move);
+            animator.SetBool("Stunned", false);
         }
 
         switch (camOneState)
