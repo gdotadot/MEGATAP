@@ -57,6 +57,7 @@ public class GenerateFaceFromText
                                 Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Platforms/" + horizontalPlatform + ".prefab", typeof(GameObject));
                                 GameObject spawnedPlatform = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
                                 spawnedPlatform.transform.position = new Vector3(i * 2, lineNumber * -2, 0);
+                                spawnedPlatform.transform.eulerAngles = new Vector3(-90, 180, 0); // fix incorrect rotation on prefabs
 
                                 //store transform
                                 transformList.Add(spawnedPlatform.transform);
@@ -68,6 +69,7 @@ public class GenerateFaceFromText
                                 Object prefab = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Platforms/" + verticalPlatform + ".prefab", typeof(GameObject));
                                 GameObject spawnedPlatform = PrefabUtility.InstantiatePrefab(prefab) as GameObject;
                                 spawnedPlatform.transform.position = new Vector3(i * 2, lineNumber * -2, 0);
+                                spawnedPlatform.transform.eulerAngles = new Vector3(-90, 180, 0);
 
                                 //store transform
                                 transformList.Add(spawnedPlatform.transform);
