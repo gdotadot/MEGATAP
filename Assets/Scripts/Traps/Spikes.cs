@@ -7,6 +7,7 @@ public class Spikes : MonoBehaviour {
 
     private SkinnedMeshRenderer[] meshRenderers;
     private float key;
+    private float hitKey;
     [SerializeField] private float animationSpeed;
 
     // custom to this trap
@@ -23,10 +24,13 @@ public class Spikes : MonoBehaviour {
     //Player's animator for knockback animation
     private Animator anim = null;
 
+    private int hitCount = 0;
+    private bool hitCheck = true;
+
     // SFX
     private AudioSource audioSource;
-    [SerializeField]
-    private AudioClip clip;
+    [SerializeField] private AudioClip impact;
+    [SerializeField] private AudioClip breakSFX;
 
     // Use this for initialization
     void Start () {
@@ -70,19 +74,52 @@ public class Spikes : MonoBehaviour {
         if(other.tag == "Player")
         {
             hit = true;
+
             player = other.gameObject;
             trapBase.UpdatePlayerVelocities(other.gameObject);
             anim = player.GetComponent<PlayerOneMovement>().GetAnim();
             anim.Play("Knockback", 0);
-            anim.SetBool("Knockback", hit);
-            audioSource.PlayOneShot(clip);
+
+            //Wait for the player to hit again; hitCount would increment too quickly if the player stayed above the spikes
+            if(hitCheck)
+            {
+                audioSource.PlayOneShot(impact);
+                hitCount++;
+                hitCheck = false;
+
+                //Set spike size
+                hitKey += 15;
+                foreach (SkinnedMeshRenderer mr in meshRenderers)
+                {
+                    mr.SetBlendShapeWeight(0, hitKey);
+                }
+
+                StartCoroutine(WaitForHitCheck());
+            }
+
+            if (hitCount >= 6)
+            {
+                //audioSource.PlayOneShot(breakSFX);
+            }
+
+            if (hitCount >= 7)
+            {
+                Destroy(this.gameObject);
+                anim.SetBool("Knockback", false);
+            }
+            else
+            {
+                anim.SetBool("Knockback", hit);
+            }
+            
         }
     }
 
     private void Scale()
     {
-        if(key >= 100)
+        if(key <= 0)
         {
+            hitKey = key;
             CancelInvoke("Scale");
         }
 
@@ -92,5 +129,11 @@ public class Spikes : MonoBehaviour {
             mr.SetBlendShapeWeight(0, key);
         }
         
+    }
+
+    private IEnumerator WaitForHitCheck()
+    {
+        yield return new WaitForSeconds(0.5f);
+        hitCheck = true;
     }
 }
