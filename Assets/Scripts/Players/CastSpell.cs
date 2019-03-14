@@ -119,7 +119,9 @@ public class CastSpell : MonoBehaviour {
         //    return new Vector3(hit.point.x, hit.point.y, hit.point.z);
         //}
         //else return null;
-        Vector3 pos = controllerCursor.transform.position;
+        Vector3 pos;
+        if (p2Controller) pos = controllerCursor.transform.position;
+        else pos = Input.mousePosition;
         pos.z = 35;
         return cam2.ScreenToWorldPoint(pos);
     }
