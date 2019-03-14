@@ -81,7 +81,7 @@ public class Spikes : MonoBehaviour {
 
     private void Scale()
     {
-        if(key >= 100)
+        if(key <= 0)
         {
             CancelInvoke("Scale");
         }
