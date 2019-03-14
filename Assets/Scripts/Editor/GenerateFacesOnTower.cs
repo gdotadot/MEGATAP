@@ -16,32 +16,32 @@ public class GenerateFacesOnTower : MonoBehaviour {
 
     private static List<GameObject> Faces = new List<GameObject>(); 
 
-    [MenuItem("GameObject/Generate Face on Tower", false, 13)]
+    [MenuItem("GameObject/Generate Face on Tower in Sequence", false, 13)]
     private static void Create()
     {
-        Debug.Log("Generating Faces on Tower");
+        Debug.Log("Generating Faces on Tower in Sequence");
         GetAtPath(Faces);
         while(loop == true)
          {
              switch (state)
              {
                  case 1:
-                     Instantiate(Faces[index], new Vector3(-39f, (20.0f * floor) + 1, -42.15f), Quaternion.Euler(0, 0, 0));
+                     Instantiate(Faces[index], new Vector3(-39.01f, (20.0f * floor) + 1, -41.99f), Quaternion.Euler(0, 0, 0));
                      state++;
                      index++;
                      break;
                  case 2:
-                     Instantiate(Faces[index], new Vector3(42.15f, (20.0f * floor) + 1, -39), Quaternion.Euler(0, -90, 0));
+                     Instantiate(Faces[index], new Vector3(41.99f, (20.0f * floor) + 1, -39.01f), Quaternion.Euler(0, -90, 0));
                      state++;
                      index++;
                      break;
                  case 3:
-                     Instantiate(Faces[index], new Vector3(39f, (20.0f * floor) + 1, 42.15f), Quaternion.Euler(0, 180, 0));
+                     Instantiate(Faces[index], new Vector3(39.01f, (20.0f * floor) + 1, 41.99f), Quaternion.Euler(0, 180, 0));
                      state++;
                      index++;
                      break;
                  case 4:
-                     Instantiate(Faces[index], new Vector3(-42.15f, (20.0f * floor) + 1, 39f), Quaternion.Euler(0, -270, 0));
+                     Instantiate(Faces[index], new Vector3(-41.99f, (20.0f * floor) + 1, 39.01f), Quaternion.Euler(0, -270, 0));
                      state = 1;
                      floor++;
                      index++;
