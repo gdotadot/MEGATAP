@@ -212,8 +212,6 @@ public class PlayerOneMovement : MonoBehaviour {
         canStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
 
         Move();
-
-        Debug.Log(speed);
     }
 
 
