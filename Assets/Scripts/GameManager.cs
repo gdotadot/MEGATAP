@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
-    [SerializeField] private GameObject avoidVinesText;
 
     //Game Over Status
     [SerializeField] private PlayerOneLose lost;
@@ -11,7 +10,15 @@ public class GameManager : MonoBehaviour {
 
     private void Awake()
     {
-        SceneManager.LoadScene("Tower1_Platforms", LoadSceneMode.Additive);
+        if(SceneManager.GetActiveScene().name == "Tower1")
+        {
+            SceneManager.LoadScene("Tower1_Platforms", LoadSceneMode.Additive);
+            SceneManager.LoadScene("Tower1_Traps", LoadSceneMode.Additive);
+        }
+        if(SceneManager.GetActiveScene().name == "Tutorial")
+        {
+            SceneManager.LoadScene("Tutorial_Platforms", LoadSceneMode.Additive);
+        }
     }
 
     private void Update ()
@@ -20,14 +27,8 @@ public class GameManager : MonoBehaviour {
         lose = lost.GameOver();
         if(lose == true)
         {
-            SceneManager.LoadScene("GameOver");
-        }
-
-
-        //Text to tell bottom player to avoid vines
-        if(Time.time > 35f && Time.time <= 38f)
-        {
-            avoidVinesText.SetActive(true);
+            //SceneManager.LoadScene("GameOver");
+            Initiate.Fade("GameOver", Color.black, 1);
         }
 
 	}

@@ -2,38 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-/* Figure out enums later
-[Flags]
-public enum LocationCastFrom
-{
-    FreeFloat = 1, //Doesn't need to be attached to a surface
-    Player
-}
 
-[Flags]
-public enum SpellComeFrom
+public enum SpellDirection
 {
     Ceiling = 1,
     Floor = 2,
-    LeftWall = 4,
-    RightWall = 8,
+    Left = 4,
+    Right = 8,
+    Instant = 16
+}
 
-    Bothsides = LeftWall | RightWall,
-    Anywhere = LeftWall | RightWall | Floor | Ceiling,
-    FloorAndCeiling = Floor | Ceiling
-}*/
 
 public class SpellBase : MonoBehaviour {
-    /*Figure out enums later
-    [EnumFlag][SerializeField]
-    public LocationCastFrom ValidLocations;
-    [EnumFlag][SerializeField]
-    public SpellComeFrom spellDirection;*/
-
-        //using same numbers as from enums
     public int LocationCast;
-    public int SpellDirection;
 
+    [EnumFlag] [SerializeField] public SpellDirection CastDirection;
+    [SerializeField] public float CooldownTime;
+
+    [HideInInspector]
+    public bool SpellCast; //Keep track of if the spell was cast - for checking instant spells (alex - post processing spells)
     //Spell speed towards player
     [SerializeField] private float speed;
 
@@ -85,7 +72,6 @@ public class SpellBase : MonoBehaviour {
     }
 
     //for stun function and its enum
-    private bool waitActive = true;
     private bool once = false;
 
     // apply knockback to inputted
@@ -117,29 +103,39 @@ public class SpellBase : MonoBehaviour {
 
     // apply stun to inputted
     // goes to enumerator for its waitforseconds
-    public void Stun(GameObject player, float stunDuration)
+    public void Stun(GameObject player, float stunDuration, Material mat = null, Animator anim = null)
     {
+        Renderer[] child = player.GetComponentsInChildren<Renderer>();
         if (once == false)
         {
             once = true;
-            StartCoroutine(WaitStun(player, stunDuration));
+            StartCoroutine(WaitStun(player, stunDuration, mat, child, anim));
         }
+
     }
 
-    private IEnumerator WaitStun(GameObject player, float stunDuration)
+    private IEnumerator WaitStun(GameObject player, float stunDuration, Material mat, Renderer[] child = null, Animator anim = null)
     {
-        waitActive = true;
         player.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(0);
         player.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
         player.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, player.gameObject.GetComponent<Rigidbody>().velocity.y, 0);
-        yield return new WaitForSeconds(stunDuration);
-        waitActive = false;
-        if (waitActive == false)
+        if (mat != null)
         {
-            player.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
-            player.GetComponent<PlayerOneMovement>().SetSpeed(player.GetComponent<PlayerOneMovement>().GetConstantSpeed());
-            once = false;
-            waitActive = true;
+            foreach (Renderer r in child)
+            {
+                if (r.name == "Body" || r.name == "Hat" || r.name == "HatEyes" || r.name == "Poncho") r.material = mat;
+            }
+        }
+        if(anim != null)
+        {
+            anim.enabled = false;
+        }
+        yield return new WaitForSeconds(stunDuration);
+        player.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
+        player.GetComponent<PlayerOneMovement>().SetSpeed(player.GetComponent<PlayerOneMovement>().GetConstantSpeed());
+        if (anim != null)
+        {
+            anim.enabled = true;
         }
     }
 
@@ -158,14 +154,15 @@ public class SpellBase : MonoBehaviour {
     {
         player.gameObject.GetComponent<PlayerOneMovement>().SetJumpHeight(player.gameObject.GetComponent<PlayerOneMovement>().GetJumpHeight() * jumpReductionPercent);
         player.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(player.gameObject.GetComponent<PlayerOneMovement>().GetSpeed() * slowPercent);
+        player.gameObject.GetComponent<PlayerOneMovement>().IsSlowed(true);
 
         yield return new WaitForSeconds(slowDuration);
 
         player.GetComponent<PlayerOneMovement>().SetJumpHeight(player.GetComponent<PlayerOneMovement>().GetConstantJumpHeight());
         player.GetComponent<PlayerOneMovement>().SetSpeed(player.GetComponent<PlayerOneMovement>().GetConstantSpeed());
+        player.gameObject.GetComponent<PlayerOneMovement>().IsSlowed(false);
     }
 
-    // apply knockback to inputted
     public void RestartFace(GameObject obj)
     {
         Debug.Log("RestartFace");
@@ -179,9 +176,9 @@ public class SpellBase : MonoBehaviour {
         return LocationCast;
     }
 
-    public int GetDirection()
+    public SpellDirection GetDirection()
     {
-        return SpellDirection;
+        return CastDirection;
     }
 
     public float GetSpeed()

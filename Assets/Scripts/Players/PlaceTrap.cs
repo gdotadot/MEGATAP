@@ -13,98 +13,118 @@ public enum Direction
 
 
 public class PlaceTrap : MonoBehaviour {
+    [Header("Design Values -------------")]
+    [SerializeField] private int gridSize;
+
+    [Header("Programmers - GameObjects/Scripts -----")]
+    [SerializeField] private GameObject tower;
+
     [SerializeField] private GameObject[] trapButtons;
     [SerializeField] private TrapBase[] trapPrefabs;
+    [SerializeField] private GameObject trapQueue;
+
     [SerializeField] private Image controllerCursor;
+
     [SerializeField] private EventSystem eventSystem;
     [SerializeField] private GameObject gameManager;
     [SerializeField] private Camera cam;
 
-
-    [SerializeField] private int cursorSpeed;
-    [SerializeField] private int gridSize;
-
-    [SerializeField] private int queueSize = 7;
-    public List<GameObject> queue { get; private set; }
-    [SerializeField] private GameObject trapQueue;
-    private int queueIndex;
-
-    private TrapBase trap;
-    public Direction CurrentDirection { get; private set; }
-    private GameObject ghostTrap;
-    private GameObject previouslySelected;
-    private float gridXOffset, gridZOffset, gridYOffset = 0.35f; //changed when trap is rotated so that it still properly aligns with grid.
-
-
-    private bool p2Controller;
-    private bool placeEnabled;
-
-    public bool active { get; private set; }
-
+    private CastSpell cs;
     private PauseMenu pause;
     private CheckControllers checkControllers;
 
+    [Header("Audio-----------------------------")]
+    [SerializeField] private AudioClip trapPlacementGood;
+    [SerializeField] private AudioClip trapPlacementBad;
+    private AudioSource audioSource;
+
+    [Header("Queue Size -----")]
+    [SerializeField] private int queueSize = 7;
+    private MoveControllerCursor cursorMove;
+    
+    //Andy's Queue Stuff
+    public List<GameObject> queue { get; private set; }
+    private int queueIndex;
+    [HideInInspector] public bool active { get; private set; }
+
+    //Alex's Trap Stuff
+    private TrapBase trap;
+    public Direction CurrentDirection { get; private set; }
+    private GameObject ghostTrap;
+    private float gridXOffset, gridZOffset, gridYOffset = 0.35f; //changed when trap is rotated so that it still properly aligns with grid.
+    private SpriteRenderer[] placementSquares;
+    
+    
+    //Controller Stuff
+    private bool p2Controller;
+    private bool placeEnabled;
+
+
+
+
+    private int numTimesRotated = 0;
+    private bool resetEnabled = true;
+
 	void Start () {
+        //Get references
+        pause = gameManager.GetComponent<PauseMenu>();
+        cs = GetComponent<CastSpell>();
+        audioSource = GetComponent<AudioSource>();
+
+        //Queue Initialization
         queue = new List<GameObject>();
+        cursorMove = GetComponent<MoveControllerCursor>();
         active = true;
+        CreateTrapQueue();
+        trapQueue.transform.SetAsLastSibling();
+
         //Handle cursor or set buttons if controller connected
         checkControllers = gameManager.GetComponent<CheckControllers>();
         p2Controller = checkControllers.GetControllerTwoState();
-        pause = gameManager.GetComponent<PauseMenu>();
-        CreateTrapQueue();
-
-        placeEnabled = false;
-        trapQueue.transform.SetAsLastSibling();
-
+        placeEnabled = true;
 
         if (p2Controller)
         {
-            controllerCursor.enabled = true;
             eventSystem.SetSelectedGameObject(queue[0].gameObject);
-        }
-        else
-        {
-            controllerCursor.enabled = false;
         }
     }
 	
 
 	void Update () {
-        //Move controller cursor & get input
-        p2Controller = checkControllers.GetControllerTwoState();
+        //Move ghost with cursor
+        MoveGhost();
 
+        //Get controller select
+        p2Controller = checkControllers.GetControllerTwoState();
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Mathf.Abs(Input.GetAxisRaw("Horizontal_Joy_2")) > 0.6f || Mathf.Abs(Input.GetAxisRaw("Vertical_Joy_2")) > 0.6f)
+            if (Input.GetButtonDown("Place_Joy_2") && placeEnabled)
             {
-                controllerCursor.transform.Translate(Input.GetAxisRaw("Horizontal_Joy_2") * cursorSpeed, Input.GetAxisRaw("Vertical_Joy_2") * cursorSpeed, 0);
-            }
-            
-            if (Input.GetButton("Place_Joy_2") && placeEnabled)
-            {
+                MoveGhost();
                 SetTrap();
             }
         }
-        MoveGhost();
-
-        if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused && !(cam.GetComponent<CameraTwoRotator>().GetFloor() == 7 && cam.GetComponent<CameraTwoRotator>().GetState() == 4))
+        //Reset queue's when tower rotates
+        if (Input.GetButtonDown("Submit_Joy_2") && resetEnabled && !pause.GameIsPaused && numTimesRotated < 4 * (tower.GetComponentInChildren<NumberOfFloors>().NumFloors - 1) - 1)
         {
+            //if(cam.GetComponent<CameraTwoRotator>().GetFloor() == tower.GetComponent<NumberOfFloors>().NumFloors && cam.GetComponent<CameraTwoRotator>().GetState() == 4)
+            //{
+            //    lastFace = true;
+            //}
+            numTimesRotated++;
+            resetEnabled = false;
+            StartCoroutine(EnableInput());
+
             DestroyGhost();
             ClearTrapQueue();
             CreateTrapQueue();
-            if (active)
-            {
-                eventSystem.SetSelectedGameObject(queue[0]);
-            }
-        }
-
-        if (Input.GetButtonDown("Swap_Queue") && !pause.GameIsPaused)
-        {
-            DestroyGhost();
-            SwitchQueue();
+            if(p2Controller) eventSystem.SetSelectedGameObject(queue[0]);
+            cursorMove.MovingTraps = true;
+            controllerCursor.transform.localPosition = new Vector3(0, 130);
         }
     }
 
+    //Returns cursor position on tower as a grid location rather than free-floating
     private Vector3? GetGridPosition()
     {
         if (RaycastFromCam() != null)
@@ -137,10 +157,12 @@ public class PlaceTrap : MonoBehaviour {
         else return null;
     }
 
+    //Raycast from the camera to tower
     private RaycastHit? RaycastFromCam()
     {
         RaycastHit hit;
         Ray ray;
+        //Ray to controller cursor
         if (p2Controller && controllerCursor.transform.position.y > Screen.height / 2)
         {
             ray = cam.ScreenPointToRay(controllerCursor.transform.position);
@@ -150,6 +172,7 @@ public class PlaceTrap : MonoBehaviour {
             }
             else return null;
         }
+        //Ray to mouse cursor
         else if(Input.mousePosition.y > Screen.height / 2)
         {
             ray = cam.ScreenPointToRay(Input.mousePosition);
@@ -165,7 +188,8 @@ public class PlaceTrap : MonoBehaviour {
         }
     }
 
-    //Called from event trigger on center column of tower when player clicks on it
+    //Called from custom event trigger script on floor prefabs column when it is clicked on w/ computer mouse
+    //ONLY computer mouse - controller cursor is handled in Update
     public void OnClickTower()
     {
         if(!Input.GetMouseButtonUp(1) && !pause.GameIsPaused)
@@ -180,8 +204,15 @@ public class PlaceTrap : MonoBehaviour {
         {
             //Check if trap is on correct surface
             bool validLocation;
+            CheckMultipleBases bases = ghostTrap.GetComponentInChildren<CheckMultipleBases>();
             CheckValidLocations check = ghostTrap.GetComponentInChildren<CheckValidLocations>();
-            if(check != null)
+         
+
+            if (bases != null)
+            {
+                validLocation = bases.Valid;
+            }
+            else if (check != null)
             {
                 validLocation = check.Valid;
             }
@@ -190,32 +221,36 @@ public class PlaceTrap : MonoBehaviour {
                 validLocation = true;
                 Debug.Log("Warning: Trap not set up correctly; valid location is always true.");
             }
-
+            
             //CheckNearby() also checks the collider provided for the "safe zone" around the trap
             if (GetGridPosition() != null && CheckNearby() && validLocation)
             {
                 Vector3 position = GetGridPosition().Value;
                 if (ghostTrap != null && CheckFloor(position.y))
                 {
+                    audioSource.PlayOneShot(trapPlacementGood);
                     trap.InstantiateTrap(position, ghostTrap.transform.rotation);
-                    check.Placed = true;
+                    if (check != null) check.Placed = true;
+                    //if (bases != null) bases.Placed = true;
                     ClearButton();
                     trap = null;
+                    foreach (SpriteRenderer sr in placementSquares)
+                    {
+                        sr.enabled = false;
+                    }
+                    placementSquares = null;
                     DestroyGhost();
 
-                    if (p2Controller)
-                    {
-                        //eventSystem.SetSelectedGameObject(previouslySelected);
-                        for (int i = queue.Count - 1; i >= 0; i--)
-                        {
-                            if (queue[i].activeInHierarchy)
-                            {
-                                eventSystem.SetSelectedGameObject(queue[i]);
-                            }
-                        }
-                        placeEnabled = false;
-                    }
+                    SetSelectedButton();
                 }
+                else
+                {
+                    audioSource.PlayOneShot(trapPlacementBad);
+                }
+            }
+            else
+            {
+                audioSource.PlayOneShot(trapPlacementBad);
             }
 
         }
@@ -231,12 +266,16 @@ public class PlaceTrap : MonoBehaviour {
         return (hitY >= lowerLimit && hitY <= upperLimit);
     }
 
-
     private bool CheckNearby()
     {
         if (ghostTrap != null)
         {
             if (ghostTrap.GetComponentInChildren<TrapOverlap>() != null && ghostTrap.GetComponentInChildren<TrapOverlap>().nearbyTrap)
+            {
+                return false;
+            }
+
+            if (ghostTrap.GetComponentInChildren<TrapOnlyChecking>() != null && ghostTrap.GetComponentInChildren<TrapOnlyChecking>().nearbyTrap)
             {
                 return false;
             }
@@ -247,25 +286,85 @@ public class PlaceTrap : MonoBehaviour {
         return false;
     }
 
+    private bool CheckClickOnPlatform()
+    {
+        RaycastHit hit;
+        Ray ray;
+        //Ray to controller cursor
+        //if (p2Controller && controllerCursor.transform.position.y > Screen.height / 2)
+        //{
+        //    ray = cam.ray
+        //    ray = cam.WorldPointToRay(ghostTrap.transform.position);
+        //    if (Physics.Raycast(ray, out hit, float.MaxValue, ~LayerMask.GetMask("Ignore Raycast")))
+        //    {
+        //        if (hit.transform.tag == "Platform")
+        //        {
+        //            return false;
+        //        }
+        //    }
+        //    else return true;
+        //}
+        //Ray to mouse cursor
+        if (Input.mousePosition.y > Screen.height / 2)
+        {
+            ray = cam.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, float.MaxValue, ~LayerMask.GetMask("Ignore Raycast")))
+            {
+                if (hit.transform.tag == "Platform")
+                {
+                    return false;
+                }
+            }
+            else return true;
+        }
+
+        return true;
+    }
     private void SetGhost()
     {
         if(trap != null)
         {
             ghostTrap = trap.InstantiateTrap(Vector3.zero);
+            placementSquares = ghostTrap.GetComponentInChildren<Canvas>().gameObject.GetComponentsInChildren<SpriteRenderer>();
         }
         
         
         Destroy(ghostTrap.GetComponent<Collider>());
-
-        //Make half transparent
-        if (ghostTrap.GetComponentInChildren<MeshRenderer>() != null)
-        {
-            Color color = ghostTrap.GetComponentInChildren<MeshRenderer>().material.color;
-            color.a = 0.5f;
-            ghostTrap.GetComponentInChildren<MeshRenderer>().material.color = color;
-        }
         
-       	ghostTrap.GetComponent<TrapBase>().enabled = false;
+        //Delete spikes script so animation doesn't play
+        if(ghostTrap.GetComponentInChildren<Spikes>() != null)
+        {
+            Destroy(ghostTrap.GetComponent<Spikes>());
+        }
+        //Make half transparent------------------------------------------------
+        //Check for both mesh renderer and skinned mesh renderers
+        MeshRenderer[] mrs = ghostTrap.GetComponentsInChildren<MeshRenderer>();
+        SkinnedMeshRenderer[] smrs = ghostTrap.GetComponentsInChildren<SkinnedMeshRenderer>();
+        //each mr can also have multiple materials
+        List<Material> mats = new List<Material>();
+
+        foreach (MeshRenderer mr in mrs)
+        {
+            mr.GetMaterials(mats);
+            foreach(Material mat in mats)
+            {
+                Color color = mat.color;
+                color.a = 0.5f;
+                mat.color = color;
+            }
+        }
+
+        foreach (SkinnedMeshRenderer smr in smrs)
+        {
+            smr.GetMaterials(mats);
+            foreach (Material mat in mats)
+            {
+                Color color = mat.color;
+                color.a = 0.5f;
+                mat.color = color;
+            }
+        }
+        ghostTrap.GetComponent<TrapBase>().enabled = false;
 
     }
 
@@ -275,9 +374,37 @@ public class PlaceTrap : MonoBehaviour {
         {
             UpdateRotationInput();
             FinalizeRotationInput();
+            bool validLocation;
+            CheckMultipleBases bases = ghostTrap.GetComponentInChildren<CheckMultipleBases>();
+            CheckValidLocations check = ghostTrap.GetComponentInChildren<CheckValidLocations>();
 
+            if (bases != null)
+            {
+                validLocation = bases.Valid;
+            }
+            else if (check != null)
+            {
+                validLocation = check.Valid;
+            }
+            else
+            {
+                validLocation = true;
+                Debug.Log("Warning: Trap not set up correctly; valid location is always true.");
+            }
+
+            if(validLocation && CheckNearby() && GetGridPosition() != null && placementSquares.Length == 2)
+            {
+                if(placementSquares[0] != null) placementSquares[0].enabled = false;
+                if (placementSquares[1] != null) placementSquares[1].enabled = true;
+            }
+            else if (placementSquares.Length == 2)
+            {
+                if (placementSquares[0] != null) placementSquares[0].enabled = true;
+                if (placementSquares[1] != null) placementSquares[1].enabled = false;
+            }
             if (GetGridPosition() != null)
             {
+                //Rotate trap based on side of tower
                 switch (cam.GetComponent<CameraTwoRotator>().GetState())
                 {
                     case 1:
@@ -296,27 +423,12 @@ public class PlaceTrap : MonoBehaviour {
                 Vector3 position = GetGridPosition().Value;
                 ghostTrap.transform.position = position;
 
+                //Cancel the trap
                 if ((Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2")) && !pause.GameIsPaused)
                 {
                     DestroyGhost();
-
-                    if (p2Controller)
-                    {
-                        if (active)
-                        {
-                            bool buttonSet = false;
-                            for (int i = 0; i < queue.Count; i++)
-                            {
-                                if (queue[i].activeInHierarchy && !buttonSet)
-                                {
-                                    eventSystem.SetSelectedGameObject(queue[i]);
-                                    buttonSet = true;
-                                }
-                            }
-
-                        }
-                        placeEnabled = false;
-                    }
+                    placementSquares = null;
+                    SetSelectedButton();
                 }
             }
         }
@@ -331,28 +443,29 @@ public class PlaceTrap : MonoBehaviour {
         {
             RaycastHit hit = RaycastFromCam().Value;
 
-            if (Input.GetButtonDown("RotateLeft_Joy_2") && !pause.GameIsPaused)
-            {
-                if (hit.normal.x == -1 || hit.normal.x == 1)
-                {
-                    trapRot--;
-                }
-                else
-                {
-                    trapRot++;
-                }
-            }
-            else if (Input.GetButtonDown("RotateRight_Joy_2") && !pause.GameIsPaused)
-            {
-                if (hit.normal.x == -1 || hit.normal.x == 1)
-                {
-                    trapRot++;
-                }
-                else
-                {
-                    trapRot--;
-                }
-            }
+            //Commented out while we are not doing trap rotation - KEEP for later
+            //if (Input.GetButtonDown("RotateLeft_Joy_2") && !pause.GameIsPaused)
+            //{
+            //    if (hit.normal.x == -1 || hit.normal.x == 1)
+            //    {
+            //        trapRot--;
+            //    }
+            //    else
+            //    {
+            //        trapRot++;
+            //    }
+            //}
+            //else if (Input.GetButtonDown("RotateRight_Joy_2") && !pause.GameIsPaused)
+            //{
+            //    if (hit.normal.x == -1 || hit.normal.x == 1)
+            //    {
+            //        trapRot++;
+            //    }
+            //    else
+            //    {
+            //        trapRot--;
+            //    }
+            //}
 
             //Add Offsets so they still stick to grid
             if(trapRot % 4 == 0)
@@ -426,7 +539,7 @@ public class PlaceTrap : MonoBehaviour {
         }
     }
 
-    private void DestroyGhost()
+    public void DestroyGhost()
     {
         if(ghostTrap != null)
         {
@@ -435,16 +548,31 @@ public class PlaceTrap : MonoBehaviour {
         }
     }
 
-    private void OnClickTrap(int trapNum)
+    //Called from trap button / CallClick script
+    public void OnClickTrap(int trapNum)
     {
         trap = trapPrefabs[trapNum];
         trapRot = 0;
-        eventSystem.SetSelectedGameObject(null);
+//        eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         DestroyGhost();
+        GetComponent<CastSpell>().DestroyTarget();
         SetGhost();
     }
 
+
+    //Mostly for controller - wait between inputs to prevent spamming and some button selection bugs
+    private IEnumerator EnableInput()
+    {
+        yield return new WaitForSeconds(0.5f);
+        resetEnabled = true;
+    }
+
+
+
+    /// --------------------------------------------------------
+    /// QUEUE/ BUTTON STUFF
+    /// --------------------------------------------------------
     private void GetIndex(GameObject trap)
     {
         queueIndex = trap.GetComponent<ButtonIndex>().GetIndex();
@@ -456,7 +584,7 @@ public class PlaceTrap : MonoBehaviour {
         for(int i = 0; i < queueSize; i++)
         {
             int random = Random.Range(0, trapButtons.Length);
-            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-140f + 40f*i, -11f, 0), Quaternion.identity) as GameObject;
+            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-80f + 40f*i, -30, 0), Quaternion.identity) as GameObject;
             newTrap.transform.SetParent(trapQueue.transform, false);
 
             //Add click listeners for all trap buttons
@@ -488,41 +616,70 @@ public class PlaceTrap : MonoBehaviour {
         queue[queueIndex].SetActive(false);
     }
 
-    //Make player wait .5 seconds after pressing button to be able to place trap.
-    //Gets rid of controller bug where pressing A to select a trap also immediately places it
-    IEnumerator EnableInput()
+    //Set new selected button if the controller is being used.
+    private void SetSelectedButton()
     {
-        yield return new WaitForSeconds(0.5f);
-        placeEnabled = true;
-    }
-
-    private void SwitchQueue()
-    {
-        if (active == true)
+        if (p2Controller)
         {
-            trapQueue.transform.SetAsFirstSibling();
-            trapQueue.transform.position += new Vector3(15f, 15f, 0);
-            for (int i = 0; i < queue.Count; i++)
+            if (active)
             {
-                queue[i].GetComponent<Button>().interactable = false;
-            }
-        }
-
-        if (active == false)
-        {
-            bool buttonSet = false;
-            trapQueue.transform.SetAsLastSibling();
-            trapQueue.transform.position -= new Vector3(15f, 15f, 0);
-            for (int i = 0; i < queue.Count; i++)
-            {
-                queue[i].GetComponent<Button>().interactable = true;
-                if (queue[i].activeInHierarchy && !buttonSet)
+                bool buttonSet = false;
+                for (int i = 0; i < queue.Count; i++)
                 {
-                    eventSystem.SetSelectedGameObject(queue[i]);
-                    buttonSet = true;
+                    if (queue[i].activeInHierarchy && !buttonSet)
+                    {
+                        eventSystem.SetSelectedGameObject(queue[i]);
+                        buttonSet = true;
+                    }
                 }
+                if (!buttonSet)
+                {
+                    for (int i = 0; i < cs.queue.Length; i++)
+                    {
+                        if (cs.queue[i] != null && cs.queue[i].GetComponent<Button>().interactable && cs.queue[i].activeInHierarchy && !buttonSet)
+                        {
+                            controllerCursor.transform.localPosition = new Vector3(0, -100);
+                            cs.placeEnabled = false;
+                            eventSystem.SetSelectedGameObject(cs.queue[i]);
+                            buttonSet = true;
+                        }
+                    }
+                }
+
             }
+            //placeEnabled = false;
         }
-        active = !active;
     }
+
+    //private void SwitchQueue()
+    //{
+    //    if (active == true)
+    //    {
+    //        trapQueue.transform.SetAsFirstSibling();
+    //        trapQueue.transform.position += new Vector3(15f, 15f, 0);
+    //        for (int i = 0; i < queue.Count; i++)
+    //        {
+    //            queue[i].GetComponent<Button>().interactable = false;
+    //        }
+    //    }
+
+    //    if (active == false)
+    //    {
+    //        controllerCursor.transform.position = new Vector3(Screen.width / 2, Screen.height / 2 + cursorDistFromCenter, 0);
+    //        GetComponent<MoveControllerCursor>().MovingTraps = true;
+    //        bool buttonSet = false;
+    //        trapQueue.transform.SetAsLastSibling();
+    //        trapQueue.transform.position -= new Vector3(15f, 15f, 0);
+    //        for (int i = 0; i < queue.Count; i++)
+    //        {
+    //            queue[i].GetComponent<Button>().interactable = true;
+    //            if (queue[i].activeInHierarchy && !buttonSet)
+    //            {
+    //                eventSystem.SetSelectedGameObject(queue[i]);
+    //                buttonSet = true;
+    //            }
+    //        }
+    //    }
+    //    active = !active;
+    //}
 }

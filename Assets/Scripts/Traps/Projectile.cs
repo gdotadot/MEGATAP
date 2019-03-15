@@ -4,52 +4,35 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
     [SerializeField] private float stunDuration;
-
+    [SerializeField] private AudioClip impactSFX;
+    [SerializeField] private AudioClip releaseSFX;
+    private AudioSource audioSource;
     private TrapBase trapBase;
-    private CameraTwoRotator cam;
+    //private CameraTwoRotator cam;
 
     private bool hit = false;
 	private GameObject player = null;
     private Renderer[] child;
+    private Animator anim;
 
 	// Use this for initialization
 	void Start () {
 		trapBase = GetComponent<TrapBase>();
 		Destroy(gameObject, 5.0f);
-        child = GetComponentsInChildren<Renderer>();
+        child = this.GetComponentsInChildren<Renderer>();
         hit = false;
-
-        cam = GameObject.Find("Player 2 Camera").GetComponent<CameraTwoRotator>();
-
-        switch (cam.GetState())
-        {
-            case 1:
-                transform.eulerAngles = new Vector3(0, 0, 0);
-                break;
-            case 2:
-                transform.eulerAngles = new Vector3(0, 270, 0);
-                break;
-            case 3:
-                transform.eulerAngles = new Vector3(0, 180, 0);
-                break;
-            case 4:
-                transform.eulerAngles = new Vector3(0, 90, 0);
-                break;
-        }
+        audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(releaseSFX);
     }
-
-    void update()
-    {
-        
-    }
-
 	void FixedUpdate(){
 		if (player != null)
 		{
 			if (hit)
 			{
 				trapBase.Stun(player, stunDuration, this.gameObject);
-			}
+                anim.SetBool("Stunned", hit);
+                StartCoroutine(Wait());
+            }
 		}
 	}
 
@@ -58,7 +41,13 @@ public class Projectile : MonoBehaviour {
 	{
 		if(col.gameObject.tag == "Player"){
 			player = col.gameObject;
+            if(!hit) audioSource.PlayOneShot(impactSFX);
 			hit = true;
+            anim = player.GetComponent<PlayerOneMovement>().GetAnim();
+            if (player.GetComponent<PlayerOneMovement>().IsCrouched() == false)
+            {
+                anim.Play("Stunned", 0);
+            }
             Unrender();
 
         }
@@ -81,6 +70,12 @@ public class Projectile : MonoBehaviour {
         {
             r.enabled = false;
         }
+    }
+
+    private IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(stunDuration);
+        anim.SetBool("Stunned", false);
     }
 
     private IEnumerator Death(float stunDuration)

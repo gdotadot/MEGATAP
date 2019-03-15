@@ -25,6 +25,8 @@ public class GameOverMenu : MonoBehaviour {
 
     public void onClickMenu()
     {
+        GameObject musicPlayer = GameObject.Find("MusicPlayer");
+        if (musicPlayer != null) Destroy(musicPlayer);
         SceneManager.LoadScene("Menu");
     }
 }

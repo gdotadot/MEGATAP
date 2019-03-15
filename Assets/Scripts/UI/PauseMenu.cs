@@ -57,7 +57,7 @@ public class PauseMenu : MonoBehaviour {
         {
             if (cs.queue[i] != null)
             {
-                if (cs.active) cs.queue[i].GetComponent<Button>().interactable = true;
+                cs.queue[i].GetComponent<Button>().interactable = true;
                 if (cs.active && cs.queue[i].activeInHierarchy && !buttonSet)
                 {
                     es.SetSelectedGameObject(cs.queue[i]);
@@ -74,7 +74,7 @@ public class PauseMenu : MonoBehaviour {
                 buttonSet = true;
             }
         }
-        es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu";
+        es.GetComponent<StandaloneInputModule>().submitButton = "Nothing";
         Time.timeScale = 1f;
 		GameIsPaused = false;
 	}
@@ -101,7 +101,9 @@ public class PauseMenu : MonoBehaviour {
 		GameIsPaused = true;
 	}
 	public void LoadMenu(){
-		SceneManager.LoadScene("Menu");
+        GameObject musicPlayer = GameObject.Find("MusicPlayer");
+        if (musicPlayer != null) Destroy(musicPlayer);
+        Initiate.Fade("Menu", Color.black, 2);
 		Time.timeScale = 1f;
 	}
 	public void ControlScreen(){

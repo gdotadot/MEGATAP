@@ -98,7 +98,7 @@ public class TrapBase : MonoBehaviour {
                 rb.velocity = new Vector3(knockBackDistance * -playerx, knockUpDistance * -playery, 0);
                 break;
             case 4:
-                rb.velocity = new Vector3(0, knockUpDistance * -playery, knockBackDistance * playerz);
+                rb.velocity = new Vector3(0, knockUpDistance * -playery, knockBackDistance * -playerz);
                 break;
         }
     }
@@ -122,7 +122,6 @@ public class TrapBase : MonoBehaviour {
     {
         obj.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(0);
         obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
-
         yield return new WaitForSeconds(stunDuration);
 
         obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);

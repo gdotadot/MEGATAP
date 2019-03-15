@@ -4,19 +4,24 @@ using UnityEngine.UI;
 
 //<alexc> This class rotates and moves the Player 2 (right side camera) on a given input.
 public class CameraTwoRotator : MonoBehaviour {
-
-    [SerializeField] private Camera playerTwoCam;
-    [SerializeField] private float moveSpeed;
+    [Header("Programmers - GameObjects/Scripts -----")]
+    [SerializeField] private GameObject tower;
+    [SerializeField] private GameObject playerTwoCam;
     [SerializeField] private Image gridUI;
-    [SerializeField] private int offsetFromAbove;
-    [SerializeField] private GameObject faceTwoInstructions;
-    [SerializeField] private GameObject faceOneInstructions;
+    [SerializeField] private Toggle gridToggle;
+    [SerializeField] private GameObject cameraTarget;
     [SerializeField] private GameManager gm;
+
+    [Header("Designers - Speeds & Offsets -----")]
+    [SerializeField] private float rotateSpeed;
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private int offsetFromAbove;
+
     //Change these static variables iff tower is scaled
-    private static int camPosHorizontal = 140;
+    private static int camPosHorizontal = 75;
     private static int camPosVertical = 20;
-    private static int camRotationX = 5;
-    private static int numFloors = 7;
+    private static int camRotationX = 0;
+    private static int numFloors;
     
 
     private Vector3[] basePositions = new [] { new Vector3(0,                   camPosVertical, -camPosHorizontal),
@@ -30,6 +35,7 @@ public class CameraTwoRotator : MonoBehaviour {
                                                  Quaternion.Euler(camRotationX, -270, 0)};
 
     private IEnumerator camTween;
+    private IEnumerator targetTween;
 
     private int currentPos, floor;
 
@@ -37,6 +43,7 @@ public class CameraTwoRotator : MonoBehaviour {
     private PauseMenu pause;
     private void Start()
     {
+        numFloors = tower.GetComponent<NumberOfFloors>().NumFloors;
         pause = gm.GetComponent<PauseMenu>();
         Vector3 startPos = basePositions[0] + new Vector3(0, 20 - offsetFromAbove, 0);
         playerTwoCam.transform.position = startPos;
@@ -50,7 +57,18 @@ public class CameraTwoRotator : MonoBehaviour {
 
     //Rotate camera around tower when arrow keys are pressed
     private void Update()
-    { 
+    {
+        //Allow toggling grid on/off for playtesting
+        if(gridToggle.isOn && !gridUI.gameObject.activeInHierarchy)
+        {
+            gridUI.gameObject.SetActive(true);
+        }
+        else if(!gridToggle.isOn && gridUI.gameObject.activeInHierarchy)
+        {
+            gridUI.gameObject.SetActive(false);
+        }
+
+
         if (moveEnabled)
         {
             if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused)
@@ -63,6 +81,8 @@ public class CameraTwoRotator : MonoBehaviour {
                     {
                         moveEnabled = false;
                         floor++;
+                        //cameraTarget.transform.position = new Vector3(cameraTarget.transform.position.x, cameraTarget.transform.position.y + 20, cameraTarget.transform.position.z);
+
                         StartMove(basePositions[0], baseRotations[0], 1);
                     }
                 }
@@ -83,19 +103,18 @@ public class CameraTwoRotator : MonoBehaviour {
         {
             StopCoroutine(camTween);
         }
-        camTween = TweenToPosition(goalPos, goalRot, moveSpeed);
+        //Tween the vcam rotation
+        camTween = TweenToPosition(goalPos, goalRot, rotateSpeed);
         StartCoroutine(camTween);
+
+        //Tween the targets (at edges of face) rotation - vcam will follow at this speed
+        targetTween = TargetTween(goalPos, goalRot, moveSpeed);
+        StartCoroutine(targetTween);
+
+
+
         MoveGrid();
 
-        //Play instructions text for face 2
-        if(currentPos == 2 && floor == 2)
-        {
-            faceTwoInstructions.SetActive(true);
-            if(faceOneInstructions != null)
-            {
-                Destroy(faceOneInstructions);
-            }
-        }
     }
 
     //Camera movement coroutine
@@ -108,13 +127,34 @@ public class CameraTwoRotator : MonoBehaviour {
         targetPos.y -= offsetFromAbove;
         for (float t = 0; t < time; t += Time.deltaTime)
         {
-            playerTwoCam.transform.position = Vector3.Lerp(currentPos, targetPos, t/time);
+            //playerTwoCam.transform.position = Vector3.Lerp(currentPos, targetPos, t/time);
             playerTwoCam.transform.rotation = Quaternion.Slerp(currentRot, targetRot, t/time);
+
             yield return null;
         }
 
         playerTwoCam.transform.position = targetPos;
         playerTwoCam.transform.rotation = targetRot;
+
+        moveEnabled = true;
+        targetTween = null;
+    }
+
+    private IEnumerator TargetTween(Vector3 targetPos, Quaternion targetRot, float time)
+    {
+        Vector3 currentPos = cameraTarget.transform.position;
+        Quaternion currentRot = playerTwoCam.transform.rotation;
+
+        targetPos.x = targetPos.z = 0;
+        targetPos.y = floor * 20 - 40;
+        for (float t = 0; t < time; t += Time.deltaTime)
+        {
+            cameraTarget.transform.position = Vector3.Lerp(currentPos, targetPos, t / time);
+            cameraTarget.transform.rotation = Quaternion.Slerp(currentRot, targetRot, t / time);
+
+            yield return null;
+        }
+        cameraTarget.transform.rotation = targetRot;
 
         moveEnabled = true;
         camTween = null;
