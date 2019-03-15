@@ -19,7 +19,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool jumping;
     private bool landing;
     private bool wallJumping;
-    private bool canStandUp;
+    private bool cantStandUp;
     private bool slowed = false;
 
     //Control if player can have input
@@ -72,7 +72,7 @@ public class PlayerOneMovement : MonoBehaviour {
                 jumping = true;
             }
 
-            if(Input.GetButtonDown("Jump_Joy_1") && grounded && crouching == true && canStandUp == false)
+            if(Input.GetButtonDown("Jump_Joy_1") && grounded && crouching == true && cantStandUp == false)
             {
                 jumping = true;
             }
@@ -82,9 +82,17 @@ public class PlayerOneMovement : MonoBehaviour {
             {
                 crouching = true;
             }
-            if (Input.GetButtonUp("Crouch_Joy_1") || (!Input.GetButton("Crouch_Joy_1") && canStandUp == false))
+            if (Input.GetButtonUp("Crouch_Joy_1") || (!Input.GetButton("Crouch_Joy_1") && cantStandUp == false))
             {
-                if (canStandUp == false)
+                if(cantStandUp == true)
+                {
+                    crouching = true;
+                    if(slowed == false)
+                    {
+                        speed = moveSpeed / 2;
+                    }
+                }
+                if (cantStandUp == false)
                 {
                     crouching = false;
                     if (slowed == false)
@@ -209,7 +217,7 @@ public class PlayerOneMovement : MonoBehaviour {
             col.center = new Vector3(0, 2.2f, 0);
         }
 
-        canStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
+        cantStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
 
         Move();
     }
