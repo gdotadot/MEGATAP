@@ -54,8 +54,7 @@ public class Petrify : MonoBehaviour {
             if (hit)
             {
                 child = player.GetComponentsInChildren<Renderer>();
-                spellBase.Stun(player, stunDuration, turnStone);
-                anim.enabled = false;
+                spellBase.Stun(player, stunDuration, turnStone, anim);
                 StartCoroutine(Wait(this.gameObject));
             }
         }
@@ -76,10 +75,6 @@ public class Petrify : MonoBehaviour {
         }
         if(hit == false && other.tag == "Boundary" && once == true)
         {
-            if(player != null)
-            {
-                anim.enabled = true;
-            }
             Destroy(this.gameObject);
         }
     }
@@ -111,10 +106,6 @@ public class Petrify : MonoBehaviour {
     {
         yield return new WaitForSeconds(stunDuration - 0.1f);
         Revert();
-        if(player != null)
-        {
-            anim.enabled = true;
-        }
         yield return new WaitForSeconds(0.1f);
         Destroy(obj);
     }
