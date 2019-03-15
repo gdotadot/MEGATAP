@@ -67,7 +67,12 @@ public class PlayerOneMovement : MonoBehaviour {
             inputAxis = checkControllers.GetInputAxis();
 
             //jumping
-            if (Input.GetButtonDown("Jump_Joy_1") && grounded)
+            if (Input.GetButtonDown("Jump_Joy_1") && grounded && crouching == false)
+            {
+                jumping = true;
+            }
+
+            if(Input.GetButtonDown("Jump_Joy_1") && grounded && crouching == true && canStandUp == false)
             {
                 jumping = true;
             }
@@ -86,8 +91,6 @@ public class PlayerOneMovement : MonoBehaviour {
                     {
                         speed = moveSpeed;
                     }
-                    col.height = 4.5f;
-                    col.center = new Vector3(0, 2.2f, 0);
                 }
             }
             // Animation parameters update
@@ -201,6 +204,11 @@ public class PlayerOneMovement : MonoBehaviour {
             col.center = new Vector3(0, 1.1f, 0);
         }
 
+        if(crouching == false || grounded == false) {
+            col.height = 4.5f;
+            col.center = new Vector3(0, 2.2f, 0);
+        }
+
         canStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
 
         Move();
@@ -212,6 +220,7 @@ public class PlayerOneMovement : MonoBehaviour {
         //Stuff that used to be in fixedupdate
         if (jumping)
         {
+            crouching = false;
             movementVector = new Vector3(movementVector.x, jumpH, movementVector.z);
             if (move == true && wallJumping == false)
             {
@@ -219,12 +228,9 @@ public class PlayerOneMovement : MonoBehaviour {
             }
             jumping = false;
             landing = false;
-            if (crouching == true)
+            if (slowed == false)
             {
                 speed = moveSpeed;
-                col.height = 4.5f;
-                col.center = new Vector3(0, 2.2f, 0);
-                crouching = false;
             }
         }
         else if (crouching)
@@ -281,7 +287,7 @@ public class PlayerOneMovement : MonoBehaviour {
                     animator.Play("Wall Jump", 0);
                     wallJumpVector = (-transform.forward + transform.up / wallJumpDirectionDivider).normalized * (jumpH / wallJumpDivider);
                     wallJumping = true;
-                    jumping = false;
+                    //jumping = false;
                     StartCoroutine(DisableWallJump());
                 }
             }

@@ -13,7 +13,7 @@ public class Spikes : MonoBehaviour {
     // custom to this trap
     [SerializeField] private int knockBackValue = 75;
     [SerializeField] private int knockUpValue = 25;
-    [SerializeField] private float stunDuration = 1f;
+    [SerializeField] private float stunDuration = 0.75f;
 
     // let the FixedUpdate method know that there was a collision
     private bool hit = false;
