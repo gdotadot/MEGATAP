@@ -76,6 +76,10 @@ public class Petrify : MonoBehaviour {
         }
         if(hit == false && other.tag == "Boundary" && once == true)
         {
+            if(player != null)
+            {
+                anim.enabled = true;
+            }
             Destroy(this.gameObject);
         }
     }
