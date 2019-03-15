@@ -86,7 +86,7 @@ public class ProjectileShooter : MonoBehaviour {
                 animator.SetTrigger("Fire");
 				projectile = Instantiate(prefab);
                 
-				projectile.transform.position = transform.position + new Vector3 (0, 1f, 0);
+				projectile.transform.position = transform.position + new Vector3 (0, 0.5f, 0);
                 projectile.transform.rotation = projectileRotation;
 
                 rb = projectile.GetComponent<Rigidbody>();
