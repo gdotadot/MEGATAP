@@ -23,6 +23,8 @@ public class Petrify : MonoBehaviour {
     // the player (or whatever collided with this trap)
     private GameObject player = null;
 
+    private Animator anim;
+
 
 
     private void Start()
@@ -52,7 +54,7 @@ public class Petrify : MonoBehaviour {
             if (hit)
             {
                 child = player.GetComponentsInChildren<Renderer>();
-                spellBase.Stun(player, stunDuration, turnStone);
+                spellBase.Stun(player, stunDuration, turnStone, anim);
                 StartCoroutine(Wait(this.gameObject));
             }
         }
@@ -64,6 +66,7 @@ public class Petrify : MonoBehaviour {
         {
             hit = true;
             player = other.gameObject;
+            anim = player.gameObject.GetComponent<PlayerOneMovement>().GetAnim();
             this.GetComponent<Renderer>().enabled = false;
         }
         if (hit == false && other.tag == "Boundary" && once == false)
@@ -78,10 +81,25 @@ public class Petrify : MonoBehaviour {
 
     private void Revert()
     {
-        child[2].material = normalBody;
-        child[3].material = normalHat;
-        child[4].material = normalHatEyes;
-        child[5].material = normalPoncho;
+        foreach (Renderer r in child)
+        {
+            if (r.name == "Body")
+            {
+                r.material = normalBody;
+            }
+            if (r.name == "Hat")
+            {
+                r.material = normalHat;
+            }
+            if (r.name == "HatEyes")
+            {
+                r.material = normalHatEyes;
+            }
+            if (r.name == "Poncho")
+            {
+                r.material = normalPoncho;
+            }
+        }
     }
 
     private IEnumerator Wait(GameObject obj)

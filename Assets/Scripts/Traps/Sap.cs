@@ -36,7 +36,6 @@ public class Sap : MonoBehaviour {
             if (hit)
             {
                 slowTimer = slowDuration;
-                player.gameObject.GetComponent<PlayerOneMovement>().IsSlowed(true);
                 hit = false;
             }
             if (slowTimer > 0 && slowTriggered == false)
@@ -73,6 +72,7 @@ public class Sap : MonoBehaviour {
         {
             hit = true;
             player = other.gameObject;
+            player.gameObject.GetComponent<PlayerOneMovement>().IsSlowed(true);
             //Player animation goes to idle properly in sap.
             if (player.GetComponent<PlayerOneMovement>().GetInputAxis() != 0)
             {
