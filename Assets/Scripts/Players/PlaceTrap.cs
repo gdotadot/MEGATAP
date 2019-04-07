@@ -424,12 +424,12 @@ public class PlaceTrap : MonoBehaviour {
                 ghostTrap.transform.position = position;
 
                 //Cancel the trap
-                if ((Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2")) && !pause.GameIsPaused)
-                {
-                    DestroyGhost();
-                    placementSquares = null;
-                    SetSelectedButton();
-                }
+                //if ((Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2")) && !pause.GameIsPaused)
+                //{
+                //    DestroyGhost();
+                //    placementSquares = null;
+                //    SetSelectedButton();
+                //}
             }
         }
     }

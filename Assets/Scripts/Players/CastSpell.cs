@@ -391,13 +391,14 @@ public class CastSpell : MonoBehaviour {
                     }
 
                 }
+                
+                //Cancel the spell
+                //if (Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2"))
+                //{
+                //    DestroyTarget();
 
-                if (Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2"))
-                {
-                    DestroyTarget();
-
-                    SetSelectedButton();
-                }
+                //    SetSelectedButton();
+                //}
             }
         }
     }
