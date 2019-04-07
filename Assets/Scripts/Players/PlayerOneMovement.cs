@@ -41,6 +41,7 @@ public class PlayerOneMovement : MonoBehaviour {
 
 
     private CheckControllers checkControllers;
+    private PauseMenu pause;
     private Animator animator;
     private CapsuleCollider col;
     private ParticleSystemRenderer stun;
@@ -51,6 +52,7 @@ public class PlayerOneMovement : MonoBehaviour {
         checkControllers = gameManager.GetComponent<CheckControllers>();
         col = GetComponent<CapsuleCollider>();
         stun = GetComponentInChildren<ParticleSystemRenderer>();
+        pause = gameManager.GetComponent<PauseMenu>();
 
         speed = moveSpeed;
         jumpH = jumpHeight;
@@ -62,7 +64,7 @@ public class PlayerOneMovement : MonoBehaviour {
     {
         camOneState = cam.GetState();
         grounded = GetComponentInChildren<PlayerGrounded>().IsGrounded();
-        if (move == true)
+        if (move == true && !pause.GameIsPaused)
         {
             inputAxis = checkControllers.GetInputAxis();
 
@@ -219,7 +221,7 @@ public class PlayerOneMovement : MonoBehaviour {
 
         cantStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
 
-        Move();
+        if(!pause.GameIsPaused) Move();
     }
 
 

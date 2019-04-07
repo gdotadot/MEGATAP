@@ -27,7 +27,7 @@ public class PauseMenu : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Start"))
         {
             if (GameIsPaused)
             {
@@ -47,6 +47,11 @@ public class PauseMenu : MonoBehaviour {
                     pauseButtons[i].interactable = true;
                 }
             }
+        }
+
+        if(GameIsPaused && Input.GetButtonDown("Cancel"))
+        {
+            Resume();
         }
 	}
 	
