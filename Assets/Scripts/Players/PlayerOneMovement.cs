@@ -21,6 +21,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool wallJumping;
     private bool cantStandUp;
     private bool slowed = false;
+    public bool InputEnabled = true;
 
     //Control if player can have input
     private bool move = true;
@@ -64,7 +65,7 @@ public class PlayerOneMovement : MonoBehaviour {
     {
         camOneState = cam.GetState();
         grounded = GetComponentInChildren<PlayerGrounded>().IsGrounded();
-        if (move == true && !pause.GameIsPaused)
+        if (move == true && !pause.GameIsPaused && InputEnabled)
         {
             inputAxis = checkControllers.GetInputAxis();
 
@@ -310,6 +311,13 @@ public class PlayerOneMovement : MonoBehaviour {
         yield return new WaitForSeconds(wallJumpTime);
         wallJumping = false;
         wallJumpVector = Vector3.zero;
+    }
+
+    //Called from pause script to re-enable input after pressing "Resume"
+    public IEnumerator ResumeInput()
+    {
+        yield return new WaitForSeconds(0.5f);
+        InputEnabled = true;
     }
 
     /////////////////////////////////////////////
