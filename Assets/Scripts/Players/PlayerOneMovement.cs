@@ -291,7 +291,7 @@ public class PlayerOneMovement : MonoBehaviour {
             RaycastHit hit;
             RaycastHit downHit;
             bool raycastDown = Physics.Raycast(transform.position, -transform.up, out downHit, 1);
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 1) && !raycastDown)
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 1.5f) && !raycastDown)
             {
                 if (hit.transform.tag == "Platform" && Input.GetButtonDown("Jump_Joy_1") && grounded == false && move == true)
                 {
