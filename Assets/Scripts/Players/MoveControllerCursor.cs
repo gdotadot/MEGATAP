@@ -54,8 +54,13 @@ public class MoveControllerCursor : MonoBehaviour {
 
         if (p2Controller && !pause.GameIsPaused && MovingTraps)
         {
+            float horizontalInput, verticalInput;
+            horizontalInput = Input.GetAxisRaw("Horizontal_Joy_2") + Input.GetAxisRaw("Horizontal_Dpad");
+            verticalInput = Input.GetAxisRaw("Vertical_Joy_2") + Input.GetAxisRaw("Vertical_Dpad");
+
             Vector3 cursorPos = controllerCursor.GetComponent<RectTransform>().localPosition;
-            if (Input.GetAxisRaw("Horizontal_Joy_2") > stickSensitivity && cursorHorizontalMove && cursorPos.x < screenWidth)
+
+            if (horizontalInput > stickSensitivity && cursorHorizontalMove && cursorPos.x < screenWidth)
             {
                 controllerCursor.GetComponent<RectTransform>().localPosition += new Vector3(cursorGrid, 0, 0);
                 cursorHorizontalMove = false;
@@ -63,21 +68,21 @@ public class MoveControllerCursor : MonoBehaviour {
 
                 //audioSource.PlayOneShot(spaceSelectionSFX);
             }
-            else if (Input.GetAxisRaw("Horizontal_Joy_2") < -stickSensitivity && cursorHorizontalMove && cursorPos.x > -screenWidth)
+            else if (horizontalInput < -stickSensitivity && cursorHorizontalMove && cursorPos.x > -screenWidth)
             {
                 controllerCursor.GetComponent<RectTransform>().localPosition -= new Vector3(cursorGrid, 0, 0);
                 cursorHorizontalMove = false;
                 StartCoroutine(EnableHorizontalCursorMove());
                 //audioSource.PlayOneShot(spaceSelectionSFX);
             }
-            else if (Input.GetAxisRaw("Vertical_Joy_2") > stickSensitivity && cursorVerticalMove && cursorPos.y < screenHeight)
+            else if (verticalInput > stickSensitivity && cursorVerticalMove && cursorPos.y < screenHeight)
             {
                 controllerCursor.GetComponent<RectTransform>().localPosition += new Vector3(0, cursorGrid, 0);
                 cursorVerticalMove = false;
                 StartCoroutine(EnableVerticalCursorMove());
                // audioSource.PlayOneShot(spaceSelectionSFX);
             }
-            else if (Input.GetAxisRaw("Vertical_Joy_2") < -stickSensitivity && cursorVerticalMove && cursorPos.y > 0)
+            else if (verticalInput < -stickSensitivity && cursorVerticalMove && cursorPos.y > 0)
             {
                 controllerCursor.GetComponent<RectTransform>().localPosition -= new Vector3(0, cursorGrid, 0);
                 cursorVerticalMove = false;
@@ -87,41 +92,46 @@ public class MoveControllerCursor : MonoBehaviour {
         }
         else if (p2Controller && !pause.GameIsPaused && !MovingTraps)
         {
+            float horizontalInput, verticalInput;
+            horizontalInput = Input.GetAxisRaw("Horizontal_Joy_2") + Input.GetAxisRaw("Horizontal_Dpad");
+            verticalInput = Input.GetAxisRaw("Vertical_Joy_2") + Input.GetAxisRaw("Vertical_Dpad");
+
             if (SpellCastDirection == SpellDirection.Instant)
             {
                 Vector3 cursorPos = controllerCursor.GetComponent<RectTransform>().localPosition;
-                if (Input.GetAxisRaw("Vertical_Joy_2") > stickSensitivity && cursorPos.y < -55)
+
+                if (verticalInput > stickSensitivity && cursorPos.y < -55)
                 {
                     Vector3 pos = controllerCursor.transform.localPosition;
                     pos.z = 35;
                     
-                    controllerCursor.transform.Translate(new Vector3(0f, Input.GetAxisRaw("Vertical_Joy_2") * freeRoamSpellSpeed, 0f));
+                    controllerCursor.transform.Translate(new Vector3(0f, verticalInput * freeRoamSpellSpeed, 0f));
                     
                 }
-                if (Input.GetAxisRaw("Vertical_Joy_2") < -stickSensitivity && cursorPos.y > -screenHeight)
+                if (verticalInput < -stickSensitivity && cursorPos.y > -screenHeight)
                 {
                     Vector3 pos = controllerCursor.transform.localPosition;
                     pos.z = 35;
 
-                    controllerCursor.transform.Translate(new Vector3(0f, Input.GetAxisRaw("Vertical_Joy_2") * freeRoamSpellSpeed, 0f));
+                    controllerCursor.transform.Translate(new Vector3(0f, verticalInput * freeRoamSpellSpeed, 0f));
 
                 }
-                if (Input.GetAxisRaw("Horizontal_Joy_2") < -stickSensitivity)
+                if (horizontalInput < -stickSensitivity)
                 {
                     Vector3 pos = controllerCursor.transform.localPosition;
                     pos.z = 35;
                     if(controllerCursor.transform.localPosition.x > -screenWidth)
                     {
-                        controllerCursor.transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal_Joy_2") * freeRoamSpellSpeed, 0f, 0f));
+                        controllerCursor.transform.Translate(new Vector3(horizontalInput * freeRoamSpellSpeed, 0f, 0f));
                     }
                 }
-                if(Input.GetAxisRaw("Horizontal_Joy_2") > stickSensitivity)
+                if(horizontalInput > stickSensitivity)
                 {
                     Vector3 pos = controllerCursor.transform.localPosition;
                     pos.z = 35;
                     if (controllerCursor.transform.localPosition.x < screenWidth)
                     {
-                        controllerCursor.transform.Translate(new Vector3(Input.GetAxisRaw("Horizontal_Joy_2") * freeRoamSpellSpeed, 0f, 0f));
+                        controllerCursor.transform.Translate(new Vector3(horizontalInput * freeRoamSpellSpeed, 0f, 0f));
                     }
                 }
             }
@@ -129,11 +139,11 @@ public class MoveControllerCursor : MonoBehaviour {
             {
 
                 Vector3 cursorPos = controllerCursor.GetComponent<RectTransform>().localPosition;
-                if (Input.GetAxisRaw("Vertical_Joy_2") > stickSensitivity && cursorVerticalMove && cursorPos.y < -55)
+                if (verticalInput > stickSensitivity && cursorVerticalMove && cursorPos.y < -55)
                 {
                     controllerCursor.GetComponent<RectTransform>().localPosition += new Vector3(0, cursorGrid * spellBarSpeedMultiplier, 0);
                 }
-                else if (Input.GetAxisRaw("Vertical_Joy_2") < -stickSensitivity && cursorVerticalMove && cursorPos.y > -screenHeight)
+                else if (verticalInput < -stickSensitivity && cursorVerticalMove && cursorPos.y > -screenHeight)
                 {
                     controllerCursor.GetComponent<RectTransform>().localPosition -= new Vector3(0, cursorGrid * spellBarSpeedMultiplier, 0);
                 }
@@ -141,11 +151,11 @@ public class MoveControllerCursor : MonoBehaviour {
             else if(SpellCastDirection == SpellDirection.Ceiling)
             {
                 Vector3 cursorPos = controllerCursor.GetComponent<RectTransform>().localPosition;
-                if (Input.GetAxisRaw("Horizontal_Joy_2") > stickSensitivity && cursorHorizontalMove && cursorPos.x < screenWidth)
+                if (horizontalInput > stickSensitivity && cursorHorizontalMove && cursorPos.x < screenWidth)
                 {
                     controllerCursor.GetComponent<RectTransform>().localPosition += new Vector3(cursorGrid * spellBarSpeedMultiplier, 0, 0);
                 }
-                else if (Input.GetAxisRaw("Horizontal_Joy_2") < -stickSensitivity && cursorHorizontalMove && cursorPos.x > -screenWidth)
+                else if (horizontalInput < -stickSensitivity && cursorHorizontalMove && cursorPos.x > -screenWidth)
                 {
                     controllerCursor.GetComponent<RectTransform>().localPosition -= new Vector3(cursorGrid * spellBarSpeedMultiplier, 0, 0);
                 }
