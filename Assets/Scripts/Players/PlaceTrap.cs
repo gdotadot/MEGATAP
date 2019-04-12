@@ -616,8 +616,9 @@ public class PlaceTrap : MonoBehaviour {
     }
 
     private void ClearButton()
-    { 
-        queue[queueIndex].SetActive(false);
+    {
+        //queue[queueIndex].SetActive(false);
+        queue[queueIndex].GetComponent<Button>().interactable = false;
     }
 
     //Set new selected button if the controller is being used.
