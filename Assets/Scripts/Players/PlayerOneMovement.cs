@@ -46,6 +46,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private Animator animator;
     private CapsuleCollider col;
     private ParticleSystemRenderer stun;
+    private SphereCollider sphere;
 
     void Start() {
         rb = GetComponent<Rigidbody>();
@@ -54,6 +55,7 @@ public class PlayerOneMovement : MonoBehaviour {
         col = GetComponent<CapsuleCollider>();
         stun = GetComponentInChildren<ParticleSystemRenderer>();
         pause = gameManager.GetComponent<PauseMenu>();
+        sphere = GetComponent<SphereCollider>();
 
         speed = moveSpeed;
         jumpH = jumpHeight;
@@ -213,11 +215,13 @@ public class PlayerOneMovement : MonoBehaviour {
             }
             col.height = 2.25f;
             col.center = new Vector3(0, 1.1f, 0);
+            sphere.center = new Vector3(0, 1f, 0); 
         }
 
         if(crouching == false || grounded == false) {
             col.height = 4.5f;
             col.center = new Vector3(0, 2.2f, 0);
+            sphere.center = new Vector3(0, 3f, 0);
         }
 
         cantStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
