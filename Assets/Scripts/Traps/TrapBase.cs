@@ -55,7 +55,7 @@ public class TrapBase : MonoBehaviour {
         {
             playery = 1;
         }
-        else if (obj.gameObject.GetComponent<Rigidbody>().velocity.y < 0)
+        else if (obj.gameObject.GetComponent<Rigidbody>().velocity.y <= 0)
         {
             playery = -1;
         }
@@ -81,6 +81,7 @@ public class TrapBase : MonoBehaviour {
     // method to decide how many frames force is applied.
     public void KnockBack(GameObject obj, int knockBackDistance, int knockUpDistance)
     {
+        Debug.Log(playerx + " " + playery + " " + playerz);
         // find out which way the player is facing (on faces of the tower) so the knock can do accordingly
         int playerDirection = obj.gameObject.GetComponent<PlayerOneMovement>().GetState();
         Rigidbody rb = obj.gameObject.GetComponent<Rigidbody>();
@@ -89,15 +90,31 @@ public class TrapBase : MonoBehaviour {
         switch (playerDirection)
         {
             case 1:
-                rb.velocity = new Vector3(-knockBackDistance * playerx, knockUpDistance * -playery, 0);
+                if(playerx == 0)
+                {
+                    playerx = 1;
+                }
+                rb.velocity = new Vector3(knockBackDistance * -playerx, knockUpDistance * -playery, 0);
                 break;
             case 2:
-                rb.velocity = new Vector3(0, knockUpDistance * -playery, -knockBackDistance * playerz);
+                if (playerz == 0)
+                {
+                    playerz = 1;
+                }
+                rb.velocity = new Vector3(0, knockUpDistance * -playery, knockBackDistance * -playerz);
                 break;
             case 3:
+                if (playerx == 0)
+                {
+                    playerx = -1;
+                }
                 rb.velocity = new Vector3(knockBackDistance * -playerx, knockUpDistance * -playery, 0);
                 break;
             case 4:
+                if (playerz == 0)
+                {
+                    playerz = -1;
+                }
                 rb.velocity = new Vector3(0, knockUpDistance * -playery, knockBackDistance * -playerz);
                 break;
         }
