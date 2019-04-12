@@ -132,10 +132,7 @@ public class SpellBase : MonoBehaviour {
         }
         float stunTimePassed = 0;
         while (stunTimePassed <= stunDuration)
-        {
-
-            Debug.Log(stunTimePassed);
-            
+        {            
             stunTimePassed += Time.deltaTime;
             player.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(0);
 
@@ -144,7 +141,6 @@ public class SpellBase : MonoBehaviour {
             yield return null;
         }
 
-        Debug.Log("Finish Stun");
         //  yield return new WaitForSeconds(stunDuration);
         player.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
         player.GetComponent<PlayerOneMovement>().SetSpeed(player.GetComponent<PlayerOneMovement>().GetConstantSpeed());
