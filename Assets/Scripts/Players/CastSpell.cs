@@ -459,7 +459,7 @@ public class CastSpell : MonoBehaviour {
             if (queue[i] == null)
             {
                 int random = Random.Range(0, spellButtons.Length);
-                GameObject newSpell = Instantiate(spellButtons[random], new Vector3(-170f + 40f * i, 20f, 0), Quaternion.identity) as GameObject;
+                GameObject newSpell = Instantiate(spellButtons[random], new Vector3(100f + 40f * i, 20f, 0), Quaternion.identity) as GameObject;
                 newSpell.transform.SetParent(spellQueue.transform, false);
 
 
