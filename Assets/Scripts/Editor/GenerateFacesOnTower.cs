@@ -47,7 +47,7 @@ public class GenerateFacesOnTower : MonoBehaviour {
                      index++;
                      break;
              }
-             if(index >= Faces.Count)
+             if(index >= 20)
              {
                  loop = false;
              }
