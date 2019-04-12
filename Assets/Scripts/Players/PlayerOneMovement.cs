@@ -21,6 +21,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool wallJumping;
     private bool cantStandUp;
     private bool slowed = false;
+    public bool InputEnabled = true;
 
     //Control if player can have input
     private bool move = true;
@@ -41,6 +42,7 @@ public class PlayerOneMovement : MonoBehaviour {
 
 
     private CheckControllers checkControllers;
+    private PauseMenu pause;
     private Animator animator;
     private CapsuleCollider col;
     private ParticleSystemRenderer stun;
@@ -51,6 +53,7 @@ public class PlayerOneMovement : MonoBehaviour {
         checkControllers = gameManager.GetComponent<CheckControllers>();
         col = GetComponent<CapsuleCollider>();
         stun = GetComponentInChildren<ParticleSystemRenderer>();
+        pause = gameManager.GetComponent<PauseMenu>();
 
         speed = moveSpeed;
         jumpH = jumpHeight;
@@ -62,7 +65,7 @@ public class PlayerOneMovement : MonoBehaviour {
     {
         camOneState = cam.GetState();
         grounded = GetComponentInChildren<PlayerGrounded>().IsGrounded();
-        if (move == true)
+        if (move == true && !pause.GameIsPaused && InputEnabled)
         {
             inputAxis = checkControllers.GetInputAxis();
 
@@ -219,7 +222,7 @@ public class PlayerOneMovement : MonoBehaviour {
 
         cantStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
 
-        Move();
+        if(!pause.GameIsPaused) Move();
     }
 
 
@@ -288,7 +291,7 @@ public class PlayerOneMovement : MonoBehaviour {
             RaycastHit hit;
             RaycastHit downHit;
             bool raycastDown = Physics.Raycast(transform.position, -transform.up, out downHit, 1);
-            if (Physics.Raycast(transform.position, transform.forward, out hit, 1) && !raycastDown)
+            if (Physics.Raycast(transform.position, transform.forward, out hit, 1.5f) && !raycastDown)
             {
                 if (hit.transform.tag == "Platform" && Input.GetButtonDown("Jump_Joy_1") && grounded == false && move == true)
                 {
@@ -308,6 +311,13 @@ public class PlayerOneMovement : MonoBehaviour {
         yield return new WaitForSeconds(wallJumpTime);
         wallJumping = false;
         wallJumpVector = Vector3.zero;
+    }
+
+    //Called from pause script to re-enable input after pressing "Resume"
+    public IEnumerator ResumeInput()
+    {
+        yield return new WaitForSeconds(0.5f);
+        InputEnabled = true;
     }
 
     /////////////////////////////////////////////

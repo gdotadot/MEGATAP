@@ -13,21 +13,26 @@ public class PauseMenu : MonoBehaviour {
     [SerializeField] GameObject controlsCanvas;
     [SerializeField] Button resumeButton;
     [SerializeField] GameObject playerTwo;
+    [SerializeField] GameObject playerOne;
     [SerializeField] EventSystem es;
 
     private PlaceTrap pt;
     private CastSpell cs;
-    private bool controlsUp;
+    private PlayerOneMovement playerMov;
 
+    private bool[] onCooldown;
+    private bool controlsUp;
+    private GameObject selectedButton;
     private void Start()
     {
         pt = playerTwo.GetComponent<PlaceTrap>();
         cs = playerTwo.GetComponent<CastSpell>();
+        playerMov = playerOne.GetComponent<PlayerOneMovement>();
     }
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetButtonDown("Cancel"))
+        if (Input.GetButtonDown("Start"))
         {
             if (GameIsPaused)
             {
@@ -48,46 +53,56 @@ public class PauseMenu : MonoBehaviour {
                 }
             }
         }
+
+        if(GameIsPaused && Input.GetButtonDown("Cancel"))
+        {
+            Resume();
+        }
 	}
 	
 	public void Resume(){
 		pauseMenuUI.SetActive(false);
-        bool buttonSet = false;
         for (int i = 0; i < cs.queue.Length; i++)
         {
-            if (cs.queue[i] != null)
+            if (cs.queue[i] != null && !onCooldown[i])
             {
                 cs.queue[i].GetComponent<Button>().interactable = true;
-                if (cs.active && cs.queue[i].activeInHierarchy && !buttonSet)
-                {
-                    es.SetSelectedGameObject(cs.queue[i]);
-                    buttonSet = true;
-                }
             }
         }
         for (int i = 0; i < pt.queue.Count; i++)
         {
-            if(pt.active) pt.queue[i].GetComponent<Button>().interactable = true;
-            if (pt.active && pt.queue[i].activeInHierarchy && !buttonSet)
-            {
-                es.SetSelectedGameObject(pt.queue[i]);
-                buttonSet = true;
-            }
+            if (pt.active) pt.queue[i].GetComponent<Button>().interactable = true;
         }
+        es.SetSelectedGameObject(selectedButton);
+
         es.GetComponent<StandaloneInputModule>().submitButton = "Nothing";
         Time.timeScale = 1f;
-		GameIsPaused = false;
+
+        //Resume Inputs
+        StartCoroutine(pt.ResumeInput());
+        StartCoroutine(cs.ResumeInput());
+        StartCoroutine(playerMov.ResumeInput());
+        GameIsPaused = false;
 	}
 	
 	public void Pause(){
-		pauseMenuUI.SetActive(true);
-        pauseMenuUI.transform.SetAsLastSibling();
-
-        for(int i = 0; i < cs.queue.Length; i++)
+        //Set buttons not interactable
+        selectedButton = es.currentSelectedGameObject;
+        onCooldown = new bool[cs.queue.Length];
+        for (int i = 0; i < cs.queue.Length; i++)
         {
             if (cs.queue[i] != null)
             {
-                cs.queue[i].GetComponent<Button>().interactable = false;
+                if (cs.queue[i].GetComponent<Button>().interactable)
+                {
+                    onCooldown[i] = false;
+
+                    cs.queue[i].GetComponent<Button>().interactable = false;
+                }
+                else
+                {
+                    onCooldown[i] = true;
+                }
             }
         }
         for (int i = 0; i < pt.queue.Count; i++)
@@ -95,19 +110,36 @@ public class PauseMenu : MonoBehaviour {
             pt.queue[i].GetComponent<Button>().interactable = false;
         }
 
-        es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Main_Menu";
+        //Bring up Pause menu
+        pauseMenuUI.SetActive(true);
+        pauseMenuUI.transform.SetAsLastSibling();
         es.SetSelectedGameObject(resumeButton.gameObject);
         Time.timeScale = 0f;
-		GameIsPaused = true;
+
+        //Disable Inputs
+        es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Main_Menu";
+        pt.InputEnabled = false;
+        cs.InputEnabled = false;
+        playerMov.InputEnabled = false;
+        GameIsPaused = true;
 	}
+
+
+
+
+
 	public void LoadMenu(){
         GameObject musicPlayer = GameObject.Find("MusicPlayer");
         if (musicPlayer != null) Destroy(musicPlayer);
         Initiate.Fade("Menu", Color.black, 2);
 		Time.timeScale = 1f;
 	}
+
+
+
+
+
 	public void ControlScreen(){
-        //SceneManager.LoadScene("Control");
         controlsUp = true;
         controlsCanvas.SetActive(true);
 
@@ -116,6 +148,11 @@ public class PauseMenu : MonoBehaviour {
             pauseButtons[i].interactable = false;
         }
 	}
+
+
+
+
+
     public void QuitGame()
     {
         Debug.Log("Quiting Game");

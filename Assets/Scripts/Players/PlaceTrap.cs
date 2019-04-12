@@ -57,13 +57,12 @@ public class PlaceTrap : MonoBehaviour {
     
     //Controller Stuff
     private bool p2Controller;
-    private bool placeEnabled;
-
+    public bool InputEnabled = true;
+    private bool resetEnabled = true;
 
 
 
     private int numTimesRotated = 0;
-    private bool resetEnabled = true;
 
 	void Start () {
         //Get references
@@ -81,7 +80,6 @@ public class PlaceTrap : MonoBehaviour {
         //Handle cursor or set buttons if controller connected
         checkControllers = gameManager.GetComponent<CheckControllers>();
         p2Controller = checkControllers.GetControllerTwoState();
-        placeEnabled = true;
 
         if (p2Controller)
         {
@@ -98,7 +96,7 @@ public class PlaceTrap : MonoBehaviour {
         p2Controller = checkControllers.GetControllerTwoState();
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Input.GetButtonDown("Place_Joy_2") && placeEnabled)
+            if (Input.GetButtonDown("Place_Joy_2") && InputEnabled)
             {
                 MoveGhost();
                 SetTrap();
@@ -424,12 +422,12 @@ public class PlaceTrap : MonoBehaviour {
                 ghostTrap.transform.position = position;
 
                 //Cancel the trap
-                if ((Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2")) && !pause.GameIsPaused)
-                {
-                    DestroyGhost();
-                    placementSquares = null;
-                    SetSelectedButton();
-                }
+                //if ((Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2")) && !pause.GameIsPaused)
+                //{
+                //    DestroyGhost();
+                //    placementSquares = null;
+                //    SetSelectedButton();
+                //}
             }
         }
     }
@@ -568,6 +566,12 @@ public class PlaceTrap : MonoBehaviour {
         resetEnabled = true;
     }
 
+    //Called from pause script to re-enable input after pressing "Resume"
+    public IEnumerator ResumeInput()
+    {
+        yield return new WaitForSeconds(0.5f);
+        InputEnabled = true;
+    }
 
 
     /// --------------------------------------------------------
@@ -639,7 +643,6 @@ public class PlaceTrap : MonoBehaviour {
                         if (cs.queue[i] != null && cs.queue[i].GetComponent<Button>().interactable && cs.queue[i].activeInHierarchy && !buttonSet)
                         {
                             controllerCursor.transform.localPosition = new Vector3(0, -100);
-                            cs.placeEnabled = false;
                             eventSystem.SetSelectedGameObject(cs.queue[i]);
                             buttonSet = true;
                         }
@@ -647,39 +650,6 @@ public class PlaceTrap : MonoBehaviour {
                 }
 
             }
-            //placeEnabled = false;
         }
     }
-
-    //private void SwitchQueue()
-    //{
-    //    if (active == true)
-    //    {
-    //        trapQueue.transform.SetAsFirstSibling();
-    //        trapQueue.transform.position += new Vector3(15f, 15f, 0);
-    //        for (int i = 0; i < queue.Count; i++)
-    //        {
-    //            queue[i].GetComponent<Button>().interactable = false;
-    //        }
-    //    }
-
-    //    if (active == false)
-    //    {
-    //        controllerCursor.transform.position = new Vector3(Screen.width / 2, Screen.height / 2 + cursorDistFromCenter, 0);
-    //        GetComponent<MoveControllerCursor>().MovingTraps = true;
-    //        bool buttonSet = false;
-    //        trapQueue.transform.SetAsLastSibling();
-    //        trapQueue.transform.position -= new Vector3(15f, 15f, 0);
-    //        for (int i = 0; i < queue.Count; i++)
-    //        {
-    //            queue[i].GetComponent<Button>().interactable = true;
-    //            if (queue[i].activeInHierarchy && !buttonSet)
-    //            {
-    //                eventSystem.SetSelectedGameObject(queue[i]);
-    //                buttonSet = true;
-    //            }
-    //        }
-    //    }
-    //    active = !active;
-    //}
 }

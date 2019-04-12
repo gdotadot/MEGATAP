@@ -56,6 +56,7 @@ public class CastSpell : MonoBehaviour {
     //Controller Stuff
     private bool p2Controller;
     public bool placeEnabled;
+    public bool InputEnabled = true;
 
     
 
@@ -77,6 +78,7 @@ public class CastSpell : MonoBehaviour {
         //Handle cursor or set buttons if controller connected
         p2Controller = gameManager.GetComponent<CheckControllers>().GetControllerTwoState();
         placeEnabled = false;
+        InputEnabled = true;
     }
 
 
@@ -88,7 +90,7 @@ public class CastSpell : MonoBehaviour {
         //CONTROLLER ONLY Spell Casting Check
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Input.GetButtonDown("Place_Joy_2") && placeEnabled && spellTarget != null)
+            if (Input.GetButtonDown("Place_Joy_2") && placeEnabled && InputEnabled && spellTarget != null)
             {
                 SpellCast();
             }
@@ -391,13 +393,14 @@ public class CastSpell : MonoBehaviour {
                     }
 
                 }
+                
+                //Cancel the spell
+                //if (Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2"))
+                //{
+                //    DestroyTarget();
 
-                if (Input.GetMouseButton(1) || Input.GetButton("Cancel_Joy_2"))
-                {
-                    DestroyTarget();
-
-                    SetSelectedButton();
-                }
+                //    SetSelectedButton();
+                //}
             }
         }
     }
@@ -511,8 +514,14 @@ public class CastSpell : MonoBehaviour {
     IEnumerator EnableInput()
     {
         yield return new WaitForSeconds(0.5f);
-      //  resetEnabled = true;
         placeEnabled = true;
+    }
+
+    //Called from pause script to re-enable input after pressing "Resume"
+    public IEnumerator ResumeInput()
+    {
+        yield return new WaitForSeconds(0.5f);
+        InputEnabled = true;
     }
 
     //Start a cooldown on the button pressed. Needs current button position and queue index to replace.
@@ -573,45 +582,4 @@ public class CastSpell : MonoBehaviour {
         }
         return null;
     }
-
-    //---------------------------------------Not needed if we aren't swapping back and forth.
-    //private void SwitchQueue()
-    //{
-    //    if (active == true)
-    //    {
-    //        spellQueue.transform.SetAsFirstSibling();
-    //        spellQueue.transform.position += new Vector3(15f, 15f, 0);
-    //        for (int i = 0; i < queue.Length; i++)
-    //        {
-    //            if (queue[i] != null)
-    //            {
-    //                queue[i].GetComponent<Button>().interactable = false;
-    //            }
-    //        }
-    //    }
-
-    //    if (active == false)
-    //    {
-    //        controllerCursor.transform.position = new Vector3(Screen.width / 2, Screen.height / 2 - cursorDistFromCenter, 0);
-    //        GetComponent<MoveControllerCursor>().MovingTraps = false;
-    //        bool buttonSet = false;
-    //        spellQueue.transform.SetAsLastSibling();
-    //        spellQueue.transform.position -= new Vector3(15f, 15f, 0);
-    //        for (int i = 0; i < queue.Length; i++)
-    //        {
-    //            if (queue[i] != null)
-    //            {
-    //                queue[i].GetComponent<Button>().interactable = true;
-
-
-    //                if (queue[i].activeInHierarchy && !buttonSet)
-    //                {
-    //                    eventSystem.SetSelectedGameObject(queue[i]);
-    //                    buttonSet = true;
-    //                }
-    //            }
-    //        }
-    //    }
-    //    active = !active;
-    //}
 }

@@ -172,7 +172,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -347,6 +347,7 @@ MonoBehaviour:
   targeting:
   - {fileID: 1046908235356196, guid: 0ded149890f182d4685b20ceb6c49d1b, type: 2}
   - {fileID: 1424637060701814, guid: e34ed2dd750177e4ba19c7100de1f5df, type: 2}
+  - {fileID: 1424637060701814, guid: 5d4a7e903769c9245a97278745db2832, type: 2}
   placeEnabled: 0
 --- !u!136 &136189357046121884
 CapsuleCollider:
