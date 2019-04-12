@@ -5,7 +5,7 @@ using UnityEngine;
 public class GenerateFloors {
     //Change these to generate a different # of floors.
     private static int floorHeight = 20;
-    public static int NumFloors = 2;
+    public static int NumFloors = 5;
 
 
     [MenuItem("GameObject/Instantiate Floors", false, 11)]
