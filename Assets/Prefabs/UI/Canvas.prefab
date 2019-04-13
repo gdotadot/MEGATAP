@@ -26,7 +26,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1247931384382040
 GameObject:
   m_ObjectHideFlags: 1
@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 223823214118595238}
   - component: {fileID: 114367813062257108}
   - component: {fileID: 114697553565266356}
-  - component: {fileID: 222899888097677298}
+  - component: {fileID: 222397161959366490}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1365,6 +1365,13 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1849702407071890}
   m_CullTransparentMesh: 0
+--- !u!222 &222397161959366490
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1936333090928394}
+  m_CullTransparentMesh: 0
 --- !u!222 &222455329636128028
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -1413,13 +1420,6 @@ CanvasRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1399714470750752}
-  m_CullTransparentMesh: 0
---- !u!222 &222899888097677298
-CanvasRenderer:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1936333090928394}
   m_CullTransparentMesh: 0
 --- !u!222 &222923781926200632
 CanvasRenderer:

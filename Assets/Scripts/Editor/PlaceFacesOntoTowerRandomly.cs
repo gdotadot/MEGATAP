@@ -6,7 +6,7 @@ using System.IO;
 
 public class PlaceFacesOntoTowerRandomly : MonoBehaviour {
     //Change to Use
-    private static int NumFloors = 7;
+    private static int NumFloors = 5;
 
     private static int state = 1;
     private static int floor = 1;
