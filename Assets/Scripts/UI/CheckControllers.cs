@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CheckControllers : MonoBehaviour {
     private string[] joysticks;
@@ -8,12 +8,30 @@ public class CheckControllers : MonoBehaviour {
     private bool controllerOne;
     private bool controllerTwo;
 
+    private Canvas canvas;
+    private SetEventTriggerVars[] eventVars;
+    private SetPointerClickEvents[] clickEvents;
+    private GameObject trapQueue;
+    private GameObject spellQueue;
+    private Button[] trapButtons;
+    private Button[] spellButtons;
+
     private void Awake()
     {
         joysticks = Input.GetJoystickNames();
+
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        GameObject tower = GameObject.Find("Tower");
+        eventVars = tower.GetComponentsInChildren<SetEventTriggerVars>();
+        clickEvents = tower.GetComponentsInChildren<SetPointerClickEvents>();
+        trapQueue = GameObject.Find("TrapQueue");
+        spellQueue = GameObject.Find("SpellQueue");
+
         CheckConnected();
         Debug.Log("Player 1 controller: " + controllerOne);
         Debug.Log("Player 2 controller: " + controllerTwo);
+
+
     }
 
     private void Update()
@@ -38,6 +56,28 @@ public class CheckControllers : MonoBehaviour {
                     if (i == 1)
                     {
                         controllerTwo = true;
+                        //Cursor.visible = false;
+                       // Cursor.lockState = CursorLockMode.Locked;
+                        canvas.GetComponent<GraphicRaycaster>().enabled = false;
+                        foreach(SetEventTriggerVars v in eventVars)
+                        {
+                            v.enabled = false;
+                        }
+                        foreach (SetPointerClickEvents p in clickEvents)
+                        {
+                            p.enabled = false;
+                        }
+                        spellButtons = spellQueue.GetComponentsInChildren<Button>();
+
+                        foreach(Button sb in spellButtons)
+                        {
+                            sb.GetComponent<EventTrigger>().enabled = false;
+                        }
+                        trapButtons = trapQueue.GetComponentsInChildren<Button>();
+                        foreach(Button tb in trapButtons)
+                        {
+                            tb.GetComponent<EventTrigger>().enabled = false;
+                        }
                     }
                 }
                 else
@@ -50,6 +90,18 @@ public class CheckControllers : MonoBehaviour {
                     if (i == 1)
                     {
                         controllerTwo = false;
+                        Cursor.visible = true;
+                        Cursor.lockState = CursorLockMode.None;
+                        canvas.GetComponent<GraphicRaycaster>().enabled = true;
+                        foreach (SetEventTriggerVars v in eventVars)
+                        {
+                            v.enabled = true;
+                        }
+                        foreach (SetPointerClickEvents p in clickEvents)
+                        {
+                            p.enabled = true;
+                        }
+
                     }
                 }
             }

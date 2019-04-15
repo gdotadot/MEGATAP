@@ -190,7 +190,7 @@ public class PlaceTrap : MonoBehaviour {
     //ONLY computer mouse - controller cursor is handled in Update
     public void OnClickTower()
     {
-        if(!Input.GetMouseButtonUp(1) && !pause.GameIsPaused)
+        if(!Input.GetMouseButtonUp(1) && !pause.GameIsPaused && !p2Controller)
         {
             SetTrap();
         }
