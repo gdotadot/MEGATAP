@@ -57,7 +57,7 @@ public class CastSpell : MonoBehaviour {
     private bool p2Controller;
     public bool placeEnabled;
     public bool InputEnabled = true;
-
+    private int previouslySelectedIndex;
     
 
 
@@ -258,11 +258,14 @@ public class CastSpell : MonoBehaviour {
                 }
                 StartCoroutine(StartCooldown(spell.GetComponent<SpellBase>().CooldownTime, queue[queueIndex].transform.localPosition, queueIndex));
 
+                previouslySelectedIndex = queueIndex;
+
                 spell = null;
 
                 ClearButton();
 
                 DestroyTarget();
+
 
                 SetSelectedButton();
             }
@@ -485,7 +488,9 @@ public class CastSpell : MonoBehaviour {
         if (p2Controller)
         {
             bool buttonSet = false;
-            for (int i = queue.Length - 1; i >= 0; i--)
+
+            //Loop over remaining spell queue to see if any are available
+            for (int i = previouslySelectedIndex; i < queue.Length; i++)
             {
                 if (queue[i] != null && queue[i].activeInHierarchy && queue[i].GetComponent<Button>().interactable && !buttonSet)
                 {
@@ -493,6 +498,21 @@ public class CastSpell : MonoBehaviour {
                     buttonSet = true;
                 }
             }
+
+            //Loop over previous of spell queue to see if any are available
+            if(!buttonSet)
+            {
+                for (int i = previouslySelectedIndex; i >= 0; i--)
+                {
+                    if (queue[i] != null && queue[i].activeInHierarchy && queue[i].GetComponent<Button>().interactable && !buttonSet)
+                    {
+                        eventSystem.SetSelectedGameObject(queue[i]);
+                        buttonSet = true;
+                    }
+                }
+            }
+
+            //Loop over traps to set available button
             if (!buttonSet)
             {
                 for (int i = 0; i < pt.queue.Count; i++)
