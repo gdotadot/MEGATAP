@@ -631,7 +631,7 @@ public class PlaceTrap : MonoBehaviour {
                 bool buttonSet = false;
                 for (int i = 0; i < queue.Count; i++)
                 {
-                    if (queue[i].activeInHierarchy && !buttonSet)
+                    if (queue[i].activeInHierarchy && !buttonSet && queue[i].GetComponent<Button>().interactable)
                     {
                         eventSystem.SetSelectedGameObject(queue[i]);
                         buttonSet = true;

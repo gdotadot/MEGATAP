@@ -497,7 +497,7 @@ public class CastSpell : MonoBehaviour {
             {
                 for (int i = 0; i < pt.queue.Count; i++)
                 {
-                    if (pt.queue[i] != null && pt.queue[i].activeInHierarchy && !buttonSet)
+                    if (pt.queue[i] != null && pt.queue[i].activeInHierarchy && !buttonSet && pt.queue[i].GetComponent<Button>().interactable)
                     {
 
                         controllerCursor.transform.localPosition = new Vector3(0, 130);
