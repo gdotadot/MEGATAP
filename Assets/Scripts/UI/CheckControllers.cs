@@ -80,6 +80,10 @@ public class CheckControllers : MonoBehaviour {
             {
                 return Input.GetAxis("Horizontal_Joy_1");
             }
+            if(Mathf.Abs(Input.GetAxisRaw("Horizontal_Keyboard")) > 0)
+            {
+                return Input.GetAxisRaw("Horizontal_Keyboard");
+            }
             else
             {
                 return 0;
