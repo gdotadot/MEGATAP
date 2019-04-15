@@ -14,7 +14,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     private Image controllerCursor;
     private TextMeshProUGUI tooltip;
     private MoveControllerCursor cursorMove;
-    private GameObject currentLastSpell;
+    private GameObject currentFirstSpell;
     private GameObject currentFirstTrap;
 
     private AudioSource audioSource;
@@ -55,8 +55,8 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         if(audioSource != null) audioSource.Play();
         if (isThisTrap)
         {
-            GetCurrentFirstTrap();
-            if (Input.GetAxis("Horizontal_Menu") > 0 || IsSpellQueueNull())
+            GetCurrentLastTrap();
+            if (Input.GetAxis("Horizontal_Menu") < 0 || IsSpellQueueNull())
             {
                 if(cs != null) cs.DestroyTarget();
                 if (currentFirstTrap != null && currentFirstTrap.gameObject == this.gameObject)
@@ -71,12 +71,13 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         }
         else
         {
-            GetCurrentLastSpell();
-            if (Input.GetAxis("Horizontal_Menu") < 0 || IsTrapQueueNull())
+            GetCurrentFirstSpell();
+            if (Input.GetAxis("Horizontal_Menu") > 0 || IsTrapQueueNull())
             {
                 if(pt != null) pt.DestroyGhost();
-                if (currentLastSpell != null && currentLastSpell.gameObject == this.gameObject)
+                if (currentFirstSpell != null && currentFirstSpell.gameObject == this.gameObject)
                 {
+                    //Debug.Log("First");
                     controllerCursor.transform.localPosition = new Vector3(0, -130);
                     cursorMove.MovingTraps = false;
                 }
@@ -146,30 +147,48 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         }
     }
 
-    private void GetCurrentFirstTrap()
+    private void GetCurrentLastTrap()
     {
         if (pt != null)
         {
-            foreach (GameObject t in pt.queue)
+            //foreach (GameObject t in pt.queue)
+            //{
+            //    if (t != null && t.activeInHierarchy && t.GetComponent<Button>().interactable)
+            //    {
+            //        currentFirstTrap = t;
+            //        return;
+            //    }
+            //}
+
+            for(int t = pt.queue.Count - 1; t >= 0; t--)
             {
-                if (t != null && t.activeInHierarchy && t.GetComponent<Button>().interactable)
+                if (pt.queue[t] != null && pt.queue[t].activeInHierarchy && pt.queue[t].GetComponent<Button>().interactable)
                 {
-                    currentFirstTrap = t;
+                    currentFirstTrap = pt.queue[t];
                     return;
                 }
             }
         }
     }
 
-    private void GetCurrentLastSpell()
+    private void GetCurrentFirstSpell()
     {
         if (cs != null)
         {
-            for (int s = cs.queue.Length - 1; s >= 0; s--)
+            //for (int s = cs.queue.Length - 1; s >= 0; s--)
+            //{
+            //    if (cs.queue[s] != null && cs.queue[s].activeInHierarchy && cs.queue[s].GetComponent<Button>().interactable)
+            //    {
+            //        currentLastSpell = cs.queue[s];
+            //        return;
+            //    }
+            //}
+
+            for(int s = 0; s < cs.queue.Length; s++)
             {
                 if (cs.queue[s] != null && cs.queue[s].activeInHierarchy && cs.queue[s].GetComponent<Button>().interactable)
                 {
-                    currentLastSpell = cs.queue[s];
+                    currentFirstSpell = cs.queue[s];
                     return;
                 }
             }
