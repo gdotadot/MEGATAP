@@ -86,6 +86,8 @@ public class CastSpell : MonoBehaviour
 
     void Update()
     {
+
+        p2Controller = gameManager.GetComponent<CheckControllers>().GetControllerTwoState();
         //Move target with cursor
         MoveTarget();
 
