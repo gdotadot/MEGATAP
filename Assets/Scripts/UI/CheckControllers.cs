@@ -20,7 +20,9 @@ public class CheckControllers : MonoBehaviour {
     {
         joysticks = Input.GetJoystickNames();
 
-        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        GameObject canv = GameObject.Find("Canvas");
+        if(canv != null) canvas = canv.GetComponent<Canvas>();
+
         GameObject tower = GameObject.Find("Tower");
         eventVars = tower.GetComponentsInChildren<SetEventTriggerVars>();
         clickEvents = tower.GetComponentsInChildren<SetPointerClickEvents>();
@@ -58,7 +60,7 @@ public class CheckControllers : MonoBehaviour {
                         controllerTwo = true;
                         Cursor.visible = false;
                         Cursor.lockState = CursorLockMode.Locked;
-                        canvas.GetComponent<GraphicRaycaster>().enabled = false;
+                        if(canvas != null) canvas.GetComponent<GraphicRaycaster>().enabled = false;
                         foreach(SetEventTriggerVars v in eventVars)
                         {
                             v.enabled = false;
@@ -92,7 +94,7 @@ public class CheckControllers : MonoBehaviour {
                         controllerTwo = false;
                         Cursor.visible = true;
                         Cursor.lockState = CursorLockMode.None;
-                        canvas.GetComponent<GraphicRaycaster>().enabled = true;
+                        if(canvas != null) canvas.GetComponent<GraphicRaycaster>().enabled = true;
                         foreach (SetEventTriggerVars v in eventVars)
                         {
                             v.enabled = true;
