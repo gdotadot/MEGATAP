@@ -32,6 +32,11 @@ public class CheckControllers : MonoBehaviour {
             clickEvents = tower.GetComponentsInChildren<SetPointerClickEvents>();
         }
 
+        GameObject canv = GameObject.Find("Canvas");
+        if(canv != null) canvas = canv.GetComponent<Canvas>();
+        GameObject tower = GameObject.Find("Tower");
+        if(tower != null) eventVars = tower.GetComponentsInChildren<SetEventTriggerVars>();
+        if(tower != null) clickEvents = tower.GetComponentsInChildren<SetPointerClickEvents>();
 
         CheckConnected();
         Debug.Log("Player 1 controller: " + controllerOne);
@@ -65,7 +70,8 @@ public class CheckControllers : MonoBehaviour {
                         Cursor.visible = false;
                         Cursor.lockState = CursorLockMode.Locked;
 
-                        if (scene == "Tower1")
+
+                        if(canvas != null && eventVars != null)
                         {
                             canvas.GetComponent<GraphicRaycaster>().enabled = false;
                             foreach (SetEventTriggerVars v in eventVars)
@@ -92,7 +98,7 @@ public class CheckControllers : MonoBehaviour {
                         Cursor.visible = true;
                         Cursor.lockState = CursorLockMode.None;
 
-                        if(scene == "Tower1")
+                        if(canvas != null && eventVars != null)
                         {
                             canvas.GetComponent<GraphicRaycaster>().enabled = true;
                             foreach (SetEventTriggerVars v in eventVars)
