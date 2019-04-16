@@ -60,11 +60,16 @@ public class PlaceTrap : MonoBehaviour {
     public bool InputEnabled = true;
     private bool resetEnabled = true;
     private int previouslySelectedIndex;
-
+    private InputManager inputManager;
 
     private int numTimesRotated = 0;
 
-	void Start () {
+    private void Awake()
+    {
+        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+    }
+
+    void Start () {
         //Get references
         pause = gameManager.GetComponent<PauseMenu>();
         cs = GetComponent<CastSpell>();
@@ -96,14 +101,14 @@ public class PlaceTrap : MonoBehaviour {
         p2Controller = checkControllers.GetControllerTwoState();
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Input.GetButtonDown("Place_Joy_2") && InputEnabled)
+            if (inputManager.GetButtonDown(InputCommand.TopPlayerSelect) && InputEnabled)
             {
                 MoveGhost();
                 SetTrap();
             }
         }
         //Reset queue's when tower rotates
-        if (Input.GetButtonDown("Submit_Joy_2") && resetEnabled && !pause.GameIsPaused && numTimesRotated < 4 * (tower.GetComponentInChildren<NumberOfFloors>().NumFloors - 1) - 1)
+        if (inputManager.GetButtonDown(InputCommand.TopPlayerRotate) && resetEnabled && !pause.GameIsPaused && numTimesRotated < 4 * (tower.GetComponentInChildren<NumberOfFloors>().NumFloors - 1) - 1)
         {
             //if(cam.GetComponent<CameraTwoRotator>().GetFloor() == tower.GetComponent<NumberOfFloors>().NumFloors && cam.GetComponent<CameraTwoRotator>().GetState() == 4)
             //{
