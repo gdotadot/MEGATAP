@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class CheckControllers : MonoBehaviour {
     private string[] joysticks;
@@ -8,12 +8,28 @@ public class CheckControllers : MonoBehaviour {
     private bool controllerOne;
     private bool controllerTwo;
 
+    private Canvas canvas;
+    private SetEventTriggerVars[] eventVars;
+    private SetPointerClickEvents[] clickEvents;
+
+    private Button[] trapButtons;
+    private Button[] spellButtons;
+
     private void Awake()
     {
         joysticks = Input.GetJoystickNames();
+
+        GameObject canv = GameObject.Find("Canvas");
+        if(canv != null) canvas = canv.GetComponent<Canvas>();
+        GameObject tower = GameObject.Find("Tower");
+        if(tower != null) eventVars = tower.GetComponentsInChildren<SetEventTriggerVars>();
+        if(tower != null) clickEvents = tower.GetComponentsInChildren<SetPointerClickEvents>();
+
         CheckConnected();
         Debug.Log("Player 1 controller: " + controllerOne);
         Debug.Log("Player 2 controller: " + controllerTwo);
+
+
     }
 
     private void Update()
@@ -38,6 +54,21 @@ public class CheckControllers : MonoBehaviour {
                     if (i == 1)
                     {
                         controllerTwo = true;
+                        Cursor.visible = false;
+                        Cursor.lockState = CursorLockMode.Locked;
+
+                        if(canvas != null && eventVars != null)
+                        {
+                            canvas.GetComponent<GraphicRaycaster>().enabled = false;
+                            foreach (SetEventTriggerVars v in eventVars)
+                            {
+                                v.enabled = false;
+                            }
+                            foreach (SetPointerClickEvents p in clickEvents)
+                            {
+                                p.enabled = false;
+                            }
+                        }
                     }
                 }
                 else
@@ -50,6 +81,20 @@ public class CheckControllers : MonoBehaviour {
                     if (i == 1)
                     {
                         controllerTwo = false;
+                        Cursor.visible = true;
+                        Cursor.lockState = CursorLockMode.None;
+                        if(canvas != null && eventVars != null)
+                        {
+                            canvas.GetComponent<GraphicRaycaster>().enabled = true;
+                            foreach (SetEventTriggerVars v in eventVars)
+                            {
+                                v.enabled = true;
+                            }
+                            foreach (SetPointerClickEvents p in clickEvents)
+                            {
+                                p.enabled = true;
+                            }
+                        }
                     }
                 }
             }
@@ -79,6 +124,10 @@ public class CheckControllers : MonoBehaviour {
             if (Mathf.Abs(Input.GetAxis("Horizontal_Joy_1")) > 0.4f)
             {
                 return Input.GetAxis("Horizontal_Joy_1");
+            }
+            if(Mathf.Abs(Input.GetAxisRaw("Horizontal_Keyboard")) > 0)
+            {
+                return Input.GetAxisRaw("Horizontal_Keyboard");
             }
             else
             {

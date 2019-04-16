@@ -15,16 +15,16 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     private TextMeshProUGUI tooltip;
     private MoveControllerCursor cursorMove;
     private GameObject currentFirstSpell;
-    private GameObject currentFirstTrap;
+    private GameObject currentLastTrap;
 
     private AudioSource audioSource;
     private Vector3 buttonScale;
     EventSystem es;
+
     private void Start()
     {
         GameObject player = GameObject.Find("Player 2");
         audioSource = GetComponentInParent<AudioSource>();
-
         buttonScale = new Vector3(0.75f, 0.75f, 0.75f);
         TextMeshProUGUI[] tooltips = transform.parent.parent.GetComponentsInChildren<TextMeshProUGUI>();
         foreach(TextMeshProUGUI t in tooltips)
@@ -52,16 +52,17 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     //Do this when the selectable UI object is selected.
     public void OnSelect(BaseEventData eventData)
     {
-        if(audioSource != null) audioSource.Play();
+        Debug.Log(this.name);
+        if (audioSource != null) audioSource.Play();
         if (isThisTrap)
         {
             GetCurrentLastTrap();
             if (Input.GetAxis("Horizontal_Menu") < 0 || IsSpellQueueNull())
             {
                 if(cs != null) cs.DestroyTarget();
-                if (currentFirstTrap != null && currentFirstTrap.gameObject == this.gameObject)
+                if (currentLastTrap != null && currentLastTrap.gameObject == this.gameObject && currentLastTrap.gameObject.GetComponent<Button>().interactable)
                 {
-                    currentFirstTrap = null;
+                    currentLastTrap = null;
                     controllerCursor.transform.localPosition = new Vector3(0, 130);
                     cursorMove.MovingTraps = true;
 
@@ -74,7 +75,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
             GetCurrentFirstSpell();
             if (Input.GetAxis("Horizontal_Menu") > 0 || IsTrapQueueNull())
             {
-                if(pt != null) pt.DestroyGhost();
+                if (pt != null) pt.DestroyGhost();
                 if (currentFirstSpell != null && currentFirstSpell.gameObject == this.gameObject)
                 {
                     //Debug.Log("First");
@@ -164,7 +165,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
             {
                 if (pt.queue[t] != null && pt.queue[t].activeInHierarchy && pt.queue[t].GetComponent<Button>().interactable)
                 {
-                    currentFirstTrap = pt.queue[t];
+                    currentLastTrap = pt.queue[t];
                     return;
                 }
             }

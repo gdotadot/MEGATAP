@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CastSpell : MonoBehaviour {
+public class CastSpell : MonoBehaviour
+{
     [Header("Design Values -------------")]
     [SerializeField] private int queueSize;
     [SerializeField] private int verticalSpellSpawnHeight;
@@ -57,8 +58,9 @@ public class CastSpell : MonoBehaviour {
     private bool p2Controller;
     public bool placeEnabled;
     public bool InputEnabled = true;
-
+    private int previouslySelectedIndex;
     
+    private GameObject currentSelectedGameObject;
 
 
     void Start()
@@ -106,9 +108,15 @@ public class CastSpell : MonoBehaviour {
 
 
         //Safety check to make sure the player's cursor isn't lost / nothing is selected
-        if(p2Controller && eventSystem.currentSelectedGameObject == null)
+        if (eventSystem.currentSelectedGameObject != null)
         {
-            SetSelectedButton();
+            currentSelectedGameObject = eventSystem.currentSelectedGameObject;
+        }
+
+        if (p2Controller && eventSystem.currentSelectedGameObject == null)
+        {
+            eventSystem.SetSelectedGameObject(currentSelectedGameObject);
+            //    SetSelectedButton();
         }
     }
 
@@ -175,7 +183,7 @@ public class CastSpell : MonoBehaviour {
     //Called from event trigger on center column of tower when player clicks on it
     public void OnClickTower()
     {
-        if (!Input.GetMouseButtonUp(1) && ValidLocation == 1)
+        if (!Input.GetMouseButtonUp(1) && ValidLocation == 1 && !p2Controller)
         {
             SpellCast();
         }
@@ -183,7 +191,7 @@ public class CastSpell : MonoBehaviour {
 
     public void OnClickPlayer()
     {
-        if (!Input.GetMouseButtonUp(1) && ValidLocation == 2)
+        if (!Input.GetMouseButtonUp(1) && ValidLocation == 2 && !p2Controller)
         {
             SpellCast();
         }
@@ -258,13 +266,18 @@ public class CastSpell : MonoBehaviour {
                 }
                 StartCoroutine(StartCooldown(spell.GetComponent<SpellBase>().CooldownTime, queue[queueIndex].transform.localPosition, queueIndex));
 
+                previouslySelectedIndex = queueIndex;
+
                 spell = null;
 
                 ClearButton();
 
                 DestroyTarget();
 
-                SetSelectedButton();
+                if (p2Controller)
+                {
+                    SetSelectedButton();
+                }
             }
         }
     }
@@ -482,10 +495,14 @@ public class CastSpell : MonoBehaviour {
     //Set new selected button if the controller is being used.
     private void SetSelectedButton()
     {
+        Debug.Log("SetButton");
+
         if (p2Controller)
         {
             bool buttonSet = false;
-            for (int i = queue.Length - 1; i >= 0; i--)
+
+            //Loop over remaining spell queue to see if any are available
+            for (int i = previouslySelectedIndex; i < queue.Length; i++)
             {
                 if (queue[i] != null && queue[i].activeInHierarchy && queue[i].GetComponent<Button>().interactable && !buttonSet)
                 {
@@ -493,11 +510,26 @@ public class CastSpell : MonoBehaviour {
                     buttonSet = true;
                 }
             }
+
+            //Loop over previous of spell queue to see if any are available
+            if(!buttonSet)
+            {
+                for (int i = previouslySelectedIndex; i >= 0; i--)
+                {
+                    if (queue[i] != null && queue[i].activeInHierarchy && queue[i].GetComponent<Button>().interactable && !buttonSet)
+                    {
+                        eventSystem.SetSelectedGameObject(queue[i]);
+                        buttonSet = true;
+                    }
+                }
+            }
+
+            //Loop over traps to set available button
             if (!buttonSet)
             {
                 for (int i = 0; i < pt.queue.Count; i++)
                 {
-                    if (pt.queue[i] != null && pt.queue[i].activeInHierarchy && !buttonSet)
+                    if (pt.queue[i] != null && pt.queue[i].activeInHierarchy && !buttonSet && pt.queue[i].GetComponent<Button>().interactable)
                     {
 
                         controllerCursor.transform.localPosition = new Vector3(0, 130);
@@ -555,7 +587,11 @@ public class CastSpell : MonoBehaviour {
             if(cooldownTimePassed >= cooldownTime)
             {
                 button.interactable = true;
-                if (eventSystem.currentSelectedGameObject == null) SetSelectedButton();
+                if (eventSystem.currentSelectedGameObject == null && p2Controller)
+                {
+                    Debug.Log("Here");
+                    SetSelectedButton();
+                }
             }
         }
     }
