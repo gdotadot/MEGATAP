@@ -59,7 +59,7 @@ public class PlaceTrap : MonoBehaviour {
     private bool p2Controller;
     public bool InputEnabled = true;
     private bool resetEnabled = true;
-
+    private int previouslySelectedIndex;
 
 
     private int numTimesRotated = 0;
@@ -229,7 +229,8 @@ public class PlaceTrap : MonoBehaviour {
                     audioSource.PlayOneShot(trapPlacementGood);
                     trap.InstantiateTrap(position, ghostTrap.transform.rotation);
                     if (check != null) check.Placed = true;
-                    //if (bases != null) bases.Placed = true;
+                    previouslySelectedIndex = queueIndex;
+
                     ClearButton();
                     trap = null;
                     foreach (SpriteRenderer sr in placementSquares)
@@ -238,7 +239,6 @@ public class PlaceTrap : MonoBehaviour {
                     }
                     placementSquares = null;
                     DestroyGhost();
-
                     SetSelectedButton();
                 }
                 else
@@ -288,20 +288,7 @@ public class PlaceTrap : MonoBehaviour {
     {
         RaycastHit hit;
         Ray ray;
-        //Ray to controller cursor
-        //if (p2Controller && controllerCursor.transform.position.y > Screen.height / 2)
-        //{
-        //    ray = cam.ray
-        //    ray = cam.WorldPointToRay(ghostTrap.transform.position);
-        //    if (Physics.Raycast(ray, out hit, float.MaxValue, ~LayerMask.GetMask("Ignore Raycast")))
-        //    {
-        //        if (hit.transform.tag == "Platform")
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    else return true;
-        //}
+
         //Ray to mouse cursor
         if (Input.mousePosition.y > Screen.height / 2)
         {
@@ -551,7 +538,6 @@ public class PlaceTrap : MonoBehaviour {
     {
         trap = trapPrefabs[trapNum];
         trapRot = 0;
-//        eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         DestroyGhost();
         GetComponent<CastSpell>().DestroyTarget();
@@ -629,14 +615,29 @@ public class PlaceTrap : MonoBehaviour {
             if (active)
             {
                 bool buttonSet = false;
-                for (int i = 0; i < queue.Count; i++)
+                //Loop over rest of trap queue
+                for (int i = previouslySelectedIndex; i < queue.Count; i++)
                 {
-                    if (queue[i].activeInHierarchy && !buttonSet)
+                    if (queue[i].activeInHierarchy && !buttonSet && queue[i].GetComponent<Button>().interactable)
                     {
                         eventSystem.SetSelectedGameObject(queue[i]);
                         buttonSet = true;
                     }
                 }
+
+                //Loop over previous trap queue
+                if(!buttonSet)
+                {
+                    for (int i = previouslySelectedIndex; i >= 0; i--)
+                    {
+                        if (queue[i].activeInHierarchy && !buttonSet && queue[i].GetComponent<Button>().interactable)
+                        {
+                            eventSystem.SetSelectedGameObject(queue[i]);
+                            buttonSet = true;
+                        }
+                    }
+                }
+                //Loop over spells to see if anything available
                 if (!buttonSet)
                 {
                     for (int i = 0; i < cs.queue.Length; i++)

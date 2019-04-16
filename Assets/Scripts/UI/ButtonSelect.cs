@@ -15,7 +15,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     private TextMeshProUGUI tooltip;
     private MoveControllerCursor cursorMove;
     private GameObject currentFirstSpell;
-    private GameObject currentFirstTrap;
+    private GameObject currentLastTrap;
 
     private AudioSource audioSource;
     private Vector3 buttonScale;
@@ -59,10 +59,10 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
             GetCurrentLastTrap();
             if (Input.GetAxis("Horizontal_Menu") < 0 || IsSpellQueueNull())
             {
-                if (cs != null) cs.DestroyTarget();
-                if (currentFirstTrap != null && currentFirstTrap.gameObject == this.gameObject)
+                if(cs != null) cs.DestroyTarget();
+                if (currentLastTrap != null && currentLastTrap.gameObject == this.gameObject && currentLastTrap.gameObject.GetComponent<Button>().interactable)
                 {
-                    currentFirstTrap = null;
+                    currentLastTrap = null;
                     controllerCursor.transform.localPosition = new Vector3(0, 130);
                     cursorMove.MovingTraps = true;
 
@@ -165,7 +165,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
             {
                 if (pt.queue[t] != null && pt.queue[t].activeInHierarchy && pt.queue[t].GetComponent<Button>().interactable)
                 {
-                    currentFirstTrap = pt.queue[t];
+                    currentLastTrap = pt.queue[t];
                     return;
                 }
             }

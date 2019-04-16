@@ -171,9 +171,6 @@ public class SpellBase : MonoBehaviour {
         float slowTimePassed = 0;
         while (slowTimePassed <= slowDuration)
         {
-
-            Debug.Log(slowTimePassed);
-
             slowTimePassed += Time.deltaTime;
             player.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(slowSpeed);
 

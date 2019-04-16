@@ -59,6 +59,7 @@ public class CastSpell : MonoBehaviour
     public bool placeEnabled;
     public bool InputEnabled = true;
     private int previouslySelectedIndex;
+    
     private GameObject currentSelectedGameObject;
 
 
@@ -265,6 +266,8 @@ public class CastSpell : MonoBehaviour
                 }
                 StartCoroutine(StartCooldown(spell.GetComponent<SpellBase>().CooldownTime, queue[queueIndex].transform.localPosition, queueIndex));
 
+                previouslySelectedIndex = queueIndex;
+
                 spell = null;
 
                 ClearButton();
@@ -273,7 +276,6 @@ public class CastSpell : MonoBehaviour
 
                 if (p2Controller)
                 {
-                    Debug.Log("Here");
                     SetSelectedButton();
                 }
             }
@@ -498,7 +500,9 @@ public class CastSpell : MonoBehaviour
         if (p2Controller)
         {
             bool buttonSet = false;
-            for (int i = queue.Length - 1; i >= 0; i--)
+
+            //Loop over remaining spell queue to see if any are available
+            for (int i = previouslySelectedIndex; i < queue.Length; i++)
             {
                 if (queue[i] != null && queue[i].activeInHierarchy && queue[i].GetComponent<Button>().interactable && !buttonSet)
                 {
@@ -506,11 +510,26 @@ public class CastSpell : MonoBehaviour
                     buttonSet = true;
                 }
             }
+
+            //Loop over previous of spell queue to see if any are available
+            if(!buttonSet)
+            {
+                for (int i = previouslySelectedIndex; i >= 0; i--)
+                {
+                    if (queue[i] != null && queue[i].activeInHierarchy && queue[i].GetComponent<Button>().interactable && !buttonSet)
+                    {
+                        eventSystem.SetSelectedGameObject(queue[i]);
+                        buttonSet = true;
+                    }
+                }
+            }
+
+            //Loop over traps to set available button
             if (!buttonSet)
             {
                 for (int i = 0; i < pt.queue.Count; i++)
                 {
-                    if (pt.queue[i] != null && pt.queue[i].activeInHierarchy && !buttonSet)
+                    if (pt.queue[i] != null && pt.queue[i].activeInHierarchy && !buttonSet && pt.queue[i].GetComponent<Button>().interactable)
                     {
 
                         controllerCursor.transform.localPosition = new Vector3(0, 130);
