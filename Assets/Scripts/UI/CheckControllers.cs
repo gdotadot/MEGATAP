@@ -32,12 +32,6 @@ public class CheckControllers : MonoBehaviour {
             clickEvents = tower.GetComponentsInChildren<SetPointerClickEvents>();
         }
 
-        GameObject canv = GameObject.Find("Canvas");
-        if(canv != null) canvas = canv.GetComponent<Canvas>();
-        GameObject tower = GameObject.Find("Tower");
-        if(tower != null) eventVars = tower.GetComponentsInChildren<SetEventTriggerVars>();
-        if(tower != null) clickEvents = tower.GetComponentsInChildren<SetPointerClickEvents>();
-
         CheckConnected();
         Debug.Log("Player 1 controller: " + controllerOne);
         Debug.Log("Player 2 controller: " + controllerTwo);
