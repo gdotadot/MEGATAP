@@ -11,8 +11,7 @@ public class CheckControllers : MonoBehaviour {
     private Canvas canvas;
     private SetEventTriggerVars[] eventVars;
     private SetPointerClickEvents[] clickEvents;
-    private GameObject trapQueue;
-    private GameObject spellQueue;
+
     private Button[] trapButtons;
     private Button[] spellButtons;
 
@@ -20,12 +19,11 @@ public class CheckControllers : MonoBehaviour {
     {
         joysticks = Input.GetJoystickNames();
 
-        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        GameObject canv = GameObject.Find("Canvas");
+        if(canv != null) canvas = canv.GetComponent<Canvas>();
         GameObject tower = GameObject.Find("Tower");
-        eventVars = tower.GetComponentsInChildren<SetEventTriggerVars>();
-        clickEvents = tower.GetComponentsInChildren<SetPointerClickEvents>();
-        trapQueue = GameObject.Find("TrapQueue");
-        spellQueue = GameObject.Find("SpellQueue");
+        if(tower != null) eventVars = tower.GetComponentsInChildren<SetEventTriggerVars>();
+        if(tower != null) clickEvents = tower.GetComponentsInChildren<SetPointerClickEvents>();
 
         CheckConnected();
         Debug.Log("Player 1 controller: " + controllerOne);
@@ -58,25 +56,18 @@ public class CheckControllers : MonoBehaviour {
                         controllerTwo = true;
                         Cursor.visible = false;
                         Cursor.lockState = CursorLockMode.Locked;
-                        canvas.GetComponent<GraphicRaycaster>().enabled = false;
-                        foreach(SetEventTriggerVars v in eventVars)
-                        {
-                            v.enabled = false;
-                        }
-                        foreach (SetPointerClickEvents p in clickEvents)
-                        {
-                            p.enabled = false;
-                        }
-                        spellButtons = spellQueue.GetComponentsInChildren<Button>();
 
-                        foreach(Button sb in spellButtons)
+                        if(canvas != null && eventVars != null)
                         {
-                            sb.GetComponent<EventTrigger>().enabled = false;
-                        }
-                        trapButtons = trapQueue.GetComponentsInChildren<Button>();
-                        foreach(Button tb in trapButtons)
-                        {
-                            tb.GetComponent<EventTrigger>().enabled = false;
+                            canvas.GetComponent<GraphicRaycaster>().enabled = false;
+                            foreach (SetEventTriggerVars v in eventVars)
+                            {
+                                v.enabled = false;
+                            }
+                            foreach (SetPointerClickEvents p in clickEvents)
+                            {
+                                p.enabled = false;
+                            }
                         }
                     }
                 }
@@ -92,16 +83,18 @@ public class CheckControllers : MonoBehaviour {
                         controllerTwo = false;
                         Cursor.visible = true;
                         Cursor.lockState = CursorLockMode.None;
-                        canvas.GetComponent<GraphicRaycaster>().enabled = true;
-                        foreach (SetEventTriggerVars v in eventVars)
+                        if(canvas != null && eventVars != null)
                         {
-                            v.enabled = true;
+                            canvas.GetComponent<GraphicRaycaster>().enabled = true;
+                            foreach (SetEventTriggerVars v in eventVars)
+                            {
+                                v.enabled = true;
+                            }
+                            foreach (SetPointerClickEvents p in clickEvents)
+                            {
+                                p.enabled = true;
+                            }
                         }
-                        foreach (SetPointerClickEvents p in clickEvents)
-                        {
-                            p.enabled = true;
-                        }
-
                     }
                 }
             }
