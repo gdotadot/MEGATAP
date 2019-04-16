@@ -52,7 +52,6 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     //Do this when the selectable UI object is selected.
     public void OnSelect(BaseEventData eventData)
     {
-        Debug.Log(this.name);
         if (audioSource != null) audioSource.Play();
         if (isThisTrap)
         {
