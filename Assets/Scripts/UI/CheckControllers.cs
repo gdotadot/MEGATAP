@@ -56,8 +56,8 @@ public class CheckControllers : MonoBehaviour {
                     if (i == 1)
                     {
                         controllerTwo = true;
-                        //Cursor.visible = false;
-                       // Cursor.lockState = CursorLockMode.Locked;
+                        Cursor.visible = false;
+                        Cursor.lockState = CursorLockMode.Locked;
                         canvas.GetComponent<GraphicRaycaster>().enabled = false;
                         foreach(SetEventTriggerVars v in eventVars)
                         {

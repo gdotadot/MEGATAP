@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CastSpell : MonoBehaviour {
+public class CastSpell : MonoBehaviour
+{
     [Header("Design Values -------------")]
     [SerializeField] private int queueSize;
     [SerializeField] private int verticalSpellSpawnHeight;
@@ -57,8 +58,8 @@ public class CastSpell : MonoBehaviour {
     private bool p2Controller;
     public bool placeEnabled;
     public bool InputEnabled = true;
-
-    
+    private int previouslySelectedIndex;
+    private GameObject currentSelectedGameObject;
 
 
     void Start()
@@ -99,17 +100,22 @@ public class CastSpell : MonoBehaviour {
         PlayerOneState = playerOne.GetComponent<CameraOneRotator>().GetState();
 
 
-        if (Input.GetMouseButtonDown(1) && ValidLocation == 1 && !p2Controller)
+        if (Input.GetMouseButtonDown(1) && ValidLocation == 1)
         {
             SpellCast();
         }
 
 
         //Safety check to make sure the player's cursor isn't lost / nothing is selected
-        if(p2Controller && eventSystem.currentSelectedGameObject == null)
+        if (eventSystem.currentSelectedGameObject != null)
         {
-            Debug.Log("Here");
-            SetSelectedButton();
+            currentSelectedGameObject = eventSystem.currentSelectedGameObject;
+        }
+
+        if (p2Controller && eventSystem.currentSelectedGameObject == null)
+        {
+            eventSystem.SetSelectedGameObject(currentSelectedGameObject);
+            //    SetSelectedButton();
         }
     }
 
