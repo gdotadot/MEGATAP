@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CastSpell : MonoBehaviour {
+public class CastSpell : MonoBehaviour
+{
     [Header("Design Values -------------")]
     [SerializeField] private int queueSize;
     [SerializeField] private int verticalSpellSpawnHeight;
@@ -59,6 +60,7 @@ public class CastSpell : MonoBehaviour {
     public bool InputEnabled = true;
     private int previouslySelectedIndex;
     
+    private GameObject currentSelectedGameObject;
 
 
     void Start()
@@ -106,9 +108,15 @@ public class CastSpell : MonoBehaviour {
 
 
         //Safety check to make sure the player's cursor isn't lost / nothing is selected
-        if(p2Controller && eventSystem.currentSelectedGameObject == null)
+        if (eventSystem.currentSelectedGameObject != null)
         {
-            SetSelectedButton();
+            currentSelectedGameObject = eventSystem.currentSelectedGameObject;
+        }
+
+        if (p2Controller && eventSystem.currentSelectedGameObject == null)
+        {
+            eventSystem.SetSelectedGameObject(currentSelectedGameObject);
+            //    SetSelectedButton();
         }
     }
 
@@ -175,7 +183,7 @@ public class CastSpell : MonoBehaviour {
     //Called from event trigger on center column of tower when player clicks on it
     public void OnClickTower()
     {
-        if (!Input.GetMouseButtonUp(1) && ValidLocation == 1)
+        if (!Input.GetMouseButtonUp(1) && ValidLocation == 1 && !p2Controller)
         {
             SpellCast();
         }
@@ -183,7 +191,7 @@ public class CastSpell : MonoBehaviour {
 
     public void OnClickPlayer()
     {
-        if (!Input.GetMouseButtonUp(1) && ValidLocation == 2)
+        if (!Input.GetMouseButtonUp(1) && ValidLocation == 2 && !p2Controller)
         {
             SpellCast();
         }
@@ -266,8 +274,10 @@ public class CastSpell : MonoBehaviour {
 
                 DestroyTarget();
 
-
-                SetSelectedButton();
+                if (p2Controller)
+                {
+                    SetSelectedButton();
+                }
             }
         }
     }
@@ -485,6 +495,8 @@ public class CastSpell : MonoBehaviour {
     //Set new selected button if the controller is being used.
     private void SetSelectedButton()
     {
+        Debug.Log("SetButton");
+
         if (p2Controller)
         {
             bool buttonSet = false;
@@ -575,7 +587,11 @@ public class CastSpell : MonoBehaviour {
             if(cooldownTimePassed >= cooldownTime)
             {
                 button.interactable = true;
-                if (eventSystem.currentSelectedGameObject == null) SetSelectedButton();
+                if (eventSystem.currentSelectedGameObject == null && p2Controller)
+                {
+                    Debug.Log("Here");
+                    SetSelectedButton();
+                }
             }
         }
     }
