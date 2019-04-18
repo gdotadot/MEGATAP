@@ -13,8 +13,11 @@ public class MainMenu : MonoBehaviour {
 
     private CheckControllers checkControllers;
 
+    private GameObject inputManager;
+
     private void Awake()
     {
+        inputManager = GameObject.Find("InputManager");
         //int musicPlayerCount = 0;
         //while(GameObject.Find("MusicPlayer") != null)
         //{
@@ -38,7 +41,16 @@ public class MainMenu : MonoBehaviour {
 
     public void OnClickPlay()
     {
-        SceneManager.LoadScene("CharacterSelect");
+        CheckControllers cc = inputManager.GetComponent<CheckControllers>();
+
+        if(cc.GetControllerOneState() && cc.GetControllerTwoState())
+        {
+            SceneManager.LoadScene("CharacterSelect");
+        }
+        else
+        {
+            SceneManager.LoadScene("Tutorial");
+        }
     }
     
     public void QuitGame()
