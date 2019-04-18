@@ -40,9 +40,9 @@ public class MainMenu : MonoBehaviour {
     {
         //SceneManager.LoadScene("Control");
         //Initiate.Fade("Tower1", Color.black, 2);
-        Initiate.Fade("Tutorial", Color.black, 2);
+        //Initiate.Fade("Tutorial", Color.black, 2);
     }
-    
+
     public void QuitGame()
     {
 		popup.gameObject.SetActive(true);
@@ -57,13 +57,13 @@ public class MainMenu : MonoBehaviour {
             }
         }
     }
-    
+
     public void YesButton()
     {
     	Debug.Log("Quit");
     	Application.Quit();
     }
-    
+
     public void NoButton()
     {
     	popup.gameObject.SetActive(false);
@@ -74,5 +74,5 @@ public class MainMenu : MonoBehaviour {
             menuButtons[i].GetComponent<Button>().interactable = true;
         }
         es.SetSelectedGameObject(menuButtons[0]);
-    }	
+    }
 }

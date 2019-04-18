@@ -70,7 +70,7 @@ public class TutorialController : MonoBehaviour
 
         if (Input.GetButtonDown("Start"))
         {
-            Initiate.Fade("Tower1", Color.black, 2);
+            //Initiate.Fade("Tower1", Color.black, 2);
         }
 
     }

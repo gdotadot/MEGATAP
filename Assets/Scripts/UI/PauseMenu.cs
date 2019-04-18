@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour {
 	[HideInInspector] public bool GameIsPaused = false;
-	
+
 	[SerializeField] GameObject pauseMenuUI;
     [SerializeField] Button[] pauseButtons;
     [SerializeField] GameObject controlsCanvas;
@@ -63,7 +63,7 @@ public class PauseMenu : MonoBehaviour {
             Resume();
         }
 	}
-	
+
 	public void Resume(){
 		pauseMenuUI.SetActive(false);
 
@@ -94,11 +94,11 @@ public class PauseMenu : MonoBehaviour {
         StartCoroutine(playerMov.ResumeInput());
         GameIsPaused = false;
 	}
-	
+
 	public void Pause(){
         //Set buttons not interactable
         selectedButton = es.currentSelectedGameObject;
-        
+
         //Keep track of which spells are on cooldown / uninteractable so we don't set them interactable when we resume.
         //& set the button uninteractable
         onCooldown = new bool[cs.queue.Length];
@@ -132,7 +132,7 @@ public class PauseMenu : MonoBehaviour {
             {
                 usedTraps[i] = true;
             }
-            
+
         }
 
         //Bring up Pause menu
@@ -156,7 +156,7 @@ public class PauseMenu : MonoBehaviour {
 	public void LoadMenu(){
         GameObject musicPlayer = GameObject.Find("MusicPlayer");
         if (musicPlayer != null) Destroy(musicPlayer);
-        Initiate.Fade("Menu", Color.black, 2);
+        //Initiate.Fade("Menu", Color.black, 2);
 		Time.timeScale = 1f;
 	}
 
