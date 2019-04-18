@@ -365,6 +365,7 @@ GameObject:
   - component: {fileID: 114614076012222384}
   - component: {fileID: 136407975964972082}
   - component: {fileID: 114452904007992328}
+  - component: {fileID: 114337649299040114}
   - component: {fileID: 95974463458835562}
   - component: {fileID: 114692266925298726}
   - component: {fileID: 82333417526295136}
@@ -372,7 +373,6 @@ GameObject:
   - component: {fileID: 136537822502040418}
   - component: {fileID: 135254525513457034}
   - component: {fileID: 135893660688449324}
-  - component: {fileID: 114337649299040114}
   m_Layer: 0
   m_Name: Player 1
   m_TagString: Player
@@ -1834,6 +1834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d9af6d3d4ce1a04b9ab729a6c5d6583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupCount: 0
 --- !u!114 &114452904007992328
 MonoBehaviour:
   m_ObjectHideFlags: 1

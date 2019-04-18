@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerOneStats : MonoBehaviour {
 
-    [SerializeField] private int pickupCount;
+    [SerializeField] public int pickupCount { get; set; }
 
 	// Use this for initialization
 	void Start () {
@@ -16,4 +16,5 @@ public class PlayerOneStats : MonoBehaviour {
 	void Update () {
 		
 	}
+
 }
