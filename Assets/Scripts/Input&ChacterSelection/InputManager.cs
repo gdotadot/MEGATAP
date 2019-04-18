@@ -69,7 +69,29 @@ public class InputManager : MonoBehaviour {
     //Set input enums for when controller 2 is top player
     private Dictionary<InputCommand, string> p1AsTop = new Dictionary<InputCommand, string>
     {
-    //TODO
+        //Universal Controls
+        { InputCommand.Start, "Start" },
+        { InputCommand.MenuSubmit, "Submit_Menu" },
+        { InputCommand.VerticalMenu1, "Vertical_Menu_Dpad" },
+        { InputCommand.VerticalMenu2, "Vertical_Menu_Stick" },
+        { InputCommand.Cancel, "Cancel" },
+        { InputCommand.Nothing, "Nothing" },
+
+        //Top Player Controls
+        { InputCommand.TopPlayerSelect, "Place_Joy_1" },
+        { InputCommand.TopPlayerRotate, "Rotate_Joy_1" },
+        { InputCommand.TopPlayerMoveHorizontal1, "Horizontal_Joy_1_Stick" },
+        { InputCommand.TopPlayerMoveHorizontal2, "Horizontal_Joy_1_Dpad" },
+        { InputCommand.TopPlayerMoveVertical1, "Vertical_Joy_1_Stick" },
+        { InputCommand.TopPlayerMoveVertical2, "Vertical_Joy_1_Dpad" },
+        { InputCommand.TopPlayerMenu, "Bumpers_Joy_1" },
+
+        //Bottom Controls
+        { InputCommand.BottomPlayerJump, "Jump_Joy_2" },
+        { InputCommand.BottomPlayerMoveStick, "Horizontal_Joy_2_Stick"},
+        { InputCommand.BottomPlayerMoveKeyboard, "Horizontal_Keyboard" },
+        { InputCommand.BottomPlayerBoost, "" }, //TODO
+        { InputCommand.BottomPlayerCrouch, "Crouch_Joy_2" }
     };
 
     public bool GetButton(InputCommand command)

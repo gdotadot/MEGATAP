@@ -67,10 +67,15 @@ public class CharacterSelect : MonoBehaviour {
             startText.SetActive(true);
             if(inputManager.GetButton(InputCommand.Start))
             {
-                //if(selectorOneState == -1)
-                //{
-                //    inputManager.P1IsTop = 
-                //}
+                if(selectorOneState == -1)
+                {
+                    inputManager.P1IsTop = false;
+                }
+                else
+                {
+                    inputManager.P1IsTop = true;
+                }
+
                 SceneManager.LoadScene("Tutorial");
             }
         }
