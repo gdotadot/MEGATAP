@@ -41,7 +41,7 @@ public class MoveControllerCursor : MonoBehaviour {
 
     void Start () {
         pause = gameManager.GetComponent<PauseMenu>();
-        checkControllers = gameManager.GetComponent<CheckControllers>();
+        checkControllers = inputManager.GetComponent<CheckControllers>();
         //audioSource = GetComponent<AudioSource>();
         p2Controller = checkControllers.GetControllerTwoState();
 
