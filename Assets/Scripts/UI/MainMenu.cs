@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour {
 
         //Detect controller connection & if connected, set selected button
         checkControllers = GetComponent<CheckControllers>();
-        if(checkControllers.GetControllerOneState())
+        if(checkControllers.GetControllerOneState() || checkControllers.GetControllerTwoState())
         {
             es.SetSelectedGameObject(menuButtons[0].gameObject);
         }
