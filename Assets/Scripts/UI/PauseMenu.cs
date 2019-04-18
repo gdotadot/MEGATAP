@@ -20,7 +20,11 @@ public class PauseMenu : MonoBehaviour {
     private CastSpell cs;
     private PlayerOneMovement playerMov;
 
+    //When we pause/resume we need to set the trap/spell buttons uninteractable, then interactable again
+    //these bool arrays keep track of which ones are used/on cooldown so we don't set them interactable on resume
     private bool[] onCooldown;
+    private bool[] usedTraps;
+
     private bool controlsUp;
     private GameObject selectedButton;
     private void Start()
@@ -62,6 +66,8 @@ public class PauseMenu : MonoBehaviour {
 	
 	public void Resume(){
 		pauseMenuUI.SetActive(false);
+
+        //Set correct spell buttons interactable again
         for (int i = 0; i < cs.queue.Length; i++)
         {
             if (cs.queue[i] != null && !onCooldown[i])
@@ -69,9 +75,13 @@ public class PauseMenu : MonoBehaviour {
                 cs.queue[i].GetComponent<Button>().interactable = true;
             }
         }
+        //Set correct trap buttons interactable again
         for (int i = 0; i < pt.queue.Count; i++)
         {
-            if (pt.active) pt.queue[i].GetComponent<Button>().interactable = true;
+            if (pt.active && pt.queue[i] != null && !usedTraps[i])
+            {
+                pt.queue[i].GetComponent<Button>().interactable = true;
+            }
         }
         es.SetSelectedGameObject(selectedButton);
 
@@ -88,6 +98,9 @@ public class PauseMenu : MonoBehaviour {
 	public void Pause(){
         //Set buttons not interactable
         selectedButton = es.currentSelectedGameObject;
+        
+        //Keep track of which spells are on cooldown / uninteractable so we don't set them interactable when we resume.
+        //& set the button uninteractable
         onCooldown = new bool[cs.queue.Length];
         for (int i = 0; i < cs.queue.Length; i++)
         {
@@ -105,9 +118,21 @@ public class PauseMenu : MonoBehaviour {
                 }
             }
         }
+        //Keep track of which traps have been used && set them uninteractable
+        usedTraps = new bool[pt.queue.Count];
         for (int i = 0; i < pt.queue.Count; i++)
         {
-            pt.queue[i].GetComponent<Button>().interactable = false;
+            if(pt.queue[i].GetComponent<Button>().interactable)
+            {
+                usedTraps[i] = false;
+
+                pt.queue[i].GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                usedTraps[i] = true;
+            }
+            
         }
 
         //Bring up Pause menu
@@ -117,7 +142,7 @@ public class PauseMenu : MonoBehaviour {
         Time.timeScale = 0f;
 
         //Disable Inputs
-        es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Main_Menu";
+        es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu";
         pt.InputEnabled = false;
         cs.InputEnabled = false;
         playerMov.InputEnabled = false;

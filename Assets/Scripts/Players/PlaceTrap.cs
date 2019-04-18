@@ -59,12 +59,17 @@ public class PlaceTrap : MonoBehaviour {
     private bool p2Controller;
     public bool InputEnabled = true;
     private bool resetEnabled = true;
-
-
+    private int previouslySelectedIndex;
+    private InputManager inputManager;
 
     private int numTimesRotated = 0;
 
-	void Start () {
+    private void Awake()
+    {
+        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+    }
+
+    void Start () {
         //Get references
         pause = gameManager.GetComponent<PauseMenu>();
         cs = GetComponent<CastSpell>();
@@ -96,14 +101,14 @@ public class PlaceTrap : MonoBehaviour {
         p2Controller = checkControllers.GetControllerTwoState();
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Input.GetButtonDown("Place_Joy_2") && InputEnabled)
+            if (inputManager.GetButtonDown(InputCommand.TopPlayerSelect) && InputEnabled)
             {
                 MoveGhost();
                 SetTrap();
             }
         }
         //Reset queue's when tower rotates
-        if (Input.GetButtonDown("Submit_Joy_2") && resetEnabled && !pause.GameIsPaused && numTimesRotated < 4 * (tower.GetComponentInChildren<NumberOfFloors>().NumFloors - 1) - 1)
+        if (inputManager.GetButtonDown(InputCommand.TopPlayerRotate) && resetEnabled && !pause.GameIsPaused && numTimesRotated < 4 * (tower.GetComponentInChildren<NumberOfFloors>().NumFloors - 1) - 1)
         {
             //if(cam.GetComponent<CameraTwoRotator>().GetFloor() == tower.GetComponent<NumberOfFloors>().NumFloors && cam.GetComponent<CameraTwoRotator>().GetState() == 4)
             //{
@@ -190,7 +195,7 @@ public class PlaceTrap : MonoBehaviour {
     //ONLY computer mouse - controller cursor is handled in Update
     public void OnClickTower()
     {
-        if(!Input.GetMouseButtonUp(1) && !pause.GameIsPaused)
+        if(!Input.GetMouseButtonUp(1) && !pause.GameIsPaused && !p2Controller)
         {
             SetTrap();
         }
@@ -229,7 +234,8 @@ public class PlaceTrap : MonoBehaviour {
                     audioSource.PlayOneShot(trapPlacementGood);
                     trap.InstantiateTrap(position, ghostTrap.transform.rotation);
                     if (check != null) check.Placed = true;
-                    //if (bases != null) bases.Placed = true;
+                    previouslySelectedIndex = queueIndex;
+
                     ClearButton();
                     trap = null;
                     foreach (SpriteRenderer sr in placementSquares)
@@ -238,7 +244,6 @@ public class PlaceTrap : MonoBehaviour {
                     }
                     placementSquares = null;
                     DestroyGhost();
-
                     SetSelectedButton();
                 }
                 else
@@ -288,20 +293,7 @@ public class PlaceTrap : MonoBehaviour {
     {
         RaycastHit hit;
         Ray ray;
-        //Ray to controller cursor
-        //if (p2Controller && controllerCursor.transform.position.y > Screen.height / 2)
-        //{
-        //    ray = cam.ray
-        //    ray = cam.WorldPointToRay(ghostTrap.transform.position);
-        //    if (Physics.Raycast(ray, out hit, float.MaxValue, ~LayerMask.GetMask("Ignore Raycast")))
-        //    {
-        //        if (hit.transform.tag == "Platform")
-        //        {
-        //            return false;
-        //        }
-        //    }
-        //    else return true;
-        //}
+
         //Ray to mouse cursor
         if (Input.mousePosition.y > Screen.height / 2)
         {
@@ -551,7 +543,6 @@ public class PlaceTrap : MonoBehaviour {
     {
         trap = trapPrefabs[trapNum];
         trapRot = 0;
-//        eventSystem.SetSelectedGameObject(null);
         StartCoroutine(EnableInput());
         DestroyGhost();
         GetComponent<CastSpell>().DestroyTarget();
@@ -616,8 +607,9 @@ public class PlaceTrap : MonoBehaviour {
     }
 
     private void ClearButton()
-    { 
-        queue[queueIndex].SetActive(false);
+    {
+        //queue[queueIndex].SetActive(false);
+        queue[queueIndex].GetComponent<Button>().interactable = false;
     }
 
     //Set new selected button if the controller is being used.
@@ -628,14 +620,29 @@ public class PlaceTrap : MonoBehaviour {
             if (active)
             {
                 bool buttonSet = false;
-                for (int i = 0; i < queue.Count; i++)
+                //Loop over rest of trap queue
+                for (int i = previouslySelectedIndex; i < queue.Count; i++)
                 {
-                    if (queue[i].activeInHierarchy && !buttonSet)
+                    if (queue[i].activeInHierarchy && !buttonSet && queue[i].GetComponent<Button>().interactable)
                     {
                         eventSystem.SetSelectedGameObject(queue[i]);
                         buttonSet = true;
                     }
                 }
+
+                //Loop over previous trap queue
+                if(!buttonSet)
+                {
+                    for (int i = previouslySelectedIndex; i >= 0; i--)
+                    {
+                        if (queue[i].activeInHierarchy && !buttonSet && queue[i].GetComponent<Button>().interactable)
+                        {
+                            eventSystem.SetSelectedGameObject(queue[i]);
+                            buttonSet = true;
+                        }
+                    }
+                }
+                //Loop over spells to see if anything available
                 if (!buttonSet)
                 {
                     for (int i = 0; i < cs.queue.Length; i++)
