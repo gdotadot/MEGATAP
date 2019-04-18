@@ -6,8 +6,13 @@ using UnityEngine.SceneManagement;
 public class CheckControllers : MonoBehaviour {
     private string[] joysticks;
 
+    //Whether the FIRST and SECOND controllers are PLUGGED IN
     private bool controllerOne;
     private bool controllerTwo;
+    //whether the TOP and BOTTOM players controllers are PLUGGED IN
+    //thise will not necessarily correspond to controllerOne/controllerTwo if the character selection decides differently
+    private bool topPlayersController;
+    private bool bottomPlayersController;
 
     private Canvas canvas;
     private SetEventTriggerVars[] eventVars;
@@ -17,9 +22,11 @@ public class CheckControllers : MonoBehaviour {
     private Button[] spellButtons;
 
     string scene;
+    private InputManager inputManager;
 
     private void Awake()
     {
+        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
         joysticks = Input.GetJoystickNames();
         scene = SceneManager.GetActiveScene().name;
         if (scene == "Tower1")
@@ -42,6 +49,41 @@ public class CheckControllers : MonoBehaviour {
     private void Update()
     {
         CheckConnected();
+
+        if (topPlayersController)
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            if (canvas != null && eventVars != null)
+            {
+                canvas.GetComponent<GraphicRaycaster>().enabled = true;
+                foreach (SetEventTriggerVars v in eventVars)
+                {
+                    v.enabled = true;
+                }
+                foreach (SetPointerClickEvents p in clickEvents)
+                {
+                    p.enabled = true;
+                }
+            }
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            if (canvas != null && eventVars != null && topPlayersController)
+            {
+                canvas.GetComponent<GraphicRaycaster>().enabled = false;
+                foreach (SetEventTriggerVars v in eventVars)
+                {
+                    v.enabled = false;
+                }
+                foreach (SetPointerClickEvents p in clickEvents)
+                {
+                    p.enabled = false;
+                }
+            }
+        }
     }
 
     private void CheckConnected()
@@ -57,25 +99,25 @@ public class CheckControllers : MonoBehaviour {
                     if (i == 0)
                     {
                         controllerOne = true;
+                        if(inputManager.P1IsTop)
+                        {
+                            topPlayersController = true;
+                        }
+                        else //if P1 is bottom
+                        {
+                            bottomPlayersController = true;
+                        }
                     }
                     if (i == 1)
                     {
                         controllerTwo = true;
-                        Cursor.visible = false;
-                        Cursor.lockState = CursorLockMode.Locked;
-
-
-                        if(canvas != null && eventVars != null)
+                        if(inputManager.P1IsTop)
                         {
-                            canvas.GetComponent<GraphicRaycaster>().enabled = false;
-                            foreach (SetEventTriggerVars v in eventVars)
-                            {
-                                v.enabled = false;
-                            }
-                            foreach (SetPointerClickEvents p in clickEvents)
-                            {
-                                p.enabled = false;
-                            }
+                            bottomPlayersController = true;
+                        }
+                        else // if P1 is bottom / p2 is top
+                        {
+                            topPlayersController = true;
                         }
                     }
                 }
@@ -85,25 +127,27 @@ public class CheckControllers : MonoBehaviour {
                     if (i == 0)
                     {
                         controllerOne = false;
+                        if (inputManager.P1IsTop)
+                        {
+                            topPlayersController = false;
+                        }
+                        else //if P1 is bottom
+                        {
+                            bottomPlayersController = false;
+                        }
                     }
                     if (i == 1)
                     {
                         controllerTwo = false;
-                        Cursor.visible = true;
-                        Cursor.lockState = CursorLockMode.None;
-
-                        if(canvas != null && eventVars != null)
+                        if (inputManager.P1IsTop)
                         {
-                            canvas.GetComponent<GraphicRaycaster>().enabled = true;
-                            foreach (SetEventTriggerVars v in eventVars)
-                            {
-                                v.enabled = true;
-                            }
-                            foreach (SetPointerClickEvents p in clickEvents)
-                            {
-                                p.enabled = true;
-                            }
+                            bottomPlayersController = false;
                         }
+                        else // if P1 is bottom / p2 is top
+                        {
+                            topPlayersController = false;
+                        }
+
                     }
                 }
             }
@@ -112,6 +156,8 @@ public class CheckControllers : MonoBehaviour {
         {
             controllerOne = false;
             controllerTwo = false;
+            topPlayersController = false;
+            bottomPlayersController = false;
         }
     }
 
@@ -124,28 +170,14 @@ public class CheckControllers : MonoBehaviour {
     {
         return controllerOne;
     }
-
-    //Get InputAxis based on whether player1 is using controller or keyboard
-    public float GetInputAxis()
+    
+    public bool GetTopPlayerControllerState()
     {
-        if (controllerOne)
-        {
-            if (Mathf.Abs(Input.GetAxis("Horizontal_Joy_1")) > 0.4f)
-            {
-                return Input.GetAxis("Horizontal_Joy_1");
-            }
-            if(Mathf.Abs(Input.GetAxisRaw("Horizontal_Keyboard")) > 0)
-            {
-                return Input.GetAxisRaw("Horizontal_Keyboard");
-            }
-            else
-            {
-                return 0;
-            }
-        }
-        else
-        {
-            return Input.GetAxisRaw("Horizontal_Keyboard");
-        }
+        return topPlayersController;
+    }
+
+    public bool GetBottomPlayerControllerState()
+    {
+        return bottomPlayersController;
     }
 }
