@@ -41,6 +41,12 @@ public class CameraTwoRotator : MonoBehaviour {
 
     private bool moveEnabled = true;
     private PauseMenu pause;
+    private InputManager inputManager;
+
+    private void Awake()
+    {
+        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+    }
     private void Start()
     {
         numFloors = tower.GetComponent<NumberOfFloors>().NumFloors;
@@ -71,7 +77,7 @@ public class CameraTwoRotator : MonoBehaviour {
 
         if (moveEnabled)
         {
-            if (Input.GetButtonDown("Submit_Joy_2") && !pause.GameIsPaused)
+            if (inputManager.GetButtonDown(InputCommand.TopPlayerRotate) && !pause.GameIsPaused)
             {
                 moveEnabled = false;
 

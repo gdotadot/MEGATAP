@@ -59,9 +59,14 @@ public class CastSpell : MonoBehaviour
     public bool placeEnabled;
     public bool InputEnabled = true;
     private int previouslySelectedIndex;
-    
+    private InputManager inputManager;
+
     private GameObject currentSelectedGameObject;
 
+    private void Awake()
+    {
+        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+    }
 
     void Start()
     {
@@ -86,13 +91,15 @@ public class CastSpell : MonoBehaviour
 
     void Update()
     {
+
+        p2Controller = gameManager.GetComponent<CheckControllers>().GetControllerTwoState();
         //Move target with cursor
         MoveTarget();
 
         //CONTROLLER ONLY Spell Casting Check
         if (p2Controller && !pause.GameIsPaused)
         {
-            if (Input.GetButtonDown("Place_Joy_2") && placeEnabled && InputEnabled && spellTarget != null)
+            if (inputManager.GetButtonDown(InputCommand.TopPlayerSelect) && placeEnabled && InputEnabled && spellTarget != null)
             {
                 SpellCast();
             }
@@ -589,7 +596,6 @@ public class CastSpell : MonoBehaviour
                 button.interactable = true;
                 if (eventSystem.currentSelectedGameObject == null && p2Controller)
                 {
-                    Debug.Log("Here");
                     SetSelectedButton();
                 }
             }

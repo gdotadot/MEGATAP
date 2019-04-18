@@ -21,6 +21,14 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     private Vector3 buttonScale;
     EventSystem es;
 
+    private InputManager inputManager;
+
+
+    private void Awake()
+    {
+        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+    }
+
     private void Start()
     {
         GameObject player = GameObject.Find("Player 2");
@@ -52,12 +60,11 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     //Do this when the selectable UI object is selected.
     public void OnSelect(BaseEventData eventData)
     {
-        Debug.Log(this.name);
         if (audioSource != null) audioSource.Play();
         if (isThisTrap)
         {
             GetCurrentLastTrap();
-            if (Input.GetAxis("Horizontal_Menu") < 0 || IsSpellQueueNull())
+            if (inputManager.GetAxis(InputCommand.TopPlayerMenu) < 0 || IsSpellQueueNull())
             {
                 if(cs != null) cs.DestroyTarget();
                 if (currentLastTrap != null && currentLastTrap.gameObject == this.gameObject && currentLastTrap.gameObject.GetComponent<Button>().interactable)
@@ -73,7 +80,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         else
         {
             GetCurrentFirstSpell();
-            if (Input.GetAxis("Horizontal_Menu") > 0 || IsTrapQueueNull())
+            if (inputManager.GetAxis(InputCommand.TopPlayerMenu) > 0 || IsTrapQueueNull())
             {
                 if (pt != null) pt.DestroyGhost();
                 if (currentFirstSpell != null && currentFirstSpell.gameObject == this.gameObject)

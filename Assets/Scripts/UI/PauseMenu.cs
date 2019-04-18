@@ -142,7 +142,7 @@ public class PauseMenu : MonoBehaviour {
         Time.timeScale = 0f;
 
         //Disable Inputs
-        es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Main_Menu";
+        es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu";
         pt.InputEnabled = false;
         cs.InputEnabled = false;
         playerMov.InputEnabled = false;

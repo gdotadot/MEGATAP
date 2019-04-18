@@ -37,21 +37,27 @@ public class PlayerOneMovement : MonoBehaviour {
     [SerializeField] private GameObject gameManager;
 
     private float inputAxis; //used to get input axis from controller/keyboard
+    private InputManager inputManager;
 
     private Rigidbody rb;
 
 
-    private CheckControllers checkControllers;
+
     private PauseMenu pause;
     private Animator animator;
     private CapsuleCollider col;
     private ParticleSystemRenderer stun;
     private SphereCollider sphere;
 
+    private void Awake()
+    {
+        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+    }
+
     void Start() {
         rb = GetComponent<Rigidbody>();
         animator = GetComponent<Animator>();
-        checkControllers = gameManager.GetComponent<CheckControllers>();
+        //checkControllers = gameManager.GetComponent<CheckControllers>();
         col = GetComponent<CapsuleCollider>();
         stun = GetComponentInChildren<ParticleSystemRenderer>();
         pause = gameManager.GetComponent<PauseMenu>();
@@ -69,25 +75,35 @@ public class PlayerOneMovement : MonoBehaviour {
         grounded = GetComponentInChildren<PlayerGrounded>().IsGrounded();
         if (move == true && !pause.GameIsPaused && InputEnabled)
         {
-            inputAxis = checkControllers.GetInputAxis();
-
+            if (Mathf.Abs(inputManager.GetAxis(InputCommand.BottomPlayerMoveStick)) > 0.4)
+            {
+                inputAxis = inputManager.GetAxis(InputCommand.BottomPlayerMoveStick);
+            }
+            else if (Mathf.Abs(inputManager.GetAxis(InputCommand.BottomPlayerMoveKeyboard)) > 0)
+            {
+                inputAxis = inputManager.GetAxis(InputCommand.BottomPlayerMoveKeyboard);
+            }
+            else
+            {
+                inputAxis = 0;
+            }
             //jumping
-            if (Input.GetButtonDown("Jump_Joy_1") && grounded && crouching == false)
+            if (inputManager.GetButtonDown(InputCommand.BottomPlayerJump) && grounded && crouching == false)
             {
                 jumping = true;
             }
 
-            if(Input.GetButtonDown("Jump_Joy_1") && grounded && crouching == true && cantStandUp == false)
+            if(inputManager.GetButtonDown(InputCommand.BottomPlayerJump) && grounded && crouching == true && cantStandUp == false)
             {
                 jumping = true;
             }
 
             //crouch
-            if (Input.GetButton("Crouch_Joy_1") && grounded)
+            if (inputManager.GetButtonDown(InputCommand.BottomPlayerCrouch) && grounded)
             {
                 crouching = true;
             }
-            if (Input.GetButtonUp("Crouch_Joy_1") || (!Input.GetButton("Crouch_Joy_1") && cantStandUp == false))
+            if (inputManager.GetButtonUp(InputCommand.BottomPlayerCrouch) || (!inputManager.GetButton(InputCommand.BottomPlayerCrouch) && cantStandUp == false))
             {
                 if(cantStandUp == true)
                 {

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class CheckControllers : MonoBehaviour {
     private string[] joysticks;
@@ -15,15 +16,21 @@ public class CheckControllers : MonoBehaviour {
     private Button[] trapButtons;
     private Button[] spellButtons;
 
+    string scene;
+
     private void Awake()
     {
         joysticks = Input.GetJoystickNames();
+        scene = SceneManager.GetActiveScene().name;
+        if (scene == "Tower1")
+        {
+            GameObject canv = GameObject.Find("Canvas");
+            canvas = canv.GetComponent<Canvas>();
 
-        GameObject canv = GameObject.Find("Canvas");
-        if(canv != null) canvas = canv.GetComponent<Canvas>();
-        GameObject tower = GameObject.Find("Tower");
-        if(tower != null) eventVars = tower.GetComponentsInChildren<SetEventTriggerVars>();
-        if(tower != null) clickEvents = tower.GetComponentsInChildren<SetPointerClickEvents>();
+            GameObject tower = GameObject.Find("Tower");
+            eventVars = tower.GetComponentsInChildren<SetEventTriggerVars>();
+            clickEvents = tower.GetComponentsInChildren<SetPointerClickEvents>();
+        }
 
         CheckConnected();
         Debug.Log("Player 1 controller: " + controllerOne);
@@ -57,6 +64,7 @@ public class CheckControllers : MonoBehaviour {
                         Cursor.visible = false;
                         Cursor.lockState = CursorLockMode.Locked;
 
+
                         if(canvas != null && eventVars != null)
                         {
                             canvas.GetComponent<GraphicRaycaster>().enabled = false;
@@ -83,6 +91,7 @@ public class CheckControllers : MonoBehaviour {
                         controllerTwo = false;
                         Cursor.visible = true;
                         Cursor.lockState = CursorLockMode.None;
+
                         if(canvas != null && eventVars != null)
                         {
                             canvas.GetComponent<GraphicRaycaster>().enabled = true;

@@ -25,6 +25,7 @@ public class MoveControllerCursor : MonoBehaviour {
     private bool p2Controller;
     private bool cursorHorizontalMove = true;
     private bool cursorVerticalMove = true;
+    private InputManager inputManager;
 
     [HideInInspector]
     public bool MovingTraps = true;
@@ -32,6 +33,11 @@ public class MoveControllerCursor : MonoBehaviour {
     public SpellDirection SpellCastDirection = SpellDirection.Instant;
 
     private float screenWidth, screenHeight;
+
+    private void Awake()
+    {
+        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+    }
 
     void Start () {
         pause = gameManager.GetComponent<PauseMenu>();
@@ -55,8 +61,8 @@ public class MoveControllerCursor : MonoBehaviour {
         if (p2Controller && !pause.GameIsPaused && MovingTraps)
         {
             float horizontalInput, verticalInput;
-            horizontalInput = Input.GetAxisRaw("Horizontal_Joy_2") + Input.GetAxisRaw("Horizontal_Dpad");
-            verticalInput = Input.GetAxisRaw("Vertical_Joy_2") + Input.GetAxisRaw("Vertical_Dpad");
+            horizontalInput = inputManager.GetAxis(InputCommand.TopPlayerMoveHorizontal1) + inputManager.GetAxis(InputCommand.TopPlayerMoveHorizontal2);
+            verticalInput = inputManager.GetAxis(InputCommand.TopPlayerMoveVertical1) + inputManager.GetAxis(InputCommand.TopPlayerMoveVertical2);
 
             Vector3 cursorPos = controllerCursor.GetComponent<RectTransform>().localPosition;
 
@@ -93,8 +99,8 @@ public class MoveControllerCursor : MonoBehaviour {
         else if (p2Controller && !pause.GameIsPaused && !MovingTraps)
         {
             float horizontalInput, verticalInput;
-            horizontalInput = Input.GetAxisRaw("Horizontal_Joy_2") + Input.GetAxisRaw("Horizontal_Dpad");
-            verticalInput = Input.GetAxisRaw("Vertical_Joy_2") + Input.GetAxisRaw("Vertical_Dpad");
+            horizontalInput = inputManager.GetAxis(InputCommand.TopPlayerMoveHorizontal1) + inputManager.GetAxis(InputCommand.TopPlayerMoveHorizontal2);
+            verticalInput = inputManager.GetAxis(InputCommand.TopPlayerMoveVertical1) + inputManager.GetAxis(InputCommand.TopPlayerMoveVertical2);
 
             if (SpellCastDirection == SpellDirection.Instant)
             {
