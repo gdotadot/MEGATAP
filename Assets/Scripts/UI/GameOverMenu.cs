@@ -12,7 +12,15 @@ public class GameOverMenu : MonoBehaviour {
     private void Start()
     {
         cc = GetComponent<CheckControllers>();
-        if(cc.GetControllerOneState())
+        if(cc.GetControllerOneState() || cc.GetControllerTwoState())
+        {
+            es.SetSelectedGameObject(menuButtons[0]);
+        }
+    }
+
+    private void Update()
+    {
+        if (cc.GetControllerOneState() || cc.GetControllerTwoState() && es.currentSelectedGameObject == null)
         {
             es.SetSelectedGameObject(menuButtons[0]);
         }
