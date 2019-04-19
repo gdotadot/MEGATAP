@@ -10,10 +10,10 @@ public class BeginGo : MonoBehaviour {
     [SerializeField] private GameObject canvas;
     [SerializeField] private Camera camBot;
     [SerializeField] private Camera camTop;
+    [SerializeField] private Camera ZoomCam;
     [SerializeField] private GameObject map;
     [SerializeField] GameObject playerTwo;
     [SerializeField] GameObject playerOne;
-    [SerializeField] private int timeDelay;
     [SerializeField] private GameObject countdown;
     [SerializeField] private GameObject countdownCanvas;
     [SerializeField] EventSystem es;
@@ -36,8 +36,7 @@ public class BeginGo : MonoBehaviour {
         
         camBot.enabled = false;
         //new Rect(Screen.width - xPos, Screen.height - yPos, width, height);
-        camTop.transform.position = new Vector3(0, 100f, -200f);
-        camTop.rect = new Rect(1, 1, 0, 0);
+        camTop.enabled = false;
 
         es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu";
         pt.InputEnabled = false;
@@ -56,8 +55,6 @@ public class BeginGo : MonoBehaviour {
 
     private IEnumerator StartDelay()
     {
-        yield return new WaitForSeconds(timeDelay);
-        
         countdownCanvas.SetActive(true);
         countdown.SetActive(true);
 
@@ -69,8 +66,8 @@ public class BeginGo : MonoBehaviour {
         map.SetActive(true);
 
         camBot.enabled = true;
-        camTop.rect = new Rect(1, 0.505f, 0, 0.5f);
-        camTop.transform.position = new Vector3(0, 30f, -80.2f);
+        camTop.enabled = true;
+        ZoomCam.enabled = false;
 
         pt.InputEnabled = true;
         cs.InputEnabled = true;
