@@ -9,6 +9,7 @@ public class CastSpell : MonoBehaviour
     [Header("Design Values -------------")]
     [SerializeField] private int queueSize;
     [SerializeField] private int verticalSpellSpawnHeight;
+    [SerializeField] private float CooldownReductionPercentage;
 
     //[SerializeField] [Tooltip("Must be in SAME ORDER and SAME AMOUNT of spell prefabs and spell buttons arrays.")]
     //private float[] spellCooldowns;
@@ -47,6 +48,7 @@ public class CastSpell : MonoBehaviour
     private GameObject spellTarget;
     private GameObject castedSpell;
     private float spellSpeed;
+    private bool atTop = false;
 
     //for spell movement and spawning
     private int ValidLocation;
@@ -125,6 +127,7 @@ public class CastSpell : MonoBehaviour
             eventSystem.SetSelectedGameObject(currentSelectedGameObject);
             //    SetSelectedButton();
         }
+        atTop = GetComponent<PlaceTrap>().LastFace();
     }
 
     void FixedUpdate()
@@ -271,7 +274,14 @@ public class CastSpell : MonoBehaviour
                     }
                     castedSpell.GetComponent<SpellBase>().SpellCast = true;
                 }
-                StartCoroutine(StartCooldown(spell.GetComponent<SpellBase>().CooldownTime, queue[queueIndex].transform.localPosition, queueIndex));
+                if (atTop == false)
+                {
+                    StartCoroutine(StartCooldown(spell.GetComponent<SpellBase>().CooldownTime, queue[queueIndex].transform.localPosition, queueIndex));
+                }
+                else
+                {
+                    StartCoroutine(StartCooldown((spell.GetComponent<SpellBase>().CooldownTime - (spell.GetComponent<SpellBase>().CooldownTime * CooldownReductionPercentage)), queue[queueIndex].transform.localPosition, queueIndex));
+                }
 
                 previouslySelectedIndex = queueIndex;
 

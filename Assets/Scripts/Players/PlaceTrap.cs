@@ -63,6 +63,7 @@ public class PlaceTrap : MonoBehaviour {
     private InputManager inputManager;
 
     private int numTimesRotated = 0;
+    private bool atTop = false;
 
     private void Awake()
     {
@@ -659,4 +660,16 @@ public class PlaceTrap : MonoBehaviour {
             }
         }
     }
+
+    //Getter
+    public bool LastFace()
+    {
+        if (numTimesRotated == 4 * (tower.GetComponentInChildren<NumberOfFloors>().NumFloors - 1) - 1)
+        {
+            atTop = true;
+        }
+        return atTop;
+    }
 }
+
+
