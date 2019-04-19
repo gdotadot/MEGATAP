@@ -39,6 +39,14 @@ public class MainMenu : MonoBehaviour {
         }
 	}
 
+    private void Update()
+    {
+        if ((checkControllers.GetControllerOneState() || checkControllers.GetControllerTwoState()) && es.currentSelectedGameObject == null)
+        {
+            es.SetSelectedGameObject(menuButtons[0].gameObject);
+        }
+    }
+
     public void OnClickPlay()
     {
         CheckControllers cc = inputManager.GetComponent<CheckControllers>();
