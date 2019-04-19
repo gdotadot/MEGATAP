@@ -46,6 +46,11 @@ public class BeginGo : MonoBehaviour {
 
     }
 
+    private void Update()
+    {
+        
+    }
+
     private IEnumerator StartDelay()
     {
 
