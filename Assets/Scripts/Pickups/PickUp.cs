@@ -6,7 +6,7 @@ public class PickUp : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        this.gameObject.GetComponent<Renderer>().
+        //this.gameObject.GetComponent<Renderer>().
 
     }
 
