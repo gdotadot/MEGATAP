@@ -13,7 +13,7 @@ public class BeginGo : MonoBehaviour {
     [SerializeField] private GameObject map;
     [SerializeField] GameObject playerTwo;
     [SerializeField] GameObject playerOne;
-    [SerializeField] private int time;
+    [SerializeField] private int timeDelay;
     [SerializeField] private GameObject countdown;
     [SerializeField] private GameObject countdownCanvas;
     [SerializeField] EventSystem es;
@@ -30,6 +30,9 @@ public class BeginGo : MonoBehaviour {
 
         canvas.SetActive(false);
         map.SetActive(false);
+
+        countdown.SetActive(false);
+        countdownCanvas.SetActive(false);
         
         camBot.enabled = false;
         //new Rect(Screen.width - xPos, Screen.height - yPos, width, height);
@@ -53,6 +56,10 @@ public class BeginGo : MonoBehaviour {
 
     private IEnumerator StartDelay()
     {
+        yield return new WaitForSeconds(timeDelay);
+        
+        countdownCanvas.SetActive(true);
+        countdown.SetActive(true);
 
         yield return new WaitForSeconds(3);
         countdown.SetActive(false);
