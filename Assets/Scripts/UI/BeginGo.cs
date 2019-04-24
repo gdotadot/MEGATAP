@@ -21,6 +21,12 @@ public class BeginGo : MonoBehaviour {
     private PlaceTrap pt;
     private CastSpell cs;
     private PlayerOneMovement playerMov;
+    private GameObject activeCountdown;
+
+    private Vector3 TargetPosition;
+    private bool once = false;
+
+    [SerializeField] private float moveInSpeed = 0.1f;
 
     // Use this for initialization
     void Start () {
@@ -28,11 +34,12 @@ public class BeginGo : MonoBehaviour {
         cs = playerTwo.GetComponent<CastSpell>();
         playerMov = playerOne.GetComponent<PlayerOneMovement>();
 
+        TargetPosition = new Vector3(camTop.transform.position.x, 21, camTop.transform.position.z + 5);
+
         canvas.SetActive(false);
         map.SetActive(false);
 
         countdown.SetActive(false);
-        countdownCanvas.SetActive(false);
         
         camBot.enabled = false;
         //new Rect(Screen.width - xPos, Screen.height - yPos, width, height);
@@ -44,22 +51,31 @@ public class BeginGo : MonoBehaviour {
         playerMov.InputEnabled = false;
         GameIsPaused = true;
 
-        StartCoroutine(StartDelay());
-
     }
 
     private void Update()
     {
-        
+        ZoomCam.transform.position = Vector3.Lerp(ZoomCam.transform.position, TargetPosition , moveInSpeed);
+        if (ZoomCam.transform.position.x <= camTop.transform.position.x && ZoomCam.transform.position.y <= 21 + 10 && ZoomCam.transform.position.z <= camTop.transform.position.z + 10 && once == false)
+        {
+            if (countdownCanvas.transform.childCount == 0)
+            {
+                activeCountdown = Instantiate(countdown, new Vector3(0, 30, -50), Quaternion.identity);
+                activeCountdown.transform.parent = countdownCanvas.transform;
+                activeCountdown.transform.localScale = new Vector3(50, 50, 1);
+            }
+            StartCoroutine(StartDelay());
+        }
     }
 
     private IEnumerator StartDelay()
     {
+        once = true;
         countdownCanvas.SetActive(true);
-        countdown.SetActive(true);
-
+        activeCountdown.SetActive(true);   
+ 
         yield return new WaitForSeconds(3);
-        countdown.SetActive(false);
+        Destroy(activeCountdown);
         countdownCanvas.SetActive(false);
 
         canvas.SetActive(true);
