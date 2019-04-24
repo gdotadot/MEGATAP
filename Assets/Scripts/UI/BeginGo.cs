@@ -37,7 +37,6 @@ public class BeginGo : MonoBehaviour {
         TargetPosition = new Vector3(camTop.transform.position.x, 21, camTop.transform.position.z + 5);
 
         canvas.SetActive(false);
-        map.SetActive(false);
 
         countdown.SetActive(false);
         
@@ -79,7 +78,6 @@ public class BeginGo : MonoBehaviour {
         countdownCanvas.SetActive(false);
 
         canvas.SetActive(true);
-        map.SetActive(true);
 
         camBot.enabled = true;
         camTop.enabled = true;
