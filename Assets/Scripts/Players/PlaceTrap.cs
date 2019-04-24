@@ -84,8 +84,8 @@ public class PlaceTrap : MonoBehaviour {
         trapQueue.transform.SetAsLastSibling();
 
         //Handle cursor or set buttons if controller connected
-        checkControllers = gameManager.GetComponent<CheckControllers>();
-        p2Controller = checkControllers.GetControllerTwoState();
+        checkControllers = inputManager.GetComponent<CheckControllers>();
+        p2Controller = checkControllers.GetTopPlayerControllerState();
 
         if (p2Controller)
         {
@@ -99,7 +99,7 @@ public class PlaceTrap : MonoBehaviour {
         MoveGhost();
 
         //Get controller select
-        p2Controller = checkControllers.GetControllerTwoState();
+        p2Controller = checkControllers.GetTopPlayerControllerState();
         if (p2Controller && !pause.GameIsPaused)
         {
             if (inputManager.GetButtonDown(InputCommand.TopPlayerSelect) && InputEnabled)
