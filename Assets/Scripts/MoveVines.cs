@@ -39,6 +39,7 @@ public class MoveVines : MonoBehaviour {
             offset.Add(Random.Range(0, 2 * Mathf.PI));
             multiplier.Add(Random.Range(1, curvinessUpperLimit));
         }
+        Debug.Log(vines.Count);
 
         //Initialize variables
         speed = vineStartSpeed;
@@ -67,7 +68,6 @@ public class MoveVines : MonoBehaviour {
             case 0:
                 p.transform.position += new Vector3(speed, multiplier[num] * Mathf.Sin(p.transform.position.x + offset[num]), 0) * Time.deltaTime;
                 break;
-
             case 1:
                 p.transform.position += new Vector3(0, multiplier[num] * Mathf.Sin(p.transform.position.z + offset[num]), speed) * Time.deltaTime;
                 break;
@@ -88,6 +88,7 @@ public class MoveVines : MonoBehaviour {
         if (p.transform.position.x >= 43 && p.transform.position.z <= -40 && face == 0)
         {
             speed += speedIncreasePerFace;
+            Rotate();
             face = 1;
             movedUpThisFloor = false;
         }
@@ -95,19 +96,30 @@ public class MoveVines : MonoBehaviour {
         if (p.transform.position.x >= 40 && p.transform.position.z >= 43 && face == 1)
         {
             speed += speedIncreasePerFace;
+            Rotate();
             face = 2;
         }
         //Third to Fourth Face
         if (p.transform.position.x <= -43 && p.transform.position.z >= 40 && face == 2)
         {
             speed += speedIncreasePerFace;
+            Rotate();
             face = 3;
         }
         //Fourth to First face -- Rotating
         if (p.transform.position.x <= -40 && p.transform.position.z <= -43 && face == 3 && floor <= 5)
         {
             speed += speedIncreasePerFace;
+            Rotate();
             face = 0;
+        }
+    }
+
+    private void Rotate()
+    {
+        for(int v = 0; v < vines.Count; v++)
+        {
+            vines[v].transform.Rotate(Vector3.up, 90);
         }
     }
 

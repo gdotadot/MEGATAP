@@ -25,7 +25,7 @@ public class PlayerOneLose : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         //check collision with Rising walls that are tagged with "rise"
-        if (other.tag == "rise")
+        if (other.tag == "Vine")
         {
             lose = true;
             GameOver();
