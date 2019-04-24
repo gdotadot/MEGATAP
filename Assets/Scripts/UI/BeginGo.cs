@@ -74,7 +74,7 @@ public class BeginGo : MonoBehaviour {
         countdownCanvas.SetActive(true);
         activeCountdown.SetActive(true);   
  
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(4);
         Destroy(activeCountdown);
         countdownCanvas.SetActive(false);
 
