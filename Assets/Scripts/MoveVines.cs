@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveVines : MonoBehaviour {
-    [HideInInspector] public bool Started = true; //Whether the vines have started moving
+    [HideInInspector] public bool Started = false; //Whether the vines have started moving
 
     [SerializeField] private float vineStartSpeed;
     [SerializeField] private float speedIncreasePerFace;
@@ -27,7 +27,6 @@ public class MoveVines : MonoBehaviour {
 
     //speed that will increase as the vines progress
     private float speed;
-    private float distanceTravelled;
 
 	void Start () {
         //Get all of the children w/ trail renderers (each individual vine object)
@@ -43,7 +42,7 @@ public class MoveVines : MonoBehaviour {
 
         //Initialize variables
         speed = vineStartSpeed;
-        distanceTravelled = 0;
+        Started = false;
 	}
 	
 
@@ -55,9 +54,6 @@ public class MoveVines : MonoBehaviour {
                 MoveVine(vines[p], p);
                 CheckRotate(vines[p]);
                 CheckMoveUp(vines[p]);
-
-                distanceTravelled += 1 / speed;
-                Debug.Log(distanceTravelled);
             }
         }
 	}
