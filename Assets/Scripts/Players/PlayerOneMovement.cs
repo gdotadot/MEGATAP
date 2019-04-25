@@ -21,6 +21,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool wallJumping;
     private bool cantStandUp;
     private bool slowed = false;
+    private bool spedUp = false;
     public bool InputEnabled = true;
 
     //Control if player can have input
@@ -105,20 +106,23 @@ public class PlayerOneMovement : MonoBehaviour {
             }
             if (inputManager.GetButtonUp(InputCommand.BottomPlayerCrouch) || (!inputManager.GetButton(InputCommand.BottomPlayerCrouch) && cantStandUp == false))
             {
-                if(cantStandUp == true)
+                if (spedUp == false)
                 {
-                    crouching = true;
-                    if(slowed == false)
+                    if (cantStandUp == true)
                     {
-                        speed = moveSpeed / 2;
+                        crouching = true;
+                        if (slowed == false)
+                        {
+                            speed = moveSpeed / 2;
+                        }
                     }
-                }
-                if (cantStandUp == false)
-                {
-                    crouching = false;
-                    if (slowed == false)
+                    if (cantStandUp == false)
                     {
-                        speed = moveSpeed;
+                        crouching = false;
+                        if (slowed == false)
+                        {
+                            speed = moveSpeed;
+                        }
                     }
                 }
             }
@@ -223,7 +227,7 @@ public class PlayerOneMovement : MonoBehaviour {
                 break;
         }
 
-        if (crouching == true)
+        if (crouching == true && spedUp == false)
         {
             if (slowed == false)
             {
@@ -259,7 +263,7 @@ public class PlayerOneMovement : MonoBehaviour {
             }
             jumping = false;
             landing = false;
-            if (slowed == false)
+            if (slowed == false && spedUp == false)
             {
                 speed = moveSpeed;
             }
@@ -366,6 +370,11 @@ public class PlayerOneMovement : MonoBehaviour {
     public void SetSpeed(float s)
     {
         speed = s;
+    }
+
+    public void SetSpedUp(bool s)
+    {
+        spedUp = s;
     }
 
     public float GetConstantSpeed()
