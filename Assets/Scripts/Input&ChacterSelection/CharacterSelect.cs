@@ -111,12 +111,10 @@ public class CharacterSelect : MonoBehaviour {
 
 
         //Check characters selected are opposite
-        Debug.Log(selectorOneState + ", " + selectorTwoState);
-
         if (selectorOneState == -selectorTwoState && selectorOneState != 0)
         {
             startText.SetActive(true);
-            if(inputManager.GetButton(InputCommand.Start))
+            if(inputManager.GetButton(InputCommand.Start) && checkControllers.GetControllerOneState())
             {
                 if(selectorOneState == -1)
                 {
@@ -125,6 +123,19 @@ public class CharacterSelect : MonoBehaviour {
                 else
                 {
                     inputManager.P1IsTop = true;
+                }
+
+                SceneManager.LoadScene("Tutorial");
+            }
+            else if(inputManager.GetButton(InputCommand.Start) && !checkControllers.GetControllerOneState())
+            {
+                if (selectorOneState == -1)
+                {
+                    inputManager.P1IsTop = true;
+                }
+                else
+                {
+                    inputManager.P1IsTop = false;
                 }
 
                 SceneManager.LoadScene("Tutorial");
