@@ -30,7 +30,7 @@ public class PickUp : MonoBehaviour {
             this.gameObject.GetComponent<Renderer>().material.color = currColor;
         }
 	}
-
+    //TODO DONT LOSE SPEED ON STUN
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player" && active == true)
