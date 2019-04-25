@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PickUp : MonoBehaviour {
 
-    private float speedUpDuration = 5f;
-    private float speedUpMultiplier = 3f;
+    [SerializeField] private float speedUpDuration = 7f;
+    [SerializeField] private float speedUpMultiplier = 3f;
     // active correlates to whether or not the pickup is faded out or not
     private bool active = true;
 
