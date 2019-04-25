@@ -5,23 +5,24 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class BeginGo : MonoBehaviour {
-    [HideInInspector] public bool GameIsPaused = false;
 
     [SerializeField] private GameObject canvas;
     [SerializeField] private Camera camBot;
     [SerializeField] private Camera camTop;
     [SerializeField] private Camera ZoomCam;
-    [SerializeField] private GameObject map;
+    //[SerializeField] private GameObject map;
     [SerializeField] GameObject playerTwo;
     [SerializeField] GameObject playerOne;
     [SerializeField] private GameObject countdown;
     [SerializeField] private GameObject countdownCanvas;
     [SerializeField] EventSystem es;
+    [SerializeField] float CountdownTime = 4;
 
     private PlaceTrap pt;
     private CastSpell cs;
     private PlayerOneMovement playerMov;
     private GameObject activeCountdown;
+    [SerializeField] private PauseMenu pause;
 
     private Vector3 TargetPosition;
     private bool once = false;
@@ -32,7 +33,7 @@ public class BeginGo : MonoBehaviour {
     void Start () {
         pt = playerTwo.GetComponent<PlaceTrap>();
         cs = playerTwo.GetComponent<CastSpell>();
-        playerMov = playerOne.GetComponent<PlayerOneMovement>();
+        playerMov = playerOne.GetComponent<PlayerOneMovement>(); 
 
         TargetPosition = new Vector3(camTop.transform.position.x, 21, camTop.transform.position.z + 5);
 
@@ -48,7 +49,7 @@ public class BeginGo : MonoBehaviour {
         pt.InputEnabled = false;
         cs.InputEnabled = false;
         playerMov.InputEnabled = false;
-        GameIsPaused = true;
+        pause.GameIsPaused = true;
 
     }
 
@@ -71,9 +72,9 @@ public class BeginGo : MonoBehaviour {
     {
         once = true;
         countdownCanvas.SetActive(true);
-        activeCountdown.SetActive(true);   
- 
-        yield return new WaitForSeconds(4);
+        activeCountdown.SetActive(true);
+
+        yield return new WaitForSeconds(CountdownTime);
         Destroy(activeCountdown);
         countdownCanvas.SetActive(false);
 
@@ -86,6 +87,6 @@ public class BeginGo : MonoBehaviour {
         pt.InputEnabled = true;
         cs.InputEnabled = true;
         playerMov.InputEnabled = true;
-        GameIsPaused = false;
+        pause.GameIsPaused = false;
     }
 }
