@@ -39,7 +39,6 @@ public class MoveVines : MonoBehaviour {
             offset.Add(Random.Range(0, 2 * Mathf.PI));
             multiplier.Add(Random.Range(1, curvinessUpperLimit));
         }
-        Debug.Log(vines.Count);
 
         //Initialize variables
         speed = vineStartSpeed;
