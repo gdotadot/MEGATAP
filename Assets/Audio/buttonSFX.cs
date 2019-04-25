@@ -11,7 +11,7 @@ public class buttonSFX : MonoBehaviour {
 
 
 	public void HoverSound(){
-			myFx.PlayOneShot(hoverFx);
+		myFx.PlayOneShot(hoverFx);
 	}
 
 	public void ClickSound(){
