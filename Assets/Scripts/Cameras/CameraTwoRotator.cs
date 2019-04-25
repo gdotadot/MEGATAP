@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Cinemachine;
 //<alexc> This class rotates and moves the Player 2 (right side camera) on a given input.
 public class CameraTwoRotator : MonoBehaviour {
     [Header("Programmers - GameObjects/Scripts -----")]
@@ -13,8 +13,9 @@ public class CameraTwoRotator : MonoBehaviour {
     [SerializeField] private GameManager gm;
 
     [Header("Designers - Speeds & Offsets -----")]
-    [SerializeField] private float rotateSpeed;
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float zoomOutAmount;
+    [SerializeField] private float moveUpSlowMultiplier;
     [SerializeField] private int offsetFromAbove;
 
     //Change these static variables iff tower is scaled
@@ -43,9 +44,12 @@ public class CameraTwoRotator : MonoBehaviour {
     private PauseMenu pause;
     private InputManager inputManager;
 
+    private CinemachineVirtualCamera cinemachineCam;
+
     private void Awake()
     {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        cinemachineCam = playerTwoCam.GetComponent<CinemachineVirtualCamera>();
     }
     private void Start()
     {
@@ -89,19 +93,20 @@ public class CameraTwoRotator : MonoBehaviour {
                         floor++;
                         //cameraTarget.transform.position = new Vector3(cameraTarget.transform.position.x, cameraTarget.transform.position.y + 20, cameraTarget.transform.position.z);
 
-                        StartMove(basePositions[0], baseRotations[0], 1);
+                        StartMove(basePositions[0], baseRotations[0], 1, moveSpeed * moveUpSlowMultiplier);
+                        StartCoroutine(ChangeFOV(moveSpeed * moveUpSlowMultiplier));
                     }
                 }
                 else
                 {
-                    StartMove(basePositions[currentPos], baseRotations[currentPos], currentPos + 1);
+                    StartMove(basePositions[currentPos], baseRotations[currentPos], currentPos + 1, moveSpeed);
                 }
             }
         }
     }
 
     //Initialize camera movement variables and start movement coroutine
-    private void StartMove(Vector3 goalPos, Quaternion goalRot, int goal)
+    private void StartMove(Vector3 goalPos, Quaternion goalRot, int goal, float time)
     {
         currentPos = goal;
 
@@ -110,11 +115,11 @@ public class CameraTwoRotator : MonoBehaviour {
             StopCoroutine(camTween);
         }
         //Tween the vcam rotation
-        camTween = TweenToPosition(goalPos, goalRot, rotateSpeed);
+        camTween = TweenToPosition(goalPos, goalRot, time);
         StartCoroutine(camTween);
 
         //Tween the targets (at edges of face) rotation - vcam will follow at this speed
-        targetTween = TargetTween(goalPos, goalRot, moveSpeed);
+        targetTween = TargetTween(goalPos, goalRot, time);
         StartCoroutine(targetTween);
 
 
@@ -164,6 +169,26 @@ public class CameraTwoRotator : MonoBehaviour {
 
         moveEnabled = true;
         camTween = null;
+    }
+
+    private IEnumerator ChangeFOV(float time)
+    {
+        float normalFOV = cinemachineCam.m_Lens.FieldOfView;
+        float zoomedFOV = cinemachineCam.m_Lens.FieldOfView - zoomOutAmount;
+
+        cinemachineCam.m_Lens.FieldOfView = zoomedFOV;
+
+        for (float t = 0; t < time / 2; t += Time.deltaTime)
+        {
+            cinemachineCam.m_Lens.FieldOfView = Mathf.Lerp(normalFOV, zoomedFOV, t / time);
+            yield return null;
+        }
+
+        for (float t = time / 2; t < time; t += Time.deltaTime)
+        {
+            cinemachineCam.m_Lens.FieldOfView = Mathf.Lerp(zoomedFOV, normalFOV, t / time);
+            yield return null;
+        }
     }
 
     //Rotate and move worldspace grid UI with camera
