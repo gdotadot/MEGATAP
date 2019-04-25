@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 223823214118595238}
   - component: {fileID: 114367813062257108}
   - component: {fileID: 114697553565266356}
-  - component: {fileID: 222397161959366490}
+  - component: {fileID: 222260236228074762}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -636,8 +636,9 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: cfdf7857ea455f245b88d33ff8aa52f5, type: 2}
+  m_sharedMaterial: {fileID: 21511166922184380, guid: cfdf7857ea455f245b88d33ff8aa52f5,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1351,6 +1352,13 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1908971397553786}
   m_CullTransparentMesh: 0
+--- !u!222 &222260236228074762
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1936333090928394}
+  m_CullTransparentMesh: 0
 --- !u!222 &222339670575985626
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -1364,13 +1372,6 @@ CanvasRenderer:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1849702407071890}
-  m_CullTransparentMesh: 0
---- !u!222 &222397161959366490
-CanvasRenderer:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1936333090928394}
   m_CullTransparentMesh: 0
 --- !u!222 &222455329636128028
 CanvasRenderer:

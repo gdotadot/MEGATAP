@@ -13,8 +13,11 @@ public class MainMenu : MonoBehaviour {
 
     private CheckControllers checkControllers;
 
+    private GameObject inputManager;
+
     private void Awake()
     {
+        inputManager = GameObject.Find("InputManager");
         //int musicPlayerCount = 0;
         //while(GameObject.Find("MusicPlayer") != null)
         //{
@@ -30,17 +33,32 @@ public class MainMenu : MonoBehaviour {
 
         //Detect controller connection & if connected, set selected button
         checkControllers = GetComponent<CheckControllers>();
-        if(checkControllers.GetControllerOneState())
+        if(checkControllers.GetControllerOneState() || checkControllers.GetControllerTwoState())
         {
             es.SetSelectedGameObject(menuButtons[0].gameObject);
         }
 	}
 
+    private void Update()
+    {
+        if ((checkControllers.GetControllerOneState() || checkControllers.GetControllerTwoState()) && es.currentSelectedGameObject == null)
+        {
+            es.SetSelectedGameObject(menuButtons[0].gameObject);
+        }
+    }
+
     public void OnClickPlay()
     {
-        //SceneManager.LoadScene("Control");
-        //Initiate.Fade("Tower1", Color.black, 2);
-        Initiate.Fade("Tutorial", Color.black, 2);
+        CheckControllers cc = inputManager.GetComponent<CheckControllers>();
+
+        if(cc.GetControllerOneState() && cc.GetControllerTwoState())
+        {
+            SceneManager.LoadScene("CharacterSelect");
+        }
+        else
+        {
+            SceneManager.LoadScene("Tutorial");
+        }
     }
     
     public void QuitGame()

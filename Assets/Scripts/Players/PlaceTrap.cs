@@ -63,6 +63,7 @@ public class PlaceTrap : MonoBehaviour {
     private InputManager inputManager;
 
     private int numTimesRotated = 0;
+    private bool atTop = false;
 
     private void Awake()
     {
@@ -83,8 +84,8 @@ public class PlaceTrap : MonoBehaviour {
         trapQueue.transform.SetAsLastSibling();
 
         //Handle cursor or set buttons if controller connected
-        checkControllers = gameManager.GetComponent<CheckControllers>();
-        p2Controller = checkControllers.GetControllerTwoState();
+        checkControllers = inputManager.GetComponent<CheckControllers>();
+        p2Controller = checkControllers.GetTopPlayerControllerState();
 
         if (p2Controller)
         {
@@ -98,7 +99,7 @@ public class PlaceTrap : MonoBehaviour {
         MoveGhost();
 
         //Get controller select
-        p2Controller = checkControllers.GetControllerTwoState();
+        p2Controller = checkControllers.GetTopPlayerControllerState();
         if (p2Controller && !pause.GameIsPaused)
         {
             if (inputManager.GetButtonDown(InputCommand.TopPlayerSelect) && InputEnabled)
@@ -659,4 +660,16 @@ public class PlaceTrap : MonoBehaviour {
             }
         }
     }
+
+    //Getter
+    public bool LastFace()
+    {
+        if (numTimesRotated == 4 * (tower.GetComponentInChildren<NumberOfFloors>().NumFloors - 1) - 1)
+        {
+            atTop = true;
+        }
+        return atTop;
+    }
 }
+
+

@@ -317,7 +317,7 @@ public class PlayerOneMovement : MonoBehaviour {
             bool raycastDown = Physics.Raycast(transform.position, -transform.up, out downHit, 1);
             if (Physics.Raycast(transform.position, transform.forward, out hit, 1.5f) && !raycastDown)
             {
-                if (hit.transform.tag == "Platform" && Input.GetButtonDown("Jump_Joy_1") && grounded == false && move == true)
+                if (hit.transform.tag == "Platform" && inputManager.GetButtonDown(InputCommand.BottomPlayerJump) && grounded == false && move == true)
                 {
                     animator.Play("Wall Jump", 0);
                     wallJumpVector = (-transform.forward + transform.up / wallJumpDirectionDivider).normalized * (jumpH / wallJumpDivider);

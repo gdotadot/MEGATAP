@@ -309,6 +309,7 @@ MonoBehaviour:
   trapPlacementGood: {fileID: 8300000, guid: 6f7b61c54b3d3904d9e08ffdca119496, type: 3}
   trapPlacementBad: {fileID: 8300000, guid: 146332e6c2633ee4bbced98f867e9780, type: 3}
   queueSize: 7
+  InputEnabled: 1
 --- !u!114 &114871698429783546
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -322,6 +323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   queueSize: 3
   verticalSpellSpawnHeight: 100
+  CooldownReductionPercentage: 0.25
   tower: {fileID: 0}
   spellButtons:
   - {fileID: 1113329559578948, guid: 9caafb2bc87b57a46a16da291b5e206d, type: 2}
@@ -349,6 +351,7 @@ MonoBehaviour:
   - {fileID: 1424637060701814, guid: e34ed2dd750177e4ba19c7100de1f5df, type: 2}
   - {fileID: 1424637060701814, guid: 5d4a7e903769c9245a97278745db2832, type: 2}
   placeEnabled: 0
+  InputEnabled: 1
 --- !u!136 &136189357046121884
 CapsuleCollider:
   m_ObjectHideFlags: 1
