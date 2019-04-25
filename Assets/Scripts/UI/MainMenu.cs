@@ -51,7 +51,7 @@ public class MainMenu : MonoBehaviour {
     {
         CheckControllers cc = inputManager.GetComponent<CheckControllers>();
 
-        if(cc.GetControllerOneState() && cc.GetControllerTwoState())
+        if(cc.GetControllerOneState() || cc.GetControllerTwoState())
         {
             SceneManager.LoadScene("CharacterSelect");
         }

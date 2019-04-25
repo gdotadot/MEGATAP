@@ -11,7 +11,7 @@ public class CheckControllers : MonoBehaviour {
     private bool controllerTwo;
     //whether the TOP and BOTTOM players controllers are PLUGGED IN
     //thise will not necessarily correspond to controllerOne/controllerTwo if the character selection decides differently
-    private bool topPlayersController;
+    public bool topPlayersController;
     private bool bottomPlayersController;
 
     private Canvas canvas;
@@ -49,7 +49,6 @@ public class CheckControllers : MonoBehaviour {
     private void Update()
     {
         CheckConnected();
-
         if (topPlayersController)
         {
             Cursor.visible = false;
@@ -67,8 +66,9 @@ public class CheckControllers : MonoBehaviour {
                 }
             }
         }
-        else
+        else if (!inputManager.P1IsTop && !controllerOne)
         {
+            Debug.Log("Top False");
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             if (canvas != null && eventVars != null && topPlayersController)
@@ -89,7 +89,8 @@ public class CheckControllers : MonoBehaviour {
     private void CheckConnected()
     {
         joysticks = Input.GetJoystickNames();
-        if (joysticks.Length > 0)
+
+        if (joysticks.Length == 2)
         {
             for (int i = 0; i < joysticks.Length; i++)
             {
@@ -130,6 +131,7 @@ public class CheckControllers : MonoBehaviour {
                         if (inputManager.P1IsTop)
                         {
                             topPlayersController = false;
+                            Debug.Log("1");
                         }
                         else //if P1 is bottom
                         {
@@ -145,11 +147,25 @@ public class CheckControllers : MonoBehaviour {
                         }
                         else // if P1 is bottom / p2 is top
                         {
+                            Debug.Log("Else");
                             topPlayersController = false;
                         }
 
                     }
                 }
+            }
+        }
+        else if(joysticks.Length == 1)
+        {
+            controllerOne = false;
+            controllerTwo = true;
+            if (inputManager.P1IsTop)
+            {
+                bottomPlayersController = true;
+            }
+            else // if P1 is bottom / p2 is top
+            {
+                //topPlayersController = true;
             }
         }
         else
