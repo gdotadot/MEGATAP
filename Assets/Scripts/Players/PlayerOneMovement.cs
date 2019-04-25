@@ -344,6 +344,18 @@ public class PlayerOneMovement : MonoBehaviour {
         InputEnabled = true;
     }
 
+    public IEnumerator SpeedBoost(Collider other, float speedUpMultiplier, float speedUpDuration)
+    {
+        other.GetComponent<PlayerOneMovement>().SetSpedUp(true);
+        other.GetComponent<PlayerOneMovement>().SetSpeed(other.GetComponent<PlayerOneMovement>().GetSpeed() * speedUpMultiplier);
+        yield return new WaitForSeconds(speedUpDuration);
+        other.GetComponent<PlayerOneMovement>().SetSpedUp(false);
+        other.GetComponent<PlayerOneMovement>().SetSpeed(other.GetComponent<PlayerOneMovement>().GetConstantSpeed());
+
+        spedUp = false;
+        other.GetComponent<PlayerOneStats>().pickupCount = 0;
+    }
+
     /////////////////////////////////////////////
     // GETTERS AND SETTERS                     //
     /////////////////////////////////////////////
@@ -375,6 +387,11 @@ public class PlayerOneMovement : MonoBehaviour {
     public void SetSpedUp(bool s)
     {
         spedUp = s;
+    }
+
+    public bool GetSpedUp()
+    {
+        return spedUp;
     }
 
     public float GetConstantSpeed()
