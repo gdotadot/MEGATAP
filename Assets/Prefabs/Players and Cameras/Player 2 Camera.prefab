@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1611476453772502}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00000047683716, y: 29.999998, z: -80.20629}
+  m_LocalPosition: {x: 0, y: 29.999998, z: -80.20629}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -52,7 +52,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.19215688, g: 0.34388143, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -148,10 +148,10 @@ MonoBehaviour:
   tower: {fileID: 0}
   playerTwoCam: {fileID: 0}
   gridUI: {fileID: 0}
+  gridToggle: {fileID: 0}
   cameraTarget: {fileID: 0}
   gm: {fileID: 0}
-  faceTwoInstructions: {fileID: 0}
-  faceOneInstructions: {fileID: 0}
-  rotateSpeed: 0.5
   moveSpeed: 0.5
+  zoomOutAmount: 35
+  moveUpSlowMultiplier: 1.7
   offsetFromAbove: 10
