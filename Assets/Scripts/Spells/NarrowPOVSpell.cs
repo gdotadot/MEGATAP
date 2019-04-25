@@ -16,7 +16,7 @@ public class NarrowPOVSpell : MonoBehaviour {
     [SerializeField] private AudioClip clip;
     private void Start()
     {
-    	 audioSource = GetComponent<AudioSource>();
+    	audioSource = GetComponent<AudioSource>();
         audioSource.PlayOneShot(clip);
         sb = GetComponent<SpellBase>();
     }

@@ -68,6 +68,7 @@ public class Petrify : MonoBehaviour {
     {
         if (other.tag == "Player")
         {
+        	audioSource.PlayOneShot(clip);
             hit = true;
             player = other.gameObject;
             anim = player.gameObject.GetComponent<PlayerOneMovement>().GetAnim();
@@ -81,7 +82,7 @@ public class Petrify : MonoBehaviour {
         {
             Destroy(this.gameObject);
         }
-         audioSource.PlayOneShot(clip);
+         
     }
 
     private void Revert()
