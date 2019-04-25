@@ -163,7 +163,7 @@ public class CheckControllers : MonoBehaviour {
             }
             else // if P1 is bottom / p2 is top
             {
-                topPlayersController = true;
+                //topPlayersController = true;
             }
         }
         else

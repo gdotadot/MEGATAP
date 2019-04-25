@@ -56,7 +56,16 @@ public class CharacterSelect : MonoBehaviour {
                 stickMove = false;
                 StartCoroutine(StickDelay());
             }
-
+            if(Input.GetMouseButtonDown(0) && Input.mousePosition.x >= Screen.width / 2)
+            {
+                playerOneSelector.transform.position = new Vector2(Screen.width / 2 + quarterDist, playerOnePos.y);
+                selectorOneState = 1;
+            }
+            if (Input.GetMouseButtonDown(0) && Input.mousePosition.x <= Screen.width / 2)
+            {
+                playerOneSelector.transform.position = new Vector2(Screen.width / 2 - quarterDist, playerOnePos.y);
+                selectorOneState = -1;
+            }
             //Controller 1 movement
             if (Input.GetAxis("Horizontal_Joy_1_Stick") > stickSensitivity && selectorTwoState < 1 && stickMove)
             {
