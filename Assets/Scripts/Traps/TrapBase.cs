@@ -81,7 +81,6 @@ public class TrapBase : MonoBehaviour {
     // method to decide how many frames force is applied.
     public void KnockBack(GameObject obj, int knockBackDistance, int knockUpDistance)
     {
-        Debug.Log(playerx + " " + playery + " " + playerz);
         // find out which way the player is facing (on faces of the tower) so the knock can do accordingly
         int playerDirection = obj.gameObject.GetComponent<PlayerOneMovement>().GetState();
         Rigidbody rb = obj.gameObject.GetComponent<Rigidbody>();
