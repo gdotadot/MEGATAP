@@ -14,7 +14,7 @@ public class MoveVines : MonoBehaviour {
     private List<GameObject> vines;
 
     //Current position along tower
-    private int face = 0, floor = 1;
+    private int face = 1, floor = 1;
 
     //Bools to help with moving the vines up
     private bool moveUp;                 //true while the vines are moving up
@@ -65,16 +65,16 @@ public class MoveVines : MonoBehaviour {
     {
         switch (face)
         {
-            case 0:
+            case 1:
                 p.transform.position += new Vector3(speed, multiplier[num] * Mathf.Sin(p.transform.position.x + offset[num]), 0) * Time.deltaTime;
                 break;
-            case 1:
+            case 2:
                 p.transform.position += new Vector3(0, multiplier[num] * Mathf.Sin(p.transform.position.z + offset[num]), speed) * Time.deltaTime;
                 break;
-            case 2:
+            case 3:
                 p.transform.position -= new Vector3(speed, multiplier[num] * Mathf.Sin(p.transform.position.x + offset[num]), 0) * Time.deltaTime;
                 break;
-            case 3:
+            case 4:
                 p.transform.position -= new Vector3(0, multiplier[num] * Mathf.Sin(p.transform.position.z + offset[num]), speed) * Time.deltaTime;
                 break;
         }
@@ -89,7 +89,7 @@ public class MoveVines : MonoBehaviour {
         {
             speed += speedIncreasePerFace;
             Rotate();
-            face = 1;
+            face = 2;
             movedUpThisFloor = false;
         }
         //Second to Third Face
@@ -97,21 +97,21 @@ public class MoveVines : MonoBehaviour {
         {
             speed += speedIncreasePerFace;
             Rotate();
-            face = 2;
+            face = 3;
         }
         //Third to Fourth Face
         if (p.transform.position.x <= -43 && p.transform.position.z >= 40 && face == 2)
         {
             speed += speedIncreasePerFace;
             Rotate();
-            face = 3;
+            face = 4;
         }
         //Fourth to First face -- Rotating
         if (p.transform.position.x <= -40 && p.transform.position.z <= -43 && face == 3 && floor <= 5)
         {
             speed += speedIncreasePerFace;
             Rotate();
-            face = 0;
+            face = 1;
         }
     }
 
@@ -141,5 +141,15 @@ public class MoveVines : MonoBehaviour {
                 floor++;
             }
         }
+    }
+
+    public int GetVineFace()
+    {
+        return face;
+    }
+
+    public int GetVineFloor()
+    {
+        return floor;
     }
 }
