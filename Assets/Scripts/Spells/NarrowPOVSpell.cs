@@ -12,8 +12,12 @@ public class NarrowPOVSpell : MonoBehaviour {
 
     private SpellBase sb;
 
+	private AudioSource audioSource;
+    [SerializeField] private AudioClip clip;
     private void Start()
     {
+    	audioSource = GetComponent<AudioSource>();
+        audioSource.PlayOneShot(clip);
         sb = GetComponent<SpellBase>();
     }
     private void Update()
