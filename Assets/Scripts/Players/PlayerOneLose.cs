@@ -4,28 +4,24 @@ using UnityEngine;
 
 public class PlayerOneLose : MonoBehaviour {
     private bool lose;
-    [SerializeField] Timer timer;
-    private float time;
+    private CameraOneRotator cam;
+    [SerializeField] MoveVines vines;
 
-	// Use this for initialization
-	void Start () {
+
+
+    private void Start () {
         lose = false;
+        cam = GetComponent<CameraOneRotator>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-  //      time = timer.getTime();
-		//if(time < 0)
-  //      {
-  //          lose = true;
-  //          GameOver();
-  //      }
+
+	private void Update () {
+
     }
 
     void OnTriggerEnter(Collider other)
     {
         //check collision with Rising walls that are tagged with "rise"
-        if (other.tag == "Vine")
+        if (other.tag == "Vine" && cam.GetFloor() == vines.GetVineFloor())
         {
             lose = true;
             GameOver();

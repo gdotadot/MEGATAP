@@ -85,7 +85,7 @@ public class MoveVines : MonoBehaviour {
     private void CheckRotate(GameObject p)
     {
         //First to Second Face
-        if (p.transform.position.x >= 43 && p.transform.position.z <= -40 && face == 0)
+        if (p.transform.position.x >= 43 && p.transform.position.z <= -40 && face == 1)
         {
             speed += speedIncreasePerFace;
             Rotate();
@@ -93,21 +93,21 @@ public class MoveVines : MonoBehaviour {
             movedUpThisFloor = false;
         }
         //Second to Third Face
-        if (p.transform.position.x >= 40 && p.transform.position.z >= 43 && face == 1)
+        if (p.transform.position.x >= 40 && p.transform.position.z >= 43 && face == 2)
         {
             speed += speedIncreasePerFace;
             Rotate();
             face = 3;
         }
         //Third to Fourth Face
-        if (p.transform.position.x <= -43 && p.transform.position.z >= 40 && face == 2)
+        if (p.transform.position.x <= -43 && p.transform.position.z >= 40 && face == 3)
         {
             speed += speedIncreasePerFace;
             Rotate();
             face = 4;
         }
         //Fourth to First face -- Rotating
-        if (p.transform.position.x <= -40 && p.transform.position.z <= -43 && face == 3 && floor <= 5)
+        if (p.transform.position.x <= -40 && p.transform.position.z <= -43 && face == 4 && floor < 5)
         {
             speed += speedIncreasePerFace;
             Rotate();
