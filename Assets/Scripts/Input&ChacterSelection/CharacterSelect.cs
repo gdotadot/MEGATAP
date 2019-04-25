@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class CharacterSelect : MonoBehaviour {
     private InputManager inputManager;
+    private CheckControllers checkControllers;
+
     [SerializeField] private Image playerOneSelector;
     [SerializeField] private Image playerTwoSelector;
     [SerializeField] private GameObject startText;
@@ -23,6 +25,12 @@ public class CharacterSelect : MonoBehaviour {
     private void Awake()
     {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        checkControllers = GameObject.Find("InputManager").GetComponent<CheckControllers>();
+
+        if(!checkControllers.GetControllerOneState())
+        {
+            stickDelay *= 2;
+        }
     }
 
 	private void Update () {
@@ -30,40 +38,82 @@ public class CharacterSelect : MonoBehaviour {
         Vector2 playerTwoPos = playerTwoSelector.transform.position;
         quarterDist = Screen.width / 4;
 
-        //Controller 1 movement
-        if (Input.GetAxis("Horizontal_Joy_1_Stick") > stickSensitivity && selectorOneState < 1 && stickMove)
+
+        //If only one controller is plugged in
+        if(!checkControllers.GetControllerOneState())
         {
-            playerOneSelector.transform.position = new Vector2(playerOnePos.x + quarterDist, playerOnePos.y);
-            selectorOneState++;
-            stickMove = false;
-            StartCoroutine(StickDelay());
+            if (Input.GetAxis("Horizontal_Keyboard") > 0 && selectorOneState < 1 && stickMove)
+            {
+                playerOneSelector.transform.position = new Vector2(playerOnePos.x + quarterDist, playerOnePos.y);
+                selectorOneState++;
+                stickMove = false;
+                StartCoroutine(StickDelay());
+            }
+            if (Input.GetAxis("Horizontal_Keyboard") < 0 && selectorOneState > -1 && stickMove)
+            {
+                playerOneSelector.transform.position = new Vector2(playerOnePos.x - quarterDist, playerOnePos.y);
+                selectorOneState--;
+                stickMove = false;
+                StartCoroutine(StickDelay());
+            }
+
+            //Controller 1 movement
+            if (Input.GetAxis("Horizontal_Joy_1_Stick") > stickSensitivity && selectorTwoState < 1 && stickMove)
+            {
+                playerTwoSelector.transform.position = new Vector2(playerTwoPos.x + quarterDist, playerTwoPos.y);
+                selectorTwoState++;
+                stickMove = false;
+                StartCoroutine(StickDelay());
+            }
+            if (Input.GetAxis("Horizontal_Joy_1_Stick") < -stickSensitivity && selectorTwoState > -1 && stickMove)
+            {
+                playerTwoSelector.transform.position = new Vector2(playerTwoPos.x - quarterDist, playerTwoPos.y);
+                selectorTwoState--;
+                stickMove = false;
+                StartCoroutine(StickDelay());
+            }
         }
-        if (Input.GetAxis("Horizontal_Joy_1_Stick") < -stickSensitivity && selectorOneState > -1 && stickMove)
+        //If both controllers plugged in
+        else
         {
-            playerOneSelector.transform.position = new Vector2(playerOnePos.x - quarterDist, playerOnePos.y);
-            selectorOneState--;
-            stickMove = false;
-            StartCoroutine(StickDelay());
+            //Controller 1 movement
+            if (Input.GetAxis("Horizontal_Joy_1_Stick") > stickSensitivity && selectorOneState < 1 && stickMove)
+            {
+                playerOneSelector.transform.position = new Vector2(playerOnePos.x + quarterDist, playerOnePos.y);
+                selectorOneState++;
+                stickMove = false;
+                StartCoroutine(StickDelay());
+            }
+            if (Input.GetAxis("Horizontal_Joy_1_Stick") < -stickSensitivity && selectorOneState > -1 && stickMove)
+            {
+                playerOneSelector.transform.position = new Vector2(playerOnePos.x - quarterDist, playerOnePos.y);
+                selectorOneState--;
+                stickMove = false;
+                StartCoroutine(StickDelay());
+            }
+
+            //Controller 2 movement
+            if (Input.GetAxis("Horizontal_Joy_2_Stick") > stickSensitivity && selectorTwoState < 1 && stickMove)
+            {
+                playerTwoSelector.transform.position = new Vector2(playerTwoPos.x + quarterDist, playerTwoPos.y);
+                selectorTwoState++;
+                stickMove = false;
+                StartCoroutine(StickDelay());
+            }
+            if (Input.GetAxis("Horizontal_Joy_2_Stick") < -stickSensitivity && selectorTwoState > -1 && stickMove)
+            {
+                playerTwoSelector.transform.position = new Vector2(playerTwoPos.x - quarterDist, playerTwoPos.y);
+                selectorTwoState--;
+                stickMove = false;
+                StartCoroutine(StickDelay());
+            }
         }
 
-        //Controller 2 movement
-        if (Input.GetAxis("Horizontal_Joy_2_Stick") > stickSensitivity && selectorTwoState < 1 && stickMove)
-        {
-            playerTwoSelector.transform.position = new Vector2(playerTwoPos.x + quarterDist, playerTwoPos.y);
-            selectorTwoState++;
-            stickMove = false;
-            StartCoroutine(StickDelay());
-        }
-        if (Input.GetAxis("Horizontal_Joy_2_Stick") < -stickSensitivity && selectorTwoState > -1 && stickMove)
-        {
-            playerTwoSelector.transform.position = new Vector2(playerTwoPos.x - quarterDist, playerTwoPos.y);
-            selectorTwoState--;
-            stickMove = false;
-            StartCoroutine(StickDelay());
-        }
 
         //Check characters selected are opposite
-        if(selectorOneState == -selectorTwoState && selectorOneState != 0)
+        Debug.Log(selectorOneState + ", " + selectorTwoState);
+
+        if (selectorOneState == -selectorTwoState && selectorOneState != 0)
         {
             startText.SetActive(true);
             if(inputManager.GetButton(InputCommand.Start))

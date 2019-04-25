@@ -89,7 +89,8 @@ public class CheckControllers : MonoBehaviour {
     private void CheckConnected()
     {
         joysticks = Input.GetJoystickNames();
-        if (joysticks.Length > 0)
+
+        if (joysticks.Length == 2)
         {
             for (int i = 0; i < joysticks.Length; i++)
             {
@@ -150,6 +151,19 @@ public class CheckControllers : MonoBehaviour {
 
                     }
                 }
+            }
+        }
+        else if(joysticks.Length == 1)
+        {
+            controllerOne = false;
+            controllerTwo = true;
+            if (inputManager.P1IsTop)
+            {
+                bottomPlayersController = true;
+            }
+            else // if P1 is bottom / p2 is top
+            {
+                topPlayersController = true;
             }
         }
         else
