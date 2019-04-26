@@ -203,6 +203,7 @@ GameObject:
   - component: {fileID: 4477508196758866}
   - component: {fileID: 65885247116116192}
   - component: {fileID: 114761745937933984}
+  - component: {fileID: 82614288575834314}
   m_Layer: 0
   m_Name: PickUp
   m_TagString: PickUp
@@ -432,6 +433,101 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.0868835, y: 1.6521606, z: 1}
   m_Center: {x: 0.19709778, y: -0.0071868896, z: 0}
+--- !u!82 &82614288575834314
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1862569287545682}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!95 &95539504296736164
 Animator:
   serializedVersion: 3
@@ -463,6 +559,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedUpDuration: 7
   speedUpMultiplier: 3
+  pickUpSFX1: {fileID: 8300000, guid: 8cda1e7d64293904a83ba31a3109326d, type: 3}
+  pickUpSFX2: {fileID: 8300000, guid: 7460042bde733a545a3ae7563cbfb9ad, type: 3}
+  pickUpSFX3: {fileID: 8300000, guid: 93f2f340eb8b5544e8f49f67bb4f04dd, type: 3}
+  speedBoostSFX: {fileID: 8300000, guid: e06853b6be043644f89a1ab20dc6cbe8, type: 3}
 --- !u!137 &137747645769824856
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
