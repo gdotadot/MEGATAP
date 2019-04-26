@@ -76,7 +76,7 @@ GameObject:
   - component: {fileID: 114893840394271494}
   - component: {fileID: 65076818654562268}
   - component: {fileID: 114105927209140518}
-  - component: {fileID: 114877820355799240}
+  - component: {fileID: 114832420465715662}
   - component: {fileID: 82024968198977080}
   m_Layer: 0
   m_Name: LogRollerTrap
@@ -462,7 +462,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &114877820355799240
+--- !u!114 &114832420465715662
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -473,6 +473,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cda7fa4f7d6ee554181097e5fab80468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeToShoot: 4
+  FaceNumberIfPrePlaced: 0
+  logPrefab: {fileID: 1285720713934524, guid: 76eb3dc14565eda4dbcdda195b173f41, type: 2}
+  speed: 20
 --- !u!114 &114893840394271494
 MonoBehaviour:
   m_ObjectHideFlags: 1
