@@ -68,7 +68,6 @@ public class CheckControllers : MonoBehaviour {
         }
         else if (!inputManager.P1IsTop && !controllerOne)
         {
-            Debug.Log("Top False");
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             if (canvas != null && eventVars != null && topPlayersController)
