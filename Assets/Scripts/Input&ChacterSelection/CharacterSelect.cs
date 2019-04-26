@@ -64,14 +64,14 @@ public class CharacterSelect : MonoBehaviour {
         if(!checkControllers.GetControllerOneState())
         {
             //Keyboard
-            if (Input.GetAxis("Vertical_Keyboard") > 0 && selectorOneState < 1 && stickMove)
+            if (Input.GetAxis("Vertical_Keyboard") < 0 && selectorOneState < 1 && stickMove)
             {
                 playerOneSelector.transform.position = new Vector2(playerOnePos.x, playerOnePos.y + quarterDist);
                 selectorOneState++;
                 stickMove = false;
                 StartCoroutine(StickDelay());
             }
-            if (Input.GetAxis("Vertical_Keyboard") < 0 && selectorOneState > -1 && stickMove)
+            if (Input.GetAxis("Vertical_Keyboard") > 0 && selectorOneState > -1 && stickMove)
             {
                 playerOneSelector.transform.position = new Vector2(playerOnePos.x, playerOnePos.y - quarterDist);
                 selectorOneState--;
@@ -80,12 +80,12 @@ public class CharacterSelect : MonoBehaviour {
             }
 
             //Mouse clicks
-            if(Input.GetMouseButtonDown(0) && Input.mousePosition.x >= Screen.height / 2)
+            if(Input.GetMouseButtonDown(0) && Input.mousePosition.y >= Screen.height / 2)
             {
                 playerOneSelector.transform.position = new Vector2(playerOnePos.x, Screen.height / 2 + quarterDist);
                 selectorOneState = 1;
             }
-            if (Input.GetMouseButtonDown(0) && Input.mousePosition.x <= Screen.height / 2)
+            if (Input.GetMouseButtonDown(0) && Input.mousePosition.y <= Screen.height / 2)
             {
                 playerOneSelector.transform.position = new Vector2(playerOnePos.x, Screen.height / 2 - quarterDist);
                 selectorOneState = -1;
