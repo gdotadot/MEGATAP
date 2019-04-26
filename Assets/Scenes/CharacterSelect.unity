@@ -2113,11 +2113,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd8a341df45f6cc47a7cb518cb47f39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stickSensitivity: 0.6
+  stickDelay: 0.2
   playerOneSelector: {fileID: 726055245}
   playerTwoSelector: {fileID: 1650017821}
-  startText: {fileID: 756186909}
-  stickSensitivity: 0.6
-  stickDelay: 0.1
+  topBackgroundObj: {fileID: 311905744}
+  botBackgroundObj: {fileID: 383935197}
+  topCharObj: {fileID: 1678700912}
+  bottomCharObj: {fileID: 1399595730}
+  topBackgroundColored: {fileID: 21300000, guid: b860d0d6aeda32846a3695a35365a283,
+    type: 3}
+  topBackgroundGrey: {fileID: 21300000, guid: 10116970b7aa9d144a64eed9df13a457, type: 3}
+  bottomBackgroundColored: {fileID: 21300000, guid: ccb6952d68136b5488482d26ba635d1b,
+    type: 3}
+  bottomBackgroundGrey: {fileID: 21300000, guid: 740c5e799494b164b9fa3f6ba5598c17,
+    type: 3}
+  topCharColored: {fileID: 21300000, guid: 272460aef2b5053459133c4cbc8e6f40, type: 3}
+  topCharGrey: {fileID: 21300000, guid: 01de32590a3de014cb94bd1350cf1db3, type: 3}
+  bottomCharColored: {fileID: 21300000, guid: 8b01ea7a547abc9469c8b37d3f77640a, type: 3}
+  bottomCharGrey: {fileID: 21300000, guid: 7a5ab30dec4347a449f85ffb615c6e2d, type: 3}
+  controllerBlue: {fileID: 21300000, guid: 4542a77752c0c40448dc9ac909a9a61c, type: 3}
+  controllerRed: {fileID: 21300000, guid: 2e4a4f9c389523a40b1f36b86b5d765a, type: 3}
+  controllerGrey: {fileID: 21300000, guid: 9da04f8187db460438af24268e01f51c, type: 3}
 --- !u!4 &1939363268
 Transform:
   m_ObjectHideFlags: 0
