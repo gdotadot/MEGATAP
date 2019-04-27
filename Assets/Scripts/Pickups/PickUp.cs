@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class PickUp : MonoBehaviour {
 
-    [SerializeField] private float speedUpDuration = 7f;
-    [SerializeField] private float speedUpMultiplier = 3f;
+    [SerializeField] public float speedUpDuration = 7f;
+    [SerializeField] public float speedUpMultiplier = 2f;
     [SerializeField] private AudioClip pickUpSFX1;
     [SerializeField] private AudioClip pickUpSFX2;
     [SerializeField] private AudioClip pickUpSFX3;
-    [SerializeField] private AudioClip speedBoostSFX;
+
+    private bool active = true; // make sure only picks up once
 
     private AudioSource audioSource;
     // active correlates to whether or not the pickup is faded out or not
-    private bool active = true;
 
 	// Use this for initialization
 	void Start () {
@@ -40,7 +40,7 @@ public class PickUp : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
 
-        if (other.tag == "Player" && active == true)
+        if (other.tag == "Player" && other.GetComponent<PlayerOneStats>().pickupCount < 3 && active == true)
         {
             active = false;
             other.GetComponent<PlayerOneStats>().pickupCount++;
@@ -54,17 +54,9 @@ public class PickUp : MonoBehaviour {
             } else if (other.gameObject.GetComponent<PlayerOneStats>().pickupCount == 3)
             {
                 audioSource.PlayOneShot(pickUpSFX3);
-                audioSource.PlayOneShot(speedBoostSFX);
             }
 
             this.gameObject.transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().enabled = false;
-
-            // initiate speed up
-            if (GameObject.FindWithTag("Player").GetComponent<PlayerOneStats>().pickupCount >= 3)
-            {
-                other.GetComponent<PlayerOneMovement>().SetSpedUp(true);
-                StartCoroutine(other.GetComponent<PlayerOneMovement>().SpeedBoost(other, speedUpMultiplier, speedUpDuration));
-            }
         }
     }
 

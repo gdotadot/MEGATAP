@@ -37,6 +37,10 @@ public class PlayerOneMovement : MonoBehaviour {
 
     [SerializeField] private GameObject gameManager;
 
+    // sound 
+    [SerializeField] private AudioClip speedBoostSFX;
+    private AudioSource audioSource;
+
     private float inputAxis; //used to get input axis from controller/keyboard
     private InputManager inputManager;
 
@@ -53,6 +57,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private void Awake()
     {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start() {
@@ -247,6 +252,14 @@ public class PlayerOneMovement : MonoBehaviour {
         cantStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
 
         if(!pause.GameIsPaused) Move();
+
+        // initiate speed up
+        if (GameObject.FindWithTag("Player").GetComponent<PlayerOneStats>().pickupCount >= 3 && inputManager.GetButtonDown(InputCommand.BottomPlayerBoost))
+        {
+            spedUp = true;
+            audioSource.PlayOneShot(speedBoostSFX);
+            StartCoroutine(SpeedBoost(GameObject.FindWithTag("PickUp").GetComponent<PickUp>().speedUpMultiplier, GameObject.FindWithTag("PickUp").GetComponent<PickUp>().speedUpDuration));
+        }
     }
 
 
@@ -344,16 +357,16 @@ public class PlayerOneMovement : MonoBehaviour {
         InputEnabled = true;
     }
 
-    public IEnumerator SpeedBoost(Collider other, float speedUpMultiplier, float speedUpDuration)
+    public IEnumerator SpeedBoost(float speedUpMultiplier, float speedUpDuration)
     {
-        other.GetComponent<PlayerOneMovement>().SetSpedUp(true);
-        other.GetComponent<PlayerOneMovement>().SetSpeed(other.GetComponent<PlayerOneMovement>().GetSpeed() * speedUpMultiplier);
-        yield return new WaitForSeconds(speedUpDuration);
-        other.GetComponent<PlayerOneMovement>().SetSpedUp(false);
-        other.GetComponent<PlayerOneMovement>().SetSpeed(other.GetComponent<PlayerOneMovement>().GetConstantSpeed());
 
+        spedUp = true;
+        speed *= speedUpMultiplier;
+        yield return new WaitForSeconds(speedUpDuration);
         spedUp = false;
-        other.GetComponent<PlayerOneStats>().pickupCount = 0;
+        speed = moveSpeed;
+        spedUp = false;
+        gameObject.GetComponent<PlayerOneStats>().pickupCount = 0;
     }
 
     /////////////////////////////////////////////
