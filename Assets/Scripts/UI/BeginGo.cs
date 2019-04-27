@@ -82,6 +82,7 @@ public class BeginGo : MonoBehaviour {
 
         count.SetActive(false);
 
+        es.GetComponent<StandaloneInputModule>().submitButton = "Nothing";
 
 
         canvas.SetActive(true);
