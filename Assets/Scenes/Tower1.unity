@@ -3831,7 +3831,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1888857409}
   - component: {fileID: 1016487807}
-  - component: {fileID: 1888857408}
   - component: {fileID: 1016487809}
   - component: {fileID: 1016487810}
   - component: {fileID: 1888857411}
@@ -3843,18 +3842,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1888857408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1888857407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 998996880c9de0047a107e2b37bec39b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  topPlayersController: 0
 --- !u!4 &1888857409
 Transform:
   m_ObjectHideFlags: 0

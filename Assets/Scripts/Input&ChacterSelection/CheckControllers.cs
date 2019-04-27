@@ -48,6 +48,7 @@ public class CheckControllers : MonoBehaviour {
 
     private void Update()
     {
+        Debug.Log(topPlayersController);
         CheckConnected();
         if (topPlayersController)
         {
@@ -66,7 +67,7 @@ public class CheckControllers : MonoBehaviour {
                 }
             }
         }
-        else if (!inputManager.P1IsTop && !controllerOne)
+        else if ((!inputManager.P1IsTop && !controllerOne) || !topPlayersController)
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -169,6 +170,7 @@ public class CheckControllers : MonoBehaviour {
         }
         else
         {
+            Debug.Log("False");
             controllerOne = false;
             controllerTwo = false;
             topPlayersController = false;
