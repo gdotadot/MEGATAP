@@ -68,6 +68,8 @@ public class PlayerOneMovement : MonoBehaviour {
         stun = GetComponentInChildren<ParticleSystemRenderer>();
         pause = gameManager.GetComponent<PauseMenu>();
         sphere = GetComponent<SphereCollider>();
+        stun.enabled = false;
+        crouching = false;
 
         speed = moveSpeed;
         jumpH = jumpHeight;
@@ -260,6 +262,10 @@ public class PlayerOneMovement : MonoBehaviour {
             audioSource.PlayOneShot(speedBoostSFX);
             StartCoroutine(SpeedBoost(GameObject.FindWithTag("PickUp").GetComponent<PickUp>().speedUpMultiplier, GameObject.FindWithTag("PickUp").GetComponent<PickUp>().speedUpDuration));
         }
+        animator.SetBool("Landing", landing);
+        animator.SetBool("Grounded", grounded);
+        animator.SetBool("Crouched", crouching);
+        animator.SetFloat("YVelocity", rb.velocity.y);
     }
 
 
@@ -312,11 +318,6 @@ public class PlayerOneMovement : MonoBehaviour {
         {
             landing = true;
         }
-
-        animator.SetBool("Landing", landing);
-        animator.SetBool("Grounded", grounded);
-        animator.SetBool("Crouched", crouching);
-        animator.SetFloat("YVelocity", rb.velocity.y);
     }
 
 
