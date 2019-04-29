@@ -51,6 +51,7 @@ public class CharacterSelect : MonoBehaviour {
         if(!checkControllers.GetControllerOneState())
         {
             stickDelay *= 2;
+            inputManager.GetComponent<CheckControllers>().topPlayersController = false;
         }
     }
 

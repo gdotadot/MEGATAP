@@ -1355,7 +1355,6 @@ GameObject:
   m_Component:
   - component: {fileID: 856821951}
   - component: {fileID: 856821950}
-  - component: {fileID: 856821949}
   - component: {fileID: 856821948}
   - component: {fileID: 856821947}
   - component: {fileID: 856821946}
@@ -1499,17 +1498,6 @@ MonoBehaviour:
   playerTwo: {fileID: 0}
   playerOne: {fileID: 0}
   es: {fileID: 0}
---- !u!114 &856821949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 856821945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 998996880c9de0047a107e2b37bec39b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &856821950
 MonoBehaviour:
   m_ObjectHideFlags: 0

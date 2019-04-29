@@ -85,7 +85,7 @@ public class CastSpell : MonoBehaviour
         spellQueue.transform.SetAsLastSibling();
 
         //Handle cursor or set buttons if controller connected
-        p2Controller = gameManager.GetComponent<CheckControllers>().GetTopPlayerControllerState();
+        //p2Controller = gameManager.GetComponent<CheckControllers>().GetTopPlayerControllerState();
         placeEnabled = false;
         InputEnabled = true;
     }
