@@ -48,7 +48,6 @@ public class CheckControllers : MonoBehaviour {
 
     private void Update()
     {
-        Debug.Log(topPlayersController);
         CheckConnected();
         if (topPlayersController)
         {

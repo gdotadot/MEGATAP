@@ -122,10 +122,20 @@ public class CastSpell : MonoBehaviour
             currentSelectedGameObject = eventSystem.currentSelectedGameObject;
         }
 
-        if (p2Controller && eventSystem.currentSelectedGameObject == null)
+        //if(Cursor.lockState == CursorLockMode.Locked && eventSystem.currentSelectedGameObject == null)
+        //{
+        //    eventSystem.SetSelectedGameObject(currentSelectedGameObject);
+        //}
+        //else
+        
+        if(Input.GetMouseButtonDown(0))
         {
             eventSystem.SetSelectedGameObject(currentSelectedGameObject);
-            //    SetSelectedButton();
+        }
+        if (p2Controller && eventSystem.currentSelectedGameObject == null)
+        {
+            //eventSystem.SetSelectedGameObject(currentSelectedGameObject);
+            SetSelectedButton();
         }
         atTop = GetComponent<PlaceTrap>().LastFace();
     }
@@ -512,7 +522,6 @@ public class CastSpell : MonoBehaviour
     //Set new selected button if the controller is being used.
     private void SetSelectedButton()
     {
-        Debug.Log("SetButton");
 
         if (p2Controller)
         {
@@ -604,6 +613,7 @@ public class CastSpell : MonoBehaviour
             if(cooldownTimePassed >= cooldownTime)
             {
                 button.interactable = true;
+
                 if (eventSystem.currentSelectedGameObject == null && p2Controller)
                 {
                     SetSelectedButton();
