@@ -21,6 +21,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool wallJumping;
     private bool cantStandUp;
     private bool slowed = false;
+    private bool spedUp = false;
     public bool InputEnabled = true;
 
     //Control if player can have input
@@ -35,6 +36,10 @@ public class PlayerOneMovement : MonoBehaviour {
     private int camOneState = 1;
 
     [SerializeField] private GameObject gameManager;
+
+    // sound 
+    [SerializeField] private AudioClip speedBoostSFX;
+    private AudioSource audioSource;
 
     private float inputAxis; //used to get input axis from controller/keyboard
     private InputManager inputManager;
@@ -52,6 +57,7 @@ public class PlayerOneMovement : MonoBehaviour {
     private void Awake()
     {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Start() {
@@ -107,20 +113,23 @@ public class PlayerOneMovement : MonoBehaviour {
             }
             if (inputManager.GetButtonUp(InputCommand.BottomPlayerCrouch) || (!inputManager.GetButton(InputCommand.BottomPlayerCrouch) && cantStandUp == false))
             {
-                if(cantStandUp == true)
+                if (spedUp == false)
                 {
-                    crouching = true;
-                    if(slowed == false)
+                    if (cantStandUp == true)
                     {
-                        speed = moveSpeed / 2;
+                        crouching = true;
+                        if (slowed == false)
+                        {
+                            speed = moveSpeed / 2;
+                        }
                     }
-                }
-                if (cantStandUp == false)
-                {
-                    crouching = false;
-                    if (slowed == false)
+                    if (cantStandUp == false)
                     {
-                        speed = moveSpeed;
+                        crouching = false;
+                        if (slowed == false)
+                        {
+                            speed = moveSpeed;
+                        }
                     }
                 }
             }
@@ -225,7 +234,7 @@ public class PlayerOneMovement : MonoBehaviour {
                 break;
         }
 
-        if (crouching == true)
+        if (crouching == true && spedUp == false)
         {
             if (slowed == false)
             {
@@ -245,6 +254,14 @@ public class PlayerOneMovement : MonoBehaviour {
         cantStandUp = gameObject.GetComponentInChildren<Colliding>().GetCollision();
 
         if(!pause.GameIsPaused) Move();
+
+        // initiate speed up
+        if (GameObject.FindWithTag("Player").GetComponent<PlayerOneStats>().pickupCount >= 3 && inputManager.GetButtonDown(InputCommand.BottomPlayerBoost))
+        {
+            spedUp = true;
+            audioSource.PlayOneShot(speedBoostSFX);
+            StartCoroutine(SpeedBoost(GameObject.FindWithTag("PickUp").GetComponent<PickUp>().speedUpMultiplier, GameObject.FindWithTag("PickUp").GetComponent<PickUp>().speedUpDuration));
+        }
         animator.SetBool("Landing", landing);
         animator.SetBool("Grounded", grounded);
         animator.SetBool("Crouched", crouching);
@@ -265,7 +282,7 @@ public class PlayerOneMovement : MonoBehaviour {
             }
             jumping = false;
             landing = false;
-            if (slowed == false)
+            if (slowed == false && spedUp == false)
             {
                 speed = moveSpeed;
             }
@@ -341,6 +358,18 @@ public class PlayerOneMovement : MonoBehaviour {
         InputEnabled = true;
     }
 
+    public IEnumerator SpeedBoost(float speedUpMultiplier, float speedUpDuration)
+    {
+
+        spedUp = true;
+        speed *= speedUpMultiplier;
+        yield return new WaitForSeconds(speedUpDuration);
+        spedUp = false;
+        speed = moveSpeed;
+        spedUp = false;
+        gameObject.GetComponent<PlayerOneStats>().pickupCount = 0;
+    }
+
     /////////////////////////////////////////////
     // GETTERS AND SETTERS                     //
     /////////////////////////////////////////////
@@ -367,6 +396,16 @@ public class PlayerOneMovement : MonoBehaviour {
     public void SetSpeed(float s)
     {
         speed = s;
+    }
+
+    public void SetSpedUp(bool s)
+    {
+        spedUp = s;
+    }
+
+    public bool GetSpedUp()
+    {
+        return spedUp;
     }
 
     public float GetConstantSpeed()
