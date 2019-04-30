@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 4981331210961474}
   - component: {fileID: 114402100483606250}
   - component: {fileID: 54139975907513094}
+  - component: {fileID: 114985933038822724}
+  - component: {fileID: 65388490035268518}
   m_Layer: 0
   m_Name: LogProjectile
   m_TagString: Untagged
@@ -132,6 +134,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &65388490035268518
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1285720713934524}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.2, y: 0.9, z: 3}
+  m_Center: {x: -0.6, y: 0, z: 0}
 --- !u!114 &114402100483606250
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -144,6 +158,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ValidLocations: 0
+--- !u!114 &114985933038822724
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1285720713934524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3ddd54dd66946b478aa52f6906dd8c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knockBackValue: 75
+  knockUpValue: 25
+  stunDuration: 0.75
+  animationSpeed: 0
 --- !u!136 &136112996131908910
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -153,7 +182,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.0076
+  m_Radius: 0.0071
   m_Height: 0.035
   m_Direction: 1
   m_Center: {x: -0.00007189461, y: 0.00020390241, z: 0.000052730797}

@@ -139,7 +139,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1601843072627836}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 2.6, z: 2}
+  m_LocalPosition: {x: 0, y: -2.6, z: 2}
   m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_Children: []
   m_Father: {fileID: 224138939363032904}
@@ -152,7 +152,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1312177818547650}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 2.6, z: 2}
+  m_LocalPosition: {x: 0, y: -2.6, z: 2}
   m_LocalScale: {x: 1.1, y: 1.1, z: 1}
   m_Children: []
   m_Father: {fileID: 224138939363032904}
@@ -165,7 +165,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1823269474374748}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4738275161215944}
@@ -294,7 +294,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.02018228, y: 0.04000001, z: 0.06000001}
-  m_Center: {x: 0.0002923502, y: 0, z: -0.02}
+  m_Center: {x: 0.0002923502, y: -0, z: 0.02}
 --- !u!82 &82024968198977080
 AudioSource:
   m_ObjectHideFlags: 1
@@ -488,7 +488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47c919212d88d784b9324f9aadcbf615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ValidLocations: 6
+  ValidLocations: 2
 --- !u!212 &212526736204214402
 SpriteRenderer:
   m_ObjectHideFlags: 1
