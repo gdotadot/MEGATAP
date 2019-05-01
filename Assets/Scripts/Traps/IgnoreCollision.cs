@@ -18,7 +18,7 @@ public class IgnoreCollision : MonoBehaviour
         if(other.tag == "Projectile")
         {
             projectile = other.gameObject;
-            col = projectile.GetComponentInChildren<CapsuleCollider>();
+            col = projectile.GetComponentInParent<CapsuleCollider>();
             col.enabled = true;
         }
     }

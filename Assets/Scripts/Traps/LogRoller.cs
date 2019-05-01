@@ -13,8 +13,8 @@ public class LogRoller : MonoBehaviour
     private GameObject logProjectile;
     private Rigidbody rb;
 
-    [SerializeField] private float speed = 60;
-    private Vector3 velocity;
+    [SerializeField] private float speed = 40;
+    //private Vector3 velocity;
     private Quaternion projectileRotation;
     // Use this for initialization
     void Start()
@@ -27,23 +27,23 @@ public class LogRoller : MonoBehaviour
         {
             case 1:
                 transform.eulerAngles = new Vector3(0, 0, 0);
-                projectileRotation = Quaternion.identity;
-                velocity = new Vector3(-speed, 0, 0);
+                projectileRotation = Quaternion.Euler(-90, 0, 0);
+              //  velocity = new Vector3(-speed, 0, 0);
                 break;
             case 2:
                 transform.eulerAngles = new Vector3(0, 270, 0);
-                projectileRotation = Quaternion.Euler(0, -90, 0);
-                velocity = new Vector3(0, 0, -speed);
+                projectileRotation = Quaternion.Euler(-90, -90, 0);
+               // velocity = new Vector3(0, 0, -speed);
                 break;
             case 3:
                 transform.eulerAngles = new Vector3(0, 180, 0);
-                projectileRotation = Quaternion.Euler(0, -180, 0);
-                velocity = new Vector3(speed, 0, 0);
+                projectileRotation = Quaternion.Euler(-90, -180, 0);
+               // velocity = new Vector3(speed, 0, 0);
                 break;
             case 4:
                 transform.eulerAngles = new Vector3(0, 90, 0);
-                projectileRotation = Quaternion.Euler(0, -270, 0);
-                velocity = new Vector3(0, 0, speed);
+                projectileRotation = Quaternion.Euler(-90, -270, 0);
+                //velocity = new Vector3(0, 0, speed);
                 break;
         }
     }
@@ -62,7 +62,7 @@ public class LogRoller : MonoBehaviour
                 logProjectile.transform.rotation = projectileRotation;
 
                 rb = logProjectile.GetComponentInChildren<Rigidbody>();
-                rb.velocity = velocity;
+                rb.AddForce(-transform.right * speed);
                 timer = timer - timeToShoot;
             }
         }

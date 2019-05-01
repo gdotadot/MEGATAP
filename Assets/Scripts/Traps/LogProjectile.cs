@@ -21,22 +21,14 @@ public class LogProjectile : MonoBehaviour {
     //Player's animator for knockback animation
     private Animator anim = null;
 
-    //child to get position
-    private Transform child;
-
     // Use this for initialization
     void Start () {
         trapBase = GetComponent<TrapBase>();
         hit = false;
-        
     }
 
     // Update is called once per frame
-    private void Update()
-    {
-        child = GetComponentInChildren<Transform>();
-        this.transform.position = child.position;
-    }
+
     void FixedUpdate () {
         if (player != null)
         {
@@ -75,15 +67,11 @@ public class LogProjectile : MonoBehaviour {
                 anim.Play("Knockback", 0);
             }
         }
-        else if (col.gameObject.tag == "Boundary" || col.gameObject.tag == "Platform")
-        {
-            StartCoroutine(Wait());
-        }
     }
 
-    private IEnumerator Wait()
+    //Getter
+    public float StunTime()
     {
-        yield return new WaitForSeconds(stunDuration);
-        Destroy(this.gameObject);
+        return stunDuration;
     }
 }
