@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ProjectileShooter : MonoBehaviour {
-    [SerializeField] private float timeToShoot;
+    [SerializeField] private float timeToShoot = 4;
     [SerializeField] private int FaceNumberIfPrePlaced;
 
     private TrapBase trapBase;
@@ -13,6 +13,7 @@ public class ProjectileShooter : MonoBehaviour {
 	private float timer = 0.0f;
   	GameObject projectile;
     private Rigidbody rb;
+    private CapsuleCollider col;
 
     private Vector3 velocity;
     private Quaternion projectileRotation;
@@ -85,12 +86,15 @@ public class ProjectileShooter : MonoBehaviour {
 			if(timer > timeToShoot){
                 animator.SetTrigger("Fire");
 				projectile = Instantiate(prefab);
+                col = projectile.GetComponentInChildren<CapsuleCollider>();
+                col.enabled = false;
                 
 				projectile.transform.position = transform.position + new Vector3 (0, 0.5f, 0);
                 projectile.transform.rotation = projectileRotation;
 
-                rb = projectile.GetComponent<Rigidbody>();
+                rb = projectile.GetComponentInChildren<Rigidbody>();
                 rb.velocity = velocity;
+                col.enabled = true;
 				timer = timer - timeToShoot;
 			}
 		}

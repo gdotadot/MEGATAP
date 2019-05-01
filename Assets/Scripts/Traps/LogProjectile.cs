@@ -21,14 +21,23 @@ public class LogProjectile : MonoBehaviour {
     //Player's animator for knockback animation
     private Animator anim = null;
 
+    //child to get position
+    private Transform child;
+
     // Use this for initialization
     void Start () {
         trapBase = GetComponent<TrapBase>();
         hit = false;
+        
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame
+    private void Update()
+    {
+        child = GetComponentInChildren<Transform>();
+        this.transform.position = child.position;
+    }
+    void FixedUpdate () {
         if (player != null)
         {
             if (hit)
