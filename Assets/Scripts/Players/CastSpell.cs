@@ -361,7 +361,7 @@ public class CastSpell : MonoBehaviour
                     switch (PlayerOneState)
                     {
                         case 1:
-                            spellTarget.transform.eulerAngles = new Vector3(0, 0, 90);
+                            spellTarget.transform.eulerAngles = new Vector3(0, 0, -90);
                             spellTarget.transform.position = new Vector3(transform.position.x, position.y, -45);
                             break;
                         case 2:
@@ -373,7 +373,7 @@ public class CastSpell : MonoBehaviour
                             spellTarget.transform.position = new Vector3(transform.position.x, position.y, 45);
                             break;
                         case 4:
-                            spellTarget.transform.eulerAngles = new Vector3(0, 90, 90);
+                            spellTarget.transform.eulerAngles = new Vector3(0, 90, -90);
                             spellTarget.transform.position = new Vector3(-45, position.y, transform.position.z);
                             break;
                     }
