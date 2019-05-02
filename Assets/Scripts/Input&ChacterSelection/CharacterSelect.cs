@@ -165,12 +165,14 @@ public class CharacterSelect : MonoBehaviour {
             {
                 if (selectorOneState == -1)
                 {
+                    Debug.Log("P1 is top");
                     inputManager.P1IsTop = true;
                     checkControllers.topPlayersController = true;
                     Cursor.lockState = CursorLockMode.Locked;
                 }
                 else
                 {
+                    Debug.Log("P1 is bottom");
                     inputManager.P1IsTop = false;
                 }
 

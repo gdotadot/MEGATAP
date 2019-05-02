@@ -69,14 +69,14 @@ public class CameraTwoRotator : MonoBehaviour {
     private void Update()
     {
         //Allow toggling grid on/off for playtesting
-        if(gridToggle.isOn && !gridUI.gameObject.activeInHierarchy)
-        {
-            gridUI.gameObject.SetActive(true);
-        }
-        else if(!gridToggle.isOn && gridUI.gameObject.activeInHierarchy)
-        {
-            gridUI.gameObject.SetActive(false);
-        }
+        //if(gridToggle.isOn && !gridUI.gameObject.activeInHierarchy)
+        //{
+        //    gridUI.gameObject.SetActive(true);
+        //}
+        //else if(!gridToggle.isOn && gridUI.gameObject.activeInHierarchy)
+        //{
+        //    gridUI.gameObject.SetActive(false);
+        //}
 
 
         if (moveEnabled)
