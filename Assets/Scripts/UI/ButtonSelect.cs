@@ -12,7 +12,8 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     private CastSpell cs;
     private PlaceTrap pt;
     private Image controllerCursor;
-    private TextMeshProUGUI tooltip;
+    private TextMeshProUGUI tooltipText;
+    private GameObject tooltipBox;
     private MoveControllerCursor cursorMove;
     private GameObject currentFirstSpell;
     private GameObject currentLastTrap;
@@ -39,8 +40,9 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         {
             if(t.name == "Tooltip")
             {
-                tooltip = t;
-                tooltip.transform.SetAsLastSibling();
+                tooltipText = t;
+                tooltipBox = tooltipText.transform.parent.gameObject;
+                tooltipText.transform.SetAsLastSibling();
             }
         }
         es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
@@ -102,7 +104,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     public void OnDeselect(BaseEventData eventData)
     {
         this.transform.localScale = buttonScale;
-        tooltip.text = "";
+        tooltipText.text = "";
     }
 
     public void ScaleUp()
@@ -114,41 +116,45 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
 
     private void ChangeTooltip(string toCheck)
     {
-        if(tooltip != null)
+        Vector3 position = tooltipBox.transform.position;
+
+        tooltipBox.transform.position = new Vector3(es.currentSelectedGameObject.transform.position.x, position.y, 0);
+
+        if(tooltipText != null)
         {
             switch(toCheck)
             {
                 //Spells
                 case "Blur Spell Button(Clone)":
-                    tooltip.text = "Blur";
+                    tooltipText.text = "Blur";
                     break;
                 case "Gust Spell Button(Clone)":
-                    tooltip.text = "Wind";
+                    tooltipText.text = "Wind";
                     break;
                 case "Lightning Spell Button(Clone)":
-                    tooltip.text = "Lightning";
+                    tooltipText.text = "Lightning";
                     break;
                 case "NarrowPOV Spell Button(Clone)":
-                    tooltip.text = "Narrow Vision";
+                    tooltipText.text = "Narrow Vision";
                     break;
                 case "Slow Spell Button(Clone)":
-                    tooltip.text = "Slow";
+                    tooltipText.text = "Slow";
                     break;
                 case "Stun Spell Button(Clone)":
-                    tooltip.text = "Petrify";
+                    tooltipText.text = "Petrify";
                     break;
                 //Traps
                 case "ArrowButton(Clone)":
-                    tooltip.text = "Arrow Shooter";
+                    tooltipText.text = "Arrow Shooter";
                     break;
                 case "BananaButton(Clone)":
-                    tooltip.text = "Banana";
+                    tooltipText.text = "Banana";
                     break;
                 case "SapButton(Clone)":
-                    tooltip.text = "Sap";
+                    tooltipText.text = "Sap";
                     break;
                 case "SpikeButton(Clone)":
-                    tooltip.text = "Spike";
+                    tooltipText.text = "Spike";
                     break;
 
             }

@@ -130,7 +130,6 @@ public class CheckControllers : MonoBehaviour {
                         if (inputManager.P1IsTop)
                         {
                             topPlayersController = false;
-                            Debug.Log("1");
                         }
                         else //if P1 is bottom
                         {
@@ -146,7 +145,6 @@ public class CheckControllers : MonoBehaviour {
                         }
                         else // if P1 is bottom / p2 is top
                         {
-                            Debug.Log("Else");
                             topPlayersController = false;
                         }
 
