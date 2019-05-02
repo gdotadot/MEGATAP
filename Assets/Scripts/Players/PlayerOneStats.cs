@@ -9,7 +9,6 @@ public class PlayerOneStats : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         pickupCount = 0;
-        Debug.Log(pickupCount);
 	}
 	
 	// Update is called once per frame

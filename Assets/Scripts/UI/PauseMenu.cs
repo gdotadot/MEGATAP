@@ -11,14 +11,23 @@ public class PauseMenu : MonoBehaviour {
 	[SerializeField] GameObject pauseMenuUI;
     [SerializeField] Button[] pauseButtons;
     [SerializeField] GameObject controlsCanvas;
+    [SerializeField] GameObject topController;
+    [SerializeField] GameObject bottomController;
+    [SerializeField] GameObject topKeyboard;
+    [SerializeField] GameObject bottomKeyboard;
     [SerializeField] Button resumeButton;
     [SerializeField] GameObject playerTwo;
     [SerializeField] GameObject playerOne;
     [SerializeField] EventSystem es;
 
+
     private PlaceTrap pt;
     private CastSpell cs;
     private PlayerOneMovement playerMov;
+
+    //For changing controls images
+    private CheckControllers cc;
+    //private InputManager input;
 
     //When we pause/resume we need to set the trap/spell buttons uninteractable, then interactable again
     //these bool arrays keep track of which ones are used/on cooldown so we don't set them interactable on resume
@@ -32,6 +41,11 @@ public class PauseMenu : MonoBehaviour {
         pt = playerTwo.GetComponent<PlaceTrap>();
         cs = playerTwo.GetComponent<CastSpell>();
         playerMov = playerOne.GetComponent<PlayerOneMovement>();
+
+        //Get input refs
+        GameObject inputManager = GameObject.Find("InputManager");
+        //input = inputManager.GetComponent<InputManager>();
+        cc = inputManager.GetComponent<CheckControllers>();
     }
 
     // Update is called once per frame
@@ -167,6 +181,36 @@ public class PauseMenu : MonoBehaviour {
 	public void ControlScreen(){
         controlsUp = true;
         controlsCanvas.SetActive(true);
+        controlsCanvas.transform.SetAsLastSibling();
+
+        //Set top player's image
+        if (cc.topPlayersController)
+        {
+            topController.SetActive(true);
+            topController.transform.SetAsLastSibling();
+            topKeyboard.SetActive(false);
+        }
+        else
+        {
+            topKeyboard.SetActive(true);
+            topKeyboard.transform.SetAsLastSibling();
+            topController.SetActive(false);
+        }
+
+        //Set bottom player's image
+        if(cc.GetBottomPlayerControllerState())
+        {
+            bottomController.SetActive(true);
+            bottomController.transform.SetAsLastSibling();
+            bottomKeyboard.SetActive(false);
+        }
+        else
+        {
+            bottomKeyboard.SetActive(true);
+            bottomKeyboard.transform.SetAsLastSibling();
+            bottomController.SetActive(false);
+        }
+
 
         for(int i = 0; i < pauseButtons.Length; i++)
         {
