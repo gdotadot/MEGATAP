@@ -48,7 +48,6 @@ public class CheckControllers : MonoBehaviour {
 
     private void Update()
     {
-        Debug.Log(topPlayersController);
         CheckConnected();
         if (topPlayersController)
         {
@@ -161,10 +160,11 @@ public class CheckControllers : MonoBehaviour {
             controllerTwo = true;
             if (inputManager.P1IsTop)
             {
-                bottomPlayersController = true;
+                bottomPlayersController = false;
             }
             else // if P1 is bottom / p2 is top
             {
+                bottomPlayersController = true;
                 //topPlayersController = true;
             }
         }
