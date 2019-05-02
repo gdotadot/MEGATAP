@@ -358,23 +358,28 @@ public class CastSpell : MonoBehaviour
                 if (spellDirection == SpellDirection.Right || spellDirection == SpellDirection.Left)
                 {
                     GetComponent<MoveControllerCursor>().SpellCastDirection = SpellDirection.Right;
+                    Vector3 center = new Vector3(cam2.pixelWidth / 2, cam2.pixelHeight / 2, 0);
                     switch (PlayerOneState)
                     {
                         case 1:
                             spellTarget.transform.eulerAngles = new Vector3(0, 0, -90);
-                            spellTarget.transform.position = new Vector3(transform.position.x, position.y, -45);
+                            //spellTarget.transform.position = new Vector3(transform.position.x, position.y, -45);
+                            spellTarget.transform.position = new Vector3(cam2.ScreenToWorldPoint(center).x, position.y, -45);
                             break;
                         case 2:
                             spellTarget.transform.eulerAngles = new Vector3(180, 90, 90);
-                            spellTarget.transform.position = new Vector3(45, position.y, transform.position.z);
+                            //spellTarget.transform.position = new Vector3(45, position.y, transform.position.z);
+                            spellTarget.transform.position = new Vector3(45, position.y, cam2.ScreenToWorldPoint(center).z);
                             break;
                         case 3:
                             spellTarget.transform.eulerAngles = new Vector3(180, 0, 90);
-                            spellTarget.transform.position = new Vector3(transform.position.x, position.y, 45);
+                            //spellTarget.transform.position = new Vector3(transform.position.x, position.y, 45);
+                            spellTarget.transform.position = new Vector3(cam2.ScreenToWorldPoint(center).x, position.y, 45);
                             break;
                         case 4:
                             spellTarget.transform.eulerAngles = new Vector3(0, 90, -90);
-                            spellTarget.transform.position = new Vector3(-45, position.y, transform.position.z);
+                            //spellTarget.transform.position = new Vector3(-45, position.y, transform.position.z);
+                            spellTarget.transform.position = new Vector3(-45, position.y, cam2.ScreenToWorldPoint(center).z);
                             break;
                     }
                 }
