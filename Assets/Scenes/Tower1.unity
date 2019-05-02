@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.75256175, g: 0.7760851, b: 0.5577871, a: 1}
+  m_IndirectSpecularColor: {r: 0.7524489, g: 0.7763308, b: 0.5577417, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -234,7 +234,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4758679635353836, guid: cfd428a7fbb7c3042a80eb1763f22607, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -80.19498
+
+      value: -80.20629
+
       objectReference: {fileID: 0}
     - target: {fileID: 4758679635353836, guid: cfd428a7fbb7c3042a80eb1763f22607, type: 2}
       propertyPath: m_LocalRotation.x
@@ -3821,11 +3823,6 @@ Transform:
   m_Father: {fileID: 173233116}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1856678014 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1266263209125258, guid: c0fc1e2919ad2234ea575a1a00fbf567,
-    type: 2}
-  m_PrefabInternal: {fileID: 1350324776}
 --- !u!1 &1888857407
 GameObject:
   m_ObjectHideFlags: 0
@@ -3836,7 +3833,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1888857409}
   - component: {fileID: 1016487807}
-  - component: {fileID: 1888857408}
   - component: {fileID: 1016487809}
   - component: {fileID: 1016487810}
   - component: {fileID: 1888857411}
@@ -3848,17 +3844,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1888857408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1888857407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 998996880c9de0047a107e2b37bec39b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1888857409
 Transform:
   m_ObjectHideFlags: 0
@@ -3979,17 +3964,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad948c8e9fa6ce94ba2605c66f0b726f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GameIsPaused: 0
   canvas: {fileID: 1652966063}
   camBot: {fileID: 834808313}
   camTop: {fileID: 412805862}
   ZoomCam: {fileID: 233121879}
-  map: {fileID: 0}
   playerTwo: {fileID: 1027381073}
   playerOne: {fileID: 1338709831}
-  countdown: {fileID: 1689456020722316, guid: 50c5086e8b3530a46897ef79ee138dc7, type: 2}
-  countdownCanvas: {fileID: 1856678014}
+  countdownCanvas: {fileID: 1106763199082680, guid: a1f2f72552e19154eb6af9f0393eb40f,
+    type: 2}
   es: {fileID: 1160000097}
+  countdownTime: 4
+  pause: {fileID: 1016487809}
   moveInSpeed: 0.025
 --- !u!114 &1967768375 stripped
 MonoBehaviour:
@@ -4025,7 +4010,9 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4940846812731354, guid: 295df6c694235764eac79c393ed826dc, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -80.19498
+
+      value: -80.20629
+
       objectReference: {fileID: 0}
     - target: {fileID: 4940846812731354, guid: 295df6c694235764eac79c393ed826dc, type: 2}
       propertyPath: m_LocalRotation.x
