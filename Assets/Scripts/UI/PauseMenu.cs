@@ -24,10 +24,11 @@ public class PauseMenu : MonoBehaviour {
     private PlaceTrap pt;
     private CastSpell cs;
     private PlayerOneMovement playerMov;
-
+    private PlayerOneLose speccyLose;
+    private WinTrigger speccyWin;
     //For changing controls images
     private CheckControllers cc;
-    //private InputManager input;
+    private BeginGo countdown;
 
     //When we pause/resume we need to set the trap/spell buttons uninteractable, then interactable again
     //these bool arrays keep track of which ones are used/on cooldown so we don't set them interactable on resume
@@ -46,11 +47,17 @@ public class PauseMenu : MonoBehaviour {
         GameObject inputManager = GameObject.Find("InputManager");
         //input = inputManager.GetComponent<InputManager>();
         cc = inputManager.GetComponent<CheckControllers>();
+
+        GameObject gameManager = GameObject.Find("GameManager");
+        countdown = gameManager.GetComponent<BeginGo>();
+
+        speccyLose = playerOne.GetComponent<PlayerOneLose>();
+        speccyWin = GameObject.Find("WinTrigger").GetComponent<WinTrigger>();
     }
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetButtonDown("Start"))
+        if (Input.GetButtonDown("Start") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin)
         {
             if (GameIsPaused)
             {
