@@ -24,10 +24,12 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
 
     private InputManager inputManager;
 
+    private CheckControllers cc;
 
     private void Awake()
     {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        cc = inputManager.GetComponent<CheckControllers>();
     }
 
     private void Start()
@@ -63,9 +65,10 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
 
     public void Update()
     {
-        if (es.currentSelectedGameObject == null)
+        if (es.currentSelectedGameObject == null && cc.topPlayersController)
         {
-            //tooltipBox.GetComponent<Image>().enabled = false;
+            tooltipBox.GetComponent<Image>().enabled = false;
+            tooltipText.text = "";
         }
     }
 
