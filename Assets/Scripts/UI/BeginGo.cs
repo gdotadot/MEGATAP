@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 public class BeginGo : MonoBehaviour {
-
+    public bool CountdownFinished { get; private set; }
     [SerializeField] private GameObject canvas;
     [SerializeField] private Camera camBot;
     [SerializeField] private Camera camTop;
@@ -47,6 +47,7 @@ public class BeginGo : MonoBehaviour {
         playerMov.InputEnabled = false;
         pause.GameIsPaused = true;
 
+        CountdownFinished = false;
     }
 
     private void Update()
@@ -95,5 +96,6 @@ public class BeginGo : MonoBehaviour {
         cs.InputEnabled = true;
         playerMov.InputEnabled = true;
         pause.GameIsPaused = false;
+        CountdownFinished = true;
     }
 }
