@@ -24,6 +24,10 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool spedUp = false;
     public bool InputEnabled = true;
 
+    //Pickup stuff
+    [SerializeField] private Image[] pickupImages;
+    [SerializeField] private Sprite pickupEmpty;
+
     //Control if player can have input
     private bool move = true;
 
@@ -258,6 +262,10 @@ public class PlayerOneMovement : MonoBehaviour {
         // initiate speed up
         if (GameObject.FindWithTag("Player").GetComponent<PlayerOneStats>().pickupCount >= 3 && inputManager.GetButtonDown(InputCommand.BottomPlayerBoost))
         {
+            foreach(Image i in pickupImages)
+            {
+                i.sprite = pickupEmpty;
+            }
             spedUp = true;
             audioSource.PlayOneShot(speedBoostSFX);
             StartCoroutine(SpeedBoost(GameObject.FindWithTag("PickUp").GetComponent<PickUp>().speedUpMultiplier, GameObject.FindWithTag("PickUp").GetComponent<PickUp>().speedUpDuration));

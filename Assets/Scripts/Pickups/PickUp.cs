@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PickUp : MonoBehaviour {
 
@@ -9,6 +10,9 @@ public class PickUp : MonoBehaviour {
     [SerializeField] private AudioClip pickUpSFX1;
     [SerializeField] private AudioClip pickUpSFX2;
     [SerializeField] private AudioClip pickUpSFX3;
+
+    private Image[] pickupImages;
+    [SerializeField] private Sprite pickupFull;
 
     private bool active = true; // make sure only picks up once
 
@@ -39,7 +43,8 @@ public class PickUp : MonoBehaviour {
     
     void OnTriggerEnter(Collider other)
     {
-
+        GameObject pickupParent = GameObject.Find("PickupsUI");
+        pickupImages = pickupParent.GetComponentsInChildren<Image>();
         if (other.tag == "Player" && other.GetComponent<PlayerOneStats>().pickupCount < 3 && active == true)
         {
             active = false;
@@ -48,12 +53,15 @@ public class PickUp : MonoBehaviour {
             if (other.gameObject.GetComponent<PlayerOneStats>().pickupCount == 1)
             {
                 audioSource.PlayOneShot(pickUpSFX1);
+                pickupImages[0].sprite = pickupFull;
             } else if (other.gameObject.GetComponent<PlayerOneStats>().pickupCount == 2)
             {
                 audioSource.PlayOneShot(pickUpSFX2);
+                pickupImages[1].sprite = pickupFull;
             } else if (other.gameObject.GetComponent<PlayerOneStats>().pickupCount == 3)
             {
                 audioSource.PlayOneShot(pickUpSFX3);
+                pickupImages[2].sprite = pickupFull;
             }
 
             this.gameObject.transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().enabled = false;
