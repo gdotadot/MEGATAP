@@ -240,7 +240,7 @@ public class PlayerOneMovement : MonoBehaviour {
                 break;
         }
 
-        if (crouching == true && spedUp == false)
+        if (crouching == true)
         {
             CrouchPenalty = crouchSlow;
             col.height = 2.25f;
