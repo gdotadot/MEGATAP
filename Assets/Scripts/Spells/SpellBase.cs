@@ -116,7 +116,6 @@ public class SpellBase : MonoBehaviour {
 
     private IEnumerator WaitStun(GameObject player, float stunDuration, Material mat, Renderer[] child = null, Animator anim = null)
     {
-        float tempSpeed = player.gameObject.GetComponent<PlayerOneMovement>().GetSpeed();
         player.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(0);
         player.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
         player.gameObject.GetComponent<Rigidbody>().velocity = new Vector3(0, player.gameObject.GetComponent<Rigidbody>().velocity.y, 0);
@@ -144,7 +143,14 @@ public class SpellBase : MonoBehaviour {
 
         //  yield return new WaitForSeconds(stunDuration);
         player.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
-        player.GetComponent<PlayerOneMovement>().SetSpeed(tempSpeed);
+        if (player.gameObject.GetComponent<PlayerOneMovement>().GetSpedUp() == true)
+        {
+            player.GetComponent<PlayerOneMovement>().SetSpeed(player.gameObject.GetComponent<PlayerOneMovement>().GetSpeed());
+        }
+        else
+        {
+            player.GetComponent<PlayerOneMovement>().SetSpeed(player.gameObject.GetComponent<PlayerOneMovement>().GetSpeed() * 2);
+        }
         if (anim != null)
         {
             anim.enabled = true;
@@ -164,7 +170,6 @@ public class SpellBase : MonoBehaviour {
 
     private IEnumerator WaitSlow(GameObject player, float slowPercent, float jumpReductionPercent, float slowDuration)
     {
-        float tempSpeed = player.gameObject.GetComponent<PlayerOneMovement>().GetSpeed();
         player.gameObject.GetComponent<PlayerOneMovement>().SetJumpHeight(player.gameObject.GetComponent<PlayerOneMovement>().GetJumpHeight() * jumpReductionPercent);
         float slowSpeed = player.gameObject.GetComponent<PlayerOneMovement>().GetSpeed() * slowPercent;
         player.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(slowSpeed);
@@ -182,7 +187,13 @@ public class SpellBase : MonoBehaviour {
         }
 
         player.GetComponent<PlayerOneMovement>().SetJumpHeight(player.GetComponent<PlayerOneMovement>().GetConstantJumpHeight());
-        player.GetComponent<PlayerOneMovement>().SetSpeed(tempSpeed);
+        if(player.gameObject.GetComponent<PlayerOneMovement>().GetSpedUp() == true)
+        {
+            player.GetComponent<PlayerOneMovement>().SetSpeed(player.gameObject.GetComponent<PlayerOneMovement>().GetSpeed());
+        } else {
+            player.GetComponent<PlayerOneMovement>().SetSpeed(player.gameObject.GetComponent<PlayerOneMovement>().GetSpeed() * 2);
+        }
+
         player.gameObject.GetComponent<PlayerOneMovement>().IsSlowed(false);
     }
 

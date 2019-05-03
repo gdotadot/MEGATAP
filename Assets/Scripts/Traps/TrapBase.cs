@@ -136,13 +136,19 @@ public class TrapBase : MonoBehaviour {
 
     private IEnumerator Wait(GameObject obj, float stunDuration, GameObject trap = null)
     {
-        float tempSpeed = obj.gameObject.GetComponent<PlayerOneMovement>().GetSpeed();
         obj.gameObject.GetComponent<PlayerOneMovement>().SetSpeed(0);
         obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(false);
         yield return new WaitForSeconds(stunDuration);
 
         obj.gameObject.GetComponent<PlayerOneMovement>().SetMove(true);
-        obj.GetComponent<PlayerOneMovement>().SetSpeed(tempSpeed);
+        if (GameObject.FindWithTag("Player").GetComponent<PlayerOneMovement>().GetSpedUp() == true)
+        {
+            GameObject.FindWithTag("Player").GetComponent<PlayerOneMovement>().SetSpeed(GameObject.FindWithTag("Player").GetComponent<PlayerOneMovement>().GetSpeed());
+        }
+        else
+        {
+            GameObject.FindWithTag("Player").GetComponent<PlayerOneMovement>().SetSpeed(GameObject.FindWithTag("Player").gameObject.GetComponent<PlayerOneMovement>().GetSpeed() * 2);
+        }
 
         once = false;
         if (trap != null)
