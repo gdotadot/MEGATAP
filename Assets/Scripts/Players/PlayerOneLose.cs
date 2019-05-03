@@ -21,7 +21,7 @@ public class PlayerOneLose : MonoBehaviour {
     void OnTriggerEnter(Collider other)
     {
         //check collision with Rising walls that are tagged with "rise"
-        if (other.tag == "Vine" && cam.GetFloor() == vines.GetVineFloor())
+        if (other.tag == "Vine" && cam.GetFloor() == vines.GetVineFloor() && vines.Started)
         {
             lose = true;
             GameOver();
