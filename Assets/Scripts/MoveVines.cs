@@ -110,6 +110,7 @@ public class MoveVines : MonoBehaviour {
         {
             speed += speedIncreasePerFace;
             Rotate();
+            floor++;
             face = 1;
         }
     }
@@ -136,7 +137,6 @@ public class MoveVines : MonoBehaviour {
             {
                 moveUp = false;
                 movedUpThisFloor = true;
-                floor++;
             }
         }
     }

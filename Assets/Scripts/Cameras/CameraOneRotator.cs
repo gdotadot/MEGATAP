@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Cinemachine;
 //<alexc> This class rotates the Player 1 (left side) camera when the player runs into triggers at
 //        the edge of each face of the tower. 
 public class CameraOneRotator : MonoBehaviour
@@ -12,8 +12,11 @@ public class CameraOneRotator : MonoBehaviour
     [SerializeField] private Camera playerOneCam;
     [SerializeField] private GameObject cinemachineSpeccy;
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float moveUpSlowMultiplier;
+    [SerializeField] private float zoomOutAmount;
     [SerializeField] private GameObject playerModel;
     [SerializeField] private LockCameraY vcamLock;
+    [SerializeField] private GameObject cameraTarget;
     //[SerializeField] private GameObject wall;
     [SerializeField] private GameObject[] rotateTriggers;    //Triggers that cause tower to rotate
     //[SerializeField] private GameObject[] wallTriggers;     //Triggers that pop up invisible wall behind player
@@ -38,8 +41,10 @@ public class CameraOneRotator : MonoBehaviour
                                              Quaternion.Euler(camRotationX, camRotationY - 270, 0)};
 
     private IEnumerator camTween;
+
     private int cameraState, floor;
     private Rigidbody rb;
+    private CinemachineVirtualCamera cinemachineCam;
 
     private void Start()
     {
@@ -49,6 +54,7 @@ public class CameraOneRotator : MonoBehaviour
         cameraState = 1;
         floor = 1;
         rb = GetComponent<Rigidbody>();
+        cinemachineCam = cinemachineSpeccy.GetComponent<CinemachineVirtualCamera>();
     }
 
     private void Update()
@@ -90,6 +96,8 @@ public class CameraOneRotator : MonoBehaviour
             case "Trigger3":
                 StartMove(new Vector3(playerModel.transform.position.x - camPosHorizontal, playerOneCam.transform.position.y, playerModel.transform.position.z), rotations[3], 4);
                 Destroy(other.gameObject);
+                vcamLock.Lock = false;
+
                 break;
             case "Trigger4":
                 if (cameraState == 4)
@@ -99,9 +107,10 @@ public class CameraOneRotator : MonoBehaviour
                     {
                         floor++;
                         audioSource.volume += windVolIncreasePerLevel;
-                        MovePlayerUp();
+                        //vcamLock.Lock = true;
                         vcamLock.m_YPosition += 20;
                         StartMove(new Vector3(playerModel.transform.position.x, playerOneCam.transform.position.y + 20, playerModel.transform.position.z - camPosHorizontal), rotations[0], 1);
+                        StartCoroutine(ChangeFOV(moveSpeed * moveUpSlowMultiplier));
                         break;
                     }
                     else
@@ -117,6 +126,7 @@ public class CameraOneRotator : MonoBehaviour
     //Initialize camera movement variables and start movement coroutine
     private void StartMove(Vector3 goalPos, Quaternion goalRot, int camState)
     {
+       
         rb.velocity = Vector3.zero;
         RotatePlayer();
         cameraState = camState;
@@ -125,8 +135,31 @@ public class CameraOneRotator : MonoBehaviour
         {
             StopCoroutine(camTween);
         }
+        //Tween the vcam rotation
         camTween = TweenToPosition(goalPos, goalRot, moveSpeed);
         StartCoroutine(camTween);
+
+    }
+
+    private IEnumerator ChangeFOV(float time)
+    {
+        float normalFOV = cinemachineCam.m_Lens.FieldOfView;
+        float zoomedFOV = cinemachineCam.m_Lens.FieldOfView + zoomOutAmount;
+
+        cinemachineCam.m_Lens.FieldOfView = zoomedFOV;
+
+        for (float t = 0; t < time / 2; t += Time.deltaTime)
+        {
+            cinemachineCam.m_Lens.FieldOfView = Mathf.Lerp(normalFOV, zoomedFOV, t / time);
+            yield return null;
+        }
+
+        for (float t = time / 2; t < time; t += Time.deltaTime)
+        {
+            cinemachineCam.m_Lens.FieldOfView = Mathf.Lerp(zoomedFOV, normalFOV, t / time);
+            yield return null;
+        }
+        vcamLock.Lock = true;
     }
 
     //Camera movement coroutine
@@ -135,6 +168,7 @@ public class CameraOneRotator : MonoBehaviour
         Vector3 currentPos = playerOneCam.transform.localPosition;
         Quaternion currentRot = playerOneCam.transform.rotation;
 
+        targetPos.y *= floor;
         for (float t = 0; t < time; t += Time.deltaTime)
         {
             //cinemachineSpeccy.transform.position = Vector3.Lerp(currentPos, targetPos, t / time);
@@ -145,12 +179,6 @@ public class CameraOneRotator : MonoBehaviour
         //playerOneCam.transform.po
         cinemachineSpeccy.transform.rotation = targetRot;
         camTween = null;
-    }
-
-    //TODO: Change this. It's not good. Bugs out sometimes and sends people all the way up. Replace with a Lerp & a ladder? 
-    private void MovePlayerUp()
-    {
-        this.transform.position = floorSpawn.position + Vector3.up * 20 * (floor - 2);
     }
 
     //TODO: Change how we do this once we get the more final player model
