@@ -23,7 +23,6 @@ public class GameOverMenu : MonoBehaviour {
     {
         if ((cc.GetControllerOneState() || cc.GetControllerTwoState()) && es.currentSelectedGameObject == null)
         {
-            Debug.Log("Set selected");
             es.SetSelectedGameObject(menuButtons[0]);
         }
     }

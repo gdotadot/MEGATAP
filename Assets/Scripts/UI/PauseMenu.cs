@@ -57,7 +57,7 @@ public class PauseMenu : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetButtonDown("Start") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin)
+        if (Input.GetButtonDown("Start") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win)
         {
             if (GameIsPaused)
             {
