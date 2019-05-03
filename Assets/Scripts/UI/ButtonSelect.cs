@@ -126,15 +126,16 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
 
     private void ChangeTooltip(string toCheck, GameObject button)
     {
-        tooltipBox.GetComponent<Image>().enabled = true;
-        Vector3 tooltipPosition = tooltipBox.transform.position;
-        
-        tooltipBox.transform.position = new Vector3(button.transform.position.x, tooltipPosition.y, 0);
-        RectTransform tooltipTransform = tooltipBox.GetComponent<RectTransform>();
         
         if(tooltipText != null)
         {
-            switch(toCheck)
+
+            tooltipBox.GetComponent<Image>().enabled = true;
+            Vector3 tooltipPosition = tooltipBox.transform.position;
+
+            tooltipBox.transform.position = new Vector3(button.transform.position.x, tooltipPosition.y, 0);
+            RectTransform tooltipTransform = tooltipBox.GetComponent<RectTransform>();
+            switch (toCheck)
             {
                 //Spells
                 case "Blur Spell Button(Clone)":
@@ -163,8 +164,8 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
                     break;
                 //Traps
                 case "ArrowButton(Clone)":
-                    tooltipText.text = "Arrow Shooter";
-                    tooltipTransform.sizeDelta = new Vector2(240, tooltipTransform.rect.height);
+                    tooltipText.text = "Crossbow";
+                    tooltipTransform.sizeDelta = new Vector2(160, tooltipTransform.rect.height);
                     break;
                 case "BananaButton(Clone)":
                     tooltipText.text = "Banana";
