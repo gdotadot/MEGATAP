@@ -139,7 +139,7 @@ public class PlaceTrap : MonoBehaviour {
         if (allUsed)
         {
             active = false;
-            eventSystem.SetSelectedGameObject(null);
+            //eventSystem.SetSelectedGameObject(null);
 
             DestroyGhost();
         }

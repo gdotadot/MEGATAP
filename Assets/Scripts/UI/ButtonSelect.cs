@@ -97,7 +97,6 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
                 if (pt != null) pt.DestroyGhost();
                 if (currentFirstSpell != null && currentFirstSpell.gameObject == this.gameObject)
                 {
-                    Debug.Log("First");
                     controllerCursor.transform.localPosition = new Vector3(0, -130);
                     cursorMove.MovingTraps = false;
                 }
