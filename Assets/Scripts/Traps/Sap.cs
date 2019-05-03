@@ -33,7 +33,6 @@ public class Sap : MonoBehaviour {
     {
         if(player != null)
         {
-            
             // if colliding, give an amount of slow
             if (hit && !player.GetComponent<PlayerOneMovement>().GetSpedUp())
             {
@@ -48,7 +47,7 @@ public class Sap : MonoBehaviour {
             else if (slowTriggered)
             {
                 player.GetComponent<PlayerOneMovement>().SetJumpHeight(player.GetComponent<PlayerOneMovement>().GetConstantJumpHeight());
-                player.GetComponent<PlayerOneMovement>().SetSpeed(player.GetComponent<PlayerOneMovement>().GetConstantSpeed());
+                player.GetComponent<PlayerOneMovement>().SetSlowPenalty(1);
                 slowTriggered = false;
             }
             if(slowTimer == 1 && anim != null)
@@ -56,7 +55,6 @@ public class Sap : MonoBehaviour {
                 //Animation ends 1 frame earlier than slow so that the next instance of sap touched will do the animation properly
                 //If this ended at the same time as the slow (= 0) then the previous instance of sap touched will call this function over and over again.
                 anim.SetBool("Slowed", hit);
-                player.gameObject.GetComponent<PlayerOneMovement>().IsSlowed(false);
 
             }
             // tick timer down if there is any
@@ -74,7 +72,6 @@ public class Sap : MonoBehaviour {
         {
             hit = true;
             player = other.gameObject;
-            player.gameObject.GetComponent<PlayerOneMovement>().IsSlowed(true);
             //Player animation goes to idle properly in sap.
             if (player.GetComponent<PlayerOneMovement>().GetInputAxis() != 0)
             {
