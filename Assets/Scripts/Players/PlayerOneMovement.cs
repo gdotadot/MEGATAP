@@ -262,10 +262,6 @@ public class PlayerOneMovement : MonoBehaviour {
         // initiate speed up
         if (GameObject.FindWithTag("Player").GetComponent<PlayerOneStats>().pickupCount >= 3 && inputManager.GetButtonDown(InputCommand.BottomPlayerBoost))
         {
-            foreach(Image i in pickupImages)
-            {
-                i.sprite = pickupEmpty;
-            }
             spedUp = true;
             audioSource.PlayOneShot(speedBoostSFX);
             StartCoroutine(SpeedBoost(GameObject.FindWithTag("PickUp").GetComponent<PickUp>().speedUpMultiplier, GameObject.FindWithTag("PickUp").GetComponent<PickUp>().speedUpDuration));
@@ -368,13 +364,21 @@ public class PlayerOneMovement : MonoBehaviour {
 
     public IEnumerator SpeedBoost(float speedUpMultiplier, float speedUpDuration)
     {
-
         spedUp = true;
         speed *= speedUpMultiplier;
-        yield return new WaitForSeconds(speedUpDuration);
+
+        float timePerPickup = speedUpDuration / 3;
+
+        yield return new WaitForSeconds(timePerPickup);
+        pickupImages[2].sprite = pickupEmpty;
+        yield return new WaitForSeconds(timePerPickup);
+        pickupImages[1].sprite = pickupEmpty;
+        yield return new WaitForSeconds(timePerPickup);
+        pickupImages[0].sprite = pickupEmpty;
+
+
         spedUp = false;
         speed = moveSpeed;
-        spedUp = false;
         gameObject.GetComponent<PlayerOneStats>().pickupCount = 0;
     }
 
