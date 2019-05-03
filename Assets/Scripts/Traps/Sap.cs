@@ -16,6 +16,7 @@ public class Sap : MonoBehaviour {
     private int slowTimer = 0;
     // Player's animator for animation
     private Animator anim = null;
+    //private float tempSpeed = 15; // here for score reasons, will be changed during runtime in slow loop
 
     [Tooltip("Defines how much slower the player will go.")][SerializeField] private float slowSeverity = 0.1f;
     [Tooltip("Defines how much lower the jump will go." )][SerializeField] private float jumpReduceSeverity = 0.5f;
@@ -32,8 +33,9 @@ public class Sap : MonoBehaviour {
     {
         if(player != null)
         {
+            
             // if colliding, give an amount of slow
-            if (hit)
+            if (hit && !player.GetComponent<PlayerOneMovement>().GetSpedUp())
             {
                 slowTimer = slowDuration;
                 hit = false;

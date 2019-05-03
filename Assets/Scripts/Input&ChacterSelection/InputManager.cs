@@ -62,7 +62,7 @@ public class InputManager : MonoBehaviour {
         { InputCommand.BottomPlayerJump, "Jump_Joy_1" },
         { InputCommand.BottomPlayerMoveStick, "Horizontal_Joy_1_Stick"},
         { InputCommand.BottomPlayerMoveKeyboard, "Horizontal_Keyboard" },
-        { InputCommand.BottomPlayerBoost, "" }, //TODO
+        { InputCommand.BottomPlayerBoost, "Boost_Joy_1" }, //TODO
         { InputCommand.BottomPlayerCrouch, "Crouch_Joy_1" }
     };
 
@@ -90,7 +90,7 @@ public class InputManager : MonoBehaviour {
         { InputCommand.BottomPlayerJump, "Jump_Joy_2" },
         { InputCommand.BottomPlayerMoveStick, "Horizontal_Joy_2_Stick"},
         { InputCommand.BottomPlayerMoveKeyboard, "Horizontal_Keyboard" },
-        { InputCommand.BottomPlayerBoost, "" }, //TODO
+        { InputCommand.BottomPlayerBoost, "Boost_Joy_2" }, //TODO
         { InputCommand.BottomPlayerCrouch, "Crouch_Joy_2" }
     };
 
