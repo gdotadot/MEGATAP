@@ -125,19 +125,17 @@ public class PlayerOneMovement : MonoBehaviour {
             }
             if (inputManager.GetButtonUp(InputCommand.BottomPlayerCrouch) || (!inputManager.GetButton(InputCommand.BottomPlayerCrouch) && cantStandUp == false))
             {
-                if (spedUp == false)
+                if (cantStandUp == true)
                 {
-                    if (cantStandUp == true)
-                    {
-                        crouching = true;
-                        CrouchPenalty = crouchSlow;
-                    }
-                    if (cantStandUp == false)
-                    {
-                        crouching = false;
-                        CrouchPenalty = 1;
-                    }
+                    crouching = true;
+                    CrouchPenalty = crouchSlow;
                 }
+                if (cantStandUp == false)
+                {
+                    crouching = false;
+                    CrouchPenalty = 1;
+                }
+                
             }
             // Animation parameters update
             animator.SetBool("Jumping", jumping);
@@ -382,6 +380,7 @@ public class PlayerOneMovement : MonoBehaviour {
         yield return new WaitForSeconds(timePerPickup);
         pickupImages[0].sprite = pickupEmpty;
 
+        spedUp = false;
         SuperSpeed = 1;
         gameObject.GetComponent<PlayerOneStats>().pickupCount = 0;
     }
