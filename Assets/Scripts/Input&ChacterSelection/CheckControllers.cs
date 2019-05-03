@@ -168,7 +168,6 @@ public class CheckControllers : MonoBehaviour {
         }
         else
         {
-            Debug.Log("False");
             controllerOne = false;
             controllerTwo = false;
             topPlayersController = false;

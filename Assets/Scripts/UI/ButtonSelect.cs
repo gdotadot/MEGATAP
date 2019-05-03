@@ -65,7 +65,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     {
         if (es.currentSelectedGameObject == null)
         {
-            tooltipBox.GetComponent<Image>().enabled = false;
+            //tooltipBox.GetComponent<Image>().enabled = false;
         }
     }
 
@@ -132,7 +132,6 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         
         if(tooltipText != null)
         {
-
             tooltipBox.GetComponent<Image>().enabled = true;
             Vector3 tooltipPosition = tooltipBox.transform.position;
 
