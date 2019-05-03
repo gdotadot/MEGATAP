@@ -24,10 +24,12 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
 
     private InputManager inputManager;
 
+    private CheckControllers cc;
 
     private void Awake()
     {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        cc = inputManager.GetComponent<CheckControllers>();
     }
 
     private void Start()
@@ -52,6 +54,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
             }
         }
         es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+
         if(es.currentSelectedGameObject != null) ChangeTooltip(es.currentSelectedGameObject.name, es.currentSelectedGameObject);
 
         cs = player.GetComponent<CastSpell>();
@@ -62,7 +65,11 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
 
     public void Update()
     {
-        //if (es.currentSelectedGameObject == null) tooltip.text = "";
+        if (es.currentSelectedGameObject == null && cc.topPlayersController)
+        {
+            tooltipBox.GetComponent<Image>().enabled = false;
+            tooltipText.text = "";
+        }
     }
 
     //Do this when the selectable UI object is selected.
@@ -93,7 +100,6 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
                 if (pt != null) pt.DestroyGhost();
                 if (currentFirstSpell != null && currentFirstSpell.gameObject == this.gameObject)
                 {
-                    //Debug.Log("First");
                     controllerCursor.transform.localPosition = new Vector3(0, -130);
                     cursorMove.MovingTraps = false;
                 }
@@ -129,7 +135,6 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         
         if(tooltipText != null)
         {
-
             tooltipBox.GetComponent<Image>().enabled = true;
             Vector3 tooltipPosition = tooltipBox.transform.position;
 

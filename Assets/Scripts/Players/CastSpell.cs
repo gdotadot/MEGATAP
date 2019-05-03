@@ -62,12 +62,14 @@ public class CastSpell : MonoBehaviour
     public bool InputEnabled = true;
     private int previouslySelectedIndex;
     private InputManager inputManager;
+    private CheckControllers cc;
 
     private GameObject currentSelectedGameObject;
 
     private void Awake()
     {
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
+        cc = inputManager.GetComponent<CheckControllers>();
     }
 
     void Start()
@@ -94,7 +96,7 @@ public class CastSpell : MonoBehaviour
     void Update()
     {
 
-        p2Controller = inputManager.GetComponent<CheckControllers>().GetTopPlayerControllerState();
+        p2Controller = cc.GetTopPlayerControllerState();
         //Move target with cursor
         MoveTarget();
 
@@ -122,10 +124,19 @@ public class CastSpell : MonoBehaviour
             currentSelectedGameObject = eventSystem.currentSelectedGameObject;
         }
 
-        if (p2Controller && eventSystem.currentSelectedGameObject == null)
+        //if(Cursor.lockState == CursorLockMode.Locked && eventSystem.currentSelectedGameObject == null)
+        //{
+        //    eventSystem.SetSelectedGameObject(currentSelectedGameObject);
+        //}
+        //else
+        
+        if(Input.GetMouseButtonDown(0))
         {
             eventSystem.SetSelectedGameObject(currentSelectedGameObject);
-            //    SetSelectedButton();
+        }
+        if (cc.topPlayersController && eventSystem.currentSelectedGameObject == null)
+        {
+            SetSelectedButton();
         }
         atTop = GetComponent<PlaceTrap>().LastFace();
     }
@@ -358,7 +369,6 @@ public class CastSpell : MonoBehaviour
                 if (spellDirection == SpellDirection.Right || spellDirection == SpellDirection.Left)
                 {
                     GetComponent<MoveControllerCursor>().SpellCastDirection = SpellDirection.Right;
-                    Debug.Log(cam2.pixelWidth);
                     Vector3 center = new Vector3(cam2.pixelWidth / 2, cam2.pixelHeight / 2, 0);
                     switch (PlayerOneState)
                     {
@@ -528,7 +538,10 @@ public class CastSpell : MonoBehaviour
             {
                 if (queue[i] != null && queue[i].activeInHierarchy && queue[i].GetComponent<Button>().interactable && !buttonSet)
                 {
-                    eventSystem.SetSelectedGameObject(queue[i]);
+                    //eventSystem.SetSelectedGameObject(queue[i]);
+                    queue[i].GetComponent<Button>().Select();
+                    queue[i].GetComponent<Button>().OnSelect(new BaseEventData(eventSystem));
+                    controllerCursor.transform.localPosition = new Vector3(0, -130);
                     buttonSet = true;
                 }
             }
@@ -540,7 +553,10 @@ public class CastSpell : MonoBehaviour
                 {
                     if (queue[i] != null && queue[i].activeInHierarchy && queue[i].GetComponent<Button>().interactable && !buttonSet)
                     {
-                        eventSystem.SetSelectedGameObject(queue[i]);
+                        //eventSystem.SetSelectedGameObject(queue[i]);
+                        queue[i].GetComponent<Button>().Select();
+                        queue[i].GetComponent<Button>().OnSelect(new BaseEventData(eventSystem));
+                        controllerCursor.transform.localPosition = new Vector3(0, -130);
                         buttonSet = true;
                     }
                 }
@@ -555,7 +571,9 @@ public class CastSpell : MonoBehaviour
                     {
 
                         controllerCursor.transform.localPosition = new Vector3(0, 130);
-                        eventSystem.SetSelectedGameObject(pt.queue[i]);
+                        //eventSystem.SetSelectedGameObject(pt.queue[i]);
+                        pt.queue[i].GetComponent<Button>().Select();
+                        pt.queue[i].GetComponent<Button>().OnSelect(new BaseEventData(eventSystem));
                         buttonSet = true;
                     }
                 }
@@ -577,7 +595,7 @@ public class CastSpell : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         InputEnabled = true;
     }
-
+    
     //Start a cooldown on the button pressed. Needs current button position and queue index to replace.
     private IEnumerator StartCooldown(float cooldownTime, Vector3 buttonPosition, int index)
     {
@@ -609,6 +627,7 @@ public class CastSpell : MonoBehaviour
             if(cooldownTimePassed >= cooldownTime)
             {
                 button.interactable = true;
+
                 if (eventSystem.currentSelectedGameObject == null && p2Controller)
                 {
                     SetSelectedButton();

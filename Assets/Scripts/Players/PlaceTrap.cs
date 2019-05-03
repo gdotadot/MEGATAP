@@ -97,7 +97,6 @@ public class PlaceTrap : MonoBehaviour {
 	void Update () {
         //Move ghost with cursor
         MoveGhost();
-
         //Get controller select
         p2Controller = checkControllers.GetTopPlayerControllerState();
         if (p2Controller && !pause.GameIsPaused)
@@ -125,6 +124,24 @@ public class PlaceTrap : MonoBehaviour {
             if(p2Controller) eventSystem.SetSelectedGameObject(queue[0]);
             cursorMove.MovingTraps = true;
             controllerCursor.transform.localPosition = new Vector3(0, 130);
+        }
+
+        //Make sure not to select uninteractable buttons
+        bool allUsed = true;
+        for (int i = 0; i < queue.Count; i++)
+        {
+            if (queue[i].GetComponent<Button>().interactable)
+            {
+                allUsed = false;
+            }
+        }
+
+        if (allUsed)
+        {
+            active = false;
+            //eventSystem.SetSelectedGameObject(null);
+
+            DestroyGhost();
         }
     }
 
@@ -313,50 +330,52 @@ public class PlaceTrap : MonoBehaviour {
     }
     private void SetGhost()
     {
-        if(trap != null)
+        if (active)
         {
-            ghostTrap = trap.InstantiateTrap(Vector3.zero);
-            placementSquares = ghostTrap.GetComponentInChildren<Canvas>().gameObject.GetComponentsInChildren<SpriteRenderer>();
-        }
-        
-        
-        Destroy(ghostTrap.GetComponent<Collider>());
-        
-        //Delete spikes script so animation doesn't play
-        if(ghostTrap.GetComponentInChildren<Spikes>() != null)
-        {
-            Destroy(ghostTrap.GetComponent<Spikes>());
-        }
-        //Make half transparent------------------------------------------------
-        //Check for both mesh renderer and skinned mesh renderers
-        MeshRenderer[] mrs = ghostTrap.GetComponentsInChildren<MeshRenderer>();
-        SkinnedMeshRenderer[] smrs = ghostTrap.GetComponentsInChildren<SkinnedMeshRenderer>();
-        //each mr can also have multiple materials
-        List<Material> mats = new List<Material>();
-
-        foreach (MeshRenderer mr in mrs)
-        {
-            mr.GetMaterials(mats);
-            foreach(Material mat in mats)
+            if (trap != null)
             {
-                Color color = mat.color;
-                color.a = 0.5f;
-                mat.color = color;
+                ghostTrap = trap.InstantiateTrap(Vector3.zero);
+                placementSquares = ghostTrap.GetComponentInChildren<Canvas>().gameObject.GetComponentsInChildren<SpriteRenderer>();
             }
-        }
 
-        foreach (SkinnedMeshRenderer smr in smrs)
-        {
-            smr.GetMaterials(mats);
-            foreach (Material mat in mats)
+
+            Destroy(ghostTrap.GetComponent<Collider>());
+
+            //Delete spikes script so animation doesn't play
+            if (ghostTrap.GetComponentInChildren<Spikes>() != null)
             {
-                Color color = mat.color;
-                color.a = 0.5f;
-                mat.color = color;
+                Destroy(ghostTrap.GetComponent<Spikes>());
             }
-        }
-        ghostTrap.GetComponent<TrapBase>().enabled = false;
+            //Make half transparent------------------------------------------------
+            //Check for both mesh renderer and skinned mesh renderers
+            MeshRenderer[] mrs = ghostTrap.GetComponentsInChildren<MeshRenderer>();
+            SkinnedMeshRenderer[] smrs = ghostTrap.GetComponentsInChildren<SkinnedMeshRenderer>();
+            //each mr can also have multiple materials
+            List<Material> mats = new List<Material>();
 
+            foreach (MeshRenderer mr in mrs)
+            {
+                mr.GetMaterials(mats);
+                foreach (Material mat in mats)
+                {
+                    Color color = mat.color;
+                    color.a = 0.5f;
+                    mat.color = color;
+                }
+            }
+
+            foreach (SkinnedMeshRenderer smr in smrs)
+            {
+                smr.GetMaterials(mats);
+                foreach (Material mat in mats)
+                {
+                    Color color = mat.color;
+                    color.a = 0.5f;
+                    mat.color = color;
+                }
+            }
+            ghostTrap.GetComponent<TrapBase>().enabled = false;
+        }
     }
 
     private void MoveGhost()
@@ -577,6 +596,7 @@ public class PlaceTrap : MonoBehaviour {
     private void CreateTrapQueue()
     {
         trapRot = 0;
+        active = true;
         for(int i = 0; i < queueSize; i++)
         {
             int random = Random.Range(0, trapButtons.Length);
@@ -611,6 +631,23 @@ public class PlaceTrap : MonoBehaviour {
     {
         //queue[queueIndex].SetActive(false);
         queue[queueIndex].GetComponent<Button>().interactable = false;
+
+        bool allUsed = true;
+        for (int i = 0; i < queue.Count; i++)
+        {
+            if (queue[i].GetComponent<Button>().interactable)
+            {
+                allUsed = false;
+            }
+        }
+
+        if(allUsed)
+        {
+            active = false;
+            SetSelectedButton();
+
+            DestroyGhost();
+        }
     }
 
     //Set new selected button if the controller is being used.
@@ -655,6 +692,13 @@ public class PlaceTrap : MonoBehaviour {
                             buttonSet = true;
                         }
                     }
+                }
+
+                if(!buttonSet)
+                {
+                    Debug.Log("DOne");
+                    DestroyGhost();
+                    eventSystem.SetSelectedGameObject(null);
                 }
 
             }
