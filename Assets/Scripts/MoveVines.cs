@@ -134,7 +134,6 @@ public class MoveVines : MonoBehaviour {
             transform.position += new Vector3(0, vineMoveUpSpeed, 0) * Time.deltaTime;
             if (transform.position.y >= (20 * floor) + 10)
             {
-                Debug.Log((20 * floor) + 10);
                 moveUp = false;
                 movedUpThisFloor = true;
                 floor++;

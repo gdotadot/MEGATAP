@@ -11,7 +11,8 @@ public class GameOverMenu : MonoBehaviour {
 
     private void Start()
     {
-        cc = GetComponent<CheckControllers>();
+        GameObject inputManager = GameObject.Find("InputManager");
+        cc = inputManager.GetComponent<CheckControllers>();
         if(cc.GetControllerOneState() || cc.GetControllerTwoState())
         {
             es.SetSelectedGameObject(menuButtons[0]);
