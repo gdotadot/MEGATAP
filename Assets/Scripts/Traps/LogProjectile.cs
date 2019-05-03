@@ -12,7 +12,7 @@ public class LogProjectile : MonoBehaviour {
 
     [SerializeField] private float animationSpeed;
 
-    // let the FixedUpdate method know that there was a collision
+    // let the FixedUpdate method know that there was a collision with player
     private bool hit = false;
     // the player (or whatever collided with this trap)
     private GameObject player = null;
@@ -20,16 +20,26 @@ public class LogProjectile : MonoBehaviour {
     private int knockTimer = 0;
     //Player's animator for knockback animation
     private Animator anim = null;
+    //To know there was collision with a platform or boundary
+    private bool hitWall = false;
+    //Time before log disappears
+    private float time = 0.0f;
+    //Transform of log model
+    private GameObject child;
 
     // Use this for initialization
     void Start () {
         trapBase = GetComponent<TrapBase>();
-        hit = false;
+        child = transform.parent.gameObject.transform.GetChild(1).gameObject;
     }
 
     // Update is called once per frame
-
+    private void Update()
+    {
+        this.transform.position = child.transform.position;
+    }
     void FixedUpdate () {
+        
         if (player != null)
         {
             if (hit)
@@ -53,6 +63,16 @@ public class LogProjectile : MonoBehaviour {
                 }
             }
         }
+        if (hitWall == true)
+        {
+            //Log disappears after stunDuration time
+            time += Time.deltaTime;
+            if (time >= stunDuration)
+            {
+                Destroy(this.transform.parent.gameObject);
+                hitWall = false;
+            }
+        }
     }
 
     void OnTriggerEnter(Collider col)
@@ -66,12 +86,12 @@ public class LogProjectile : MonoBehaviour {
             {
                 anim.Play("Knockback", 0);
             }
+            //Reset time to 0 when plaer is hit so player doesn't get infinitely stunned.
+            time = 0.0f;
         }
-    }
-
-    //Getter
-    public float StunTime()
-    {
-        return stunDuration;
+        if (col.gameObject.tag == "Boundary" || col.gameObject.tag == "Platform")
+        {
+            hitWall = true;
+        }
     }
 }

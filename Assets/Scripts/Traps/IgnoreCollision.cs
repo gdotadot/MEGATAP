@@ -12,13 +12,17 @@ public class IgnoreCollision : MonoBehaviour
     {
 
     }
+    void Update()
+    {
+        Debug.Log(projectile);
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Projectile")
         {
             projectile = other.gameObject;
-            col = projectile.GetComponentInParent<CapsuleCollider>();
+            col = projectile.GetComponentInChildren<CapsuleCollider>();
             col.enabled = true;
         }
     }

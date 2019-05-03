@@ -58,7 +58,7 @@ public class LogRoller : MonoBehaviour
             {
                 logProjectile = Instantiate(logPrefab);
 
-                logProjectile.transform.position = transform.position + new Vector3(0, 0.5f, 0);
+                logProjectile.transform.position = transform.position + new Vector3(0, 0, 0);
                 logProjectile.transform.rotation = projectileRotation;
 
                 rb = logProjectile.GetComponentInChildren<Rigidbody>();
