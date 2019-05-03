@@ -52,6 +52,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
             }
         }
         es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+
         if(es.currentSelectedGameObject != null) ChangeTooltip(es.currentSelectedGameObject.name, es.currentSelectedGameObject);
 
         cs = player.GetComponent<CastSpell>();
@@ -62,7 +63,10 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
 
     public void Update()
     {
-        //if (es.currentSelectedGameObject == null) tooltip.text = "";
+        if (es.currentSelectedGameObject == null)
+        {
+            tooltipBox.GetComponent<Image>().enabled = false;
+        }
     }
 
     //Do this when the selectable UI object is selected.
@@ -93,7 +97,7 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
                 if (pt != null) pt.DestroyGhost();
                 if (currentFirstSpell != null && currentFirstSpell.gameObject == this.gameObject)
                 {
-                    //Debug.Log("First");
+                    Debug.Log("First");
                     controllerCursor.transform.localPosition = new Vector3(0, -130);
                     cursorMove.MovingTraps = false;
                 }
