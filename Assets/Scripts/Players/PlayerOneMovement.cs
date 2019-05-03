@@ -24,6 +24,10 @@ public class PlayerOneMovement : MonoBehaviour {
     private bool spedUp = false;
     public bool InputEnabled = true;
 
+    //Pickup stuff
+    [SerializeField] private Image[] pickupImages;
+    [SerializeField] private Sprite pickupEmpty;
+
     //Control if player can have input
     private bool move = true;
 
@@ -360,13 +364,21 @@ public class PlayerOneMovement : MonoBehaviour {
 
     public IEnumerator SpeedBoost(float speedUpMultiplier, float speedUpDuration)
     {
-
         spedUp = true;
         speed *= speedUpMultiplier;
-        yield return new WaitForSeconds(speedUpDuration);
+
+        float timePerPickup = speedUpDuration / 3;
+
+        yield return new WaitForSeconds(timePerPickup);
+        pickupImages[2].sprite = pickupEmpty;
+        yield return new WaitForSeconds(timePerPickup);
+        pickupImages[1].sprite = pickupEmpty;
+        yield return new WaitForSeconds(timePerPickup);
+        pickupImages[0].sprite = pickupEmpty;
+
+
         spedUp = false;
         speed = moveSpeed;
-        spedUp = false;
         gameObject.GetComponent<PlayerOneStats>().pickupCount = 0;
     }
 

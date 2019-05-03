@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -709,7 +709,7 @@ MonoBehaviour:
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cfdf7857ea455f245b88d33ff8aa52f5, type: 2}
-  m_sharedMaterial: {fileID: 21919546947304198, guid: ded0785c2ea1e824ea50aacfd25d8590,
+  m_sharedMaterial: {fileID: 21511166922184380, guid: cfdf7857ea455f245b88d33ff8aa52f5,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -753,7 +753,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -784,7 +784,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -1544,6 +1544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 998996880c9de0047a107e2b37bec39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  topPlayersController: 0
 --- !u!1 &1241446601
 GameObject:
   m_ObjectHideFlags: 0
@@ -2308,7 +2309,7 @@ MonoBehaviour:
   m_text: Yes
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cfdf7857ea455f245b88d33ff8aa52f5, type: 2}
-  m_sharedMaterial: {fileID: 21919546947304198, guid: ded0785c2ea1e824ea50aacfd25d8590,
+  m_sharedMaterial: {fileID: 21511166922184380, guid: cfdf7857ea455f245b88d33ff8aa52f5,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2352,7 +2353,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: 0
+  m_firstOverflowCharacterIndex: -1
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -2383,7 +2384,7 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
@@ -2495,7 +2496,7 @@ RectTransform:
   m_GameObject: {fileID: 2045890911}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.25, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.25, z: 1}
   m_Children:
   - {fileID: 2103821321}
   - {fileID: 1578665434}
@@ -2731,7 +2732,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -22.1, y: 150}
+  m_AnchoredPosition: {x: -22.1, y: 305.77}
   m_SizeDelta: {x: 400, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2103821322
@@ -2755,8 +2756,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: Are you sure you want to quit the game?
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ded0785c2ea1e824ea50aacfd25d8590, type: 2}
-  m_sharedMaterial: {fileID: 21919546947304198, guid: ded0785c2ea1e824ea50aacfd25d8590,
+  m_fontAsset: {fileID: 11400000, guid: cfdf7857ea455f245b88d33ff8aa52f5, type: 2}
+  m_sharedMaterial: {fileID: 21511166922184380, guid: cfdf7857ea455f245b88d33ff8aa52f5,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -2828,7 +2829,7 @@ MonoBehaviour:
     spaceCount: 8
     wordCount: 9
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
@@ -2837,7 +2838,7 @@ MonoBehaviour:
   m_spriteAnimator: {fileID: 0}
   m_isInputParsingRequired: 0
   m_inputSource: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_subTextObjects:
   - {fileID: 0}
   - {fileID: 0}

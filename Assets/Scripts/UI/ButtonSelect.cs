@@ -12,7 +12,8 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     private CastSpell cs;
     private PlaceTrap pt;
     private Image controllerCursor;
-    private TextMeshProUGUI tooltip;
+    private TextMeshProUGUI tooltipText;
+    private GameObject tooltipBox;
     private MoveControllerCursor cursorMove;
     private GameObject currentFirstSpell;
     private GameObject currentLastTrap;
@@ -39,12 +40,19 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         {
             if(t.name == "Tooltip")
             {
-                tooltip = t;
-                tooltip.transform.SetAsLastSibling();
+                tooltipText = t;
+                tooltipBox = tooltipText.transform.parent.gameObject;
+                tooltipText.transform.SetAsLastSibling();
+
+
+                if(!inputManager.GetComponent<CheckControllers>().topPlayersController)
+                {
+                    tooltipBox.GetComponent<Image>().enabled = false;
+                }
             }
         }
         es = GameObject.Find("EventSystem").GetComponent<EventSystem>();
-        if(es.currentSelectedGameObject != null) ChangeTooltip(es.currentSelectedGameObject.name);
+        if(es.currentSelectedGameObject != null) ChangeTooltip(es.currentSelectedGameObject.name, es.currentSelectedGameObject);
 
         cs = player.GetComponent<CastSpell>();
         pt = player.GetComponent<PlaceTrap>();
@@ -102,53 +110,74 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
     public void OnDeselect(BaseEventData eventData)
     {
         this.transform.localScale = buttonScale;
-        tooltip.text = "";
+        if (!inputManager.GetComponent<CheckControllers>().topPlayersController)
+        {
+            tooltipBox.GetComponent<Image>().enabled = false;
+        }
+        tooltipText.text = "";
     }
 
     public void ScaleUp()
     {
         if(this.GetComponent<Button>().interactable) this.transform.localScale *= 1.35f;
-        ChangeTooltip(this.name);
+        ChangeTooltip(this.name, this.gameObject);
     }
 
 
-    private void ChangeTooltip(string toCheck)
+    private void ChangeTooltip(string toCheck, GameObject button)
     {
-        if(tooltip != null)
+        
+        if(tooltipText != null)
         {
-            switch(toCheck)
+
+            tooltipBox.GetComponent<Image>().enabled = true;
+            Vector3 tooltipPosition = tooltipBox.transform.position;
+
+            tooltipBox.transform.position = new Vector3(button.transform.position.x, tooltipPosition.y, 0);
+            RectTransform tooltipTransform = tooltipBox.GetComponent<RectTransform>();
+            switch (toCheck)
             {
                 //Spells
                 case "Blur Spell Button(Clone)":
-                    tooltip.text = "Blur";
+                    tooltipText.text = "Blur";
+                    tooltipTransform.sizeDelta = new Vector2(120, tooltipTransform.rect.height);
                     break;
                 case "Gust Spell Button(Clone)":
-                    tooltip.text = "Wind";
+                    tooltipText.text = "Wind";
+                    tooltipTransform.sizeDelta = new Vector2(120, tooltipTransform.rect.height);
                     break;
                 case "Lightning Spell Button(Clone)":
-                    tooltip.text = "Lightning";
+                    tooltipText.text = "Lightning";
+                    tooltipTransform.sizeDelta = new Vector2(150, tooltipTransform.rect.height);
                     break;
                 case "NarrowPOV Spell Button(Clone)":
-                    tooltip.text = "Narrow Vision";
+                    tooltipText.text = "Narrow Vision";
+                    tooltipTransform.sizeDelta = new Vector2(230, tooltipTransform.rect.height);
                     break;
                 case "Slow Spell Button(Clone)":
-                    tooltip.text = "Slow";
+                    tooltipText.text = "Slow";
+                    tooltipTransform.sizeDelta = new Vector2(120, tooltipTransform.rect.height);
                     break;
                 case "Stun Spell Button(Clone)":
-                    tooltip.text = "Petrify";
+                    tooltipText.text = "Petrify";
+                    tooltipTransform.sizeDelta = new Vector2(120, tooltipTransform.rect.height);
                     break;
                 //Traps
                 case "ArrowButton(Clone)":
-                    tooltip.text = "Arrow Shooter";
+                    tooltipText.text = "Crossbow";
+                    tooltipTransform.sizeDelta = new Vector2(160, tooltipTransform.rect.height);
                     break;
                 case "BananaButton(Clone)":
-                    tooltip.text = "Banana";
+                    tooltipText.text = "Banana";
+                    tooltipTransform.sizeDelta = new Vector2(130, tooltipTransform.rect.height);
                     break;
                 case "SapButton(Clone)":
-                    tooltip.text = "Sap";
+                    tooltipText.text = "Sap";
+                    tooltipTransform.sizeDelta = new Vector2(120, tooltipTransform.rect.height);
                     break;
                 case "SpikeButton(Clone)":
-                    tooltip.text = "Spike";
+                    tooltipText.text = "Spike";
+                    tooltipTransform.sizeDelta = new Vector2(120, tooltipTransform.rect.height);
                     break;
 
             }
