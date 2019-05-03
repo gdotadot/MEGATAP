@@ -63,6 +63,7 @@ public class LogProjectile : MonoBehaviour {
                 }
             }
         }
+        Debug.Log(hitWall);
         if (hitWall == true)
         {
             //Log disappears after stunDuration time
@@ -89,6 +90,20 @@ public class LogProjectile : MonoBehaviour {
             //Reset time to 0 when plaer is hit so player doesn't get infinitely stunned.
             time = 0.0f;
         }
+        if (col.gameObject.tag == "Boundary" || col.gameObject.tag == "Platform")
+        {
+            hitWall = true;
+        }
+    }
+    private void OnTriggerStay(Collider col)
+    {
+        if (col.gameObject.tag == "Boundary" || col.gameObject.tag == "Platform")
+        {
+            hitWall = true;
+        }
+    }
+    private void OnTriggerExit(Collider col)
+    {
         if (col.gameObject.tag == "Boundary" || col.gameObject.tag == "Platform")
         {
             hitWall = true;

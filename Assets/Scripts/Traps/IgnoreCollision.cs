@@ -17,7 +17,7 @@ public class IgnoreCollision : MonoBehaviour
         Debug.Log(projectile);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         if(other.tag == "Projectile")
         {
