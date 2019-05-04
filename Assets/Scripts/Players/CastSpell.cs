@@ -115,6 +115,7 @@ public class CastSpell : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && ValidLocation == 1)
         {
             SpellCast();
+            Debug.Log("Cast");
         }
 
 
@@ -223,7 +224,7 @@ public class CastSpell : MonoBehaviour
         if (GetGridPosition() != null)
         {
             Vector3 position = GetGridPosition().Value;
-            if (spellTarget != null && CheckFloor(position.y))
+            if (spellTarget != null)
             {
                 //Spell comes from right side
                 if (spellDirection == SpellDirection.Right)
@@ -366,10 +367,10 @@ public class CastSpell : MonoBehaviour
             if (GetGridPosition() != null)
             {
                 Vector3 position = GetGridPosition().Value;
+                Vector3 center = new Vector3(cam2.pixelWidth / 2, cam2.pixelHeight / 2, 0);
                 if (spellDirection == SpellDirection.Right || spellDirection == SpellDirection.Left)
                 {
                     GetComponent<MoveControllerCursor>().SpellCastDirection = SpellDirection.Right;
-                    Vector3 center = new Vector3(cam2.pixelWidth / 2, cam2.pixelHeight / 2, 0);
                     switch (PlayerOneState)
                     {
                         case 1:
@@ -398,23 +399,23 @@ public class CastSpell : MonoBehaviour
                 else if (spellDirection == SpellDirection.Ceiling || spellDirection == SpellDirection.Floor)
                 {
                     GetComponent<MoveControllerCursor>().SpellCastDirection = SpellDirection.Ceiling;
-                    int playerFloor = playerOne.GetComponent<CameraOneRotator>().GetFloor() * 20 - 10;
+                    //int playerFloor = playerOne.GetComponent<CameraOneRotator>().GetFloor() * 20 - 10;
                     switch (PlayerOneState)
                     {
                         case 1:
-                            spellTarget.transform.position = new Vector3(position.x, playerFloor + 5, -45);
+                            spellTarget.transform.position = new Vector3(position.x, cam2.ScreenToWorldPoint(center).y + 2.5f, -45);
                             break;
                         case 3:
                             spellTarget.transform.eulerAngles = new Vector3(0, 180, 0);
-                            spellTarget.transform.position = new Vector3(position.x, playerFloor + 5, 45);
+                            spellTarget.transform.position = new Vector3(position.x, cam2.ScreenToWorldPoint(center).y + 2.5f, 45);
                             break;
                         case 2:
                             spellTarget.transform.eulerAngles = new Vector3(0, -90, 0);
-                            spellTarget.transform.position = new Vector3(45, playerFloor + 5, position.z);
+                            spellTarget.transform.position = new Vector3(45, cam2.ScreenToWorldPoint(center).y + 2.5f, position.z);
                             break;
                         case 4:
                             spellTarget.transform.eulerAngles = new Vector3(0, 90, 0);
-                            spellTarget.transform.position = new Vector3(-45, playerFloor + 5, position.z);
+                            spellTarget.transform.position = new Vector3(-45, cam2.ScreenToWorldPoint(center).y + 2.5f, position.z);
                             break;
                     }
 
