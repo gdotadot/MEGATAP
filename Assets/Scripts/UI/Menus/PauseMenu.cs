@@ -66,24 +66,24 @@ public class PauseMenu : MonoBehaviour {
         {
             if (Input.GetButtonDown("Escape") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win && (!cc.topPlayersController || !cc.GetBottomPlayerControllerState()))
             {
+                Pause();
                 es.GetComponent<StandaloneInputModule>().submitButton = "Nothing";
                 es.GetComponent<StandaloneInputModule>().verticalAxis = "Nothing";
                 controllerThatPaused = 0;
-                Pause();
             }
             if (Input.GetButtonDown("Start_Joy_1") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win)
             {
+                Pause();
                 es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu_Joy_1";
                 es.GetComponent<StandaloneInputModule>().verticalAxis = "Vertical_Menu_Stick_Joy_1";
                 controllerThatPaused = 1;
-                Pause();
             }
             if (Input.GetButtonDown("Start_Joy_2") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win)
             {
+                Pause();
                 es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu_Joy_2";
                 es.GetComponent<StandaloneInputModule>().verticalAxis = "Vertical_Menu_Stick_Joy_2";
                 controllerThatPaused = 2;
-                Pause();
             }
         }
         else
@@ -152,7 +152,7 @@ public class PauseMenu : MonoBehaviour {
         //Set correct trap buttons interactable again
         for (int i = 0; i < pt.queue.Count; i++)
         {
-            if (pt.active && pt.queue[i] != null && !usedTraps[i])
+            if (pt.queue[i] != null && !usedTraps[i])
             {
                 pt.queue[i].GetComponent<Button>().interactable = true;
             }

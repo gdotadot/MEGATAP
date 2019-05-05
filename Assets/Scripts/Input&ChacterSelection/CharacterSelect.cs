@@ -159,7 +159,14 @@ public class CharacterSelect : MonoBehaviour {
                     inputManager.P1IsTop = true;
                 }
 
-                SceneManager.LoadScene("Tutorial");
+                if (inputManager.TutorialSelected)
+                {
+                    Initiate.Fade("Tutorial", Color.black, 2);
+                }
+                else
+                {
+                    Initiate.Fade("Tower1", Color.black, 2);
+                }
             }
             else if(inputManager.GetButton(InputCommand.Start) && !checkControllers.GetControllerOneState())
             {
@@ -176,7 +183,14 @@ public class CharacterSelect : MonoBehaviour {
                     inputManager.P1IsTop = false;
                 }
 
-                SceneManager.LoadScene("Tutorial");
+                if(inputManager.TutorialSelected)
+                {
+                    Initiate.Fade("Tutorial", Color.black, 2);
+                }
+                else
+                {
+                    Initiate.Fade("Tower1", Color.black, 2);
+                }
             }
         }
     }

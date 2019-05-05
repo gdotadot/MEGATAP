@@ -18,12 +18,6 @@ public class MainMenu : MonoBehaviour {
     private void Awake()
     {
         inputManager = GameObject.Find("InputManager");
-        //int musicPlayerCount = 0;
-        //while(GameObject.Find("MusicPlayer") != null)
-        //{
-        //    musicPlayerCount++;
-        //}
-        //Debug.Log(musicPlayerCount);
     }
 
     void Start ()
@@ -50,6 +44,7 @@ public class MainMenu : MonoBehaviour {
     public void OnClickPlay()
     {
         CheckControllers cc = inputManager.GetComponent<CheckControllers>();
+        inputManager.GetComponent<InputManager>().TutorialSelected = false;
 
         if(cc.GetControllerOneState() || cc.GetControllerTwoState())
         {
@@ -57,8 +52,29 @@ public class MainMenu : MonoBehaviour {
         }
         else
         {
+            SceneManager.LoadScene("Tower1");
+        }
+    }
+
+    public void OnClickTutorial()
+    {
+        CheckControllers cc = inputManager.GetComponent<CheckControllers>();
+        inputManager.GetComponent<InputManager>().TutorialSelected = true;
+
+        if (cc.GetControllerOneState() || cc.GetControllerTwoState())
+        {
+            //Initiate.Fade("CharacterSelect", Color.black, 2);
+            SceneManager.LoadScene("CharacterSelect");
+        }
+        else
+        {
             SceneManager.LoadScene("Tutorial");
         }
+    }
+
+    public void OnClickCredits()
+    {
+        SceneManager.LoadScene("Credits");
     }
     
     public void QuitGame()
