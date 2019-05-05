@@ -37,6 +37,11 @@ public class PauseMenu : MonoBehaviour {
 
     private bool controlsUp;
     private GameObject selectedButton;
+    CursorLockMode currentLockMode;
+    bool cursorVisible;
+
+    private int controllerThatPaused = -1; //0 = keyboard, 1 = controller 1, 2 = controller 2; -1 = not paused
+
     private void Start()
     {
         pt = playerTwo.GetComponent<PlaceTrap>();
@@ -57,33 +62,81 @@ public class PauseMenu : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetButtonDown("Start") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win)
+        if(!GameIsPaused)
         {
-            if (GameIsPaused)
+            if (Input.GetButtonDown("Escape") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win && (!cc.topPlayersController || !cc.GetBottomPlayerControllerState()))
             {
-                Resume();
-            }
-            else
-            {
+                es.GetComponent<StandaloneInputModule>().submitButton = "Nothing";
+                es.GetComponent<StandaloneInputModule>().verticalAxis = "Nothing";
+                controllerThatPaused = 0;
                 Pause();
             }
-
-            if(controlsUp)
+            if (Input.GetButtonDown("Start_Joy_1") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win)
             {
-                controlsCanvas.SetActive(false);
-                controlsUp = false;
-                for (int i = 0; i < pauseButtons.Length; i++)
+                es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu_Joy_1";
+                es.GetComponent<StandaloneInputModule>().verticalAxis = "Vertical_Menu_Stick_Joy_1";
+                controllerThatPaused = 1;
+                Pause();
+            }
+            if (Input.GetButtonDown("Start_Joy_2") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win)
+            {
+                es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu_Joy_2";
+                es.GetComponent<StandaloneInputModule>().verticalAxis = "Vertical_Menu_Stick_Joy_2";
+                controllerThatPaused = 2;
+                Pause();
+            }
+        }
+        else
+        {
+            if(controllerThatPaused == 0 && Input.GetButtonDown("Escape") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win)
+            {
+                if(controlsUp)
                 {
-                    pauseButtons[i].interactable = true;
+                    CloseControlsPanel();
+                }
+                else
+                {
+                    controllerThatPaused = -1;
+                    Resume();
+                }
+            }
+            if (controllerThatPaused == 1 && (Input.GetButtonDown("Start_Joy_1") || Input.GetButtonDown("Cancel_Joy_1")) && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win)
+            {
+                if (controlsUp)
+                {
+                    CloseControlsPanel();
+                }
+                else
+                {
+                    controllerThatPaused = -1;
+                    Resume();
+                }
+            }
+            if (controllerThatPaused == 2 && (Input.GetButtonDown("Start_Joy_2") || Input.GetButtonDown("Cancel_Joy_2")) && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win)
+            {
+                if (controlsUp)
+                {
+                    CloseControlsPanel();
+                }
+                else
+                {
+                    controllerThatPaused = -1;
+                    Resume();
                 }
             }
         }
-
-        if(GameIsPaused && Input.GetButtonDown("Cancel"))
-        {
-            Resume();
-        }
 	}
+
+    private void CloseControlsPanel()
+    {
+        for (int i = 0; i < pauseButtons.Length; i++)
+        {
+            pauseButtons[i].interactable = true;
+        }
+        es.SetSelectedGameObject(pauseButtons[1].gameObject);
+        controlsCanvas.SetActive(false);
+        controlsUp = false;
+    }
 	
 	public void Resume(){
 		pauseMenuUI.SetActive(false);
@@ -114,12 +167,14 @@ public class PauseMenu : MonoBehaviour {
         StartCoroutine(cs.ResumeInput());
         StartCoroutine(playerMov.ResumeInput());
         GameIsPaused = false;
-	}
+
+    }
 	
 	public void Pause(){
         //Set buttons not interactable
         selectedButton = es.currentSelectedGameObject;
-        
+    
+
         //Keep track of which spells are on cooldown / uninteractable so we don't set them interactable when we resume.
         //& set the button uninteractable
         onCooldown = new bool[cs.queue.Length];
@@ -163,7 +218,6 @@ public class PauseMenu : MonoBehaviour {
         Time.timeScale = 0f;
 
         //Disable Inputs
-        es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu";
         pt.InputEnabled = false;
         cs.InputEnabled = false;
         playerMov.InputEnabled = false;
