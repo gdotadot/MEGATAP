@@ -536,7 +536,6 @@ public class PlaceTrap : MonoBehaviour {
     {
         if(ghostTrap != null)
         {
-            Debug.Log("Destroy");
             Destroy(ghostTrap);
             ghostTrap = null;
         }
