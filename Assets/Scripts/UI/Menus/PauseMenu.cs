@@ -67,7 +67,7 @@ public class PauseMenu : MonoBehaviour {
             if (Input.GetButtonDown("Escape") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win && (!cc.topPlayersController || !cc.GetBottomPlayerControllerState()))
             {
                 Pause();
-                es.GetComponent<StandaloneInputModule>().submitButton = "Nothing";
+                es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu_Click";
                 es.GetComponent<StandaloneInputModule>().verticalAxis = "Nothing";
                 controllerThatPaused = 0;
             }
