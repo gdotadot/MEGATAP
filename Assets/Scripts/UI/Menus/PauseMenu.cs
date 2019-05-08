@@ -214,7 +214,8 @@ public class PauseMenu : MonoBehaviour {
         //Bring up Pause menu
         pauseMenuUI.SetActive(true);
         pauseMenuUI.transform.SetAsLastSibling();
-        es.SetSelectedGameObject(resumeButton.gameObject);
+        if(cc.GetControllerOneState() || cc.GetControllerTwoState())
+            es.SetSelectedGameObject(resumeButton.gameObject);
         Time.timeScale = 0f;
 
         //Disable Inputs
