@@ -119,8 +119,8 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
         if (!inputManager.GetComponent<CheckControllers>().topPlayersController)
         {
             tooltipBox.GetComponent<Image>().enabled = false;
+            tooltipText.text = "";
         }
-        tooltipText.text = "";
     }
 
     public void ScaleUp()
