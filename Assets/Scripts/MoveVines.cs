@@ -15,7 +15,7 @@ public class MoveVines : MonoBehaviour {
 
     //Current position along tower
     private int face = 1, floor = 1;
-
+    private int targetHeight;
     //Bools to help with moving the vines up
     private bool moveUp;                 //true while the vines are moving up
     private bool movedUpThisFloor;       //true if the vines have already moved up this floor (so they don't do it repeatedly)
@@ -126,19 +126,25 @@ public class MoveVines : MonoBehaviour {
     //Check if the vines should start moving upwards
     private void CheckMoveUp(GameObject p)
     {
-        if (p.transform.position.x <= -40 && p.transform.position.z <= -10 && face == 4 && floor < 5 && !movedUpThisFloor && !moveUp)
+        if (p.transform.position.x <= -40 && p.transform.position.z <= -10 && p.transform.position.z >= -11 && face == 4 && floor < 5 && !movedUpThisFloor && !moveUp)
         {
+            Debug.Log("Start Moving Up");
             moveUp = true;
+            targetHeight = (20 * floor) + 10;
         }
-        if (moveUp)
+        if(p.transform.position.x <= -40 && p.transform.position.z <= -40 && face == 4 && floor == 5 && !movedUpThisFloor && !moveUp)
+        {
+            Started = false;
+        }
+        if (moveUp && !movedUpThisFloor)
         {
             transform.position += new Vector3(0, vineMoveUpSpeed, 0) * Time.deltaTime;
             
-            if (transform.position.y >= ((20 * floor) + 10))
+            if (transform.position.y >= targetHeight)
             {
                 moveUp = false;
                 movedUpThisFloor = true;
-                vineMoveUpSpeed += 0.1f;
+                vineMoveUpSpeed += 0.075f;
             }
         }
     }
