@@ -115,7 +115,6 @@ public class CastSpell : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && ValidLocation == 1)
         {
             SpellCast();
-            Debug.Log("Cast");
         }
 
 
@@ -131,7 +130,7 @@ public class CastSpell : MonoBehaviour
         //}
         //else
         
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && cc.topPlayersController)
         {
             eventSystem.SetSelectedGameObject(currentSelectedGameObject);
         }
