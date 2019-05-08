@@ -49,19 +49,23 @@ public class PickUp : MonoBehaviour {
         {
             active = false;
             other.GetComponent<PlayerOneStats>().pickupCount++;
+            
 
             if (other.gameObject.GetComponent<PlayerOneStats>().pickupCount == 1)
             {
                 audioSource.PlayOneShot(pickUpSFX1);
                 pickupImages[0].sprite = pickupFull;
+                pickupImages[0].rectTransform.sizeDelta = new Vector2(75, 60);
             } else if (other.gameObject.GetComponent<PlayerOneStats>().pickupCount == 2)
             {
                 audioSource.PlayOneShot(pickUpSFX2);
                 pickupImages[1].sprite = pickupFull;
+                pickupImages[1].rectTransform.sizeDelta = new Vector2(75, 60);
             } else if (other.gameObject.GetComponent<PlayerOneStats>().pickupCount == 3)
             {
                 audioSource.PlayOneShot(pickUpSFX3);
                 pickupImages[2].sprite = pickupFull;
+                pickupImages[2].rectTransform.sizeDelta = new Vector2(75, 60);
             }
 
             this.gameObject.transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().enabled = false;

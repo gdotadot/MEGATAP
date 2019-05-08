@@ -126,23 +126,6 @@ public class PlaceTrap : MonoBehaviour {
             controllerCursor.transform.localPosition = new Vector3(0, 130);
         }
 
-        //Make sure not to select uninteractable buttons
-        bool allUsed = true;
-        for (int i = 0; i < queue.Count; i++)
-        {
-            if (queue[i].GetComponent<Button>().interactable)
-            {
-                allUsed = false;
-            }
-        }
-
-        if (allUsed)
-        {
-            active = false;
-            //eventSystem.SetSelectedGameObject(null);
-
-            DestroyGhost();
-        }
     }
 
     //Returns cursor position on tower as a grid location rather than free-floating

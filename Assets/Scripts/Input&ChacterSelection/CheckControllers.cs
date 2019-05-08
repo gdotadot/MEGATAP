@@ -23,6 +23,8 @@ public class CheckControllers : MonoBehaviour {
 
     string scene;
     private InputManager inputManager;
+    private PauseMenu pause;
+
 
     private void Awake()
     {
@@ -48,38 +50,41 @@ public class CheckControllers : MonoBehaviour {
 
     private void Update()
     {
-        CheckConnected();
-        if (topPlayersController)
+        if(Time.timeScale != 0)
         {
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            if (canvas != null && eventVars != null)
+            CheckConnected();
+            if (topPlayersController)
             {
-                canvas.GetComponent<GraphicRaycaster>().enabled = true;
-                foreach (SetEventTriggerVars v in eventVars)
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+                if (canvas != null && eventVars != null)
                 {
-                    v.enabled = true;
-                }
-                foreach (SetPointerClickEvents p in clickEvents)
-                {
-                    p.enabled = true;
+                    canvas.GetComponent<GraphicRaycaster>().enabled = true;
+                    foreach (SetEventTriggerVars v in eventVars)
+                    {
+                        v.enabled = true;
+                    }
+                    foreach (SetPointerClickEvents p in clickEvents)
+                    {
+                        p.enabled = true;
+                    }
                 }
             }
-        }
-        else if ((!inputManager.P1IsTop && !controllerOne) || !topPlayersController)
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            if (canvas != null && eventVars != null && topPlayersController)
+            else if ((!inputManager.P1IsTop && !controllerOne) || !topPlayersController)
             {
-                canvas.GetComponent<GraphicRaycaster>().enabled = false;
-                foreach (SetEventTriggerVars v in eventVars)
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+                if (canvas != null && eventVars != null && topPlayersController)
                 {
-                    v.enabled = false;
-                }
-                foreach (SetPointerClickEvents p in clickEvents)
-                {
-                    p.enabled = false;
+                    canvas.GetComponent<GraphicRaycaster>().enabled = false;
+                    foreach (SetEventTriggerVars v in eventVars)
+                    {
+                        v.enabled = false;
+                    }
+                    foreach (SetPointerClickEvents p in clickEvents)
+                    {
+                        p.enabled = false;
+                    }
                 }
             }
         }

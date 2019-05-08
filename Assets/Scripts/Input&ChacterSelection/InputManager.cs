@@ -31,13 +31,14 @@ public enum InputCommand
 
 public class InputManager : MonoBehaviour {
     [HideInInspector] public bool P1IsTop;
+    [HideInInspector] public bool TutorialSelected;
 
     //P1 is not top by default
     private void Awake()
     {
         P1IsTop = false;
     }
-    
+
     //Set input enums for when controller 1 is top player
     private Dictionary<InputCommand, string> p2AsTop = new Dictionary<InputCommand, string>
     {

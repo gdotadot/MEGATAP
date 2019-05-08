@@ -375,10 +375,13 @@ public class PlayerOneMovement : MonoBehaviour {
 
         yield return new WaitForSeconds(timePerPickup);
         pickupImages[2].sprite = pickupEmpty;
+        pickupImages[2].rectTransform.sizeDelta = new Vector2(50, 40);
         yield return new WaitForSeconds(timePerPickup);
         pickupImages[1].sprite = pickupEmpty;
+        pickupImages[1].rectTransform.sizeDelta = new Vector2(50, 40);
         yield return new WaitForSeconds(timePerPickup);
         pickupImages[0].sprite = pickupEmpty;
+        pickupImages[0].rectTransform.sizeDelta = new Vector2(50, 40);
 
         spedUp = false;
         SuperSpeed = 1;
