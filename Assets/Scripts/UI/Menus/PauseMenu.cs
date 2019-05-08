@@ -37,6 +37,7 @@ public class PauseMenu : MonoBehaviour {
 
     private bool controlsUp;
     private GameObject selectedButton;
+
     CursorLockMode currentLockMode;
     bool cursorVisible;
 
@@ -66,24 +67,36 @@ public class PauseMenu : MonoBehaviour {
         {
             if (Input.GetButtonDown("Escape") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win && (!cc.topPlayersController || !cc.GetBottomPlayerControllerState()))
             {
+                controllerThatPaused = 0;
                 Pause();
                 es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu_Click";
                 es.GetComponent<StandaloneInputModule>().verticalAxis = "Nothing";
-                controllerThatPaused = 0;
+
+                currentLockMode = Cursor.lockState;
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;              
             }
             if (Input.GetButtonDown("Start_Joy_1") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win)
             {
+                controllerThatPaused = 1;
+
+
+                Cursor.lockState = CursorLockMode.Locked;
+
                 Pause();
                 es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu_Joy_1";
                 es.GetComponent<StandaloneInputModule>().verticalAxis = "Vertical_Menu_Stick_Joy_1";
-                controllerThatPaused = 1;
             }
             if (Input.GetButtonDown("Start_Joy_2") && countdown.CountdownFinished && !speccyLose.Lose && !speccyWin.Win)
             {
+                controllerThatPaused = 2;
+
+
+                Cursor.lockState = CursorLockMode.Locked;
+
                 Pause();
                 es.GetComponent<StandaloneInputModule>().submitButton = "Submit_Menu_Joy_2";
                 es.GetComponent<StandaloneInputModule>().verticalAxis = "Vertical_Menu_Stick_Joy_2";
-                controllerThatPaused = 2;
             }
         }
         else
@@ -97,6 +110,9 @@ public class PauseMenu : MonoBehaviour {
                 else
                 {
                     controllerThatPaused = -1;
+                    Debug.Log("Cursor: " + currentLockMode);
+                    Cursor.lockState = currentLockMode;
+
                     Resume();
                 }
             }
@@ -162,6 +178,7 @@ public class PauseMenu : MonoBehaviour {
         es.GetComponent<StandaloneInputModule>().submitButton = "Nothing";
         Time.timeScale = 1f;
 
+        Cursor.lockState = currentLockMode;
         //Resume Inputs
         StartCoroutine(pt.ResumeInput());
         StartCoroutine(cs.ResumeInput());
@@ -173,7 +190,6 @@ public class PauseMenu : MonoBehaviour {
 	public void Pause(){
         //Set buttons not interactable
         selectedButton = es.currentSelectedGameObject;
-    
 
         //Keep track of which spells are on cooldown / uninteractable so we don't set them interactable when we resume.
         //& set the button uninteractable
@@ -214,7 +230,8 @@ public class PauseMenu : MonoBehaviour {
         //Bring up Pause menu
         pauseMenuUI.SetActive(true);
         pauseMenuUI.transform.SetAsLastSibling();
-        if(cc.GetControllerOneState() || cc.GetControllerTwoState())
+        
+        if(controllerThatPaused == 1 || controllerThatPaused == 2)
             es.SetSelectedGameObject(resumeButton.gameObject);
         Time.timeScale = 0f;
 
