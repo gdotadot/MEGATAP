@@ -145,44 +145,44 @@ public class ButtonSelect : MonoBehaviour, ISelectHandler, IDeselectHandler// re
                 //Spells
                 case "Blur Spell Button(Clone)":
                     tooltipText.text = "Blur";
-                    tooltipTransform.sizeDelta = new Vector2(120, tooltipTransform.rect.height);
+                    tooltipTransform.sizeDelta = new Vector2(75, tooltipTransform.rect.height);
                     break;
                 case "Gust Spell Button(Clone)":
                     tooltipText.text = "Wind";
-                    tooltipTransform.sizeDelta = new Vector2(120, tooltipTransform.rect.height);
+                    tooltipTransform.sizeDelta = new Vector2(75, tooltipTransform.rect.height);
                     break;
                 case "Lightning Spell Button(Clone)":
                     tooltipText.text = "Lightning";
-                    tooltipTransform.sizeDelta = new Vector2(150, tooltipTransform.rect.height);
+                    tooltipTransform.sizeDelta = new Vector2(100, tooltipTransform.rect.height);
                     break;
                 case "NarrowPOV Spell Button(Clone)":
-                    tooltipText.text = "Narrow Vision";
-                    tooltipTransform.sizeDelta = new Vector2(230, tooltipTransform.rect.height);
+                    tooltipText.text = "Blind";
+                    tooltipTransform.sizeDelta = new Vector2(75, tooltipTransform.rect.height);
                     break;
                 case "Slow Spell Button(Clone)":
                     tooltipText.text = "Slow";
-                    tooltipTransform.sizeDelta = new Vector2(120, tooltipTransform.rect.height);
+                    tooltipTransform.sizeDelta = new Vector2(75, tooltipTransform.rect.height);
                     break;
                 case "Stun Spell Button(Clone)":
                     tooltipText.text = "Petrify";
-                    tooltipTransform.sizeDelta = new Vector2(120, tooltipTransform.rect.height);
+                    tooltipTransform.sizeDelta = new Vector2(75, tooltipTransform.rect.height);
                     break;
                 //Traps
                 case "ArrowButton(Clone)":
                     tooltipText.text = "Crossbow";
-                    tooltipTransform.sizeDelta = new Vector2(160, tooltipTransform.rect.height);
+                    tooltipTransform.sizeDelta = new Vector2(100, tooltipTransform.rect.height);
                     break;
                 case "BananaButton(Clone)":
                     tooltipText.text = "Banana";
-                    tooltipTransform.sizeDelta = new Vector2(130, tooltipTransform.rect.height);
+                    tooltipTransform.sizeDelta = new Vector2(85, tooltipTransform.rect.height);
                     break;
                 case "SapButton(Clone)":
                     tooltipText.text = "Sap";
-                    tooltipTransform.sizeDelta = new Vector2(120, tooltipTransform.rect.height);
+                    tooltipTransform.sizeDelta = new Vector2(75, tooltipTransform.rect.height);
                     break;
                 case "SpikeButton(Clone)":
                     tooltipText.text = "Spike";
-                    tooltipTransform.sizeDelta = new Vector2(120, tooltipTransform.rect.height);
+                    tooltipTransform.sizeDelta = new Vector2(75, tooltipTransform.rect.height);
                     break;
 
             }
