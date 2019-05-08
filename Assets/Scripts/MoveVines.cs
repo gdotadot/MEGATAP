@@ -126,17 +126,19 @@ public class MoveVines : MonoBehaviour {
     //Check if the vines should start moving upwards
     private void CheckMoveUp(GameObject p)
     {
-        if (p.transform.position.x <= -40 && p.transform.position.z <= -10 && face == 4 && floor < 5 && !movedUpThisFloor)
+        if (p.transform.position.x <= -40 && p.transform.position.z <= -10 && face == 4 && floor < 5 && !movedUpThisFloor && !moveUp)
         {
             moveUp = true;
         }
         if (moveUp)
         {
             transform.position += new Vector3(0, vineMoveUpSpeed, 0) * Time.deltaTime;
-            if (transform.position.y >= (20 * floor) + 10)
+            
+            if (transform.position.y >= ((20 * floor) + 10))
             {
                 moveUp = false;
                 movedUpThisFloor = true;
+                vineMoveUpSpeed += 0.1f;
             }
         }
     }
