@@ -128,7 +128,6 @@ public class MoveVines : MonoBehaviour {
     {
         if (p.transform.position.x <= -40 && p.transform.position.z <= -10 && p.transform.position.z >= -11 && face == 4 && floor < 5 && !movedUpThisFloor && !moveUp)
         {
-            Debug.Log("Start Moving Up");
             moveUp = true;
             targetHeight = (20 * floor) + 10;
         }
