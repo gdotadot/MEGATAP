@@ -1816,6 +1816,16 @@ Prefab:
       propertyPath: RareTrapPrefabs.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: RareSpellButtons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: RareSpellPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 114220156261559540, guid: 7c17f18a57460024ba6258242e429410,
         type: 2}
       propertyPath: CommonTrapButtons.Array.size
@@ -1826,6 +1836,16 @@ Prefab:
       propertyPath: CommonTrapPrefabs.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: CommonSpellButtons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: CommonSpellPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 114220156261559540, guid: 7c17f18a57460024ba6258242e429410,
         type: 2}
       propertyPath: UncommonTrapButtons.Array.size
@@ -1834,6 +1854,16 @@ Prefab:
     - target: {fileID: 114220156261559540, guid: 7c17f18a57460024ba6258242e429410,
         type: 2}
       propertyPath: UncommonTrapPrefabs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: UncommonSpellButtons.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: UncommonSpellPrefabs.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4994873547233482, guid: 7c17f18a57460024ba6258242e429410, type: 2}
@@ -2085,6 +2115,78 @@ Prefab:
       propertyPath: RareTrapButtons.Array.data[0]
       value: 
       objectReference: {fileID: 1342018372598374, guid: 208c22d5edce409439fa7b3eb12a8ab6,
+        type: 2}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: CommonSpellButtons.Array.data[0]
+      value: 
+      objectReference: {fileID: 1113329559578948, guid: 9caafb2bc87b57a46a16da291b5e206d,
+        type: 2}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: CommonSpellButtons.Array.data[1]
+      value: 
+      objectReference: {fileID: 1113329559578948, guid: 4fcae1fa39201f24cb3eb5a005187de5,
+        type: 2}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: RareSpellButtons.Array.data[1]
+      value: 
+      objectReference: {fileID: 1613936015125488, guid: 4a067145d92a94685b6e22ef6edc3f4b,
+        type: 2}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: RareSpellButtons.Array.data[0]
+      value: 
+      objectReference: {fileID: 1113329559578948, guid: 6a89e440e2925b14c9bb31d09e4d2c2f,
+        type: 2}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: UncommonSpellButtons.Array.data[0]
+      value: 
+      objectReference: {fileID: 1113329559578948, guid: d5688845a27f247f8856e27dbb5cf2e8,
+        type: 2}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: UncommonSpellButtons.Array.data[1]
+      value: 
+      objectReference: {fileID: 1113329559578948, guid: a515d837040864ce486d259b379aca39,
+        type: 2}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: RareSpellPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 114692542700711350, guid: 7a8dfb4bd9fe5404c9de268e4b6a114f,
+        type: 2}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: RareSpellPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 114692542700711350, guid: 4ccad5a5f67c07f48b38c70dbdfb34cb,
+        type: 2}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: CommonSpellPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 114666726713938728, guid: a1877a9fcd9b1044b903f7eb78d4662f,
+        type: 2}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: CommonSpellPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 114692542700711350, guid: 1be1b6caab1fd324698fced99786f928,
+        type: 2}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: UncommonSpellPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 114692542700711350, guid: 80156f25595d343399a190b204285c71,
+        type: 2}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: UncommonSpellPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 114666726713938728, guid: b22aaa237e58e459b8de7de4cc8a9106,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c17f18a57460024ba6258242e429410, type: 2}

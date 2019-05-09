@@ -11,6 +11,11 @@ public class CastSpell : MonoBehaviour
     [SerializeField] private int verticalSpellSpawnHeight;
     [SerializeField] private float CooldownReductionPercentage;
 
+    [Header("Percentage is X/100 currently.")]
+    [SerializeField] private int CommonRarityChance = 50;
+    [SerializeField] private int UncommonRarityChance = 35;
+    [SerializeField] private int RareRarityChance = 15;
+
     //[SerializeField] [Tooltip("Must be in SAME ORDER and SAME AMOUNT of spell prefabs and spell buttons arrays.")]
     //private float[] spellCooldowns;
 
@@ -18,8 +23,17 @@ public class CastSpell : MonoBehaviour
     [Header("Programmers - GameObjects/Scripts -----")]
     [SerializeField] private GameObject tower;
 
-    [SerializeField] private GameObject[] spellButtons;
-    [SerializeField] private SpellBase[] spellPrefabs;
+    //[SerializeField] private GameObject[] spellButtons;
+    //[SerializeField] private SpellBase[] spellPrefabs;
+
+    [SerializeField] private GameObject[] CommonSpellButtons;
+    [SerializeField] private GameObject[] UncommonSpellButtons;
+    [SerializeField] private GameObject[] RareSpellButtons;
+
+    [SerializeField] private SpellBase[] CommonSpellPrefabs;
+    [SerializeField] private SpellBase[] UncommonSpellPrefabs;
+    [SerializeField] private SpellBase[] RareSpellPrefabs;
+
     [SerializeField] private GameObject spellQueue;
 
     [SerializeField] private Image controllerCursor;
@@ -464,9 +478,33 @@ public class CastSpell : MonoBehaviour
         }
     }
 
-    private void OnClickSpell(int spellNum)
+    private void OnClickSpellCommon(int spellNum)
     {
-        spell = spellPrefabs[spellNum];
+        spell = CommonSpellPrefabs[spellNum];
+
+        StartCoroutine(EnableInput());
+
+        DestroyTarget();
+        GetComponent<PlaceTrap>().DestroyGhost();
+        SetTarget();
+        spellSpeed = spell.GetComponent<SpellBase>().GetSpeed();
+    }
+
+    private void OnClickSpellUncommon(int spellNum)
+    {
+        spell = UncommonSpellPrefabs[spellNum];
+
+        StartCoroutine(EnableInput());
+
+        DestroyTarget();
+        GetComponent<PlaceTrap>().DestroyGhost();
+        SetTarget();
+        spellSpeed = spell.GetComponent<SpellBase>().GetSpeed();
+    }
+
+    private void OnClickSpellRare(int spellNum)
+    {
+        spell = RareSpellPrefabs[spellNum];
 
         StartCoroutine(EnableInput());
 
@@ -485,16 +523,49 @@ public class CastSpell : MonoBehaviour
     private void GenerateNewSpell(Vector3 position, int index)
     {
         //Instantiate Spell Button
-        int random = Random.Range(0, spellButtons.Length);
-        GameObject newSpell = Instantiate(spellButtons[random], position, Quaternion.identity) as GameObject;
-        newSpell.transform.SetParent(spellQueue.transform, false);
+        int randomIndex;
+        GameObject newSpell;
+        int SpellChance = Random.Range(1, 100);
 
-        //Add Click Listener
-        newSpell.GetComponent<Button>().onClick.AddListener(() => OnClickSpell(random));
-        newSpell.GetComponent<ButtonIndex>().ButtonIndexing(index);
-        newSpell.GetComponent<Button>().onClick.AddListener(() => GetIndex(newSpell));
+        if (SpellChance <= CommonRarityChance)
+        {
+            randomIndex = Random.Range(0, CommonSpellButtons.Length);
+            newSpell = Instantiate(CommonSpellButtons[randomIndex], position, Quaternion.identity) as GameObject;
+            newSpell.transform.SetParent(spellQueue.transform, false);
 
-        queue[index] = newSpell;
+            //Add Click Listener
+            newSpell.GetComponent<Button>().onClick.AddListener(() => OnClickSpellCommon(randomIndex));
+            newSpell.GetComponent<ButtonIndex>().ButtonIndexing(index);
+            newSpell.GetComponent<Button>().onClick.AddListener(() => GetIndex(newSpell));
+
+            queue[index] = newSpell;
+        }
+        else if (SpellChance > CommonRarityChance && SpellChance < (100 - RareRarityChance))
+        {
+            randomIndex = Random.Range(0, UncommonSpellButtons.Length);
+            newSpell = Instantiate(UncommonSpellButtons[randomIndex], position, Quaternion.identity) as GameObject;
+            newSpell.transform.SetParent(spellQueue.transform, false);
+
+            //Add Click Listener
+            newSpell.GetComponent<Button>().onClick.AddListener(() => OnClickSpellUncommon(randomIndex));
+            newSpell.GetComponent<ButtonIndex>().ButtonIndexing(index);
+            newSpell.GetComponent<Button>().onClick.AddListener(() => GetIndex(newSpell));
+
+            queue[index] = newSpell;
+        }
+        else if (SpellChance >= (CommonRarityChance + UncommonRarityChance))
+        {
+            randomIndex = Random.Range(0, RareSpellButtons.Length);
+            newSpell = Instantiate(RareSpellButtons[randomIndex], position, Quaternion.identity) as GameObject;
+            newSpell.transform.SetParent(spellQueue.transform, false);
+
+            //Add Click Listener
+            newSpell.GetComponent<Button>().onClick.AddListener(() => OnClickSpellRare(randomIndex));
+            newSpell.GetComponent<ButtonIndex>().ButtonIndexing(index);
+            newSpell.GetComponent<Button>().onClick.AddListener(() => GetIndex(newSpell));
+
+            queue[index] = newSpell;
+        }
     }
 
     //Called on start only now
@@ -504,17 +575,49 @@ public class CastSpell : MonoBehaviour
         {
             if (queue[i] == null)
             {
-                int random = Random.Range(0, spellButtons.Length);
-                GameObject newSpell = Instantiate(spellButtons[random], new Vector3(100f + 40f * i, 20f, 0), Quaternion.identity) as GameObject;
-                newSpell.transform.SetParent(spellQueue.transform, false);
+                int randomIndex;
+                GameObject newSpell;
+                int SpellChance = Random.Range(1, 100);
 
+                if (SpellChance <= CommonRarityChance)
+                {
+                    randomIndex = Random.Range(0, CommonSpellButtons.Length);
+                    newSpell = Instantiate(CommonSpellButtons[randomIndex], new Vector3(100f + 40f * i, 20f, 0), Quaternion.identity) as GameObject;
+                    newSpell.transform.SetParent(spellQueue.transform, false);
 
-                //Add click listeners for all trap buttons
-                newSpell.GetComponent<Button>().onClick.AddListener(() => OnClickSpell(random));
-                newSpell.GetComponent<ButtonIndex>().ButtonIndexing(i);
-                newSpell.GetComponent<Button>().onClick.AddListener(() => GetIndex(newSpell));
+                    //Add Click Listener
+                    newSpell.GetComponent<Button>().onClick.AddListener(() => OnClickSpellCommon(randomIndex));
+                    newSpell.GetComponent<ButtonIndex>().ButtonIndexing(i);
+                    newSpell.GetComponent<Button>().onClick.AddListener(() => GetIndex(newSpell));
 
-                queue[i] = newSpell;
+                    queue[i] = newSpell;
+                }
+                else if (SpellChance > CommonRarityChance && SpellChance < (100 - RareRarityChance))
+                {
+                    randomIndex = Random.Range(0, UncommonSpellButtons.Length);
+                    newSpell = Instantiate(UncommonSpellButtons[randomIndex], new Vector3(100f + 40f * i, 20f, 0), Quaternion.identity) as GameObject;
+                    newSpell.transform.SetParent(spellQueue.transform, false);
+
+                    //Add Click Listener
+                    newSpell.GetComponent<Button>().onClick.AddListener(() => OnClickSpellUncommon(randomIndex));
+                    newSpell.GetComponent<ButtonIndex>().ButtonIndexing(i);
+                    newSpell.GetComponent<Button>().onClick.AddListener(() => GetIndex(newSpell));
+
+                    queue[i] = newSpell;
+                }
+                else if (SpellChance >= (CommonRarityChance + UncommonRarityChance))
+                {
+                    randomIndex = Random.Range(0, RareSpellButtons.Length);
+                    newSpell = Instantiate(RareSpellButtons[randomIndex], new Vector3(100f + 40f * i, 20f, 0), Quaternion.identity) as GameObject;
+                    newSpell.transform.SetParent(spellQueue.transform, false);
+
+                    //Add Click Listener
+                    newSpell.GetComponent<Button>().onClick.AddListener(() => OnClickSpellRare(randomIndex));
+                    newSpell.GetComponent<ButtonIndex>().ButtonIndexing(i);
+                    newSpell.GetComponent<Button>().onClick.AddListener(() => GetIndex(newSpell));
+
+                    queue[i] = newSpell;
+                }
             }
         }
     }
