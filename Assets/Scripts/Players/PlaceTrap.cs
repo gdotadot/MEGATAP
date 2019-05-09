@@ -16,11 +16,25 @@ public class PlaceTrap : MonoBehaviour {
     [Header("Design Values -------------")]
     [SerializeField] private int gridSize;
 
+    [Header("Percentage is X/100 currently.")]
+    [SerializeField] private int CommonRarityChance = 50;
+    [SerializeField] private int UncommonRarityChance = 35;
+    [SerializeField] private int RareRarityChance = 15;
+
     [Header("Programmers - GameObjects/Scripts -----")]
     [SerializeField] private GameObject tower;
 
-    [SerializeField] private GameObject[] trapButtons;
-    [SerializeField] private TrapBase[] trapPrefabs;
+    // [SerializeField] private GameObject[] trapButtons;
+     //[SerializeField] private TrapBase[] trapPrefabs;
+
+    [SerializeField] private GameObject[] CommonTrapButtons;
+    [SerializeField] private GameObject[] UncommonTrapButtons;
+    [SerializeField] private GameObject[] RareTrapButtons;
+
+    [SerializeField] private TrapBase[] CommonTrapPrefabs;
+    [SerializeField] private TrapBase[] UncommonTrapPrefabs;
+    [SerializeField] private TrapBase[] RareTrapPrefabs;
+
     [SerializeField] private GameObject trapQueue;
 
     [SerializeField] private Image controllerCursor;
@@ -542,9 +556,32 @@ public class PlaceTrap : MonoBehaviour {
     }
 
     //Called from trap button / CallClick script
-    public void OnClickTrap(int trapNum)
+    public void OnClickTrapCommon(int trapNum)
     {
-        trap = trapPrefabs[trapNum];
+        trap = CommonTrapPrefabs[trapNum];
+
+        trapRot = 0;
+        StartCoroutine(EnableInput());
+        DestroyGhost();
+        GetComponent<CastSpell>().DestroyTarget();
+        SetGhost();
+    }
+
+    public void OnClickTrapUncommon(int trapNum)
+    {
+        trap = UncommonTrapPrefabs[trapNum];
+
+        trapRot = 0;
+        StartCoroutine(EnableInput());
+        DestroyGhost();
+        GetComponent<CastSpell>().DestroyTarget();
+        SetGhost();
+    }
+
+    public void OnClickTrapRare(int trapNum)
+    {
+        trap = RareTrapPrefabs[trapNum];
+
         trapRot = 0;
         StartCoroutine(EnableInput());
         DestroyGhost();
@@ -582,16 +619,56 @@ public class PlaceTrap : MonoBehaviour {
         active = true;
         for(int i = 0; i < queueSize; i++)
         {
-            int random = Random.Range(0, trapButtons.Length);
-            GameObject newTrap = Instantiate(trapButtons[random], new Vector3 (-230f + 40f*i, -30, 0), Quaternion.identity) as GameObject;
-            newTrap.transform.SetParent(trapQueue.transform, false);
+           int TrapChance = Random.Range(1, 100);
+           int randomIndex;
+           GameObject newTrap;
 
-            //Add click listeners for all trap buttons
-            newTrap.GetComponent<Button>().onClick.AddListener(() => OnClickTrap(random));
-            newTrap.GetComponent<ButtonIndex>().ButtonIndexing(i);
-            newTrap.GetComponent<Button>().onClick.AddListener(() => GetIndex(newTrap));
+            if (TrapChance <= CommonRarityChance)
+            {
+                randomIndex = Random.Range(0, CommonTrapButtons.Length);
+                newTrap = Instantiate(CommonTrapButtons[randomIndex], new Vector3(-230f + 40f * i, -30, 0), Quaternion.identity) as GameObject;
 
-            queue.Add(newTrap);
+                newTrap.transform.SetParent(trapQueue.transform, false);
+
+                //Add click listeners for all trap buttons
+                newTrap.GetComponent<Button>().onClick.AddListener(() => OnClickTrapCommon(randomIndex));
+                newTrap.GetComponent<ButtonIndex>().ButtonIndexing(i);
+                newTrap.GetComponent<Button>().onClick.AddListener(() => GetIndex(newTrap));
+
+                queue.Add(newTrap);
+            }
+            else if (TrapChance > CommonRarityChance && TrapChance < (100 - RareRarityChance))
+            {
+                randomIndex = Random.Range(0, UncommonTrapButtons.Length);
+                newTrap = Instantiate(UncommonTrapButtons[randomIndex], new Vector3(-230f + 40f * i, -30, 0), Quaternion.identity) as GameObject;
+
+                newTrap.transform.SetParent(trapQueue.transform, false);
+
+                //Add click listeners for all trap buttons
+                newTrap.GetComponent<Button>().onClick.AddListener(() => OnClickTrapUncommon(randomIndex));
+                newTrap.GetComponent<ButtonIndex>().ButtonIndexing(i);
+                newTrap.GetComponent<Button>().onClick.AddListener(() => GetIndex(newTrap));
+
+                queue.Add(newTrap);
+            }
+            else if (TrapChance >= (CommonRarityChance + UncommonRarityChance))
+            {
+                randomIndex = Random.Range(0, RareTrapButtons.Length);
+                newTrap = Instantiate(RareTrapButtons[randomIndex], new Vector3(-230f + 40f * i, -30, 0), Quaternion.identity) as GameObject;
+
+                newTrap.transform.SetParent(trapQueue.transform, false);
+
+                //Add click listeners for all trap buttons
+                newTrap.GetComponent<Button>().onClick.AddListener(() => OnClickTrapRare(randomIndex));
+                newTrap.GetComponent<ButtonIndex>().ButtonIndexing(i);
+                newTrap.GetComponent<Button>().onClick.AddListener(() => GetIndex(newTrap));
+
+                queue.Add(newTrap);
+            }
+            else
+            {
+                Debug.Log("Error. You weren't supposed to reach here.");
+            }
 
             if (active == false)
             {
