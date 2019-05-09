@@ -1786,26 +1786,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: targeting.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114220156261559540, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: trapButtons.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: spellButtons.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: spellPrefabs.Array.size
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 4994873547233482, guid: 7c17f18a57460024ba6258242e429410, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1838,6 +1818,16 @@ Prefab:
       propertyPath: m_RootOrder
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114169544570823518, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1016487807}
+    - target: {fileID: 114169544570823518, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: controllerCursor
+      value: 
+      objectReference: {fileID: 1513495130}
     - target: {fileID: 114220156261559540, guid: 7c17f18a57460024ba6258242e429410,
         type: 2}
       propertyPath: tower
@@ -1868,21 +1858,16 @@ Prefab:
       propertyPath: cam
       value: 
       objectReference: {fileID: 412805862}
-    - target: {fileID: 114169544570823518, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: gameManager
-      value: 
-      objectReference: {fileID: 1016487807}
-    - target: {fileID: 114169544570823518, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: controllerCursor
-      value: 
-      objectReference: {fileID: 1513495130}
     - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
         type: 2}
       propertyPath: tower
       value: 
       objectReference: {fileID: 1219273410}
+    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
+        type: 2}
+      propertyPath: spellQueue
+      value: 
+      objectReference: {fileID: 10065831}
     - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
         type: 2}
       propertyPath: controllerCursor
@@ -1913,101 +1898,6 @@ Prefab:
       propertyPath: playerOne
       value: 
       objectReference: {fileID: 1338709831}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: spellQueue
-      value: 
-      objectReference: {fileID: 10065831}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: targeting.Array.data[0]
-      value: 
-      objectReference: {fileID: 1046908235356196, guid: 0ded149890f182d4685b20ceb6c49d1b,
-        type: 2}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: targeting.Array.data[1]
-      value: 
-      objectReference: {fileID: 1424637060701814, guid: e34ed2dd750177e4ba19c7100de1f5df,
-        type: 2}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: spellPrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 114666726713938728, guid: a1877a9fcd9b1044b903f7eb78d4662f,
-        type: 2}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: spellButtons.Array.data[5]
-      value: 
-      objectReference: {fileID: 1113329559578948, guid: a515d837040864ce486d259b379aca39,
-        type: 2}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: spellPrefabs.Array.data[5]
-      value: 
-      objectReference: {fileID: 114666726713938728, guid: b22aaa237e58e459b8de7de4cc8a9106,
-        type: 2}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: spellButtons.Array.data[0]
-      value: 
-      objectReference: {fileID: 1113329559578948, guid: 9caafb2bc87b57a46a16da291b5e206d,
-        type: 2}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: spellButtons.Array.data[1]
-      value: 
-      objectReference: {fileID: 1613936015125488, guid: 4a067145d92a94685b6e22ef6edc3f4b,
-        type: 2}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: spellButtons.Array.data[2]
-      value: 
-      objectReference: {fileID: 1113329559578948, guid: 4fcae1fa39201f24cb3eb5a005187de5,
-        type: 2}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: spellButtons.Array.data[3]
-      value: 
-      objectReference: {fileID: 1113329559578948, guid: 6a89e440e2925b14c9bb31d09e4d2c2f,
-        type: 2}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: spellButtons.Array.data[4]
-      value: 
-      objectReference: {fileID: 1113329559578948, guid: d5688845a27f247f8856e27dbb5cf2e8,
-        type: 2}
-    - target: {fileID: 114220156261559540, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: trapButtons.Array.data[0]
-      value: 
-      objectReference: {fileID: 1148860999998904, guid: ad3241910d1b2f54db2ac80af833dd05,
-        type: 2}
-    - target: {fileID: 114220156261559540, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: trapButtons.Array.data[1]
-      value: 
-      objectReference: {fileID: 1110785462397992, guid: beb48e7d73b8a5949836542f424745f8,
-        type: 2}
-    - target: {fileID: 114220156261559540, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: trapButtons.Array.data[2]
-      value: 
-      objectReference: {fileID: 1881833347296892, guid: abd8a9fa5d7d7f24096cab103761e9a2,
-        type: 2}
-    - target: {fileID: 114220156261559540, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: trapButtons.Array.data[3]
-      value: 
-      objectReference: {fileID: 1342018372598374, guid: 208c22d5edce409439fa7b3eb12a8ab6,
-        type: 2}
-    - target: {fileID: 114871698429783546, guid: 7c17f18a57460024ba6258242e429410,
-        type: 2}
-      propertyPath: targeting.Array.data[2]
-      value: 
-      objectReference: {fileID: 1424637060701814, guid: 5d4a7e903769c9245a97278745db2832,
-        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c17f18a57460024ba6258242e429410, type: 2}
   m_IsPrefabAsset: 0
